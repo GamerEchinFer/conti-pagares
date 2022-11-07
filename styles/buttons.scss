@@ -1,0 +1,48 @@
+.buttonCommon {
+    font-size: 12px;
+    text-transform: 'initial';
+    font-family: "ContiSans-Light";
+    border-radius: 1px !important;
+    width: 100px !important;
+    padding: 4px 30px !important;
+    text-transform: initial !important;
+    margin: 0 auto !important;
+}
+
+.buttonsOutShadow, .buttonsOutShadow:hover {
+    box-shadow: none !important;
+}
+
+.buttonOutHover:hover {
+    background: none !important;
+}
+
+.btnAccionesBotonera{
+    padding: 4px 22px !important;
+    border-radius: 50px !important;
+    box-shadow: none !important;
+    text-transform: initial !important;
+    font-size: 1rem !important;
+}
+
+.btnAccionesActualizacion {
+    text-transform: initial !important;
+    margin: 8px 5px 0 !important;
+    border-radius: 10px !important;
+    padding: 4px 15px !important;
+    line-height: 2 !important;
+    font-size: 1rem !important;
+}
+
+@media only screen and (max-width: 600px) {
+    .btnAccionesBotonera {
+        width: 100% !important;
+        margin-bottom: 10px !important;
+    }
+}
+
+@media (max-width:944px) and (min-width:601px) {
+    .btnMargenBotonera {
+        margin-bottom: 10px !important;
+    }
+}
