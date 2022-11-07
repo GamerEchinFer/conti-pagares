@@ -1,0 +1,191 @@
+import { useState, useEffect } from 'react';
+import ProductosComponent from '../NuevaSolicitud/ProductosComponent';
+import { SolicitudCliente } from '../../interfaces/interfaces';
+import ArrowIconBack from '../ArrowIconsComponent/ArrowIconBack';
+import { useSolicitudes } from '../../hooks/useSolicitudes';
+import FormularioNuevaSolicitud from '../NuevaSolicitud/FormularioNuevaSolicitud';
+import SubProductosComponent from '../NuevaSolicitud/SubProductosComponent';
+import { useDispatch, useSelector } from 'react-redux';
+import { getSubProductosAction } from '../../redux/thunks/subProducto.thunks';
+import { getParametroAction } from '../../redux/thunks/parametro.thunks';
+import ParametroSelectComponent from '../NuevaSolicitud/ParametroSelectComponent';
+import { parametroActions } from '../../redux/slices/parametro.slice';
+import { RootState } from '../../redux/store';
+import { postEtiquetasVariablesAction } from '../../redux/thunks/etiqueta.thunk';
+import NextButton from '../Buttons/NextButton';
+import { useNavigate } from 'react-router-dom';
+import { etiquetaVariableActions } from '../../redux/slices/etiquetaVariable.slice';
+
+type NuevaSolicitudComponentProps = {
+  solicitud: SolicitudCliente | null
+}
+
+function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
+
+  const navigate = useNavigate();
+  // STATES
+  const dispatch = useDispatch(); 
+
+  const loadingParametrosSelect = useSelector((state: RootState) => state.parametro.loading);
+  const etiquetaVariableSuccess = useSelector((state: RootState) => state.etiquetaVariable.success);
+
+  const [nuevaSolicitud, setNuevaSolicitud] = useState(0);
+  const [idProducto, setIdProducto] = useState(0);
+  const [idSubProducto, setIdSubProducto] = useState(0);
+
+  const [body, setBody] = useState<any>({
+    codigoCliente: {
+      "nombre": "codigoCliente",
+      "valor": "666"
+    },
+    tipo_persona: {
+      "nombre": "tipo_persona",
+      "valor": "F"
+    },
+    id_producto: {
+      "nombre": "id_producto",
+      "valor": "10"
+    },
+    id_subproducto: {
+      "nombre": "id_subproducto",
+      "valor": "160"
+    },
+    id_actividad: {
+      "nombre": "id_actividad",
+      "valor": "10"
+    }
+  })
+
+  const solicitudes = useSolicitudes()
+
+  const handleChangeNuevaSolicitud = (event : any) =>  
+  setNuevaSolicitud(event.target.value);
+
+  useEffect(() => {
+    // Clean or Clear    
+    dispatch(parametroActions.parametroSuccess({}))
+  }, [])
+
+
+  // CUANDO TRAE LAS ETIQUETAS VARIABLES CORRECTAMENTE SE VA A LA SIGUIENTE PANTALLA
+  useEffect(() => {
+    if (etiquetaVariableSuccess) {
+      navigate('/subir-documentos');
+    }
+
+    return () => {
+      dispatch(etiquetaVariableActions.etiquetaVariableReset())
+    }
+  }, [etiquetaVariableSuccess])
+
+  useEffect(() => {
+
+    // Cada vez que el estado id producto cambia se vuelve a ejecutar este codigo 
+
+    if (idProducto) {
+      dispatch(getSubProductosAction(idProducto))
+    }
+  }, [idProducto])
+
+  useEffect(() => {
+
+    // Cada vez que el estado id subproducto cambia se vuelve a ejecutar este codigo 
+
+    if (idProducto && idSubProducto) {
+      dispatch(getParametroAction(idProducto, idSubProducto))
+    }
+  }, [idSubProducto])
+
+  if(!solicitud) return null;
+
+  // Dictionary 
+  const items: any = {
+    1: <FormularioNuevaSolicitud />,
+  }
+
+  const handleClickNext = () => {
+    dispatch(postEtiquetasVariablesAction(Object.values(body)))
+    navigate('/subir-documentos');
+  }
+
+  const agregarNombreValor = (nombre: string, valor: string) => {
+
+    const item = {nombre, valor}    
+
+    setBody({...body, [nombre]: item})
+  }
+
+  return (
+    <>
+      <div className="grid grid-cols-2 gap-2 pt-4">
+        <div 
+          className="text-left pl-5"
+          style={{
+            color: "#1D428A",
+            fontWeight: "bold",
+            fontSize:"24px"
+          }}
+        >
+          Nueva Solicitud
+        </div>  
+        <div className="relative">
+          <div className="absolute top-1 right-0 h-16" style={{paddingLeft: "70px"}}>
+            <ArrowIconBack />
+          </div>
+        </div>
+      </div>
+        <div 
+          className="text-left pl-5"
+          style={{
+            color: "#6C6C6C",
+            fontWeight: "400",
+            fontSize:"18px"
+          }}
+        >
+          Para cargar documentos a partir de una solicitud de productos
+        </div> 
+        <div className="pt-8">
+          {/* {idProducto} */}
+          
+          {/* {idProducto === 0 ? <ProductosComponent 
+            idProducto={idProducto}
+            setIdProducto={setIdProducto}
+          /> : items[idProducto]} */}
+
+          {<ProductosComponent 
+            idProducto={idProducto}
+            setIdProducto={(id: any) => {
+              agregarNombreValor("id_producto", `${id}`)
+              setIdProducto(id)
+            }}
+          />}
+
+           <SubProductosComponent 
+              idSubProducto={idSubProducto}
+              setIdSubProducto={(id: any) => {
+                agregarNombreValor("id_subproducto", `${id}`)
+                setIdSubProducto(id)
+              }}
+            />
+            {
+              loadingParametrosSelect 
+              ? (
+                <div>
+                  <h1>Cargando...</h1>
+                </div>
+              ) 
+              : null
+            }
+              <ParametroSelectComponent onChange={(nombre: string, id: any) => {
+                agregarNombreValor(`id_${nombre}`, `${id}`)
+              }} />
+
+              
+            </div>  
+            <div className="flex flex-row justify-center gap-8">
+              <NextButton onClick={handleClickNext}/>
+            </div>
+    </>
+  ) 
+}
+export default NuevaSolicitudComponent

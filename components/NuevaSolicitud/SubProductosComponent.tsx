@@ -1,0 +1,44 @@
+import { FormControl, InputLabel, Select, MenuItem, Grid } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+
+type SubProductosComponentProps = {
+    idSubProducto: number,
+    setIdSubProducto: any
+}
+
+const SubProductosComponent = ({idSubProducto, setIdSubProducto}: SubProductosComponentProps) => {
+  const subProductos = useSelector((state: RootState) => state.subProducto.items);
+
+  return (
+    <>
+      <div className="flex pl-10 pr-10 pt-4 ">
+        <FormControl size="small" fullWidth>
+          <InputLabel id="demo-simple-select-label">SubProductos</InputLabel>
+            <Select
+              className="text-left"
+              style={{
+                color: "#151515",
+                fontWeight: "400",
+                fontSize:"16px",
+              }}
+              value={idSubProducto}
+              label="subproductos"
+              onChange={(item) => {
+                  setIdSubProducto(Number(item.target?.value ?? 1));
+              }}
+            >
+              {
+                subProductos.map((item) => {
+                  return <MenuItem key={item.idSubProducto} value={item.idSubProducto}>{item.descripcion}</MenuItem>
+                })
+              } 
+            </Select>
+            
+            </FormControl>
+      </div>
+    </>
+  )                    
+}
+
+export default SubProductosComponent
