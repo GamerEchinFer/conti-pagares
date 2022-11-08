@@ -15,6 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts","redux-persist/lib/storage", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "redux-persist/lib/storage", "**/*.tsx"],
   "exclude": ["node_modules"]
 }
