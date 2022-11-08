@@ -1,6 +1,6 @@
-import { getDescargarHadoopDirecto } from "../../api/apmDesaApi";
 import { AppDispatch } from '../store';
 import { hadoopDownloadActions } from '../slices/hadoopDownload.slice';
+import { getDescargarHadoopDirecto } from '../../pages/api/apmDesaApi';
 
 export const getDownloadAction: any = (downloadpath: string) =>  async (dispatch: AppDispatch) => {
     dispatch(hadoopDownloadActions.hadoopDownloadRequest());

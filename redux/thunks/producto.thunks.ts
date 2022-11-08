@@ -1,5 +1,5 @@
 
-import { getProductos } from "../../api/apmDesaApi";
+import { getProductos } from "../../pages/api/apmDesaApi";
 import { productoActions } from "../slices/producto.slice";
 import { AppDispatch } from "../store";
 

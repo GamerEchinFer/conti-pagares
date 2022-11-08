@@ -2,7 +2,7 @@
 import { AppDispatch } from "../store";
 import { etiquetaVariableActions } from '../slices/etiquetaVariable.slice';
 import { EtiquetaVariable } from '../../interfaces/interfaces';
-import { postEtiquetaVariable } from "../../api/apmDesaApi";
+import { postEtiquetaVariable } from "../../pages/api/apmDesaApi";
 
 export const postEtiquetasVariablesAction: any = (body: EtiquetaVariable[]) => async (dispatch: AppDispatch) => {
     dispatch(etiquetaVariableActions.etiquetaVariableRequest());

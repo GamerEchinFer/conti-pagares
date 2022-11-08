@@ -1,10 +1,10 @@
 import { AppDispatch } from '../store';
 import { hadoopDirectoActions } from '../slices/hadoop.slice';
 import { HadoopDirecto } from '../../interfaces/interfaces';
-import { postAlzarHadoopDirecto } from '../../api/apmDesaApi';
+import { postAlzarHadoopDirecto } from '../../pages/api/apmDesaApi';
 
 
-export const postAlzarHadoopDirectoAction: any = (body: HadoopDirecto,path_images: string, overwrite: boolean, chunk_size: number) => async (dispatch: AppDispatch) => {
+export const postAlzarHadoopDirectoAction: any = (body: FormData,path_images: string, overwrite: boolean, chunk_size: number) => async (dispatch: AppDispatch) => {
     dispatch(hadoopDirectoActions.hadoopDirectoRequest());
     try {
         const data = await postAlzarHadoopDirecto(body, path_images, overwrite, chunk_size);

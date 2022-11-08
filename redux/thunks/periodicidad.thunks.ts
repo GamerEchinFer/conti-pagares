@@ -1,4 +1,4 @@
-import { getPeriodicidad } from "../../api/gdiApi";
+import { getPeriodicidad } from "../../pages/api/gdiApi";
 import { periodicidadActions } from "../slices/periodicidad.slice";
 import { AppDispatch } from "../store";
 

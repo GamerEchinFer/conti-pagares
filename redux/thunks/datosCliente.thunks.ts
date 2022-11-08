@@ -1,4 +1,4 @@
-import { getDatosCliente } from "../../api/gdiApi";
+import { getDatosCliente } from "../../pages/api/gdiApi";
 import { datosClienteActions } from "../slices/datosCliente.slice";
 import { AppDispatch } from "../store"
 

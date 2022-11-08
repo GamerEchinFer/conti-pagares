@@ -1,5 +1,5 @@
 
-import { getParametrosVisibles } from "../../api/apmDesaApi";
+import { getParametrosVisibles } from "../../pages/api/apmDesaApi";
 import { parametroVisibleActions } from "../slices/parametroVisible.slice";
 import { AppDispatch } from "../store";
 

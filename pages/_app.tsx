@@ -21,7 +21,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-           <title>Agentes | Banco Continental </title>
+           <title>Carpeta Digital | Banco Continental </title>
        </Head>
       <ThemeProvider theme={theme}>
         <Provider store={store}>

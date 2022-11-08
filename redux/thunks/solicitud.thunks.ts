@@ -1,4 +1,4 @@
-import { getAllSolicitudCliente } from "../../api/gdiApi";
+import { getAllSolicitudCliente } from "../../pages/api/gdiApi";
 import { solicitudActions } from "../slices/solicitud.slice";
 import { AppDispatch } from "../store"
 

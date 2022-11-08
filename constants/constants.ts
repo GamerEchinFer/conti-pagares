@@ -3,7 +3,7 @@
 import { AutenticarServicioHeader, AuthHadoop } from "../interfaces/interfaces"
 
 export const baseUrl = process.env.NODE_ENV === "development" ? 
-    "http://localhost:3000" : "http://localhost:3000" // configuración de puerto de JSONServer
+    "http://localhost:9000" : "http://localhost:9000" // configuración de puerto de JSONServer
     // Debe cambiar cuando se realice pase a producción
 
 export const baseUrl2 = process.env.NODE_ENV === "development" ? // configuración de puerto de Base de Datos Oracle

@@ -34,7 +34,7 @@ const TipoBusquedaPage = () => {
   };
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className="flex">
         <div className="max-w-7xl" style={{ padding: 20, margin: 'auto'}}>
           <GDITitulosComponent />
