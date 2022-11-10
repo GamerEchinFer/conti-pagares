@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="17.746" height="18.745" viewBox="0 0 17.746 18.745">
+  <defs>
+    <filter id="Rechazado" x="0" y="0" width="17.746" height="18.745" filterUnits="userSpaceOnUse">
+      <feOffset dy="1" input="SourceAlpha"/>
+      <feGaussianBlur result="blur"/>
+      <feFlood flood-color="#fff" flood-opacity="0.302"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Rechazado)">
+    <path id="Rechazado-2" data-name="Rechazado" d="M3.187,0,0,3.187,1.628,4.815,5.651,8.906,1.628,12.93,0,14.49l3.187,3.255,1.628-1.628,4.092-4.091,4.024,4.091,1.56,1.628,3.255-3.255-1.628-1.56L12.026,8.906l4.092-4.091,1.628-1.628L14.49,0,12.93,1.628,8.907,5.651,4.815,1.628,3.187,0Z" fill="#d12103"/>
+  </g>
+</svg>
