@@ -19,15 +19,15 @@ const ProductosComponent = ({idProducto, setIdProducto}: ProductosComponentProps
     <>
       <div className="flex pl-10 pr-10 pt-4 ">
         {loading ? <span>Cargando...</span> : null}
-        <FormControl size="small" fullWidth>
-          <InputLabel id="demo-simple-select-label">Productos</InputLabel>
+        <FormControl size="small" fullWidth >
+          <InputLabel id="demo-simple-select-label" >Productos</InputLabel>
             <Select
               className="text-left"
-              style={{
-                color: "#151515",
-                fontWeight: "400",
-                fontSize:"16px",
-              }}
+                sx={{
+                  color: "#151515",
+                  fontWeight: "400",
+                  fontSize:"16px",
+                }}
               value={idProducto}
               label="productos"
               onChange={(item) => {
@@ -36,7 +36,7 @@ const ProductosComponent = ({idProducto, setIdProducto}: ProductosComponentProps
             >
               {
                 productos.map((item) => {
-                  return <MenuItem key={item.idProducto} value={item.idProducto}>{item.descripcion}</MenuItem>
+                  return <MenuItem key={item.idProducto} value={item.idProducto} >{item.descripcion}</MenuItem>
                 })
               } 
             </Select>

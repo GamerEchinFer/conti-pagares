@@ -92,7 +92,9 @@ export interface AuthHadoop {
 }
 
 export interface HadoopDirectoRequest {
-    downloadpath: string;
+    LOC: string;
+    MSG: string;
+    TYPE: number;
 }
 
 export interface HadoopDirecto {

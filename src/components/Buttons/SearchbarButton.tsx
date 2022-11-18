@@ -1,7 +1,11 @@
 import { Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
-const SearchbarButton = () => {
+type SearchbarButtonProps = {
+  active?: boolean
+}
+
+const SearchbarButton = ({active = false}: SearchbarButtonProps) => {
   return (
     <>
         <div>
@@ -10,7 +14,9 @@ const SearchbarButton = () => {
               type='submit'
               color="primary"
               variant="outlined"
-              disabled
+              disabled={!active}              
+              sx={{background: active ? "#1D428A" : "#B6B6B6"}}
+              style={{color: active ? "white" : ""}}
               className="btnSearch buttonsOutShadow text-white"
               >
                 <SearchIcon />

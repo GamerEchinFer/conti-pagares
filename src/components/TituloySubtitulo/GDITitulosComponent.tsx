@@ -1,18 +1,13 @@
 import React from 'react'
 
 const GDITitulosComponent = () => {
-  return (
-    <>
-      <div className="flex justify-end">
-        <div className="homeTitle">
-            Carpeta Digital
-        </div>
-
-        <div className="homeSubTitle">
-            Banco Continental
-        </div>
-      </div>
-    </>
+  return (    
+    <>          
+      <div className="flex flex-col">        
+          <span className="homeTitle" style={{marginBottom: "-10px"}}>Carpeta Digital</span>
+          <span className="homeSubTitle">Banco Continental</span>        
+      </div>                        
+      </>
   )
 }
 

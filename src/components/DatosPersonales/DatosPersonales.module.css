@@ -1,0 +1,42 @@
+.box {
+    display: flex !important;
+    max-width: 781px !important;
+    width: 100% !important;
+}
+
+.container-inside-box {
+    padding-left: 49px !important;
+    margin-top: 14px !important;
+    display: flex  !important;
+}   
+
+.btnAccionesActualizacion {
+    text-transform: initial !important;
+    margin: 8px 5px 0 !important;
+    border-radius: 10px !important;
+    padding: 4px 15px !important;
+    line-height: 2 !important;
+    font-size: 1rem !important;
+}
+
+
+.boxList {
+    background: white !important;
+    width: 100% !important;
+    border: 1px solid #b7b7b7 !important;
+    border-radius: 12px !important;
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+}
+
+.box-cargo {
+    display: flex !important;
+    max-width: 671px !important;
+    width: 100% !important;
+}
+
+.container-cargo {
+    padding-left: 19px !important;
+    margin-top: 14px !important;
+    display: flex  !important;
+} 

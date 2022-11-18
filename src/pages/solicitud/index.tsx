@@ -13,19 +13,45 @@ import ActualizarDocumentosComponent from '../../components/SolicitudComponent/A
 import ConsultarDocumentosComponent from '../../components/SolicitudComponent/ConsultarDocumentosComponent';
 import DatosClienteComponent from '../../components/DatosClienteComponent';
 import BackButton from '../../components/Buttons/BackButton';
+import { Box, Grid } from '@mui/material';
+import styles from "../solicitud/Solicitud.module.css";
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { theme } from '../../../theme/Theme';
+import { solicitudActions } from '../../redux/slices/solicitud.slice';
+
 
 function SolicitudPage() {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const [solicitud, setSolicitud] = useState<SolicitudCliente | null>(null)
-  const [page, setPage] = useState(-1)
+  const mediaQueryPadding = useMediaQuery(theme.breakpoints.down(705));
+
+  // const [solicitud, setSolicitud] = useState<SolicitudCliente | null>(null)
+  // const [page, setPage] = useState(-1)
 
   //const solicitudes = useSolicitudes()
   const solicitudes = useSelector((state: RootState) => state.solicitud.items)
+  const solicitud = useSelector((state: RootState) => state.solicitud.solicitudSelected)
+  const page = useSelector((state: RootState) => state.solicitud.page)
+
   useMount(() => {
-    dispatch(getAllSolicitudClienteAction())
+    initialize();
   })
+
+  const initialize = () => {
+    if (page === -1) {
+      setSolicitud(null)
+    }    
+    dispatch(getAllSolicitudClienteAction())
+  }
+
+  const setPage = (value: number) => {
+    dispatch(solicitudActions.setPage(value))
+  }
+
+  const setSolicitud = (value: SolicitudCliente | null) => {
+    dispatch(solicitudActions.setSolicitudSelected(value))
+  }
 
   const handleChangeSolicitud = (solicitud: SolicitudCliente) => { 
     setPage(solicitud.id)
@@ -33,7 +59,13 @@ function SolicitudPage() {
   }
 
   const handleClickPrevius = () => {
-    router.push('/tipoBusqueda');
+    // router.push('/tipoBusqueda');
+    // OPERACION TERNARIA TU_CONDIDICION ? RENDERIZA : NULL
+    if (page === -1) {
+      router.push('/tipoBusqueda');
+    } else {
+      setPage(-1)
+    }    
   };
 
   const handleClickNext = () => {
@@ -50,9 +82,8 @@ function SolicitudPage() {
   
   return (
     <>
-    {/* <Header/> */}
-    <div className="flex">
-      <div className="max-w-7xl" style={{ padding: 20, margin: 'auto'}}>
+      <Grid container pt={3} style={{ justifyContent: 'center' }}>
+				<Box className={styles['box-user']} style={{padding: mediaQueryPadding ? '0px 0px' : '0px'}}>
         <DatosClienteComponent />
         <div className="pl-9">
           <List 
@@ -62,14 +93,19 @@ function SolicitudPage() {
                 key={solicitud.id}
                 solicitud={solicitud}
                 handleChangeNewSolicitud={handleChangeSolicitud}
-            />) : items[page]}            
+            />
+            
+            
+            ) : items[page]}    
+
           </List>
-        </div>
+          
         <div className="flex flex-row justify-center gap-8">
           <BackButton onClick={handleClickPrevius}/>          
         </div>
-      </div>
-    </div>    
+        </div>
+    </Box>
+    </Grid>
   </>
   )
 }

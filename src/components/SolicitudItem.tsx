@@ -1,4 +1,5 @@
-import { ListItem, ListItemText, Divider } from '@mui/material'
+import { ListItem, ListItemText, Divider, Box, List } from '@mui/material'
+import { useRouter } from 'next/router';
 import { SolicitudCliente } from '../interfaces/interfaces';
 import ArrowIconNext from './ArrowIconsComponent/ArrowIconNext';
 
@@ -9,10 +10,16 @@ type SolicitudItemProps = {
 
 // TODO - Create destructuring using props and replace props for component 
 const SolicitudItem = (solicitud: SolicitudItemProps) => {
+const router = useRouter();
+
+const handleIconNext = () => {
+  router.push('/solicitud')
+}
   return (
     <>
+     <List sx={{ width: '100%', maxWidth: 660,maxHeight: 360, bgcolor: 'background.paper' }}>
       <ListItem 
-          button
+          // button
           onClick={() => solicitud.handleChangeNewSolicitud(solicitud.solicitud)}
       >
         <ListItemText 
@@ -30,9 +37,10 @@ const SolicitudItem = (solicitud: SolicitudItemProps) => {
           } }}
           secondary={solicitud.solicitud?.nameDetalle ?? ""}
         />
-        <ArrowIconNext />
+          <ArrowIconNext onClick={handleIconNext}/>
         </ListItem> 
         <Divider />
+    </List>
     </>
   )
 }

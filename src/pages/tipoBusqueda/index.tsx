@@ -1,24 +1,34 @@
-import { Grid, TextField, Typography } from "@mui/material"
+import { Box, Grid, TextField, Typography, useMediaQuery } from "@mui/material"
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { getTipoBusquedaById } from "../../api/gdiApi";
 import NextButtonTB from "../../components/Buttons/NextButtonTB";
 import SearchbarButton from "../../components/Buttons/SearchbarButton";
+import DatosPersonales from "../../components/DatosPersonales/DatosPersonales";
 import RadioButtonOption from "../../components/RadioButtonOption";
 import TBBodyPrincipal from "../../components/TipoBusqueda/TBBodyPrincipal";
 import GDITitulosComponent from "../../components/TituloySubtitulo/GDITitulosComponent";
-import { TipoBusqueda } from "../../interfaces/interfaces";
+import { TipoBusqueda, SolicitudCliente } from '../../interfaces/interfaces';
 import styles from './TipoBusqueda.module.css';
 import Archivo from '../../assets/svg/Archivo.svg' 
 import Image from "next/image";
+import { theme } from "../../../theme/Theme";
+import { useDispatch } from 'react-redux';
+import { solicitudActions } from '../../redux/slices/solicitud.slice';
 
 type props  = {
   imagen?: string;
 }
+
 const TipoBusquedaPage = ({imagen = Archivo} : props) => {
+
+  const dispatch = useDispatch()
+
   const [tipoBusqueda, setTipoBusqueda] = useState<TipoBusqueda | null>();
   const [tipoBusquedaSelected, setTipoBusquedaSelected] = useState(1);
+  const [codigoCliente, setCodigoCliente] = useState("")
   const [nextPage, setNextPage] = useState();
+  const mediaQueryPadding = useMediaQuery(theme.breakpoints.down(705));
 
   const router = useRouter();
 
@@ -29,6 +39,7 @@ const TipoBusquedaPage = ({imagen = Archivo} : props) => {
   }, [tipoBusquedaSelected])
 
   const handleClickNext = () => {
+    dispatch(solicitudActions.setPage(-1))
     router.push('/solicitud');
   };
 
@@ -38,51 +49,58 @@ const TipoBusquedaPage = ({imagen = Archivo} : props) => {
   return (
     <>
 			<Grid container pt={3} style={{ justifyContent: 'center' }}>
-      <div>
-        <div className="justify-around">
+				<Box className={styles['box-user']} style={{padding: mediaQueryPadding ? '0px 0px' : '0px'}}>
+        <div>
           <GDITitulosComponent />
           <TBBodyPrincipal />
-        </div>
-          <div className="flex flex-row gap-8 items-start justify-center pt-8">
-            <div className="flex flex-col items-start justify-content-start gap-4">
+          <div>
+            <div>
               <RadioButtonOption
                 tipoBusquedaSelected={tipoBusquedaSelected} 
                 setTipoBusquedaSelected={setTipoBusquedaSelected} 
                 />
               <div className="flex flex-row items-center gap-2">
-                <div className="flex flex-col items-start justify-start gap-7 w-1/8 pt-2">
-              <div className="labelRadio">
-                {tipoBusqueda?.nameTipoBusqueda ?? ""}
-              </div>
-
-                <TextField
-                  size="small" 
-                  id="outlined-basic"
-                  // value={tipoBusquedaSelected} 
-                  label={tipoBusqueda?.nameTipoBusqueda ?? ""}
-                  variant="outlined"
-                  sx={{
-                    '& label': { paddingLeft: (theme) => theme.spacing(2) },
-                    '& input': { paddingLeft: (theme) => theme.spacing(3.5), },
-                    '& fieldset': {
-                      paddingLeft: (theme) => theme.spacing(2.5),
-                      borderRadius: '0px',
-                    },
-                  }}
-                  />
-
+                <div className="labelRadio flex flex-col pl-28">
+                  {tipoBusqueda?.nameTipoBusqueda ?? ""}
                 </div>
-                <SearchbarButton />
+                <div className="flex flex-col items-start  gap-7 w-1/8 pt-2">
+                  <TextField
+                    size="small" 
+                    id="outlined-basic"
+                    value={codigoCliente}
+                    onChange={(e) => setCodigoCliente(e.target.value)}
+                    // value={tipoBusquedaSelected} 
+                    // label={tipoBusqueda?.nameTipoBusqueda ?? ""}
+                    variant="outlined"
+                    sx={{
+                      '& label': { paddingLeft: (theme) => theme.spacing(2) },
+                      '& input': { paddingLeft: (theme) => theme.spacing(3.5), },
+                      '& fieldset': {
+                        // paddingLeft: (theme) => theme.spacing(2.5),
+                        borderRadius: '5px',
+
+                      },
+                    }}
+                  />
+                </div>
+                <div className="flex flex-col pl-28">
+                  <SearchbarButton active={codigoCliente.length > 0} />
+                 </div>
               </div>
             </div>
           </div>
-          <div className="flex flex-row justify-center gap-8">
-            {/* <CancelButtonTB onClick={handleClickPrevius} /> */}
+          {/* <div className="flex flex-row justify-center gap-8">
+            <NextButtonTB onClick={handleClickNext} />
+          </div> */}
+          <DatosPersonales />
+        </div>
+        <div className="flex flex-row justify-center gap-8 pb-8">
             <NextButtonTB onClick={handleClickNext} />
           </div>
-      </div>
-
-        {/* <div className="chat-notification">
+        </Box>
+      </Grid>  
+      
+      {/* <div className="chat-notification">
           <div className="chat-notification-logo-wrapper">
             <Image className="chat-notification-logo" src={imagen} alt="ChitChat Logo" />
           </div>
@@ -91,7 +109,7 @@ const TipoBusquedaPage = ({imagen = Archivo} : props) => {
             <p className="chat-notification-message">You have a new message!</p>
           </div>
         </div> */}
-</Grid>
+  
     </>
   )
 }

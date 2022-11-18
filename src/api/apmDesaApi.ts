@@ -43,10 +43,10 @@ export async function getDescargarHadoopDirecto(downloadpath: string) {
 }
 
 export const postAlzarHadoopDirecto = async (body: FormData, path_images: string, overwrite: boolean, chunksize: number) => {
-    const URL = `/upload`;
+    const URL = `/upload?path_images`;
     const {data} = await apmHadoopApi.post<FormData, AxiosResponse<HadoopDirectoResponse>>(
         URL,body, {headers: {'Content-Type':'multipart/form-data'},
-                    params:{path_images, overwrite, chunksize},
+                    params:{path_images, overwrite, chunk_size: chunksize},
 });
 
     return data;

@@ -5,7 +5,9 @@ const initialState = () => ({
     items: [] as SolicitudCliente[],
     loading: false, //luego de ejecutar is true
     success: false,
-    error: null as any
+    error: null as any,
+    page: -1,
+    solicitudSelected: null as SolicitudCliente | null
 });
 
 const solicitudSlice = createSlice({
@@ -24,6 +26,12 @@ const solicitudSlice = createSlice({
             state.loading = false;
             state.success = false;
             state.error = action.payload;
+        },
+        setPage(state, action: PayloadAction<number>) {
+            state.page = action.payload;
+        },
+        setSolicitudSelected(state, action: PayloadAction<SolicitudCliente | null>) {
+            state.solicitudSelected = action.payload;
         }
     }
 })

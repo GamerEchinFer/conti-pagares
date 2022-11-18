@@ -15,6 +15,7 @@ import { postEtiquetasVariablesAction } from '../../redux/thunks/etiqueta.thunk'
 import { getParametroAction } from '../../redux/thunks/parametro.thunks';
 import { getSubProductosAction } from '../../redux/thunks/subProducto.thunks';
 import { useRouter } from 'next/router';
+import { solicitudActions } from '../../redux/slices/solicitud.slice';
 
 type NuevaSolicitudComponentProps = {
   solicitud: SolicitudCliente | null
@@ -108,6 +109,11 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
     router.push('/subirDocumento');
   }
 
+  const handleIconBack = () => {
+    // router.push('/solicitud');
+    dispatch(solicitudActions.setPage(-1))
+  }
+
   const agregarNombreValor = (nombre: string, valor: string) => {
 
     const item = {nombre, valor}    
@@ -130,7 +136,7 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
         </div>  
         <div className="relative">
           <div className="absolute top-1 right-0 h-16" style={{paddingLeft: "70px"}}>
-            <ArrowIconBack />
+            <ArrowIconBack onClick={handleIconBack}/>
           </div>
         </div>
       </div>
@@ -157,16 +163,21 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
             setIdProducto={(id: any) => {
               agregarNombreValor("id_producto", `${id}`)
               setIdProducto(id)
+              
             }}
           />}
-
-           <SubProductosComponent 
+          {
+            idProducto !== 0 ? (
+              <SubProductosComponent 
               idSubProducto={idSubProducto}
               setIdSubProducto={(id: any) => {
                 agregarNombreValor("id_subproducto", `${id}`)
                 setIdSubProducto(id)
-              }}
-            />
+              }}            
+              /> 
+            ) : null
+          }
+           
             {
               loadingParametrosSelect 
               ? (

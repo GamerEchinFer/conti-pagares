@@ -35,8 +35,10 @@ export const apmHadoopApi = axios.create(
         // baseURL: "https://apihadoop-desa.bancontinental.com.py/download?downloadpath=/"
         // baseURL: "http://10.6.3.84:5051"
         // baseURL: "http://10.6.3.84:5055"
-        baseURL: "http://10.6.3.84:5051"
+        // baseURL: "http://10.6.3.84:5051",
+        baseURL: "https://apihadoop-desa.bancontinental.com.py"
     }
 );
 
-apmHadoopApi.interceptors.request.use(apmAuthInterceptorHadoop);
+// comment the subscription key for use unique without problems
+// apmHadoopApi.interceptors.request.use(apmAuthInterceptorHadoop);
