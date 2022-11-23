@@ -16,8 +16,8 @@ const SearchbarButton = ({active = false}: SearchbarButtonProps) => {
               variant="outlined"
               disabled={!active}              
               sx={{background: active ? "#1D428A" : "#B6B6B6"}}
-              style={{color: active ? "white" : ""}}
-              className="btnSearch buttonsOutShadow text-white"
+              style={{color: active ? "white" : "white"}}
+              className="btnSearch  text-white"
               >
                 <SearchIcon />
             Buscar

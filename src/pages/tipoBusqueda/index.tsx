@@ -55,13 +55,14 @@ const TipoBusquedaPage = ({imagen = Archivo} : props) => {
           <TBBodyPrincipal />
           <div>
             <div>
+              
               <RadioButtonOption
                 tipoBusquedaSelected={tipoBusquedaSelected} 
                 setTipoBusquedaSelected={setTipoBusquedaSelected} 
                 />
-              <div className="flex flex-row items-center gap-2">
+              <div className="flex flex-row items-center">
                 <div className="labelRadio flex flex-col pl-28">
-                  {tipoBusqueda?.nameTipoBusqueda ?? ""}
+                  {/* {tipoBusqueda?.nameTipoBusqueda ?? ""} */}
                 </div>
                 <div className="flex flex-col items-start  gap-7 w-1/8 pt-2">
                   <TextField
@@ -74,42 +75,28 @@ const TipoBusquedaPage = ({imagen = Archivo} : props) => {
                     variant="outlined"
                     sx={{
                       '& label': { paddingLeft: (theme) => theme.spacing(2) },
-                      '& input': { paddingLeft: (theme) => theme.spacing(3.5), },
+                      '& input': { paddingLeft: (theme) => theme.spacing(1.5), },
                       '& fieldset': {
                         // paddingLeft: (theme) => theme.spacing(2.5),
                         borderRadius: '5px',
-
                       },
+                      minWidth: 300,
                     }}
                   />
                 </div>
-                <div className="flex flex-col pl-28">
+                <div className="flex flex-col pl-28 pt-1">
                   <SearchbarButton active={codigoCliente.length > 0} />
                  </div>
               </div>
             </div>
           </div>
-          {/* <div className="flex flex-row justify-center gap-8">
-            <NextButtonTB onClick={handleClickNext} />
-          </div> */}
           <DatosPersonales />
         </div>
         <div className="flex flex-row justify-center gap-8 pb-8">
             <NextButtonTB onClick={handleClickNext} />
           </div>
         </Box>
-      </Grid>  
-      
-      {/* <div className="chat-notification">
-          <div className="chat-notification-logo-wrapper">
-            <Image className="chat-notification-logo" src={imagen} alt="ChitChat Logo" />
-          </div>
-          <div className="chat-notification-content">
-            <h4 className="chat-notification-title">ChitChat</h4>
-            <p className="chat-notification-message">You have a new message!</p>
-          </div>
-        </div> */}
-  
+      </Grid>
     </>
   )
 }

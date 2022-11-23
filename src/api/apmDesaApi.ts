@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { EtiquetaVariable, EtiquetaVariableResponse, HadoopDirectoRequest, HadoopDirectoResponse, Parametros, ParametrosVisibles, Producto, SubProducto } from '../interfaces/interfaces';
+import { ClienteDatos, EtiquetaVariable, EtiquetaVariableResponse, HadoopDirectoRequest, HadoopDirectoResponse, Parametros, ParametrosVisibles, Producto, SubProducto } from '../interfaces/interfaces';
 import { apmApi, apmHadoopApi } from './index';
 
 export async function getProductos() {    
@@ -50,4 +50,11 @@ export const postAlzarHadoopDirecto = async (body: FormData, path_images: string
 });
 
     return data;
+}
+
+
+export async function getClienteDatos() {    
+    const URL = `/clientes/963013`;    
+    const response = await apmApi.get<ClienteDatos>(URL);
+    return response
 }

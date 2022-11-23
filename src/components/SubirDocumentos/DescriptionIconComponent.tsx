@@ -1,17 +1,18 @@
 import DescriptionIcon from '@mui/icons-material/Description';
 import { ListItemIcon } from '@mui/material';
+import Documento from '../../assets/svg/Documento.svg' 
+import Image from 'next/image';
 
-const DescriptionIconComponent = () => {
+type props = {
+  imagen? : string;
+}
+const DescriptionIconComponent = ({imagen = Documento}: props) => {
   return (
     <>
     <div className="flex justify-start">
-      <ListItemIcon>
-          <DescriptionIcon 
-            sx={{ fontSize: 35,
-            pl: 0, 
-            color: "#1D428A" }}
-          />
-      </ListItemIcon>
+      {/* <ListItemIcon> */}
+        <Image src={imagen}  alt='documento' />
+      {/* </ListItemIcon> */}
     </div>
     </>
   )

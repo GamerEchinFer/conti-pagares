@@ -16,6 +16,7 @@ import { getParametroAction } from '../../redux/thunks/parametro.thunks';
 import { getSubProductosAction } from '../../redux/thunks/subProducto.thunks';
 import { useRouter } from 'next/router';
 import { solicitudActions } from '../../redux/slices/solicitud.slice';
+import { Grid } from '@mui/material';
 
 type NuevaSolicitudComponentProps = {
   solicitud: SolicitudCliente | null
@@ -100,9 +101,9 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
   if(!solicitud) return null;
 
   // Dictionary 
-  const items: any = {
-    1: <FormularioNuevaSolicitud />,
-  }
+  // const items: any = {
+  //   1: <FormularioNuevaSolicitud />,
+  // }
 
   const handleClickNext = () => {
     dispatch(postEtiquetasVariablesAction(Object.values(body)))
@@ -166,8 +167,8 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
               
             }}
           />}
-          {
-            idProducto !== 0 ? (
+          {idProducto !== 0 ? (
+            
               <SubProductosComponent 
               idSubProducto={idSubProducto}
               setIdSubProducto={(id: any) => {
@@ -175,8 +176,7 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
                 setIdSubProducto(id)
               }}            
               /> 
-            ) : null
-          }
+           ) : null}
            
             {
               loadingParametrosSelect 
@@ -187,6 +187,7 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
               ) 
               : null
             }
+              
               <ParametroSelectComponent onChange={(nombre: string, id: any) => {
                 agregarNombreValor(`id_${nombre}`, `${id}`)
               }} />

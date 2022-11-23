@@ -1,6 +1,6 @@
-import { FormControl, InputLabel, Select, MenuItem, Grid } from '@mui/material';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 type SubProductosComponentProps = {
     idSubProducto: number,
@@ -26,13 +26,14 @@ const SubProductosComponent = ({idSubProducto, setIdSubProducto}: SubProductosCo
               label="subproductos"
               onChange={(item) => {
                   setIdSubProducto(Number(item.target?.value ?? 1));
-              }}
-            >
+                }}
+                >
               {
-                subProductos.map((item) => {
+                Array.isArray(subProductos)
+                ? subProductos.map((item: any) => {
                   return <MenuItem key={item.idSubProducto} value={item.idSubProducto}>{item.descripcion}</MenuItem>
-                })
-              } 
+                }) : null
+              }  
             </Select>
             
             </FormControl>

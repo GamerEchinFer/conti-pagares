@@ -10,7 +10,7 @@ const HeaderDocComponent = () => {
           <DatosClienteComponent />
           <div className="md:flex pt-6">
             <DescriptionIconComponent />
-              Subir documentos
+              <span className="pl-2">Subir documentos</span>
           </div>
 
       <div className="pt-2 text-left" style={{fontSize:"18px", color:"#707070", fontWeight:"400"}}>

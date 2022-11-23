@@ -1,3 +1,4 @@
+import { clienteDatos } from "./slices/clienteDatos.slice";
 import { datosCliente } from "./slices/datosCliente.slice";
 import { etiquetaVariable } from "./slices/etiquetaVariable.slice";
 import { hadoopDirecto } from "./slices/hadoop.slice";
@@ -16,7 +17,8 @@ const reducer = {
     parametro: parametro,
     etiquetaVariable,
     hadoopDirecto,
-    hadoopDownload
+    hadoopDownload,
+    clienteDatos: clienteDatos
 }
 
 export default reducer;

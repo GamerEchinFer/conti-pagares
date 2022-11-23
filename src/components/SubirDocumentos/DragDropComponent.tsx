@@ -55,8 +55,8 @@ const DragDropComponent = () => {
                 <Button
                     style={{padding:"35px",fontSize:"medium"}}
                     className="dragDropButton" 
-                    variant="outlined"
-                    size="small"
+                    // variant="outlined"
+                    // size="small"
                     onClick={() => inputRef.current.click()}
                     >
                     <FolderIconComponent />

@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material"
+import { Typography, useMediaQuery } from "@mui/material"
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import BackButton from "../../components/Buttons/BackButton";
@@ -9,11 +9,16 @@ import DocumentListComponent from "../../components/SubirDocumentos/DocumentList
 import DragDropComponent from "../../components/SubirDocumentos/DragDropComponent";
 import HeaderDocComponent from "../../components/SubirDocumentos/HeaderDocComponent";
 import { RootState } from "../../redux/store";
+import Image from "next/image";
+import Documento from '../../assets/svg/Documento.svg' 
+import { theme } from "../../../theme/Theme";
 
-const SubirDocumentoPage = () => {
+
+const SubirDocumentoPage = ()  => {
     const router = useRouter();
     const etiquetasVariables = useSelector((state: RootState) => state.etiquetaVariable.response)
-
+    const mediaQueryXsNumber = useMediaQuery(theme.breakpoints.down(634));
+	const mediaQueryMdNumber = useMediaQuery(theme.breakpoints.down(785));
     const handleClickAtras = () => {
         router.push("/solicitud");
     }
@@ -29,7 +34,7 @@ const SubirDocumentoPage = () => {
     return (
         <>
             <HeaderDocComponent />
-            <div className="flex justify-start md:flex-row flex-col max-w-2xl md:max-w-xl m-auto">
+            <div className="flex md:flex-row flex-col md:max-w-xl m-auto">
                 <div className="overflow-auto h-96">
                     {
                     etiquetasVariables.map(item => (

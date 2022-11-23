@@ -10,16 +10,6 @@ const persistConfig = {
   storage
 }
 
-
-// const combinedReducers = combineReducers({
-//   auth : authSlice,
-//   utilitarios : utilitariosSlice,
-//   productos: productosSlice,
-//   datos: datosSlice,
-//   prestamos:SolicitudPrestamos,
-//   ui: uiSlice,
-// })
-
 const persistedReducer = persistReducer(persistConfig, combineReducers({...reducer}))
 
 const store = configureStore ({
@@ -37,14 +27,14 @@ const store = configureStore ({
 
 export let persistor = typeof window !== 'undefined' && persistStore(store)
 
-export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch: () => AppDispatch = useDispatch
 export type RootState = ReturnType<typeof store.getState>
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action<string>
->;
+export type AppDispatch = typeof store.dispatch;
+// export type AppThunk<ReturnType = void> = ThunkAction<
+//   ReturnType,
+//   RootState,
+//   unknown,
+//   Action<string>
+// >;
 export default store;
 

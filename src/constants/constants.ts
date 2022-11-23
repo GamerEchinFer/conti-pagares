@@ -12,13 +12,21 @@ export const baseUrl2 = process.env.NODE_ENV === "development" ? // configuraci√
 export const apiKey = "Ivb2'@sr8|x,3`yv.7YfxNwb#?l8C!"
 
 export const keycloakHeaders: AutenticarServicioHeader = {
+    //APIM DESA
+    // "Client-Id": "gestion-documental",
+    // "Client-Secret": "f0eaaef0-286c-4b54-bdab-4f668006bb62",
+    // "Grant-Type": "client_credentials",
+    // "Subscription-Key": "cc665137fcfb4a95a0c2701e58828e7c",
+    // Scope: "profile"
+    
+    //APIM QA
     "Client-Id": "gestion-documental",
-    "Client-Secret": "98691755-fa0c-4a6d-b8ba-7ed27ccdba0e",
+    "Client-Secret": "e2d02da5-6e68-4929-b263-74822d4d4714",
     "Grant-Type": "client_credentials",
-    "Subscription-Key": "cc665137fcfb4a95a0c2701e58828e7c",
+    "Subscription-Key": "578a3e189d3a4da791ad1aa2a00bae3c",
     Scope: "profile",    
 }
-
 export const keyCloakHeadersHadoop : AuthHadoop = {
     "Subscription-Key": "2d489b65ea374662b3c6c6929dd62f9a"
 }
+

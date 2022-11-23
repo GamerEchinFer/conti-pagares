@@ -52,82 +52,82 @@ export async function getTipoBusqueda() {
 }
 
 //Para comunicar en funcion a la dirección de datos desde ContinentalAPI Producto
-export async function getProductos() {    
-    const productoURL = `/gestion-documental/productos`;
+// export async function getProductos() {    
+    // const productoURL = `/gestion-documental/productos`;
     // TODO - LEER HEADERS, ENCABEZADO DE SOLICITUD
-    const producto = await continentalApi.get<Producto[]>(productoURL, {
-        headers: {
-            "x-api-key": apiKey
-        }
-    });
-    return producto
-}
+    // const producto = await continentalApi.get<Producto[]>(productoURL, {
+    //     headers: {
+    //         "x-api-key": apiKey
+    //     }
+    // });
+    // return producto
+// }
 
 //Para comunicar en funcion a la dirección de datos desde la APIGDI SubProducto
-export async function getSubProductos(idProducto: number) {    
-    const subProductoURL = `/gestion-documental/subproductos`;
-    const subProducto = await continentalApi.get<SubProducto[]>(subProductoURL , {
-        params: {idProducto},
-        headers: {
-            "x-api-key": apiKey
-        }
-    });
-    return subProducto
-}
+// export async function getSubProductos(idProducto: number) {    
+//     const subProductoURL = `/gestion-documental/subproductos`;
+//     const subProducto = await continentalApi.get<SubProducto[]>(subProductoURL , {
+//         params: {idProducto},
+//         headers: {
+//             "x-api-key": apiKey
+//         }
+//     });
+//     return subProducto
+// }
 
 //Para comunicar en funcion a la dirección de datos desde la APIGDI Parametros Visibles
-export async function getParametrosVisibles(idProducto: number, idSubProducto: number) {    
-    const parametrosVisiblesURL = `/gestion-documental/parametros-visibles`;
-    const parametrosVisibles = await continentalApi.get<ParametrosVisibles[]>(parametrosVisiblesURL, {
-        params: {idProducto, idSubProducto},
-        headers: {
-            "x-api-key": apiKey
-        }
-    });
-    return parametrosVisibles
-}
+// export async function getParametrosVisibles(idProducto: number, idSubProducto: number) {    
+//     const parametrosVisiblesURL = `/gestion-documental/parametros-visibles`;
+//     const parametrosVisibles = await continentalApi.get<ParametrosVisibles[]>(parametrosVisiblesURL, {
+//         params: {idProducto, idSubProducto},
+//         headers: {
+//             "x-api-key": apiKey
+//         }
+//     });
+//     return parametrosVisibles
+//}
 
 //Para comunicar en funcion a la dirección de datos desde la APIGDI Parametros
-export async function getParametros(tipo: string) {    
-    const parametrosURL = `/gestion-documental/parametros`;
-    const parametros = await continentalApi.get<Parametros[]>(parametrosURL, {
-        params: {tipo},
-        headers: {
-            "x-api-key": apiKey
-        }
-    });
-    return parametros
-}
+// export async function getParametros(tipo: string) {    
+//     const parametrosURL = `/gestion-documental/parametros`;
+//     const parametros = await continentalApi.get<Parametros[]>(parametrosURL, {
+//         params: {tipo},
+//         headers: {
+//             "x-api-key": apiKey
+//         }
+//     });
+//     return parametros
+// }
 
 //Para comunicar en funcion a la dirección de datos desde la APIGDI ParametrosVisibleLista
-export async function getParametrosVisibleLista(tipoParametro: string) {    
-    const parametrosVisibleListaURL = `/gestion-documental/parametros-visible-lista`;
-    const parametrosVisibleLista = await continentalApi.get<ParametrosVisibleLista[]>(parametrosVisibleListaURL, {
-        params: {tipoParametro},
-        headers: {
-            "x-api-key": apiKey
-        }
-    });
-    return parametrosVisibleLista
-}
+// export async function getParametrosVisibleLista(tipoParametro: string) {    
+//     const parametrosVisibleListaURL = `/gestion-documental/parametros-visible-lista`;
+//     const parametrosVisibleLista = await continentalApi.get<ParametrosVisibleLista[]>(parametrosVisibleListaURL, {
+//         params: {tipoParametro},
+//         headers: {
+//             "x-api-key": apiKey
+//         }
+//     });
+//     return parametrosVisibleLista
+// }
 
 
 
 //Para comunicar en funcion a la dirección de datos desde la APIGDI EtiquetaVariable
-export const postEtiquetaVariable = async (body: EtiquetaVariable[]) => {
-    const etiquetaURL =  `/gestion-documental/etiquetas-variables-periodicidad`;
-    const {data} = await continentalApi.post<EtiquetaVariable[], AxiosResponse<EtiquetaVariableResponse[]>>(etiquetaURL, body,{headers: { "x-api-key": apiKey }});
-    return data;
-}
+// export const postEtiquetaVariable = async (body: EtiquetaVariable[]) => {
+//     const etiquetaURL =  `/gestion-documental/etiquetas-variables-periodicidad`;
+//     const {data} = await continentalApi.post<EtiquetaVariable[], AxiosResponse<EtiquetaVariableResponse[]>>(etiquetaURL, body,{headers: { "x-api-key": apiKey }});
+//     return data;
+// }
 
 //Para comunicar en funcion a la dirección de datos desde la APIGDI Periodicidad Tipo Documento
-export async function getPeriodicidad(idTipoDocumento: number) {    
-    const periodicidadURL = `/gestion-documental/periodicidad-tipo-documento`;
-    const periodicidad = await continentalApi.get<PeriodicidadTipoDocumento[]>(periodicidadURL, {
-        params: {idTipoDocumento},
-        headers: {
-            "x-api-key": apiKey
-        }
-    });
-    return periodicidad;
-}
+// export async function getPeriodicidad(idTipoDocumento: number) {    
+//     const periodicidadURL = `/gestion-documental/periodicidad-tipo-documento`;
+//     const periodicidad = await continentalApi.get<PeriodicidadTipoDocumento[]>(periodicidadURL, {
+//         params: {idTipoDocumento},
+//         headers: {
+//             "x-api-key": apiKey
+//         }
+//     });
+//     return periodicidad;
+// }
