@@ -7,6 +7,7 @@ const initialState = () => ({
     loading: false,
     success: false,
     error: null as any,
+    files: [] as any[],
 })
 
 const hadoopDirectoSlice = createSlice({
@@ -29,6 +30,9 @@ const hadoopDirectoSlice = createSlice({
       hadoopDirectoReset(state) {
         state.loading = false;
         state.success = false;
+      },
+      setFiles(state, action: PayloadAction<any[]>) {
+        state.files = action.payload
       }
 
     }

@@ -7,7 +7,9 @@ const initialState = () => ({
     success: false,
     error: null as any,
     page: -1,
-    solicitudSelected: null as SolicitudCliente | null
+    solicitudSelected: null as SolicitudCliente | null,
+    idProducto: 0,
+    idSubProducto: 0
 });
 
 const solicitudSlice = createSlice({
@@ -32,6 +34,12 @@ const solicitudSlice = createSlice({
         },
         setSolicitudSelected(state, action: PayloadAction<SolicitudCliente | null>) {
             state.solicitudSelected = action.payload;
+        },
+        setIdProducto(state, action: PayloadAction<number>) {
+            state.idProducto = action.payload;
+        },
+        setIdSubProducto(state, action: PayloadAction<number>) {
+            state.idSubProducto = action.payload;
         }
     }
 })

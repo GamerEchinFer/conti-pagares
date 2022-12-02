@@ -8,29 +8,44 @@ import DatosPersonales from "../../components/DatosPersonales/DatosPersonales";
 import RadioButtonOption from "../../components/RadioButtonOption";
 import TBBodyPrincipal from "../../components/TipoBusqueda/TBBodyPrincipal";
 import GDITitulosComponent from "../../components/TituloySubtitulo/GDITitulosComponent";
-import { TipoBusqueda, SolicitudCliente } from '../../interfaces/interfaces';
+import { TipoBusqueda } from '../../interfaces/interfaces';
 import styles from './TipoBusqueda.module.css';
-import Archivo from '../../assets/svg/Archivo.svg' 
-import Image from "next/image";
 import { theme } from "../../../theme/Theme";
 import { useDispatch } from 'react-redux';
 import { solicitudActions } from '../../redux/slices/solicitud.slice';
+import { clienteDatosActions } from '../../redux/slices/clienteDatos.slice';
+import { getClienteDatosAction } from '../../redux/thunks/clienteDatos.thunks';
+import { useMount } from 'ahooks';
+import { postAutenticarServicio } from "../../api/keycloakApi";
+import { keycloakHeaders } from "../../constants/constants";
+import { getProductosAction } from "../../redux/thunks/producto.thunks";
+import { clienteDocumentoActions } from "../../redux/slices/clienteDocumento.slice";
+import { getClienteDocumentoAction } from "../../redux/thunks/clienteDocumento.thunks";
 
-type props  = {
-  imagen?: string;
-}
-
-const TipoBusquedaPage = ({imagen = Archivo} : props) => {
+const TipoBusquedaPage = () => {
 
   const dispatch = useDispatch()
 
   const [tipoBusqueda, setTipoBusqueda] = useState<TipoBusqueda | null>();
   const [tipoBusquedaSelected, setTipoBusquedaSelected] = useState(1);
-  const [codigoCliente, setCodigoCliente] = useState("")
+  const [codigoCliente, setCodigoCliente] = useState("");
+  const [clienteDocumento, setClienteDocumento] = useState("");
   const [nextPage, setNextPage] = useState();
   const mediaQueryPadding = useMediaQuery(theme.breakpoints.down(705));
 
   const router = useRouter();
+
+  useMount(() => {
+    dispatch(clienteDatosActions.clienteDatosReset())
+    dispatch(clienteDocumentoActions.clienteDocumentoReset()) 
+    postAutenticarServicio(keycloakHeaders).then((value) => {            
+      localStorage.setItem("gdi-auth", JSON.stringify(value));
+      console.log(value);      
+      dispatch(getProductosAction())
+    }).finally(() => {
+        
+    })
+  })
 
   useEffect(() => {
       getTipoBusquedaById(tipoBusquedaSelected).then((response) => {
@@ -55,7 +70,6 @@ const TipoBusquedaPage = ({imagen = Archivo} : props) => {
           <TBBodyPrincipal />
           <div>
             <div>
-              
               <RadioButtonOption
                 tipoBusquedaSelected={tipoBusquedaSelected} 
                 setTipoBusquedaSelected={setTipoBusquedaSelected} 
@@ -68,8 +82,8 @@ const TipoBusquedaPage = ({imagen = Archivo} : props) => {
                   <TextField
                     size="small" 
                     id="outlined-basic"
-                    value={codigoCliente}
-                    onChange={(e) => setCodigoCliente(e.target.value)}
+                    value={codigoCliente ?? clienteDocumento}
+                    onChange={(e) => {setCodigoCliente(e.target.value); setClienteDocumento(e.target.value);}}
                     // value={tipoBusquedaSelected} 
                     // label={tipoBusqueda?.nameTipoBusqueda ?? ""}
                     variant="outlined"
@@ -82,10 +96,16 @@ const TipoBusquedaPage = ({imagen = Archivo} : props) => {
                       },
                       minWidth: 300,
                     }}
+
                   />
                 </div>
                 <div className="flex flex-col pl-28 pt-1">
-                  <SearchbarButton active={codigoCliente.length > 0} />
+                  
+                    {<SearchbarButton active={codigoCliente.length > 0} onClick={() => 
+                    dispatch(getClienteDatosAction(codigoCliente))}  /> 
+                    ? <SearchbarButton active={clienteDocumento.length > 0} onClick={() => 
+                      dispatch(getClienteDocumentoAction(clienteDocumento))}  /> : null}
+                  
                  </div>
               </div>
             </div>

@@ -5,16 +5,20 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { getDescargarHadoopDirecto, postAlzarHadoopDirecto } from '../../api/apmDesaApi';
 
-const AddDocumentComponent = () => {
+type AddPDFComponentProps = {
+    base64: string
+}
+
+const AddPDFComponent = ({base64}: AddPDFComponentProps) => {
     const hadoopDirecto = useSelector((state: RootState) => state.hadoopDirecto.response);
     const hadoopDownload = useSelector((state:RootState) => state.hadoopDownload.items);    
 
     const fileInput = useRef<HTMLInputElement | null>(null);
     const [file, setFile] = useState<File>();
     const [download, setDownload] = useState();
-    const [href, setHref] = useState("")
-    const [fileName, setFileName] = useState("")
-    const [urlPdf, setUrlPdf] = useState("")
+    const [href, setHref] = useState("");
+    const [fileName, setFileName] = useState("");
+    const [urlPdf, setUrlPdf] = useState("");
     
 
     const handleClickOpen = async () => {
@@ -52,7 +56,7 @@ const AddDocumentComponent = () => {
 
   return (
     <>
-        <pre>{JSON.stringify(hadoopDirecto, null, 2)}</pre>
+        {/* <pre>{JSON.stringify(hadoopDirecto, null, 2)}</pre>
         <div className="flex  justify-center p-10">
             Up Document...
             <div className="flex justify-start">
@@ -65,22 +69,27 @@ const AddDocumentComponent = () => {
                     Subir
                 </Button> 
             </div>
-        </div>
+        </div> */}
 
-        <pre>{JSON.stringify(hadoopDownload, null, 2)}</pre>
+        {/* <pre>{JSON.stringify(hadoopDownload, null, 2)}</pre> */}
 
-        <div className="flex justify-start">
+        {/* <div className="flex justify-start">
             <h1 className="pt-4 pl-4">Download Document</h1>
                 <div className="flex  justify-center p-10" >
                     <Button onClick={handleClickOpen}>
                         Download
                     </Button>
                 </div>
-        </div>        
+
+
+        </div>   */}
+        {/*{base64}*/}  
         {
-            urlPdf.length > 0 
+            // urlPdf.length > 0 
+            base64.length > 0 
             ? (<embed
-                src={urlPdf}
+                src={base64}
+                // src={urlPdf}
                 type="application/pdf" width="100%" height="600px"/>)
             : null
         }        
@@ -88,4 +97,4 @@ const AddDocumentComponent = () => {
   )
 }
 
-export default AddDocumentComponent
+export default AddPDFComponent

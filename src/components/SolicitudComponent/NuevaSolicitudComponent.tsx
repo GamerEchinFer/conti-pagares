@@ -30,6 +30,8 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
 
   const loadingParametrosSelect = useSelector((state: RootState) => state.parametro.loading);
   const etiquetaVariableSuccess = useSelector((state: RootState) => state.etiquetaVariable.success);
+  // const idProducto = useSelector((state: RootState) => state.solicitud.idProducto);
+  // const idSubProducto = useSelector((state: RootState) => state.solicitud.idSubProducto);
 
   const [nuevaSolicitud, setNuevaSolicitud] = useState(0);
   const [idProducto, setIdProducto] = useState(0);
@@ -38,7 +40,7 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
   const [body, setBody] = useState<any>({
     codigoCliente: {
       "nombre": "codigoCliente",
-      "valor": "666"
+      "valor": "000666"
     },
     tipo_persona: {
       "nombre": "tipo_persona",
@@ -50,11 +52,11 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
     },
     id_subproducto: {
       "nombre": "id_subproducto",
-      "valor": "160"
+      "valor": "151"
     },
     id_actividad: {
       "nombre": "id_actividad",
-      "valor": "10"
+      "valor": "1"
     }
   })
 
@@ -163,6 +165,7 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
             idProducto={idProducto}
             setIdProducto={(id: any) => {
               agregarNombreValor("id_producto", `${id}`)
+              // dispatch(solicitudActions.setIdProducto(id))
               setIdProducto(id)
               
             }}
@@ -173,6 +176,7 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
               idSubProducto={idSubProducto}
               setIdSubProducto={(id: any) => {
                 agregarNombreValor("id_subproducto", `${id}`)
+                // dispatch(solicitudActions.setIdSubProducto(id))
                 setIdSubProducto(id)
               }}            
               /> 

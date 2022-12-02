@@ -1,8 +1,10 @@
-import { ListItem, ListItemText, Divider, ListItemButton } from '@mui/material';
+import { ListItem, ListItemText, Divider, ListItemButton, Typography } from '@mui/material';
 import DialogComponent from './DialogComponent';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { EtiquetaVariableResponse } from '../../interfaces/interfaces';
+import { capitalize } from '../../helpers/capitalize';
+import { fontWeight } from '@mui/system';
 
 type DocumentListComponentProps = {
   item: EtiquetaVariableResponse
@@ -21,13 +23,22 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
     <>
       <ListItem component="div" disablePadding>
           <ListItemText
-            primary={item.tipoDocumento}
+            primary={capitalize(`${item.tipoDocumento}`)}
             primaryTypographyProps={{fontSize:"20px", color:"#1D428A", fontWeight:"400"}}
-            secondary="Adjunta el documento con el explorador de archivos" 
-            secondaryTypographyProps={{fontSize:"12px", color:"#373A3C", fontWeight:"400"}}
+            secondary={
+              <>
+                <Typography
+                  sx={{fontSize:"12px", color:"#373A3C", fontWeight:"400"}}>
+                    Adjunta el documento con el explorador de archivos
+                </Typography>
+                <span style={{fontSize:"16px", color:"#1D428A", fontWeight:"400" }}>
+                  Subir desde el histórico
+                </span>
+              </>}
             />
+            <span></span>
           <ListItemButton>
-            <DialogComponent />
+            <DialogComponent item={item} />
           </ListItemButton>
       </ListItem>
       <Divider />

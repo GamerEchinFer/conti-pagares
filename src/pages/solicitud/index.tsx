@@ -24,7 +24,7 @@ function SolicitudPage() {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const mediaQueryPadding = useMediaQuery(theme.breakpoints.down(705));
+  const mediaQueryPadding = useMediaQuery(theme.breakpoints.down(705));  
 
   // const [solicitud, setSolicitud] = useState<SolicitudCliente | null>(null)
   // const [page, setPage] = useState(-1)
@@ -39,10 +39,16 @@ function SolicitudPage() {
   })
 
   const initialize = () => {
+    // Cuando esta en la pagina inicial donde muestran la lista de solicitudes se hara las siguientes acciones
     if (page === -1) {
       setSolicitud(null)
+      // Inicializar con los valores por defecto
+      dispatch(solicitudActions.setIdProducto(0))
+      dispatch(solicitudActions.setIdSubProducto(0))
     }    
     dispatch(getAllSolicitudClienteAction())
+
+    
   }
 
   const setPage = (value: number) => {
@@ -65,6 +71,8 @@ function SolicitudPage() {
       router.push('/tipoBusqueda');
     } else {
       setPage(-1)
+      dispatch(solicitudActions.setIdProducto(0))
+      dispatch(solicitudActions.setIdSubProducto(0))
     }    
   };
 

@@ -1,6 +1,7 @@
 import { FormControl, InputLabel, Select, MenuItem, Grid } from '@mui/material';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { capitalize } from '../../helpers/capitalize';
 import { SubProducto } from '../../interfaces/interfaces';
 import { RootState } from '../../redux/store';
 
@@ -36,7 +37,7 @@ const ProductosComponent = ({idProducto, setIdProducto}: ProductosComponentProps
             >
               {
                 productos.map((item) => {
-                  return <MenuItem key={item.idProducto} value={item.idProducto} >{item.descripcion}</MenuItem>
+                  return <MenuItem key={item.idProducto} value={item.idProducto} >{capitalize(`${item.descripcion}`)}</MenuItem>
                 })
               } 
             </Select>

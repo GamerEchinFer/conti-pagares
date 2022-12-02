@@ -8,6 +8,9 @@ import { parametroVisible } from "./slices/parametroVisible.slice";
 import { producto } from "./slices/producto.slice";
 import { solicitud } from "./slices/solicitud.slice";
 import { subProducto } from "./slices/subProducto.slice";
+import { guardarDocumento } from "./slices/guardarDocumento.slice";
+import { clienteDocumento } from './slices/clienteDocumento.slice';
+
 const reducer = {
     solicitud,
     producto : producto,
@@ -18,7 +21,9 @@ const reducer = {
     etiquetaVariable,
     hadoopDirecto,
     hadoopDownload,
-    clienteDatos: clienteDatos
+    clienteDatos,
+    guardarDocumento,
+    clienteDocumento: clienteDocumento
 }
 
 export default reducer;

@@ -1,39 +1,39 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ClienteDatos } from "../../interfaces/interfaces";
+import { ClienteDocumento } from "../../interfaces/interfaces";
 
 const initialState = () => ({
-    items: {} as ClienteDatos,
+    items: {} as ClienteDocumento,
     loading: false, //luego de ejecutar is true
     success: false,
     error: null as any
 });
 
-const clienteDatosSlice = createSlice({
-    name: 'clienteDatos',
+const clienteDocumentoSlice = createSlice({
+    name: 'clienteDocumento',
     initialState: initialState(),
     reducers: {
-        clienteDatosRequest(state) {
+        clienteDocumentoRequest(state) {
             state.loading = true;
         },
-        clienteDatosSuccess(state, action:PayloadAction<ClienteDatos>) {
+        clienteDocumentoSuccess(state, action:PayloadAction<ClienteDocumento>) {
             state.items = action.payload;
             state.loading = false;
             state.success = true;
         },
-        clienteDatosError(state, action: PayloadAction<any>) {
+        clienteDocumentoError(state, action: PayloadAction<any>) {
             state.loading = false;
             state.success = false;
             state.error = action.payload
         },
-        clienteDatosReset(state) {
+        clienteDocumentoReset(state) {
             state.loading = false;
             state.success = false;
             state.error = null as any;
-            state.items = {} as ClienteDatos
+            state.items = {} as ClienteDocumento
         },
     }
 })
 
-export const clienteDatosActions = clienteDatosSlice.actions
+export const clienteDocumentoActions = clienteDocumentoSlice.actions
 
-export const clienteDatos = clienteDatosSlice.reducer
+export const clienteDocumento = clienteDocumentoSlice.reducer

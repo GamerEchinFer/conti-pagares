@@ -2,22 +2,28 @@ import { Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 type SearchbarButtonProps = {
-  active?: boolean
+  active?: boolean,
+  onClick?: () => void
 }
 
-const SearchbarButton = ({active = false}: SearchbarButtonProps) => {
+const SearchbarButton = ({active = false, onClick}: SearchbarButtonProps) => {
   return (
     <>
         <div>
             <Button
               disableRipple
               type='submit'
-              color="primary"
+              onClick={() => onClick ? onClick() : null}
               variant="outlined"
               disabled={!active}              
-              sx={{background: active ? "#1D428A" : "#B6B6B6"}}
-              style={{color: active ? "white" : "white"}}
-              className="btnSearch  text-white"
+              sx={{
+                background: active ? "#1D428A" : "#B6B6B6",
+                ":hover": {
+                  "background": "#1D428A"
+                } 
+            }}
+              style={{color: active ? "white" : "white"} }
+              className="btnSearch"
               >
                 <SearchIcon />
             Buscar

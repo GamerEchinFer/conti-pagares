@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { ClienteDatos, EtiquetaVariable, EtiquetaVariableResponse, HadoopDirectoRequest, HadoopDirectoResponse, Parametros, ParametrosVisibles, Producto, SubProducto } from '../interfaces/interfaces';
+import { ClienteDatos, ClienteDocumento, EtiquetaVariable, EtiquetaVariableResponse, GuardarDocumento, GuardarDocumentoResponse, HadoopDirectoRequest, HadoopDirectoResponse, Parametros, ParametrosVisibles, Producto, SubProducto } from '../interfaces/interfaces';
 import { apmApi, apmHadoopApi } from './index';
 
 export async function getProductos() {    
@@ -29,7 +29,7 @@ export async function getParametrosVisibles(idProducto: number, idSubProducto: n
 }
 
 export const postEtiquetaVariable = async (body: EtiquetaVariable[]) => {
-    const URL =  `/etiquetas-variables-periodicidad`;
+    const URL =  `/checklist`;
     const {data} = await apmApi.post<EtiquetaVariable[], AxiosResponse<EtiquetaVariableResponse[]>>(URL, body,{headers: {config:'keycloakHeaders'}});
     return data;
 }
@@ -53,8 +53,20 @@ export const postAlzarHadoopDirecto = async (body: FormData, path_images: string
 }
 
 
-export async function getClienteDatos() {    
-    const URL = `/clientes/963013`;    
+export async function getClienteDatos(codigoCliente: string) {    
+    const URL = `https://api-sandbox.bancontinental.com.py/interno/clientes/datos/v1/clientes/${codigoCliente}`;    
     const response = await apmApi.get<ClienteDatos>(URL);
     return response
 }
+export async function getClienteDocumento(numeroDocumento: number) {    
+    const URL = `https://api-sandbox.bancontinental.com.py/interno/clientes/datos/v1/clientes/${numeroDocumento}`;    
+    // const URL = `https://api-sandbox.bancontinental.com.py/interno/clientes/datos/v1/clientes/datos?numeroDocumento=4766940`;    
+    const response = await apmApi.get<ClienteDocumento>(URL);
+    return response
+}
+
+export const postGuardarDocumento = async (body: GuardarDocumento) => {
+    const URL =  `/guardar-documento`;
+    const {data} = await apmApi.post<GuardarDocumento, AxiosResponse<GuardarDocumentoResponse>>(URL, body,{headers: {config:'keycloakHeaders'}});
+    return data;
+} 

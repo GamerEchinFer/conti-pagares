@@ -1,10 +1,10 @@
 import { Button } from '@mui/material';
 
-type ButtonCargarProps = {
+type ButtonFinalizarProps = {
   onClick: () => void
 }
 
-const ButtonCargar = ({onClick}: ButtonCargarProps) => {
+const ButtonFinalizar = ({onClick}: ButtonFinalizarProps) => {
   return (
     <>
       <div className="pt-8">
@@ -20,10 +20,10 @@ const ButtonCargar = ({onClick}: ButtonCargarProps) => {
           className="btnNext"
           onClick={()=> onClick()}
         >
-        Cargar
+        Finalizar
         </Button>
       </div>
     </>
   )
 }
-export default ButtonCargar
+export default ButtonFinalizar

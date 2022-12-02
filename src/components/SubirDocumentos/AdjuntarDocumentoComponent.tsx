@@ -1,11 +1,13 @@
-import { Dialog, DialogTitle, useMediaQuery, useTheme } from '@mui/material';
-import React from 'react'
+import { Dialog, DialogTitle, ListItem, useMediaQuery, useTheme } from '@mui/material';
+import React, { useState } from 'react'
 import FileUploadIconComponent from './FileUploadIconComponent';
+import { periodicidad } from '../../redux/slices/periodicidad.slice';
 
 const AdjuntarDocumentoComponent = () => {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+    const [periodicidad, setPeriodicidad] = useState();
 
     const handleClickOpen = () => {
         setOpen(true); 
@@ -14,6 +16,7 @@ const AdjuntarDocumentoComponent = () => {
       const handleClose = () => {
         setOpen(false);
       };
+
   return (
     <>
         <FileUploadIconComponent onClick={handleClickOpen} />

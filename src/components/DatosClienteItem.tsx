@@ -1,11 +1,10 @@
-import { DatosCliente } from "../interfaces/interfaces";
+import { DatosCliente, ClienteDatos } from '../interfaces/interfaces';
 
 type DatosClienteItemProps = {
-    datosCliente: DatosCliente,
-    handleChangeDatosCliente: (event: any) => void
+    datosCliente: ClienteDatos,    
 }
 
-const DatosClienteItem = ({datosCliente, handleChangeDatosCliente}: DatosClienteItemProps) => { // destructuring
+const DatosClienteItem = ({datosCliente}: DatosClienteItemProps) => { // destructuring
   return (
     <>
     <div className="flex justify-start">
@@ -13,12 +12,11 @@ const DatosClienteItem = ({datosCliente, handleChangeDatosCliente}: DatosCliente
         style={{
           color: "#1D428A",
           fontWeight: "bold",          
-        }}
-        onChange={handleChangeDatosCliente}
+        }}        
         >
-        <div className="flex flex-row" key={datosCliente?.id ?? 0}>
-          <div className="1/4 pl-1" >{datosCliente?.codCliente ?? ""}</div>
-          <div className="1/4 pl-1" >{datosCliente?.nombreCliente ?? ""}, {datosCliente?.apellidoCliente ?? ""}</div>
+        <div className="flex flex-row">
+          <div className="1/4 pl-1" >{datosCliente?.codigoCliente ?? ""}</div>
+          <div className="1/4 pl-1" >{datosCliente?.primerNombre ?? ""} {datosCliente?.segundoNombre ?? ""}, {datosCliente?.primerApellido ?? ""} {datosCliente?.segundoApellido ?? ""}</div>
         </div>  
       </div>
     </div>

@@ -1,26 +1,24 @@
 import React from 'react'
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { ListItemIcon } from '@mui/material';
+import { ListItemButton, ListItemIcon } from '@mui/material';
+import Image from "next/image";
+import Add from '../../assets/svg/Add.svg' 
 
 
 type AddIconComponentProps = {
+  imagen?: string,
   onClick: () => void
 }
 
-const AddIconComponent = ({onClick}: AddIconComponentProps) => {
+const AddIconComponent = ({onClick, imagen=Add}: AddIconComponentProps) => {
   return (
     <>
       <ListItemIcon
         className="flex items-center justify-center pt-2 pb-2"
         onClick={() => onClick()}
       >
-        <AddCircleIcon
-          sx={{
-            fontSize:40,
-            left: 1,
-            color:"#1D428A"
-            }}    
-          />
+        <ListItemButton>
+          <Image src={imagen} alt='add' />
+        </ListItemButton>
       </ListItemIcon>
     </>
   )

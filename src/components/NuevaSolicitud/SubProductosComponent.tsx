@@ -1,5 +1,6 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { useSelector } from "react-redux";
+import { capitalize } from "../../helpers/capitalize";
 import { RootState } from "../../redux/store";
 
 type SubProductosComponentProps = {
@@ -31,7 +32,7 @@ const SubProductosComponent = ({idSubProducto, setIdSubProducto}: SubProductosCo
               {
                 Array.isArray(subProductos)
                 ? subProductos.map((item: any) => {
-                  return <MenuItem key={item.idSubProducto} value={item.idSubProducto}>{item.descripcion}</MenuItem>
+                  return <MenuItem key={item.idSubProducto} value={item.idSubProducto}>{capitalize(`${item.descripcion}`)}</MenuItem>
                 }) : null
               }  
             </Select>

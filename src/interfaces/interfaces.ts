@@ -51,7 +51,27 @@ export interface EtiquetaVariableResponse {
     tipoDocumento: string;
     periodicidad: number;
     tieneDocumento: boolean;
-    datosAdicionales: string [];
+   "datosAdicionales": [
+        {
+            'idDocumento': number;
+            'codigoTipoDocumento': number;
+            'descripcion': string;
+            'codigoEstadoDocumento': string;
+            'fechaEmision': Date;
+            'periodo': string;
+            'numeroOperacion': string;
+            'rutaHadoop': string;
+            'usuarioCarga': string;
+            'fechaRegistro': Date;
+            'userAprobador': string;
+            'fechaAprobacion': Date;
+            'usuarioVerificador': string;
+            'fechaVerificacion': string;
+        }
+    ];
+    file?: any; // Dentro del frontend
+    openModal?: boolean;
+    base64?: string;
 }
 
 export interface AutenticarServicioHeader {
@@ -131,4 +151,54 @@ export interface ClienteDatos {
     calificacion: string;
     nombreBarrio: string;
     estadoCivil: string;
+}
+
+export interface ClienteDocumento {
+    primerNombre: string;
+    segundoNombre: string;
+    primerApellido: string;
+    segundoApellido: string;
+    direccion: string;
+    ciudad: string;
+    telefono: string;
+    celular: string;
+    cedula: string;
+    fechaNacimiento: string;
+    ocupacion: string;
+    fechaAlta: string;
+    pais: string;
+    localidad: string;
+    clasificacion: string;
+    codigoSucursal: string;
+    codigoOficial: string;
+    codigoRegion: string;
+    tipoPersona: string;
+    tipoDocumento: string;
+    sexo: string;
+    codigoEstadoCivil: string;
+    correo: string;
+    codigoCliente: string;
+    sucursal: string;
+    oficial: string;
+    calificacion: string;
+    nombreBarrio: string;
+    estadoCivil: string;
+}
+
+export interface GuardarDocumento {
+    codigoTipoDocumento: number,
+    rutaDocumento: string;
+    fechaRegistro: Date;
+    fechaEmision: Date;
+    descripcionDocumento: string;
+    codigoCliente: string;
+    codigoLegajo: number;
+    hadoopPath: string;
+    codigoUsuario: string;
+    codigoProducto: number;
+    codigoSubproducto: number;
+}
+
+export interface GuardarDocumentoResponse {
+    idDocumentos: number;
 }
