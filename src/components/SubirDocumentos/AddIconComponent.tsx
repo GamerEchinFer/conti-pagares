@@ -9,7 +9,7 @@ type AddIconComponentProps = {
   onClick: () => void
 }
 
-const AddIconComponent = ({onClick, imagen=Add}: AddIconComponentProps) => {
+const AddIconComponent = ({onClick,imagen=Add}: AddIconComponentProps) => {
   return (
     <>
       <ListItemIcon

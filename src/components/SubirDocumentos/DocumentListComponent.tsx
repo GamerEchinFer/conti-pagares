@@ -5,6 +5,8 @@ import { useRouter } from 'next/router';
 import { EtiquetaVariableResponse } from '../../interfaces/interfaces';
 import { capitalize } from '../../helpers/capitalize';
 import { fontWeight } from '@mui/system';
+import AddDocumentList from '../../pages/addDocumentList';
+import DialogPeriodoComponent from './DialogPeriodoComponent';
 
 type DocumentListComponentProps = {
   item: EtiquetaVariableResponse
@@ -21,24 +23,28 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
 
   return (
     <>
-      <ListItem component="div" disablePadding>
+      <ListItem component="div" disablePadding className="pb-2 pt-2 flex justify-start">
           <ListItemText
-            primary={capitalize(`${item.tipoDocumento}`)}
-            primaryTypographyProps={{fontSize:"20px", color:"#1D428A", fontWeight:"400"}}
+            className="pr-2"
+            primary={capitalize(`${item.tipoDocumento}`)}            
+            primaryTypographyProps={{fontSize:"20px", color: item.tieneDocumento ? "#BEC400" : "#1D428A", fontWeight:"400"}}
             secondary={
+              !item.tieneDocumento ?
               <>
                 <Typography
                   sx={{fontSize:"12px", color:"#373A3C", fontWeight:"400"}}>
                     Adjunta el documento con el explorador de archivos
                 </Typography>
                 <span style={{fontSize:"16px", color:"#1D428A", fontWeight:"400" }}>
+                  <div className="pt-2">
                   Subir desde el histórico
+                  </div>
                 </span>
-              </>}
-            />
-            <span></span>
+              </> : null}
+            />            
           <ListItemButton>
-            <DialogComponent item={item} />
+            <DialogComponent item={item} />            
+            <DialogPeriodoComponent item={item} />            
           </ListItemButton>
       </ListItem>
       <Divider />

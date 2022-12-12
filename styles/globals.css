@@ -153,10 +153,10 @@ a {
   font-family: 'ContiSans' !important;
   padding: 6px 36px 4px !important;
   border-radius: 5px !important;
-  box-shadow: none !important;
-  font-size: 16px !important;
-  text-transform:capitalize !important;
-  background-color: #00438A !important;
+  box-shadow: none;
+  font-size: 16px;
+  text-transform:capitalize;
+  background-color: #00438A;
 }
 
 .btnBack {
@@ -208,6 +208,11 @@ a {
   align-items: center;
   /* border-radius: 9999px #ffffff; */
 }
+
+.periodicidad {
+  padding-left: 8px !important;
+}
+
 .box{
   padding-left: 600px !important;
   margin-bottom: 100px !important;

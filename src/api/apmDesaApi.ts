@@ -1,5 +1,17 @@
 import { AxiosResponse } from 'axios';
-import { ClienteDatos, ClienteDocumento, EtiquetaVariable, EtiquetaVariableResponse, GuardarDocumento, GuardarDocumentoResponse, HadoopDirectoRequest, HadoopDirectoResponse, Parametros, ParametrosVisibles, Producto, SubProducto } from '../interfaces/interfaces';
+import { ClienteDatos,
+        ClienteDocumento,
+        EtiquetaVariable,
+        EtiquetaVariableResponse,
+        GuardarDocumentoRequest,                
+        HadoopDirectoRequest,
+        HadoopDirectoResponse,
+        NumeroLegajo,
+        Parametros,
+        ParametrosVisibles,
+        Producto,
+        SubProducto, 
+        TiposDocumentos} from '../interfaces/interfaces';
 import { apmApi, apmHadoopApi } from './index';
 
 export async function getProductos() {    
@@ -58,15 +70,31 @@ export async function getClienteDatos(codigoCliente: string) {
     const response = await apmApi.get<ClienteDatos>(URL);
     return response
 }
-export async function getClienteDocumento(numeroDocumento: number) {    
-    const URL = `https://api-sandbox.bancontinental.com.py/interno/clientes/datos/v1/clientes/${numeroDocumento}`;    
-    // const URL = `https://api-sandbox.bancontinental.com.py/interno/clientes/datos/v1/clientes/datos?numeroDocumento=4766940`;    
-    const response = await apmApi.get<ClienteDocumento>(URL);
+
+export async function getClienteDocumento(numeroDocumento: string) {    
+    const URL = `https://api-sandbox.bancontinental.com.py/interno/clientes/datos/v1/clientes/datos`;            
+    const response = await apmApi.get<ClienteDocumento>(URL, {
+        params: {numeroDocumento},        
+    });
     return response
 }
 
-export const postGuardarDocumento = async (body: GuardarDocumento) => {
+export const postGuardarDocumento = async (body: GuardarDocumentoRequest) => {
     const URL =  `/guardar-documento`;
-    const {data} = await apmApi.post<GuardarDocumento, AxiosResponse<GuardarDocumentoResponse>>(URL, body,{headers: {config:'keycloakHeaders'}});
+    const {data} = await apmApi.post<GuardarDocumentoRequest, AxiosResponse<number>>(URL, body,{headers: {config:'keycloakHeaders'}});
+    console.log(data);
+    
     return data;
 } 
+
+export async function getNumeroLegajo() {
+    const URL = `/numero-legajo`;
+    const response = apmApi.get<NumeroLegajo[]>(URL);
+    return response;
+}
+
+export async function getTipoDocumento() {
+    const URL = `/tipos-documentos`;
+    const response = apmApi.get<TiposDocumentos[]>(URL);
+    return response;
+}

@@ -42,7 +42,9 @@ const  RadioButtonOption = ({tipoBusquedaSelected, setTipoBusquedaSelected}: Rad
               value={tipoBusquedaSelected}
               name="radio-buttons-group"
               onChange={(item) => {
-                setTipoBusquedaSelected(Number(item.target?.value ?? 1));
+                console.log("radioselected",item.target?.value);
+                
+                setTipoBusquedaSelected(Number(item.target?.value ?? "codigo"));
               }}
               >             
               {tipoBusquedas.map((item) => (

@@ -2,6 +2,7 @@ import { FormControl, InputLabel, Select, MenuItem, Grid } from '@mui/material';
 import React from 'react'
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
+import ArrowSelect from '../shared/ArrowSelect';
 
 const ParametroSelectComponent = ({onChange}: any) => {
     const parametrosSelect = useSelector((state: RootState) => state.parametro.parametrosSelect);
@@ -31,6 +32,7 @@ const ParametroSelectComponent = ({onChange}: any) => {
                                 fontSize:"16px",
                             }}
                             // name={data.item}
+                            IconComponent={ArrowSelect}
                             label={item}
                             onChange={(event) => {
                                 onChange(item, event.target?.value ?? 1)

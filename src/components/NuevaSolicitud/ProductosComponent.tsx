@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { capitalize } from '../../helpers/capitalize';
 import { SubProducto } from '../../interfaces/interfaces';
 import { RootState } from '../../redux/store';
+import ArrowSelect from '../shared/ArrowSelect';
 
 type ProductosComponentProps = {
     idProducto: number,
@@ -29,6 +30,7 @@ const ProductosComponent = ({idProducto, setIdProducto}: ProductosComponentProps
                   fontWeight: "400",
                   fontSize:"16px",
                 }}
+              IconComponent={ArrowSelect}
               value={idProducto}
               label="productos"
               onChange={(item) => {

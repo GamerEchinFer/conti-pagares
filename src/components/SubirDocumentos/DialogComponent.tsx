@@ -21,6 +21,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { theme } from '../../../theme/Theme';
 import AddPDFComponent from './AddPDFComponent';
 import { useRef, useState } from 'react';
+import { hadoopDirectoActions } from '../../redux/slices/hadoop.slice';
+import { useMount } from 'ahooks';
 
 type DialogComponentProps = {
   item: EtiquetaVariableResponse
@@ -29,8 +31,7 @@ type DialogComponentProps = {
 export default function DialogComponent({item}: DialogComponentProps) {
   const dispatch = useDispatch()
   const fullScreen = useMediaQuery(theme.breakpoints.down('xl'));
-  const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
-  const open = useSelector((state: RootState) => state.etiquetaVariable.openModal)
+  const label = { inputProps: { 'aria-label': 'Checkbox demo' } };  
   
   const [archives, setArchives] = useState(null);
   const inputRef = useRef<any>();
@@ -42,6 +43,10 @@ export default function DialogComponent({item}: DialogComponentProps) {
   const handleChange = (newValue: Dayjs | null) => {
     setValue(newValue);
   };
+
+  useMount(() => {                
+    hadoopDirectoActions.setFiles(null)
+  })
 
   const handleDragOver = (event:any) => {
     
@@ -63,6 +68,12 @@ export default function DialogComponent({item}: DialogComponentProps) {
     dispatch(etiquetaVariableActions.etiquetaVariableCloseAllModals())
   };
 
+  const handleFile = (files: any) => {
+    // setFiles(files)
+    // Aca tambien subimos los archivos
+    dispatch(hadoopDirectoActions.setFiles(files))
+}
+
   return (
     <>
     {
@@ -73,12 +84,15 @@ export default function DialogComponent({item}: DialogComponentProps) {
           <input
             type="file"
             multiple
+            onChange={(event) => handleFile(event.target.files)}
             hidden
             ref={inputRef}></input>
         </div>
       )
     }
+      {/* <div className="flex justify-end"> */}
       <FileUploadIconComponent onClick={() => inputRef.current.click()} />
+      {/* </div> */}
       <Dialog
         fullScreen={fullScreen}
         open={!!item.openModal}

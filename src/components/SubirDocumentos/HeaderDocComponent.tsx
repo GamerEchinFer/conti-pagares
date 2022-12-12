@@ -1,7 +1,12 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 import DatosClienteComponent from '../DatosClienteComponent'
 import DescriptionIconComponent from './DescriptionIconComponent'
 
 const HeaderDocComponent = () => {
+  const dispatch = useDispatch();
+  const numeroLegajo = useSelector((state: RootState) => state.numeroLegajo.items);
+
   return (
     <>
       <div 

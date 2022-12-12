@@ -1,4 +1,3 @@
-import { Typography, useMediaQuery } from "@mui/material"
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from 'react-redux';
 import BackButton from "../../components/Buttons/BackButton";
@@ -7,11 +6,13 @@ import DocumentListComponent from "../../components/SubirDocumentos/DocumentList
 import DragDropComponent from "../../components/SubirDocumentos/DragDropComponent";
 import HeaderDocComponent from "../../components/SubirDocumentos/HeaderDocComponent";
 import { RootState } from "../../redux/store";
-import { theme } from "../../../theme/Theme";
 import { DragEvent, useEffect } from 'react';
 import { etiquetaVariableActions } from '../../redux/slices/etiquetaVariable.slice';
-import { useUnmount } from "ahooks";
+import { useUnmount, useMount } from 'ahooks';
 import ButtonFinalizar from "../../components/Buttons/ButtonFinalizar";
+import { EtiquetaVariableResponse } from '../../interfaces/interfaces';
+import { hadoopDirectoActions } from '../../redux/slices/hadoop.slice';
+import { SubirDocumentoProvider } from '../../context/subirDocumento/SubirDocumentoProvider';
 
 const SubirDocumentoPage = ()  => {
 
@@ -19,28 +20,36 @@ const SubirDocumentoPage = ()  => {
 
     const dispatch = useDispatch();
     const etiquetasVariables = useSelector((state: RootState) => state.etiquetaVariable.response);
+
+    // Los files viene de redux tambien para usar en otras partes
     const files = useSelector((state: RootState) => state.hadoopDirecto.files);
 
-    useUnmount(() => {
-        // Con redux se debe realizar clear donde corresponda, en este caso en todos los modales = false
-        dispatch(etiquetaVariableActions.etiquetaVariableCloseAllModals());
+
+    useMount(() => {                
+        hadoopDirectoActions.setFiles(null)
     })
+
+    useUnmount(() => {
+        // With redux clear in all modals = false
+        dispatch(etiquetaVariableActions.etiquetaVariableCloseAllModals());
+    });
 
 
     const handleClickAtras = () => {
         router.push("/solicitud");
-    }
+    };
+
     const handleClickCargar = () => {
         console.log("cargando...");
         // router.push("/subirDocumentos");
-    }
+    };
 
-    /// En caso de aparecer periodicidad > 2
+    /// En caso de necesitar subir más documentos, insertar lista
     const handleClickAdd = () => {
-        router.push("/adjuntarDocumentoComponent");
-    }
+        router.push("/addDocumentList");
+    };
 
-    const onDrop = (event: DragEvent<HTMLDivElement>, idTipoDocumento: string) => {
+    const onDrop = (event: DragEvent<HTMLDivElement>, {idTipoDocumento, periodicidad}: EtiquetaVariableResponse) => {
         console.log(event);
         
         const idx = event.dataTransfer.getData("file")        
@@ -49,16 +58,20 @@ const SubirDocumentoPage = ()  => {
         // console.log(typeof file === "string")
         console.log(files[Number(idx)]);    
 
-        const reader = new FileReader()
-        reader.readAsDataURL(files[Number(idx)])
+        const reader = new FileReader();
+        reader.readAsDataURL(files[Number(idx)]);
 
         reader.onload = function () {
-            
             dispatch(etiquetaVariableActions.etiquetaVariableUpdateFile({
                 idTipoDocumento, 
                 file: files[Number(idx)], 
-                base64: reader.result?.toString() ?? ""
-            }))            
+                base64: reader.result?.toString() ?? "",
+            }));
+            
+            
+            if (periodicidad === 6) {
+
+            }            
         }
     }
 
@@ -67,14 +80,15 @@ const SubirDocumentoPage = ()  => {
     }
 
     return (
-        <>
+        <SubirDocumentoProvider>
+
             <HeaderDocComponent />
             <div className="grid grid-cols-2 gap-6 md:max-w-3xl m-auto" >
                 <div className="overflow-auto h-96">
                     {
                     etiquetasVariables.map(item => (
-                        <div key={item.idTipoDocumento} className="flex pl-6" onDrop={(event) => onDrop(event, item.idTipoDocumento)} onDragOver={allowDrop}>
-                            <div className="">
+                        <div key={item.idTipoDocumento} className="flex justify-start" onDrop={(event) => onDrop(event, item)} onDragOver={allowDrop}>
+                            <div className="pt-2">
                                 <DocumentListComponent item={item} /> 
                             </div>
                         </div>
@@ -82,7 +96,7 @@ const SubirDocumentoPage = ()  => {
                     }
                     {/* Añadir listado de documentos */}
                     <div className="flex justify-center">
-                        <AddIconComponent onClick={handleClickAdd} />
+                        <AddIconComponent  onClick={handleClickAdd} />
                     </div>
                 </div>
                 {/* <div className="border-dashed border-2 border-[#1D428A] w-80 h-96 ..."> */}
@@ -94,7 +108,7 @@ const SubirDocumentoPage = ()  => {
                 <BackButton  onClick={handleClickAtras} />
                 <ButtonFinalizar onClick={handleClickCargar}/>
             </div>
-        </>
+        </SubirDocumentoProvider>
     )
 }
 

@@ -11,7 +11,7 @@ import GDITitulosComponent from "../../components/TituloySubtitulo/GDITitulosCom
 import { TipoBusqueda } from '../../interfaces/interfaces';
 import styles from './TipoBusqueda.module.css';
 import { theme } from "../../../theme/Theme";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { solicitudActions } from '../../redux/slices/solicitud.slice';
 import { clienteDatosActions } from '../../redux/slices/clienteDatos.slice';
 import { getClienteDatosAction } from '../../redux/thunks/clienteDatos.thunks';
@@ -21,6 +21,9 @@ import { keycloakHeaders } from "../../constants/constants";
 import { getProductosAction } from "../../redux/thunks/producto.thunks";
 import { clienteDocumentoActions } from "../../redux/slices/clienteDocumento.slice";
 import { getClienteDocumentoAction } from "../../redux/thunks/clienteDocumento.thunks";
+import { RootState } from "../../redux/store";
+
+const filtros = ["codigo", "documento"]
 
 const TipoBusquedaPage = () => {
 
@@ -32,7 +35,7 @@ const TipoBusquedaPage = () => {
   const [clienteDocumento, setClienteDocumento] = useState("");
   const [nextPage, setNextPage] = useState();
   const mediaQueryPadding = useMediaQuery(theme.breakpoints.down(705));
-
+  const clienteDatos = useSelector((state: RootState) => state.clienteDatos.items);    
   const router = useRouter();
 
   useMount(() => {
@@ -101,19 +104,21 @@ const TipoBusquedaPage = () => {
                 </div>
                 <div className="flex flex-col pl-28 pt-1">
                   
-                    {<SearchbarButton active={codigoCliente.length > 0} onClick={() => 
-                    dispatch(getClienteDatosAction(codigoCliente))}  /> 
-                    ? <SearchbarButton active={clienteDocumento.length > 0} onClick={() => 
-                      dispatch(getClienteDocumentoAction(clienteDocumento))}  /> : null}
+                    <SearchbarButton active={codigoCliente.length > 0} onClick={() => 
+                    dispatch(getClienteDatosAction(codigoCliente, filtros[tipoBusquedaSelected - 1]))}  />
+
+                    {/* ? <SearchbarButton active={clienteDocumento.length > 0} onClick={() => 
+                      dispatch(getClienteDocumentoAction(clienteDocumento))}  /> : null} */}
                   
                  </div>
               </div>
             </div>
           </div>
+          
           <DatosPersonales />
         </div>
         <div className="flex flex-row justify-center gap-8 pb-8">
-            <NextButtonTB onClick={handleClickNext} />
+            <NextButtonTB disabled={!clienteDatos || !clienteDatos.codigoCliente} onClick={handleClickNext} />
           </div>
         </Box>
       </Grid>

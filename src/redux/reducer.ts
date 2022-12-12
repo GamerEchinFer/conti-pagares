@@ -10,6 +10,8 @@ import { solicitud } from "./slices/solicitud.slice";
 import { subProducto } from "./slices/subProducto.slice";
 import { guardarDocumento } from "./slices/guardarDocumento.slice";
 import { clienteDocumento } from './slices/clienteDocumento.slice';
+import { numeroLegajo } from "./slices/numeroLegajo.slice";
+import { tipoDocumento } from "./slices/tipoDocumento.slice";
 
 const reducer = {
     solicitud,
@@ -23,7 +25,9 @@ const reducer = {
     hadoopDownload,
     clienteDatos,
     guardarDocumento,
-    clienteDocumento: clienteDocumento
+    clienteDocumento: clienteDocumento,
+    numeroLegajo: numeroLegajo,
+    tipoDocumento: tipoDocumento
 }
 
 export default reducer;

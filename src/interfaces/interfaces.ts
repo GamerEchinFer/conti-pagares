@@ -71,6 +71,7 @@ export interface EtiquetaVariableResponse {
     ];
     file?: any; // Dentro del frontend
     openModal?: boolean;
+    openModalPeriodo?: boolean;
     base64?: string;
 }
 
@@ -153,44 +154,17 @@ export interface ClienteDatos {
     estadoCivil: string;
 }
 
-export interface ClienteDocumento {
-    primerNombre: string;
-    segundoNombre: string;
-    primerApellido: string;
-    segundoApellido: string;
-    direccion: string;
-    ciudad: string;
-    telefono: string;
-    celular: string;
-    cedula: string;
-    fechaNacimiento: string;
-    ocupacion: string;
-    fechaAlta: string;
-    pais: string;
-    localidad: string;
-    clasificacion: string;
-    codigoSucursal: string;
-    codigoOficial: string;
-    codigoRegion: string;
-    tipoPersona: string;
-    tipoDocumento: string;
-    sexo: string;
-    codigoEstadoCivil: string;
-    correo: string;
-    codigoCliente: string;
-    sucursal: string;
-    oficial: string;
-    calificacion: string;
-    nombreBarrio: string;
-    estadoCivil: string;
-}
+export interface ClienteDocumento extends ClienteDatos {}
 
-export interface GuardarDocumento {
+
+
+export interface GuardarDocumentoRequest {
     codigoTipoDocumento: number,
     rutaDocumento: string;
-    fechaRegistro: Date;
-    fechaEmision: Date;
+    fechaRegistro: any;
+    fechaEmision: any;
     descripcionDocumento: string;
+    hadoop: string;
     codigoCliente: string;
     codigoLegajo: number;
     hadoopPath: string;
@@ -198,7 +172,19 @@ export interface GuardarDocumento {
     codigoProducto: number;
     codigoSubproducto: number;
 }
+export interface NumeroLegajo {
+    nextSequence: number;
+}
 
-export interface GuardarDocumentoResponse {
-    idDocumentos: number;
+export interface TiposDocumentos {
+    idTipoDocumento: number;
+    descripcion: string;
+    idGrupo: number;
+    tiempoVencimiento: number;
+    estado: number;
+    esInterno: boolean;
+    esRelacionable: boolean;
+    validezTemporal: number;
+    esDocumentoLegales: boolean;
+    periodicidad: number;
 }

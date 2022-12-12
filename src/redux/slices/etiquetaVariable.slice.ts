@@ -6,8 +6,7 @@ const initialState = () => ({
     response: [] as EtiquetaVariableResponse[],
     loading: false,    
     success: false,
-    error: null as any,
-    openModal: false,
+    error: null as any,    
 })
 
 interface EtiquetaVariableUpdateFile {
@@ -33,7 +32,9 @@ const etiquetaVariableSlice = createSlice({
 
                 if (Number(item.idTipoDocumento) === Number(action.payload.idTipoDocumento)) {
                     item.file = action.payload.file
-                    item.openModal = true
+                    // Cambiar aca segun convenga
+                    item.openModal = item.periodicidad === 1
+                    item.openModalPeriodo = item.periodicidad === 6
                     item.base64 = action.payload.base64                    
                 }
 
@@ -43,6 +44,7 @@ const etiquetaVariableSlice = createSlice({
         etiquetaVariableCloseAllModals(state) {
             state.response = state.response.map(item => {                
                 item.openModal = false
+                item.openModalPeriodo = false
                 return item;
             })
         },
@@ -56,7 +58,7 @@ const etiquetaVariableSlice = createSlice({
             state.success = false;            
         },
         setOpenModal(state, action: PayloadAction<boolean>) {
-            state.openModal = action.payload
+            // state.openModal = action.payload
         }
     }
 });

@@ -22,9 +22,10 @@ const DatosPersonales = ({imagen = DatosPersonalesImage } : ClienteDatosProps) =
     const mediaQueryXsNumber = useMediaQuery(theme.breakpoints.down(634));
 	const mediaQueryMdNumber = useMediaQuery(theme.breakpoints.down(785));
 	const [estado, setEstado] = useState();
-    const clienteDatos = useSelector((state: RootState) => state.clienteDatos.items);
-    const clienteDocumento = useSelector((state: RootState) => state.clienteDocumento.items);
-    const [clientDate, setClientDate] = useState<any>(null);            
+    const clienteDatos = useSelector((state: RootState) => state.clienteDatos.items);    
+    const [clientDate, setClientDate] = useState<any>(null);   
+    
+    if (!clienteDatos || !clienteDatos.codigoCliente) return null
     
     return (
         <>          
@@ -48,7 +49,8 @@ const DatosPersonales = ({imagen = DatosPersonalesImage } : ClienteDatosProps) =
                                         size='small'
                                         label='Nro Documento'
                                         fullWidth
-                                        value={(clienteDatos?.cedula ?? "") ?? (clienteDocumento?.cedula ?? "")}                                        
+                                        value={(clienteDatos?.cedula ?? "")}
+                                        // ?? (clienteDocumento?.cedula ?? "")}                                        
                                         // disabled
                                         // value = {capitalize(`${datosBasicos?.primerNombre  || ''} ${datosBasicos?.segundoNombre || ''}`)}                                     
                                         />                                                                            
@@ -60,9 +62,9 @@ const DatosPersonales = ({imagen = DatosPersonalesImage } : ClienteDatosProps) =
                                         label='Nombre y Apellido'
                                         fullWidth                                                                             
                                         value = 
-                                        {(clienteDatos.primerNombre ? `${capitalizePorPalabra(`${clienteDatos?.primerNombre ?? ''}`)} ${capitalizePorPalabra(`${clienteDatos?.segundoNombre ?? ''}`)} ${clienteDatos?.primerApellido ?? ''} ${clienteDatos?.segundoApellido ?? ''}` : '')
-                                            ?? 
-                                        (clienteDocumento.primerNombre ? `${capitalizePorPalabra(`${clienteDocumento?.primerNombre ?? ''}`)} ${capitalizePorPalabra(`${clienteDocumento?.segundoNombre ?? ''}`)} ${clienteDocumento?.primerApellido ?? ''} ${clienteDocumento?.segundoApellido ?? ''}` : '')}
+                                        {(clienteDatos.primerNombre ? `${capitalizePorPalabra(`${clienteDatos?.primerNombre ?? ''}`)} ${capitalizePorPalabra(`${clienteDatos?.segundoNombre ?? ''}`)} ${clienteDatos?.primerApellido ?? ''} ${clienteDatos?.segundoApellido ?? ''}` : '')}
+                                            // ?? 
+                                        // (clienteDocumento.primerNombre ? `${capitalizePorPalabra(`${clienteDocumento?.primerNombre ?? ''}`)} ${capitalizePorPalabra(`${clienteDocumento?.segundoNombre ?? ''}`)} ${clienteDocumento?.primerApellido ?? ''} ${clienteDocumento?.segundoApellido ?? ''}` : '')}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -72,7 +74,8 @@ const DatosPersonales = ({imagen = DatosPersonalesImage } : ClienteDatosProps) =
                                         label='Fecha de Nacimiento'
                                         name="fechaNacimiento"
                                         fullWidth
-                                        value={(clienteDatos?.fechaNacimiento ?? "") ?? (clienteDocumento.fechaNacimiento ?? "")}
+                                        value={(clienteDatos?.fechaNacimiento ?? "")}
+                                        //  ?? (clienteDocumento.fechaNacimiento ?? "")}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -82,7 +85,8 @@ const DatosPersonales = ({imagen = DatosPersonalesImage } : ClienteDatosProps) =
                                         label='Nacionalidad'
                                         name="nacionalidad"
                                         fullWidth      
-                                        value={(paises[clienteDatos?.pais ?? ""]) ?? (paises[clienteDocumento?.pais ?? ""])}                                  
+                                        value={(paises[clienteDatos?.pais ?? ""])}
+                                        //  ?? (paises[clienteDocumento?.pais ?? ""])}                                  
                                     />
                                 </Grid>
                             </Grid>
@@ -98,7 +102,8 @@ const DatosPersonales = ({imagen = DatosPersonalesImage } : ClienteDatosProps) =
                                         size='small'
                                         label='Estado Civil'
                                         fullWidth
-                                        value={(capitalizePorPalabra(`${clienteDatos?.estadoCivil ?? ""}`)) ?? (capitalizePorPalabra(`${clienteDocumento?.estadoCivil ?? ""}`))}
+                                        value={(capitalizePorPalabra(`${clienteDatos?.estadoCivil ?? ""}`))}
+                                        //  ?? (capitalizePorPalabra(`${clienteDocumento?.estadoCivil ?? ""}`))}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -107,7 +112,8 @@ const DatosPersonales = ({imagen = DatosPersonalesImage } : ClienteDatosProps) =
                                         size='small'
                                         label='Profesión'
                                         fullWidth
-                                        value={(capitalizePorPalabra(`${clienteDatos?.ocupacion ?? ""}`)) ?? (capitalizePorPalabra(`${clienteDocumento?.ocupacion ?? ""}`))}
+                                        value={(capitalizePorPalabra(`${clienteDatos?.ocupacion ?? ""}`))}
+                                        //  ?? (capitalizePorPalabra(`${clienteDocumento?.ocupacion ?? ""}`))}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -116,7 +122,8 @@ const DatosPersonales = ({imagen = DatosPersonalesImage } : ClienteDatosProps) =
                                         size='small'
                                         label='Suc. Cliente'
                                         fullWidth
-                                        value={(capitalizePorPalabra(`${clienteDatos?.sucursal ?? ""}`)) ?? (capitalizePorPalabra(`${clienteDocumento?.sucursal ?? ""}`))}
+                                        value={(capitalizePorPalabra(`${clienteDatos?.sucursal ?? ""}`))}
+                                        //  ?? (capitalizePorPalabra(`${clienteDocumento?.sucursal ?? ""}`))}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -125,7 +132,8 @@ const DatosPersonales = ({imagen = DatosPersonalesImage } : ClienteDatosProps) =
                                         size='small'
                                         label='Oficial'
                                         fullWidth
-                                        value={(capitalizePorPalabra(`${clienteDatos?.oficial ?? ""}`)) ?? (capitalizePorPalabra(`${clienteDocumento?.oficial ?? ""}`))}
+                                        value={(capitalizePorPalabra(`${clienteDatos?.oficial ?? ""}`))} 
+                                        // ?? (capitalizePorPalabra(`${clienteDocumento?.oficial ?? ""}`))}
                                     />
                                 </Grid>
                             </Grid>

@@ -5,21 +5,29 @@ import DocPDFIcon from './DocPDFIcon';
 import FolderIconComponent from './FolderIconComponent';
 import { hadoopDirectoActions, hadoopDirecto } from '../../redux/slices/hadoop.slice';
 import { RootState } from '../../redux/store';
+import { useMount } from 'ahooks';
 
 const DragDropComponent = () => {
     const dispatch = useDispatch()
     const [files, setFiles] = useState(null);
-    // const files = useSelector((state: RootS`tate) => state.hadoopDirecto.files)
+    // const files = useSelector((state: RootState) => state.hadoopDirecto.files)
     const inputRef = useRef<any>(); // HTMLInputElement, HTMLDivElement
     const handleDragOver = (event:any) => {
         event.preventDefault();
     };
+    
+    useMount(() => {                
+        hadoopDirectoActions.setFiles(null)
+    })
+
     const handleDrop = (event:any) => {
         event.preventDefault();
         console.log(Array.from(event.dataTransfer.files));
         setFiles(event.dataTransfer.files)                              
         
         dispatch(hadoopDirectoActions.setFiles(event.dataTransfer.files))
+        
+        
     };
 
     const handleUpload = (event: any) => {
@@ -37,8 +45,15 @@ const DragDropComponent = () => {
 
     }
 
+    const handleFile = (files: any) => {
+        setFiles(files)
+        // Aca tambien subimos los archivos
+        console.log("hola");
+        dispatch(hadoopDirectoActions.setFiles(files))
+    }    
+
     if (files) return (
-        <div className="dropZone"> 
+        <div className="dropZone">              
             <ul>
                 {Object.values(files).map((file: any, idx) =>
                  <li key={idx} className="p-2" draggable onDragStart={(event) => onDragStart(event, idx)} onDragEnd={onDragEnd}>
@@ -62,7 +77,7 @@ const DragDropComponent = () => {
     )
     
   return (
-    <>
+    <>        
         {!files && (
             <div className="dropZone"
                 onDragOver={handleDragOver}
@@ -70,7 +85,7 @@ const DragDropComponent = () => {
                 <input
                     type="file"
                     multiple
-                    // onChange={(event: any) => setFiles(event.target.files)}
+                    onChange={(event) => handleFile(event.target.files)}
                     hidden
                     ref={inputRef}
                 >

@@ -18,7 +18,8 @@ export const continentalApi = axios.create(
 export const authApi = axios.create(
     {
         // baseURL: "https://api-test-gw.bancontinental.com.py/autenticarServicio/v1/realms/interno"  
-        baseURL: "https://api-sandbox-gw.bancontinental.com.py/autenticarServicio/v1/realms/interno"  
+        // baseURL: "https://api-sandbox-gw.bancontinental.com.py/autenticarServicio/v1/realms/interno"  
+        baseURL: "https://api-sandbox.bancontinental.com.py/autenticarServicio/v1/realms/interno"  
     }
 );
 
