@@ -87,9 +87,9 @@ export const postGuardarDocumento = async (body: GuardarDocumentoRequest) => {
     return data;
 } 
 
-export async function getNumeroLegajo() {
+export async function getNumeroLegajo(nextSequence: number) {
     const URL = `/numero-legajo`;
-    const response = apmApi.get<NumeroLegajo[]>(URL);
+    const response = await apmApi.get<NumeroLegajo[]>(URL, { params: {nextSequence}});
     return response;
 }
 

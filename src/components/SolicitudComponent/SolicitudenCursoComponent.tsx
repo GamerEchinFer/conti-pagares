@@ -23,7 +23,7 @@ function SolicitudenCursoComponent() {
       <div className="pt-4">
         <div className="relative">
           <div className="absolute top-1 right-0 h-16 w-16">
-            <ArrowIconBack />
+            {/* <ArrowIconBack /> */}
           </div>
         </div>
         <div 

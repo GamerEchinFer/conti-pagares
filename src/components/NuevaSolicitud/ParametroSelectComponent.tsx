@@ -3,6 +3,7 @@ import React from 'react'
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import ArrowSelect from '../shared/ArrowSelect';
+import { capitalize } from '../../helpers/capitalize';
 
 const ParametroSelectComponent = ({onChange}: any) => {
     const parametrosSelect = useSelector((state: RootState) => state.parametro.parametrosSelect);
@@ -41,7 +42,7 @@ const ParametroSelectComponent = ({onChange}: any) => {
                             >
                             {
                                 parametrosSelect[item].map((item: any) => {
-                                    return <MenuItem key={item.idParametro} value={item.idParametro}>{item.descripcion}</MenuItem>
+                                    return <MenuItem key={item.idParametro} value={item.idParametro}>{capitalize(`${item.descripcion}`)}</MenuItem>
                                 })
                             }
                         </Select>

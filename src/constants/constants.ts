@@ -20,8 +20,8 @@ export const keycloakHeaders: AutenticarServicioHeader = {
     // Scope: "profile"
     
     //APIM QA
-    "Client-Id": "gestion-documental",
-    "Client-Secret": "7cfd8756-683a-4f81-b4e4-2732c964c359",
+    "Client-Id": process?.env?.NEXT_PUBLIC_CLIENTE_ID ?? "",
+    "Client-Secret": process?.env?.NEXT_PUBLIC_CLIENT_SECRET ?? "",
     "Grant-Type": "client_credentials",
     "Subscription-Key": "578a3e189d3a4da791ad1aa2a00bae3c",
     Scope: "profile",    

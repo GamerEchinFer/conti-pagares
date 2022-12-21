@@ -1,10 +1,10 @@
 
 import { AppDispatch } from "../store";
-import { GuardarDocumento } from "../../interfaces/interfaces";
 import { guardarDocumentoActions } from "../slices/guardarDocumento.slice";
 import { postGuardarDocumento } from "../../api/apmDesaApi";
+import { GuardarDocumentoRequest } from '../../interfaces/interfaces';
 
-export const postGuardarDocumentoAction: any = (body: GuardarDocumento) => async (dispatch: AppDispatch) => {
+export const postGuardarDocumentoAction: any = (body: GuardarDocumentoRequest) => async (dispatch: AppDispatch) => {
     dispatch(guardarDocumentoActions.guardarDocumentoRequest());
 
     try {

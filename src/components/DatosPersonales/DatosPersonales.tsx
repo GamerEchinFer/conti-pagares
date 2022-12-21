@@ -55,6 +55,7 @@ const DatosPersonales = ({imagen = DatosPersonalesImage } : ClienteDatosProps) =
                                         // value = {capitalize(`${datosBasicos?.primerNombre  || ''} ${datosBasicos?.segundoNombre || ''}`)}                                     
                                         />                                                                            
                                 </Grid>
+                                
                                 <Grid item xs={12}>
                                     <TextField
                                         variant='outlined'
@@ -74,7 +75,7 @@ const DatosPersonales = ({imagen = DatosPersonalesImage } : ClienteDatosProps) =
                                         label='Fecha de Nacimiento'
                                         name="fechaNacimiento"
                                         fullWidth
-                                        value={(clienteDatos?.fechaNacimiento ?? "")}
+                                        value={(clienteDatos?.fechaNacimiento?.split("T")[0] ?? "")}
                                         //  ?? (clienteDocumento.fechaNacimiento ?? "")}
                                     />
                                 </Grid>

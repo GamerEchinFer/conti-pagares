@@ -7,7 +7,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { fontWeight } from '@mui/system';
-import { Stack, ListItem } from '@mui/material';
+import { Stack, ListItem, ListItemText, Divider } from '@mui/material';
 import { useMount } from 'ahooks';
 import { postGuardarDocumento } from '../../api/apmDesaApi';
 import { GuardarDocumentoRequest } from '../../interfaces/interfaces';
@@ -49,9 +49,6 @@ export default function AddDocumentList() {
 
   return (
     <div>
-      {/* <Button variant="outlined" onClick={handleClickOpen}>
-        Open form dialog
-      </Button> */}
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle 
             className="flex justify-center"
@@ -59,6 +56,7 @@ export default function AddDocumentList() {
             fontWeight:"400px",
             fontSize:"16px"}}
             sx={{paddingTop: "60px" }}
+            
         >
             Elegir la cantidad de documentos a adjuntar
             <Stack
@@ -75,6 +73,7 @@ export default function AddDocumentList() {
                     className="periodicidad"
                     type="number"
                     size="small"
+                    value={6}
                     InputLabelProps={{
                     shrink: true,
                     }} 
@@ -84,18 +83,13 @@ export default function AddDocumentList() {
         <DialogContent>
           <DialogContentText>
             <ListItem>
-                <div className="">Numero_documento</div>
+            <ListItemText>
+                Nombre_Documento_01
+            </ListItemText>
             </ListItem>
+              <Divider />
           </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
-            fullWidth
-            variant="standard"
-          />
+          
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>

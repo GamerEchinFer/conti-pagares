@@ -1,4 +1,4 @@
-import { DatosCliente, ClienteDatos } from '../interfaces/interfaces';
+import { ClienteDatos } from '../interfaces/interfaces';
 
 type DatosClienteItemProps = {
     datosCliente: ClienteDatos,    

@@ -22,7 +22,7 @@ const DragDropComponent = () => {
 
     const handleDrop = (event:any) => {
         event.preventDefault();
-        console.log(Array.from(event.dataTransfer.files));
+        // console.log(Array.from(event.dataTransfer.files));
         setFiles(event.dataTransfer.files)                              
         
         dispatch(hadoopDirectoActions.setFiles(event.dataTransfer.files))
@@ -48,7 +48,6 @@ const DragDropComponent = () => {
     const handleFile = (files: any) => {
         setFiles(files)
         // Aca tambien subimos los archivos
-        console.log("hola");
         dispatch(hadoopDirectoActions.setFiles(files))
     }    
 
@@ -88,6 +87,8 @@ const DragDropComponent = () => {
                     onChange={(event) => handleFile(event.target.files)}
                     hidden
                     ref={inputRef}
+                    // only PDF
+                    accept=".pdf"
                 >
                 </input>
                 <Button

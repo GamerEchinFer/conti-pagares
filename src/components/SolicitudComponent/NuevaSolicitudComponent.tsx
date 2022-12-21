@@ -16,7 +16,7 @@ import { getParametroAction } from '../../redux/thunks/parametro.thunks';
 import { getSubProductosAction } from '../../redux/thunks/subProducto.thunks';
 import { useRouter } from 'next/router';
 import { solicitudActions } from '../../redux/slices/solicitud.slice';
-import { Grid } from '@mui/material';
+import { getNumeroLegajoAction } from '../../redux/thunks/numeroLegajo.thunks';
 
 type NuevaSolicitudComponentProps = {
   solicitud: SolicitudCliente | null
@@ -108,7 +108,8 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
   // }
 
   const handleClickNext = () => {
-    dispatch(postEtiquetasVariablesAction(Object.values(body)))
+    dispatch(postEtiquetasVariablesAction(Object.values(body)));
+    dispatch(getNumeroLegajoAction());
     router.push('/subirDocumento');
   }
 

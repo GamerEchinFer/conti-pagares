@@ -1,4 +1,4 @@
-import { Dialog, DialogTitle, ListItem, useMediaQuery, useTheme } from '@mui/material';
+import { Dialog, DialogTitle, Divider, ListItem, ListItemText, useMediaQuery, useTheme } from '@mui/material';
 import React, { useState } from 'react'
 import FileUploadIconComponent from './FileUploadIconComponent';
 import { periodicidad } from '../../redux/slices/periodicidad.slice';
@@ -31,7 +31,7 @@ const AdjuntarDocumentoComponent = () => {
             className="justify-start"
         >
             Elegir cantidad de documentos a adjuntar 
-            <input type="number" id="inputDoc" value={4} className="pl-2 inputDesign" />
+            <input type="number" id="inputDoc" value={6} className="pl-2 inputDesign" />
             <input type="number" id="inputDoc" className="border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 p-1"/>
         </DialogTitle>
         </Dialog>

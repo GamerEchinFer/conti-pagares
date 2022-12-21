@@ -1,6 +1,6 @@
 import { List, ListItemIcon } from '@mui/material'
 import FileUploadIcon from '@mui/icons-material/FileUpload';
-import DialogComponent from './DialogComponent';
+import DialogComponent from './ModalPDFComponent';
 import Image from "next/image";
 import CargaDocumento from '../../assets/svg/CargaDocumento.svg' 
 

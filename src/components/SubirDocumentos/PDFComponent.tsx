@@ -5,11 +5,11 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { getDescargarHadoopDirecto, postAlzarHadoopDirecto } from '../../api/apmDesaApi';
 
-type AddPDFComponentProps = {
+type PDFComponentProps = {
     base64: string
 }
 
-const AddPDFComponent = ({base64}: AddPDFComponentProps) => {
+const PDFComponent = ({base64}: PDFComponentProps) => {
     const hadoopDirecto = useSelector((state: RootState) => state.hadoopDirecto.response);
     const hadoopDownload = useSelector((state:RootState) => state.hadoopDownload.items);    
 
@@ -97,4 +97,4 @@ const AddPDFComponent = ({base64}: AddPDFComponentProps) => {
   )
 }
 
-export default AddPDFComponent
+export default PDFComponent

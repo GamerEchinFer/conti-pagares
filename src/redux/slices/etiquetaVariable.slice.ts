@@ -1,19 +1,30 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { EtiquetaVariableResponse } from '../../interfaces/interfaces';
 
+interface EtiquetaVariableUpdateFile {
+    idTipoDocumento: string,
+    file: any,
+    base64: string
+    base64Modified: string
+    totalPages: number,
+    size: number,
+}
+
+interface EtiquetaVariableUpdateFileModified {
+    idTipoDocumento: string,    
+    base64Modified: string
+    // sizeModified: number,
+    // totalPagesModified: number,
+}
+
 // MUTABLE
 const initialState = () => ({
     response: [] as EtiquetaVariableResponse[],
     loading: false,    
     success: false,
-    error: null as any,    
+    error: null as any,
 })
 
-interface EtiquetaVariableUpdateFile {
-    idTipoDocumento: string,
-    file: any,
-    base64: string
-}
 
 const etiquetaVariableSlice = createSlice({
     name: 'etiquetaVariable',
@@ -36,6 +47,18 @@ const etiquetaVariableSlice = createSlice({
                     item.openModal = item.periodicidad === 1
                     item.openModalPeriodo = item.periodicidad === 6
                     item.base64 = action.payload.base64                    
+                    item.base64Modified = action.payload.base64      
+                    item.totalPages = action.payload.totalPages ?? 0              
+                    item.size = action.payload.size ?? 0              
+                }
+
+                return item;
+            })
+        },
+        etiquetaVariableUpdateFileModified(state, action:PayloadAction<EtiquetaVariableUpdateFileModified>) {
+            state.response = state.response.map(item => {
+                if (Number(item.idTipoDocumento) === Number(action.payload.idTipoDocumento)) {                                                                                
+                    item.base64Modified = action.payload.base64Modified                    
                 }
 
                 return item;

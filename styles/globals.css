@@ -218,6 +218,15 @@ a {
   margin-bottom: 100px !important;
 }
 
+.inputPDF {
+  border: 1px solid #B7B7B7;
+  border-radius: 4px;
+  width: 11%;
+  margin: 8px 0;
+  box-sizing: border-box;
+  text-align: center;
+}
+
 @font-face {
   font-family: 'ContiSans';
   src: url('../src/assets/fonts/ContiSans.otf') format('opentype');

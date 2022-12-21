@@ -73,6 +73,9 @@ export interface EtiquetaVariableResponse {
     openModal?: boolean;
     openModalPeriodo?: boolean;
     base64?: string;
+    base64Modified?: string;
+    totalPages?: number;
+    size?: number;
 }
 
 export interface AutenticarServicioHeader {
