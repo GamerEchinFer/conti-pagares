@@ -12,6 +12,7 @@ import FileUploadIconComponent from './FileUploadIconComponent';
 import ModalPDFComponent from './ModalPDFComponent';
 import * as pdfjsLib from 'pdf-lib'
 import { etiquetaVariableActions } from '../../redux/slices/etiquetaVariable.slice';
+import RecargarDocIcon from './RecargarDocIcon';
 
 type DocumentListComponentProps = {
   item: EtiquetaVariableResponse
@@ -77,6 +78,7 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
         secondaryAction={                      
           item.tieneDocumento 
             ? <CheckUploadIconComponent onClick={() => handleClickModificarDoc} />
+            // ? <RecargarDocIcon onClick={()=> handleClickModificarDoc} /> 
             : <FileUploadIconComponent onClick={() => inputRef.current.click()} />          
         }
         >

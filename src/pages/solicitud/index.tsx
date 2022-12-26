@@ -108,8 +108,8 @@ function SolicitudPage() {
 
           </List>
           
-        <div className="flex flex-row justify-center gap-8">
-          <BackButton onClick={handleClickPrevius}/>          
+        <div className="flex flex-row justify-center">
+            <BackButton onClick={handleClickPrevius} />          
         </div>
         </div>
     </Box>

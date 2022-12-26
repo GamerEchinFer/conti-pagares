@@ -1,6 +1,6 @@
 import * as pdfjsLib from 'pdf-lib'
 
-export const cutPdf = async (base64: string, cut_from: number, cut_to: number, totalPages: number) => {    
+export const cutPdf = async (base64: string, cut_from: number, cut_to: number, totalPages: number, totalPagesModified: number, sizeModified: number) => {    
     const pdfDoc = await pdfjsLib.PDFDocument.load(base64)
 
     // Cortar 

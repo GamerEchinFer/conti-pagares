@@ -79,15 +79,23 @@ export default function ModalPDFComponent({item}: ModalPDFComponentProps) {
       const cut_from = Number(filter.cut_from)
       const cut_to = Number(filter.cut_to)
       const totalPages = Number(item.totalPages)
-            
+      const totalPagesModified = Number(item.totalPages)
+      const pdfConfig = 'data:application/pdf;base64,${base64}'
+      const buffer = Buffer.from(pdfConfig.substring(pdfConfig.indexOf(',') + 1))
+      const sizeModified = Number(buffer.length / 1e+6)
+      console.log("mb:" + buffer.length / 1e+6);
+
+      
       // tomamos de la base64 original para crear una instancia de pdfkit
       try {        
-        const base64Modified = await cutPdf(base64, cut_from, cut_to, totalPages)       
+        const base64Modified = await cutPdf(base64, cut_from, cut_to, totalPages, totalPagesModified, sizeModified)       
                 
         dispatch(etiquetaVariableActions.etiquetaVariableUpdateFileModified({
-          idTipoDocumento: item.idTipoDocumento, 
-          base64Modified: parsePdfBase64(base64Modified as string)
-        }))
+          idTipoDocumento: item.idTipoDocumento,
+          base64Modified: parsePdfBase64(base64Modified as string),
+          totalPagesModified: (cut_to + 1) - cut_from,
+          sizeModified: sizeModified
+        })) 
 
       } catch (err: any) {
         console.log(err);        
@@ -142,7 +150,7 @@ export default function ModalPDFComponent({item}: ModalPDFComponentProps) {
               <DialogContentText
                 className="pb-4 "
               >
-                <span className="pr-10">Tamaño: {item.size?.toFixed(3) ?? 0} MB</span><span>Cantidad de Paginas: {item.totalPages}</span>
+                <span className="pr-10">Tamaño: {item.size?.toFixed(3) ?? 0} MB</span><span>Cantidad de Paginas: {item.totalPagesModified}</span>
               </DialogContentText>
                 <div className="pb-4">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>

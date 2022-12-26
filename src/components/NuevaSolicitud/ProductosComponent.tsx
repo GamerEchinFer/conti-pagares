@@ -21,7 +21,7 @@ const ProductosComponent = ({idProducto, setIdProducto}: ProductosComponentProps
     <>
       <div className="flex pl-10 pr-10 pt-4 ">
         {loading ? <span>Cargando...</span> : null}
-        <FormControl size="small" fullWidth >
+        <FormControl size="small" sx={{ minWidth: 470 }}>
           <InputLabel id="demo-simple-select-label" >Productos</InputLabel>
             <Select
               className="text-left"

@@ -1,3 +1,4 @@
+import { Box } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import DatosClienteComponent from '../DatosClienteComponent'
@@ -13,14 +14,18 @@ const HeaderDocComponent = () => {
         className="max-w-md mx-auto md:max-w-2xl pb-2 pt-6"
         style={{fontSize:"24px", color:"#1D428A", fontWeight:"400"}}>
           
-          <div className="">
-            {
-              numeroDeLegajo.map(item => (
-                <span key={item.nextSequence} className="flex justify-end">Legajo : {item.nextSequence}</span>
-              ))
-            }
+          <div className="static">
+            <div className="absolute pt-0 right-60">
+              {
+                numeroDeLegajo.map(item => (
+                  <span key={item.nextSequence} className="flex justify-end">Legajo : {item.nextSequence}</span>
+                ))
+              }
+            </div> 
+            <Box sx={{ width: '200%' }}>
+              <DatosClienteComponent />
+            </Box>
           </div>
-          <DatosClienteComponent />
           <div className="md:flex pt-6">
             <DescriptionIconComponent />
               <span className="pl-2">Subir documentos</span>

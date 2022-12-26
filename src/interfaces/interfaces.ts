@@ -75,7 +75,9 @@ export interface EtiquetaVariableResponse {
     base64?: string;
     base64Modified?: string;
     totalPages?: number;
+    totalPagesModified?: number;
     size?: number;
+    sizeModified?: number;
 }
 
 export interface AutenticarServicioHeader {

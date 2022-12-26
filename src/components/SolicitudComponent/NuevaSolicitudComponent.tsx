@@ -199,8 +199,8 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
 
               
             </div>  
-            <div className="flex flex-row justify-center gap-8">
-              <NextButton onClick={handleClickNext}/>
+            <div className="flex flex-row justify-center">
+              <NextButton onClick={handleClickNext} />
             </div>
     </>
   ) 

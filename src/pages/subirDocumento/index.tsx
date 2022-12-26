@@ -14,6 +14,7 @@ import { EtiquetaVariableResponse } from '../../interfaces/interfaces';
 import { hadoopDirectoActions } from '../../redux/slices/hadoop.slice';
 import { SubirDocumentoProvider } from '../../context/subirDocumento/SubirDocumentoProvider';
 import * as pdfjsLib from 'pdf-lib'
+import { Box } from "@mui/material";
 
 const SubirDocumentoPage = ()  => {
 
@@ -86,8 +87,10 @@ const SubirDocumentoPage = ()  => {
 
     return (
         <SubirDocumentoProvider>
+            <Box sx={{ width: "75%"}}>
             <HeaderDocComponent />
-            <div className="grid grid-cols-2 gap-6 md:max-w-3xl m-auto" >
+            <Box sx={{ width: "125%"}}>
+            <div className="grid grid-cols-2 gap-6 md:max-w-5xl m-auto" >
                 <div className="overflow-auto h-96">
                     {
                     etiquetasVariables.map(item => (
@@ -103,8 +106,7 @@ const SubirDocumentoPage = ()  => {
                         <AddIconComponent  onClick={handleClickAdd} />
                     </div>
                 </div>
-                {/* <div className="border-dashed border-2 border-[#1D428A] w-80 h-96 ..."> */}
-                <div>    
+                <div className="">    
                     <DragDropComponent />
                 </div>
             </div>
@@ -112,6 +114,8 @@ const SubirDocumentoPage = ()  => {
                 <BackButton  onClick={handleClickAtras} />
                 <ButtonFinalizar onClick={handleClickCargar}/>
             </div>
+            </Box>
+        </Box>
         </SubirDocumentoProvider>
     )
 }

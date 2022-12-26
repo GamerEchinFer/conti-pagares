@@ -15,15 +15,15 @@ const ParametroSelectComponent = ({onChange}: any) => {
 
     return (
 
-    <div className="flex pl-10 pr-10 pt-4 gap-4">
+    <div className="pl-10 pt-4">
         {/* {JSON.stringify(parametrosSelect)} */}
         <Grid container spacing={2}>
         {
             Object.keys(parametrosSelect).map((item) => {
                 return (
                     <>
-                    <Grid item sm={12} >
-                    <FormControl key={item} size="small" fullWidth style={{textTransform:"capitalize"}}>
+                    <Grid item sm={4} spacing={2}>
+                    <FormControl key={item} size="small" style={{textTransform:"capitalize"}} sx={{ minWidth: 300 }}>
                         <InputLabel id="demo-simple-select-label">{item}</InputLabel>
                         <Select
                             className="text-left"
@@ -32,7 +32,6 @@ const ParametroSelectComponent = ({onChange}: any) => {
                                 fontWeight: "400",
                                 fontSize:"16px",
                             }}
-                            // name={data.item}
                             IconComponent={ArrowSelect}
                             label={item}
                             onChange={(event) => {

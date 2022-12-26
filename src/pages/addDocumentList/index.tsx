@@ -58,7 +58,7 @@ export default function AddDocumentList() {
             sx={{paddingTop: "60px" }}
             
         >
-            Elegir la cantidad de documentos a adjuntar
+            Seleccione la cantidad de documentos a adjuntar
             <Stack
                 component="form"
                 sx={{
@@ -92,8 +92,8 @@ export default function AddDocumentList() {
           
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Subscribe</Button>
+          <Button onClick={handleClose}>Cancelar</Button>
+          <Button onClick={handleClose}>Aceptar</Button>
         </DialogActions>
       </Dialog>
     </div>

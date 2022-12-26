@@ -17,7 +17,7 @@ const handleIconNext = () => {
 }
   return (
     <>
-     <List sx={{ width: '100%', maxWidth: 660,maxHeight: 360, bgcolor: 'background.paper' }}>
+     <List sx={{ width: '100%', maxWidth: 860,maxHeight: 360, bgcolor: 'background.paper' }}>
       <ListItem 
           // button
           onClick={() => solicitud.handleChangeNewSolicitud(solicitud.solicitud)}
@@ -39,7 +39,7 @@ const handleIconNext = () => {
         />
           <ArrowIconNext onClick={handleIconNext}/>
         </ListItem> 
-        <Divider />
+        <Divider className="pt-4" />
     </List>
     </>
   )

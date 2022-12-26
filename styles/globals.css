@@ -195,11 +195,11 @@ a {
 .dropZone {
   display: flex;
   flex-direction: column ;
-  justify-content: center ;
-  align-items: center;
+  /* justify-content: start ;
+  align-items: start; */
   /* height: 360px !important; */
   border: 3px dashed #5375B3 !important; 
-  padding: 30px !important;
+  padding: 40px !important;
   border-radius: 6px;
 }
 .dragDropButton {

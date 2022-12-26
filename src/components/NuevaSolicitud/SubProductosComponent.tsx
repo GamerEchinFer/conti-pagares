@@ -15,7 +15,7 @@ const SubProductosComponent = ({idSubProducto, setIdSubProducto}: SubProductosCo
   return (
     <>
       <div className="flex pl-10 pr-10 pt-4 ">
-        <FormControl size="small" fullWidth>
+        <FormControl size="small" sx={{ minWidth: 470 }}>
           <InputLabel id="demo-simple-select-label">SubProductos</InputLabel>
             <Select
               className="text-left"
