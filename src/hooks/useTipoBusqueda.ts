@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { getTipoBusqueda } from "../api/gdiApi";
+import { getTipoBusqueda } from "../api/apmDesaApi";
+// import { getTipoBusqueda } from "../api/gdiApi";
 import { TipoBusqueda } from "../interfaces/interfaces";
 
 export const useTipoBusqueda = () => {

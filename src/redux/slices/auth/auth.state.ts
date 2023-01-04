@@ -1,20 +1,16 @@
-// interface AuthStateModel {
-//     cliente: string | null;
-//     access_token: string | null;
-//     datosClientesParticulares : DatosClientesParticularesResponse | null;
-//     datosClientesLaborales : DatosClientesLaboralesResponse | null;
-//     datosAdicionales: DatosAdicionalesResponse | null;
-//     codigoCliente: string | null;
-//     datosAdicionalesContacto: DatosUsuarioAdicionalResponse | null;
-//     datosPendientesActualizacion : ActualizacionDatosPendienteResponse | null;
-//     datosBasicos: DatosUsuarioResponse | null;
-//     permisosUsuario: PermisosUsuarioResponse[];
-//     usuarioKeycloack : string;
-//     ipGeolocation: IpGeolocationResponse | null;
-//     marcasPla: MarcasPlaResponse[];
-//     datosAgente: DatosAgenteResponse | null;
-// }
+import DatosAgenteResponse from "../../../models/responses/DatosAgente.response";
+import IpGeolocationResponse from "../../../models/responses/ipGeolocation.response";
+import PermisosUsuarioResponse from "../../../models/responses/PermisosUsuario.response";
 
-// export default AuthStateModel;
+interface AuthStateModel {
+    cliente: string | null;
+    access_token: string | null;
+    codigoCliente: string | null;
+    permisosUsuario: PermisosUsuarioResponse[];
+    usuarioKeycloack : string;
+    ipGeolocation: IpGeolocationResponse | null;
+    datosAgente: DatosAgenteResponse | null;
 
-export default {}
+}
+
+export default AuthStateModel;

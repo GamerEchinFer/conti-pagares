@@ -10,7 +10,9 @@ import { ClienteDatos,
         Parametros,
         ParametrosVisibles,
         Producto,
+        SolicitudCliente,
         SubProducto, 
+        TipoBusqueda, 
         TiposDocumentos} from '../interfaces/interfaces';
 import { apmApi, apmHadoopApi } from './index';
 
@@ -55,7 +57,8 @@ export async function getDescargarHadoopDirecto(downloadpath: string) {
 }
 
 export const postAlzarHadoopDirecto = async (body: FormData, path_images: string, overwrite: boolean, chunksize: number) => {
-    const URL = `/upload?path_images`;
+    // const URL = `/upload?path_images`;
+    const URL = `/upload`;
     const {data} = await apmHadoopApi.post<FormData, AxiosResponse<HadoopDirectoResponse>>(
         URL,body, {headers: {'Content-Type':'multipart/form-data'},
                     params:{path_images, overwrite, chunk_size: chunksize},
@@ -66,13 +69,15 @@ export const postAlzarHadoopDirecto = async (body: FormData, path_images: string
 
 
 export async function getClienteDatos(codigoCliente: string) {    
-    const URL = `https://api-sandbox.bancontinental.com.py/interno/clientes/datos/v1/clientes/${codigoCliente}`;    
+    // const URL = `https://api-sandbox.bancontinental.com.py/interno/clientes/datos/v1/clientes/${codigoCliente}`;    
+    const URL = `https://api-test.bancontinental.com.py/interno/clientes/datos/v1/clientes/${codigoCliente}`;    
     const response = await apmApi.get<ClienteDatos>(URL);
     return response
 }
 
 export async function getClienteDocumento(numeroDocumento: string) {    
-    const URL = `https://api-sandbox.bancontinental.com.py/interno/clientes/datos/v1/clientes/datos`;            
+    // const URL = `https://api-sandbox.bancontinental.com.py/interno/clientes/datos/v1/clientes/datos`;            
+    const URL = `https://api-test.bancontinental.com.py/interno/clientes/datos/v1/clientes/datos`;            
     const response = await apmApi.get<ClienteDocumento>(URL, {
         params: {numeroDocumento},        
     });
@@ -95,6 +100,19 @@ export async function getNumeroLegajo(nextSequence: number) {
 
 export async function getTipoDocumento() {
     const URL = `/tipos-documentos`;
-    const response = apmApi.get<TiposDocumentos[]>(URL);
-    return response;
+    const response = await apmApi.get<TiposDocumentos[]>(URL);
+    return response; 
+}
+
+
+export async function getSolicitudCliente() {    
+    const URL = `/menus-frontEnd/solicitud-cliente`;
+    const response = await apmApi.get<SolicitudCliente[]>(URL);
+    return response
+}
+
+export async function getTipoBusqueda() {    
+    const URL = `/menus-frontEnd/tipo-busqueda`;
+    const response = await apmApi.get<TipoBusqueda[]>(URL);
+    return response
 }

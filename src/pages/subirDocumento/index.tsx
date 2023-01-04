@@ -10,11 +10,18 @@ import { DragEvent } from 'react';
 import { etiquetaVariableActions } from '../../redux/slices/etiquetaVariable.slice';
 import { useUnmount, useMount } from 'ahooks';
 import ButtonFinalizar from "../../components/Buttons/ButtonFinalizar";
-import { EtiquetaVariableResponse } from '../../interfaces/interfaces';
+import { EtiquetaVariableResponse, Parametros, SolicitudCliente } from '../../interfaces/interfaces';
 import { hadoopDirectoActions } from '../../redux/slices/hadoop.slice';
 import { SubirDocumentoProvider } from '../../context/subirDocumento/SubirDocumentoProvider';
 import * as pdfjsLib from 'pdf-lib'
 import { Box } from "@mui/material";
+// import { getAllSolicitudClienteAction } from "../../redux/thunks/solicitud.thunks";
+import { solicitudActions } from "../../redux/slices/solicitud.slice";
+import { parametroActions } from "../../redux/slices/parametro.slice";
+import { postAutenticarServicio } from "../../api/keycloakApi";
+import { keycloakHeaders } from "../../constants/constants";
+import { postEtiquetaVariable } from '../../api/apmDesaApi';
+import { getSolicitudClienteAction } from "../../redux/thunks/solicitud.thunks";
 
 const SubirDocumentoPage = ()  => {
 
@@ -22,28 +29,67 @@ const SubirDocumentoPage = ()  => {
 
     const dispatch = useDispatch();
     const etiquetasVariables = useSelector((state: RootState) => state.etiquetaVariable.response);
+    const page = useSelector((state: RootState) => state.etiquetaVariable.page)
 
     // The Files of redux but cant use in others components
     const files = useSelector((state: RootState) => state.hadoopDirecto.files);
 
 
-    useMount(() => {                
-        hadoopDirectoActions.setFiles(null);
-    })
+    // useMount(() => {                
+    //     hadoopDirectoActions.setFiles(null);
+    // })
 
     useUnmount(() => {
         // With redux clear in all modals = false
         dispatch(etiquetaVariableActions.etiquetaVariableCloseAllModals());
+        
     });
 
+    useMount(() => {
+        initialize();
+        hadoopDirectoActions.setFiles(null);
+        // add for exmaple token
+        dispatch(etiquetaVariableActions.etiquetaVariableCloseAllModals())
+        postAutenticarServicio(keycloakHeaders).then((value) => {            
+          localStorage.setItem("gdi-auth", JSON.stringify(value));
+          console.log(value);
+        }).finally(() => {
+            
+        })
+    })
 
+    const initialize = () => {
+        if(page === -1){
+            setSolicitud(null)
+            // dispatch(solicitudActions.setIdProducto(0))
+            // dispatch(solicitudActions.setIdSubProducto(0))
+        }
+    dispatch(getSolicitudClienteAction())
+
+    }
+
+    const setPage = (value: number) => {
+        dispatch(etiquetaVariableActions.setPage(value));
+    }
+    
+    const setSolicitud = (value: Parametros | null) => {
+        dispatch(parametroActions.parametroRequest());
+    }
+    
     const handleClickAtras = () => {
-        router.push("/solicitud");
-    };
+        if (page === -1) {
+            router.push('./solicitud')
+            // dispatch(solicitudActions.setIdProducto(0))
+            // dispatch(solicitudActions.setIdSubProducto(0))
+            dispatch(etiquetaVariableActions.etiquetaVariableReset());
+        }
+    }; 
 
     const handleClickCargar = () => {
         console.log("cargando...");
-        // router.push("/subirDocumentos");
+        // hadoopDirectoActions.setFiles(null);
+        // finzalizar a traves del historial
+        router.push("/tipoBusqueda");
     };
 
     /// En caso de necesitar subir más documentos, insertar lista

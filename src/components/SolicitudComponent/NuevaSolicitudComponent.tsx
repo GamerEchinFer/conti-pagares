@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import ParametroSelectComponent from '../NuevaSolicitud/ParametroSelectComponent';
 import NextButton from '../Buttons/NextButton';
 import { useSolicitudes } from '../../hooks/useSolicitudes';
-import { SolicitudCliente } from '../../interfaces/interfaces';
+import { EtiquetaVariableBody, SolicitudCliente } from '../../interfaces/interfaces';
 import { etiquetaVariableActions } from '../../redux/slices/etiquetaVariable.slice';
 import { parametroActions } from '../../redux/slices/parametro.slice';
 import { RootState } from '../../redux/store';
@@ -17,6 +17,7 @@ import { getSubProductosAction } from '../../redux/thunks/subProducto.thunks';
 import { useRouter } from 'next/router';
 import { solicitudActions } from '../../redux/slices/solicitud.slice';
 import { getNumeroLegajoAction } from '../../redux/thunks/numeroLegajo.thunks';
+import LoadingIcon from '../shared/LoadingIcon';
 
 type NuevaSolicitudComponentProps = {
   solicitud: SolicitudCliente | null
@@ -36,8 +37,9 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
   const [nuevaSolicitud, setNuevaSolicitud] = useState(0);
   const [idProducto, setIdProducto] = useState(0);
   const [idSubProducto, setIdSubProducto] = useState(0);
+  const [isChangeSelected, setIsChangeSelected] = useState(false)
 
-  const [body, setBody] = useState<any>({
+  const [body, setBody] = useState<EtiquetaVariableBody>({
     codigoCliente: {
       "nombre": "codigoCliente",
       "valor": "000666"
@@ -48,16 +50,25 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
     },
     id_producto: {
       "nombre": "id_producto",
-      "valor": "10"
+      "valor": "7"
     },
     id_subproducto: {
       "nombre": "id_subproducto",
-      "valor": "151"
+      "valor": "146"
     },
     id_actividad: {
       "nombre": "id_actividad",
       "valor": "1"
-    }
+    },
+    id_riesgo: {
+      "nombre": "id_riesgo",
+      "valor": "4"
+    },
+    id_destino: {
+      "nombre": "id_destino",
+      "valor": "1"
+    },
+    
   })
 
   const solicitudes = useSolicitudes()
@@ -102,14 +113,16 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
 
   if(!solicitud) return null;
 
-  // Dictionary 
-  // const items: any = {
-  //   1: <FormularioNuevaSolicitud />,
-  // }
-
   const handleClickNext = () => {
     dispatch(postEtiquetasVariablesAction(Object.values(body)));
-    dispatch(getNumeroLegajoAction());
+    dispatch(etiquetaVariableActions.setEtiquetaVariableBody(body))
+    // True si cambia la combinacion de productos and false si no cambia
+
+    if (isChangeSelected) {
+      dispatch(getNumeroLegajoAction());
+      // dispatch(postEtiquetasVariablesAction().setEtiquetaVariableBody(body));
+    }
+    
     router.push('/subirDocumento');
   }
 
@@ -123,6 +136,8 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
     const item = {nombre, valor}    
 
     setBody({...body, [nombre]: item})
+
+    setIsChangeSelected(true)
   }
 
   return (
@@ -171,6 +186,7 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
               
             }}
           />}
+          
           {idProducto !== 0 ? (
             
               <SubProductosComponent 
@@ -186,8 +202,8 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
             {
               loadingParametrosSelect 
               ? (
-                <div>
-                  <h1>Cargando...</h1>
+                <div className='flex justify-center pt-10 pb-10 w-200'>
+                  <LoadingIcon />
                 </div>
               ) 
               : null

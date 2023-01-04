@@ -24,7 +24,7 @@ const PDFComponent = ({base64}: PDFComponentProps) => {
     const handleClickOpen = async () => {
         // DESCARGAR PDF
         const download = await getDescargarHadoopDirecto(href)
-        // console.log("El PDF: " + download.data.LOC);
+        console.log("El PDF: " + download.data.LOC);
 
         const hrefPdf = `data:application/pdf;base64,${download.data.LOC}` 
         setUrlPdf(hrefPdf)           
@@ -43,10 +43,9 @@ const PDFComponent = ({base64}: PDFComponentProps) => {
         }
         console.log(fileInput);
               
-        const formData = new FormData();
-
+        const formData = new FormData();        
         formData.append("file", fileInput.files[0]);
- 
+                
         // SUBIR PDF POR ALGUNA RAZON FUNCIONA DA ERROR SI PONES SUBSCRIPTION KEY
         const res = await postAlzarHadoopDirecto(formData, "", false, 255);
 
@@ -75,13 +74,11 @@ const PDFComponent = ({base64}: PDFComponentProps) => {
 
         {/* <div className="flex justify-start">
             <h1 className="pt-4 pl-4">Download Document</h1>
-                <div className="flex  justify-center p-10" >
-                    <Button onClick={handleClickOpen}>
-                        Download
-                    </Button>
-                </div>
-
-
+            <div className="flex  justify-center p-10" >
+                <Button onClick={handleClickOpen}>
+                    Download
+                </Button>
+            </div>
         </div>   */}
         {/*{base64}*/}  
         {
@@ -90,7 +87,7 @@ const PDFComponent = ({base64}: PDFComponentProps) => {
             ? (<embed
                 src={base64}
                 // src={urlPdf}
-                type="application/pdf" width="100%" height="600px"/>)
+                type="application/pdf" width="80%" height="550px"/>)
             : null
         }        
     </> 

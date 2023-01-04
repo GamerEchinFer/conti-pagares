@@ -1,6 +1,5 @@
 
-
-// export {default as authSlice} from './auth.slice'
+export {default as authSlice} from './auth.slice'
 
 export default {  }
-// export * from './auth.state'
+export * from './auth.state'

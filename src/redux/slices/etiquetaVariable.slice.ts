@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { EtiquetaVariableResponse } from '../../interfaces/interfaces';
+import { EtiquetaVariableResponse, EtiquetaVariableBody } from '../../interfaces/interfaces';
 
 interface EtiquetaVariableUpdateFile {
     idTipoDocumento: string,
@@ -23,6 +23,8 @@ const initialState = () => ({
     loading: false,    
     success: false,
     error: null as any,
+    page: -1,
+    etiquetaVariableBody: null as EtiquetaVariableBody | null
 })
 
 
@@ -43,7 +45,7 @@ const etiquetaVariableSlice = createSlice({
 
                 if (Number(item.idTipoDocumento) === Number(action.payload.idTipoDocumento)) {
                     item.file = action.payload.file
-                    // Cambiar aca segun convenga
+                    // Change for use
                     item.openModal = item.periodicidad === 1
                     item.openModalPeriodo = item.periodicidad === 6
                     item.base64 = action.payload.base64                    
@@ -79,12 +81,20 @@ const etiquetaVariableSlice = createSlice({
             state.success = false;
             state.error = action.payload
         },
+
+        setPage(state, action: PayloadAction<number>){
+            state.page = action.payload;
+        },
+
         etiquetaVariableReset(state) {
             state.loading = false;
             state.success = false;            
         },
         setOpenModal(state, action: PayloadAction<boolean>) {
             // state.openModal = action.payload
+        },
+        setEtiquetaVariableBody(state, action: PayloadAction<EtiquetaVariableBody>) {
+            state.etiquetaVariableBody = action.payload
         }
     }
 });

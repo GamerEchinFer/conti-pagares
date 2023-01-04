@@ -22,6 +22,7 @@ import { getProductosAction } from "../../redux/thunks/producto.thunks";
 import { clienteDocumentoActions } from "../../redux/slices/clienteDocumento.slice";
 import { getClienteDocumentoAction } from "../../redux/thunks/clienteDocumento.thunks";
 import { RootState } from "../../redux/store";
+import LoadingIcon from "../../components/shared/LoadingIcon";
 
 const filtros = ["codigo", "documento"]
 
@@ -35,7 +36,9 @@ const TipoBusquedaPage = () => {
   const [clienteDocumento, setClienteDocumento] = useState("");
   const [nextPage, setNextPage] = useState();
   const mediaQueryPadding = useMediaQuery(theme.breakpoints.down(705));
-  const clienteDatos = useSelector((state: RootState) => state.clienteDatos.items);    
+  const clienteDatos = useSelector((state: RootState) => state.clienteDatos.items);
+  const loading = useSelector((state: RootState) => state.clienteDatos.loading);
+
   const router = useRouter();
 
   useMount(() => {
@@ -103,15 +106,24 @@ const TipoBusquedaPage = () => {
                   />
                 </div>
                 <div className="flex flex-col pl-28 pt-1">
-                  
-                    <SearchbarButton active={codigoCliente.length > 0} onClick={() => 
-                    dispatch(getClienteDatosAction(codigoCliente, filtros[tipoBusquedaSelected - 1]))}  />
-
+                  <SearchbarButton 
+                    active={codigoCliente.length > 0} 
+                    onClick={() => 
+                      dispatch(getClienteDatosAction(codigoCliente, filtros[tipoBusquedaSelected - 1]))}  
+                      />
                     {/* ? <SearchbarButton active={clienteDocumento.length > 0} onClick={() => 
                       dispatch(getClienteDocumentoAction(clienteDocumento))}  /> : null} */}
-                  
                  </div>
               </div>
+                      {
+                      loading
+                      ? (
+                        <div className="flex justify-center pt-10 pb-10 w-200">
+                          <LoadingIcon />
+                        </div>
+                        )
+                        : null
+                      }
             </div>
           </div>
           

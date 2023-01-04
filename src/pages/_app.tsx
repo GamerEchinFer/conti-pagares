@@ -8,22 +8,30 @@ import { Persistor } from 'redux-persist'
 import store, { persistor } from '../redux/store'
 import { theme } from '../../theme/Theme'
 import ResponsiveAppBar from '../components/TopBar'
+import interceptors from '../api/interceptors'
+import { ReactKeycloakProvider } from '@react-keycloak/web'
+import keycloak from '../config/Keycloak'
+import ErrorBar from '../components/shared/ErrorBar'
 
 
 export default function App({ Component, pageProps }: AppProps) {
+  interceptors();
   return (
     <>
       <Head>
         <title>Carpeta Digital | Banco Continental </title>
        </Head>
-      <ThemeProvider theme={theme}>
-        <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor as Persistor}>
-            <ResponsiveAppBar />
-            <Component {...pageProps} />
-          </PersistGate>          
-        </Provider>        
-      </ThemeProvider>
+        <ReactKeycloakProvider authClient={keycloak as any} initOptions={{onLoad: 'login-required'}} >
+          <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor as Persistor}>
+              <ThemeProvider theme={theme}>
+                  <ErrorBar />
+                  <ResponsiveAppBar />
+                  <Component {...pageProps} />
+              </ThemeProvider>
+            </PersistGate>          
+          </Provider>
+        </ReactKeycloakProvider>      
     </>        
   )
 }

@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { GuardarDocumentoResponse } from '../../interfaces/interfaces';
+import { GuardarDocumentoRequest } from '../../interfaces/interfaces';
 
 // MUTABLE
 const initialState = () => ({
-    response: {} as GuardarDocumentoResponse,
+    response: {} as GuardarDocumentoRequest,
     loading: false,    
     success: false,
     error: null as any,
@@ -17,7 +17,7 @@ const guardarDocumentoSlice = createSlice({
         guardarDocumentoRequest(state) {
             state.loading = true;
         },
-        guardarDocumentoSuccess(state, action:PayloadAction<GuardarDocumentoResponse>) {
+        guardarDocumentoSuccess(state, action:PayloadAction<GuardarDocumentoRequest>) {
             state.response = action.payload;
             state.loading = false;
             state.success = true;

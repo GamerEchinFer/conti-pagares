@@ -2,7 +2,7 @@ import List from '@mui/material/List';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {useMount} from 'ahooks'
-import { getAllSolicitudClienteAction } from '../../redux/thunks/solicitud.thunks';
+// import { getAllSolicitudClienteAction } from '../../redux/thunks/solicitud.thunks';
 import { SolicitudCliente } from '../../interfaces/interfaces';
 import { RootState } from '../../redux/store';
 import SolicitudItem from '../../components/SolicitudItem';
@@ -18,7 +18,9 @@ import styles from "../solicitud/Solicitud.module.css";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { theme } from '../../../theme/Theme';
 import { solicitudActions } from '../../redux/slices/solicitud.slice';
-
+import { postAutenticarServicio } from '../../api/keycloakApi';
+import { keycloakHeaders } from '../../constants/constants';
+import { getSolicitudClienteAction } from '../../redux/thunks/solicitud.thunks';
 
 function SolicitudPage() {
   const router = useRouter();
@@ -34,9 +36,19 @@ function SolicitudPage() {
   const solicitud = useSelector((state: RootState) => state.solicitud.solicitudSelected)
   const page = useSelector((state: RootState) => state.solicitud.page)
 
+  // refrescar cada página con un request y un  dispatch de definición de esta página.
   useMount(() => {
     initialize();
+    dispatch(solicitudActions.solicitudRequest())
+    postAutenticarServicio(keycloakHeaders).then((value) => {            
+      localStorage.setItem("gdi-auth", JSON.stringify(value));
+      console.log(value);      
+      dispatch(getSolicitudClienteAction())
+    }).finally(() => {
+        
+    })
   })
+
 
   const initialize = () => {
     // Cuando esta en la pagina inicial donde muestran la lista de solicitudes se hara las siguientes acciones
@@ -46,9 +58,7 @@ function SolicitudPage() {
       dispatch(solicitudActions.setIdProducto(0))
       dispatch(solicitudActions.setIdSubProducto(0))
     }    
-    dispatch(getAllSolicitudClienteAction())
-
-    
+    dispatch(getSolicitudClienteAction())
   }
 
   const setPage = (value: number) => {

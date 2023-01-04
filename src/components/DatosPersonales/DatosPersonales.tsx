@@ -25,10 +25,10 @@ const DatosPersonales = ({imagen = DatosPersonalesImage } : ClienteDatosProps) =
     const clienteDatos = useSelector((state: RootState) => state.clienteDatos.items);    
     const [clientDate, setClientDate] = useState<any>(null);   
     
-    if (!clienteDatos || !clienteDatos.codigoCliente) return null
+    if (!clienteDatos || !clienteDatos.codigoCliente) return null;
     
     return (
-        <>          
+    <>          
         <Grid container pt={3} pb={'2px'} style={{ justifyContent: 'center' }}>
 			<Box className={styles.box}>
                 <Grid container>  

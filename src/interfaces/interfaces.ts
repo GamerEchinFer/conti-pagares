@@ -45,6 +45,8 @@ export interface EtiquetaVariable {
     valor: string;
 }
 
+export type EtiquetaVariableBody = {[key: string]: EtiquetaVariable}
+
 export interface EtiquetaVariableResponse {
     // idTipoDocumento: number;
     idTipoDocumento: string;
@@ -162,12 +164,11 @@ export interface ClienteDatos {
 export interface ClienteDocumento extends ClienteDatos {}
 
 
-
 export interface GuardarDocumentoRequest {
     codigoTipoDocumento: number,
     rutaDocumento: string;
-    fechaRegistro: any;
-    fechaEmision: any;
+    fechaRegistro?: any;
+    fechaEmision: Date;
     descripcionDocumento: string;
     hadoop: string;
     codigoCliente: string;
@@ -176,6 +177,7 @@ export interface GuardarDocumentoRequest {
     codigoUsuario: string;
     codigoProducto: number;
     codigoSubproducto: number;
+    operacion: number;
 }
 export interface NumeroLegajo {
     nextSequence: number;

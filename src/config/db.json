@@ -1,0 +1,69 @@
+{
+    "tipoBusqueda" : [
+      {
+        "id":1,
+        "nameTipoBusqueda": "Código de Cliente"
+      },
+      {
+        "id":2,
+        "nameTipoBusqueda": "Número Documento"
+      }
+    ],
+      
+    "solicitudCliente" : [
+      {
+        "id": 1,
+        "nameSolicitud": "Nueva solicitud",
+        "nameDetalle": "Para cargar documentos a partir de una solicitud de productos."
+      },
+      {
+          "id": 2,
+          "nameSolicitud": "Solicitud en curso",
+          "nameDetalle": "Para concultar y editar solicitudes en curso."
+      },
+      {
+          "id": 3,
+          "nameSolicitud": "Actualizar documentos",
+          "nameDetalle": "Para cargar documentos que no esten relacionados a un producto."
+      },
+      {
+          "id": 4,
+          "nameSolicitud": "Consultar documentos",
+          "nameDetalle": "Para consultar el estado de los documentos cargados del cliente."
+      }],
+  
+  
+    "documentos" :[
+      {
+        "idTipoDocumento": "243",
+        "tipoDocumento": "CENTRAL DE RIESGOS DE BANCARD",
+        "periodicidad": 1
+      },
+      {
+        "idTipoDocumento": "206",
+        "tipoDocumento": "MANIFESTACIÓN DE BIENES",
+        "periodicidad": 6
+      },
+      {
+        "idTipoDocumento": "2134",
+        "tipoDocumento": "REPORTE BASE POSITIVA",
+        "periodicidad": 1
+      },
+      {
+        "idTipoDocumento": "2114",
+        "tipoDocumento": "REPORTE BICSA",
+        "periodicidad": 1
+      },
+      {
+        "idTipoDocumento": "1594",
+        "tipoDocumento": "EVALUACIÓN SCORING",
+        "periodicidad": 1
+      },
+      {
+        "idTipoDocumento": "2194",
+        "tipoDocumento": "IMPUESTO A LA RENTA PERSONAL FORM. 515,516",
+        "periodicidad": 1
+      }
+    ]
+  }
+    

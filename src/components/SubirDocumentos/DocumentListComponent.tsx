@@ -24,6 +24,8 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [archives, setArchives] = useState(null);
+  const [isCheckedIcon, setisCheckedIcon] = useState(true)
+  const [isShown, setIsShown] = useState(true);
 
   const inputRef = useRef<any>();
 
@@ -44,7 +46,7 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
 
     dispatch(hadoopDirectoActions.setFiles(files))
     const reader = new FileReader();
-    reader.readAsDataURL(files[0]);
+    reader.readAsDataURL(files[Number(0)]);
 
     reader.onload = function () {
 
@@ -69,6 +71,10 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
     router.push('/dialog-components');
   } 
 
+  const handleClickViewDoc = (event: React.MouseEvent<HTMLElement>) => {
+    console.log(event.target);
+  }
+
   return (
     <>
       <ListItem 
@@ -77,41 +83,41 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
         className="pb-2 pt-2"
         secondaryAction={                      
           item.tieneDocumento 
-            ? <CheckUploadIconComponent onClick={() => handleClickModificarDoc} />
-            // ? <RecargarDocIcon onClick={()=> handleClickModificarDoc} /> 
+            ? <RecargarDocIcon onClick={() => handleClickModificarDoc}  />                        
             : <FileUploadIconComponent onClick={() => inputRef.current.click()} />          
         }
-        >
+      >
                  
-      <LightTooltip 
-        disableTouchListener 
-        title="Visualizar archivo cargado" 
-        arrow>
-            <ListItemText
-              className="pr-2"
-              primary={capitalize(`${item.tipoDocumento}`)}       
-              primaryTypographyProps={{fontSize:"20px", color: item.tieneDocumento ? "#BEC400" : "#1D428A", fontWeight:"400"}}
-              
-              secondary={
-                !item.tieneDocumento ?
-                <>
-                  <Typography
-                    sx={{fontSize:"12px", color:"#373A3C", fontWeight:"400"}}>
-                      Adjunta el documento con el explorador de archivos
-                  </Typography>
-                  <span style={{fontSize:"16px", color:"#1D428A", fontWeight:"400" }}>
-                    <div className="pt-2">
-                    Subir desde el histórico
-                    </div>
-                  </span>
-                </> : null}
-            />
-            </LightTooltip>
+        <LightTooltip 
+          disableTouchListener 
+          title="Visualizar archivo cargado" 
+          arrow>
+          <ListItemText
+            className="pr-2"
+            primary={capitalize(`${item.tipoDocumento}`)}       
+            primaryTypographyProps={{fontSize:"20px", color: item.tieneDocumento ? "#BEC400" : "#1D428A", fontWeight:"400"}}
+            // onClick={(e) => handleClickViewDoc(e)}
+            secondary={
+              !item.tieneDocumento ?
+              <>
+                <Typography
+                  sx={{fontSize:"12px", color:"#373A3C", fontWeight:"400"}}>
+                    Adjunta el documento con el explorador de archivos
+                </Typography>
+                <span style={{fontSize:"16px", color:"#1D428A", fontWeight:"400" }}>
+                  <div className="pt-2">
+                  Subir desde el histórico
+                  </div>
+                </span>
+              </> : null}
+          />
           
-          <ListItemButton>            
-            <ModalPDFComponent item={item} />
-            <DialogPeriodoComponent item={item} />            
-          </ListItemButton>                  
+          </LightTooltip>
+          
+        <ListItemButton>            
+          <ModalPDFComponent item={item} />
+          <DialogPeriodoComponent item={item} />            
+        </ListItemButton>                  
             
       </ListItem>
       <Divider />

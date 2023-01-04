@@ -11,7 +11,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { useMount, useDebounce } from 'ahooks';
 import dayjs, { Dayjs } from 'dayjs';
 import React, {useState, ChangeEvent} from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { theme } from '../../../theme/Theme';
 import { capitalize } from '../../helpers/capitalize';
 import { EtiquetaVariableResponse } from '../../interfaces/interfaces';
@@ -25,6 +25,11 @@ import * as pdfjsLib from 'pdf-lib'
 import { cutPdf, parsePdfBase64 } from '../../helpers/cutPdf';
 import { useEffect } from 'react';
 import  "dayjs/locale/es";
+import { RootState } from '../../redux/store';
+import router from 'next/router';
+import { base64ToFile } from '../../helpers/base64ToFile';
+import { postAlzarHadoopDirecto } from '../../api/apmDesaApi';
+import { useDocumento } from './hooks/useDocumento';
 
 type ModalPDFComponentProps = {
   item: EtiquetaVariableResponse
@@ -36,13 +41,17 @@ const filterPdf = () => ({
 })
 
 export default function ModalPDFComponent({item}: ModalPDFComponentProps) {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const documento = useDocumento();
   const fullScreen = useMediaQuery(theme.breakpoints.down('xl'));
   const label = { inputProps: { 'aria-label': 'Checkbox demo' } }; 
+  const [href, setHref] = useState("");
   
   const [filter, setFilter] = useState(filterPdf());
   const debouncedValue = useDebounce(filter, { wait: 500 });  
-
+  const files = useSelector((state: RootState) => state.hadoopDirecto.files);
+  const saveDoc = useSelector((state: RootState) => state.guardarDocumento.response);
+  const saveDate = useSelector((state: RootState) => state.guardarDocumento.response);
 
   useEffect(() => {
     confirmCutPdf()    
@@ -105,21 +114,13 @@ export default function ModalPDFComponent({item}: ModalPDFComponentProps) {
 
   const confirm = async () => {
 
-    console.log(item);
+    const res = await documento.guardarDocumento(item);
+    //update list check    
+    dispatch(etiquetaVariableActions.etiquetaVariableRequest());
+    // setHref(res.LOC)
+    // setFileName("test")
 
-    const pdfstr = await fetch(item.base64Modified as string);  
-    const blobFromFetch= await pdfstr.blob();
-
-  
-    var blob = new Blob([blobFromFetch], {type: "application/pdf"});
-    
-    const blobUrl = URL.createObjectURL(blob);
-
-    const formData = new FormData()
-    formData.append("file", blob)
-
-    // api 
-    
+    console.log(res);                
   }
 
   const handleChangeFilter = (event: ChangeEvent<HTMLInputElement>) => {
@@ -157,7 +158,7 @@ export default function ModalPDFComponent({item}: ModalPDFComponentProps) {
                   <DesktopDatePicker
                     label="Fecha de Expedición"
                     inputFormat="DD - MM - YYYY"
-                    value={value}
+                    value={saveDate.fechaEmision}
                     onChange={handleChange}
                     renderInput={(params) => <TextField {...params}  sx={{ width: 508 }}/>}
                   />
@@ -171,13 +172,14 @@ export default function ModalPDFComponent({item}: ModalPDFComponentProps) {
                   </div>
                 </form>                                                              
                 <div>
+                    {href}
                     Es un documento autenticado
                     <Checkbox {...label} defaultChecked />
                 </div>
                 <div className="pb-4 pt-4">
                   <TextField
                     label="Asociar a Operación"
-                    // value={"74783648247234"}
+                    value={saveDoc.operacion}
                     placeholder="74783648247234"
                     fullWidth
                   />
@@ -185,7 +187,7 @@ export default function ModalPDFComponent({item}: ModalPDFComponentProps) {
                 
                 <div className="flex flex-row justify-center gap-8 pb-4">
                   <CancelButton onClick={handleClose}/>
-                  <ButtonConfirmar onClick={confirm}/>
+                  <ButtonConfirmar onClick={confirm} />
                   {/* <ButtonModificar onClick={handleClose}/> */}
                 </div>
             </DialogContent>

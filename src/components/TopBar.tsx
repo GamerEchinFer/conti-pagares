@@ -11,12 +11,12 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import logo from '../assets/img/generales/logo-continental-blanco.svg';
 import { useSelector } from 'react-redux';
-// import { useKeycloak } from '@react-keycloak/web';
+import { useKeycloak } from '@react-keycloak/web';
 import { RootState } from '../redux/store';
 
 const ResponsiveAppBar = () => {
 
-	// const { usuarioKeycloack } = useSelector((state:RootState)=>state.auth)
+	const { usuarioKeycloack } = useSelector((state:RootState)=>state.auth)
 	const router = useRouter();
     // const { keycloak } = useKeycloak();
 
@@ -25,8 +25,8 @@ const ResponsiveAppBar = () => {
 	};
 
 	const imageRedirect = () => {
-		if (router.pathname !== '/' && router.pathname !== '/productos'){
-			router.push('/productos')
+		if (router.pathname !== '/' && router.pathname !== '/tipoBusqueda'){
+			router.push('/tipoBusqueda')
 		}
 	}
 
@@ -45,7 +45,7 @@ const ResponsiveAppBar = () => {
 					</Grid>
 					<Box sx={{ flexGrow: 0,display:'contents' }}>
 							<Typography style={{paddingRight:8}}>
-								{/* {usuarioKeycloack} */}
+								{usuarioKeycloack}
 							</Typography>
 							<Tooltip title="Cerrar sesión">
 							<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
