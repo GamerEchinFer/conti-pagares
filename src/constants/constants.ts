@@ -14,7 +14,7 @@ export const apiKey = "Ivb2'@sr8|x,3`yv.7YfxNwb#?l8C!"
 export const keycloakHeaders: AutenticarServicioHeader = {
     // APIM DESA
     "Client-Id": "gestion-documental",
-    "Client-Secret": "bfecaa67-2d9a-4703-93be-83d429c045c5",
+    "Client-Secret": "157a0c08-bb2e-451d-895d-5a43d90fb3ae",
     "Grant-Type": "client_credentials",
     "Subscription-Key": "cc665137fcfb4a95a0c2701e58828e7c",
     Scope: "profile"

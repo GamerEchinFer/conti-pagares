@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { getClientId } from '../../../api/ApiAuth'
 import interceptors from '../../../api/interceptors'
 import { desencriptar } from '../../../helpers/encriptar'
-import { ClientIdResponse } from '../../../models/responses/ClienteId.response'
+import { ClienteDatos } from '../../../interfaces/interfaces'
 
 export type payloadCliente = {
   token: string, 
@@ -25,7 +25,7 @@ export default async function handler(
 ) {
     const clientData = await requestToken(req.body.data, req.headers.deviceinfo as string, req.headers.userinfo as string)
     if (clientData){
-      res.status(clientData.status).json(clientData.data as ClientIdResponse)
+      res.status(clientData.status).json(clientData.data as ClienteDatos)
     }else{
       res.status(500).json({data: clientData})
     }

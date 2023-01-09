@@ -19,18 +19,52 @@ import { solicitudActions } from '../../redux/slices/solicitud.slice';
 import { getNumeroLegajoAction } from '../../redux/thunks/numeroLegajo.thunks';
 import LoadingIcon from '../shared/LoadingIcon';
 
+const initialBody = (body: EtiquetaVariableBody) => ({
+  codigoCliente: {
+    "nombre": "codigoCliente",
+    "valor": "000666"
+  },
+  tipo_persona: {
+    "nombre": "tipo_persona",
+    "valor": "F"
+  },
+  id_producto: {
+    "nombre": "id_producto",
+    "valor": "7"
+  },
+  id_subproducto: {
+    "nombre": "id_subproducto",
+    "valor": "146"
+  },
+  id_actividad: {
+    "nombre": "id_actividad",
+    "valor": "1"
+  },
+  id_riesgo: {
+    "nombre": "id_riesgo",
+    "valor": "4"
+  },
+  id_destino: {
+    "nombre": "id_destino",
+    "valor": "1"        
+  },
+  
+  ...body
+})
+
 type NuevaSolicitudComponentProps = {
   solicitud: SolicitudCliente | null
 }
 
 function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
-
+  const clienteDatos = useSelector((state: RootState) => state.clienteDatos.items);
   const router = useRouter();
   // STATES
   const dispatch = useDispatch(); 
 
   const loadingParametrosSelect = useSelector((state: RootState) => state.parametro.loading);
   const etiquetaVariableSuccess = useSelector((state: RootState) => state.etiquetaVariable.success);
+  const etiquetaVariableBody = useSelector((state: RootState) => state.etiquetaVariable.etiquetaVariableBody);
   // const idProducto = useSelector((state: RootState) => state.solicitud.idProducto);
   // const idSubProducto = useSelector((state: RootState) => state.solicitud.idSubProducto);
 
@@ -39,37 +73,7 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
   const [idSubProducto, setIdSubProducto] = useState(0);
   const [isChangeSelected, setIsChangeSelected] = useState(false)
 
-  const [body, setBody] = useState<EtiquetaVariableBody>({
-    codigoCliente: {
-      "nombre": "codigoCliente",
-      "valor": "000666"
-    },
-    tipo_persona: {
-      "nombre": "tipo_persona",
-      "valor": "F"
-    },
-    id_producto: {
-      "nombre": "id_producto",
-      "valor": "7"
-    },
-    id_subproducto: {
-      "nombre": "id_subproducto",
-      "valor": "146"
-    },
-    id_actividad: {
-      "nombre": "id_actividad",
-      "valor": "1"
-    },
-    id_riesgo: {
-      "nombre": "id_riesgo",
-      "valor": "4"
-    },
-    id_destino: {
-      "nombre": "id_destino",
-      "valor": "1"
-    },
-    
-  })
+  const [body, setBody] = useState<EtiquetaVariableBody>(initialBody(etiquetaVariableBody as EtiquetaVariableBody))
 
   const solicitudes = useSolicitudes()
 
@@ -115,11 +119,14 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
 
   const handleClickNext = () => {
     dispatch(postEtiquetasVariablesAction(Object.values(body)));
-    dispatch(etiquetaVariableActions.setEtiquetaVariableBody(body))
+    dispatch(etiquetaVariableActions.setEtiquetaVariableBody(body));
+
     // True si cambia la combinacion de productos and false si no cambia
 
     if (isChangeSelected) {
       dispatch(getNumeroLegajoAction());
+      dispatch(postEtiquetasVariablesAction(Object.values(body)));
+      // dispatch(etiquetaVariableActions.setEtiquetaVariableBody(body));
       // dispatch(postEtiquetasVariablesAction().setEtiquetaVariableBody(body));
     }
     

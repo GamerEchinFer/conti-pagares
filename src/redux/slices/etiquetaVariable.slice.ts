@@ -8,6 +8,7 @@ interface EtiquetaVariableUpdateFile {
     base64Modified: string
     totalPages: number,
     size: number,
+    filename?: string
 }
 
 interface EtiquetaVariableUpdateFileModified {
@@ -15,6 +16,11 @@ interface EtiquetaVariableUpdateFileModified {
     base64Modified: string,
     totalPagesModified: number,
     sizeModified: number
+}
+
+interface EtiquetaVariableSetOpenModalView {
+    idTipoDocumento: string,
+    openModalView: boolean
 }
 
 // MUTABLE
@@ -48,11 +54,13 @@ const etiquetaVariableSlice = createSlice({
                     // Change for use
                     item.openModal = item.periodicidad === 1
                     item.openModalPeriodo = item.periodicidad === 6
+                    item.openModalView = item.tieneDocumento === true
                     item.base64 = action.payload.base64                    
                     item.base64Modified = action.payload.base64 ?? 0     
                     item.totalPages = action.payload.totalPages ?? 0              
                     item.totalPagesModified = action.payload.totalPages ?? 0              
                     item.size = action.payload.size ?? 0              
+                    item.filename = action.payload.filename ?? "Test"     
                 }
 
                 return item;
@@ -73,6 +81,7 @@ const etiquetaVariableSlice = createSlice({
             state.response = state.response.map(item => {                
                 item.openModal = false
                 item.openModalPeriodo = false
+                item.openModalView = false
                 return item;
             })
         },
@@ -95,7 +104,16 @@ const etiquetaVariableSlice = createSlice({
         },
         setEtiquetaVariableBody(state, action: PayloadAction<EtiquetaVariableBody>) {
             state.etiquetaVariableBody = action.payload
-        }
+        },
+        setOpenModalView(state, action:PayloadAction<EtiquetaVariableSetOpenModalView>) {                                                                  
+            state.response = state.response.map(item => {
+
+                if (Number(item.idTipoDocumento) === Number(action.payload.idTipoDocumento)) {                    
+                    item.openModalView = action.payload.openModalView                  
+                }
+                return item;
+            })            
+        },
     }
 });
 

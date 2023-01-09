@@ -8,7 +8,7 @@ trigger:
 
 variables:
   registryNamespace: 'front'
-  imageName: 'front-finansysweb-modulo-omnicanal'
+  imageName: 'front-finansysweb-modulo-gdi'
   imageVersion: '$(Build.SourceVersion)'
 
 pool:

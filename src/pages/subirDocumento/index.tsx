@@ -35,9 +35,9 @@ const SubirDocumentoPage = ()  => {
     const files = useSelector((state: RootState) => state.hadoopDirecto.files);
 
 
-    // useMount(() => {                
-    //     hadoopDirectoActions.setFiles(null);
-    // })
+    useMount(() => {                
+        hadoopDirectoActions.setFiles(null);
+    })
 
     useUnmount(() => {
         // With redux clear in all modals = false
@@ -46,8 +46,8 @@ const SubirDocumentoPage = ()  => {
     });
 
     useMount(() => {
+        // hadoopDirectoActions.setFiles(null);
         initialize();
-        hadoopDirectoActions.setFiles(null);
         // add for exmaple token
         dispatch(etiquetaVariableActions.etiquetaVariableCloseAllModals())
         postAutenticarServicio(keycloakHeaders).then((value) => {            
@@ -64,7 +64,9 @@ const SubirDocumentoPage = ()  => {
             // dispatch(solicitudActions.setIdProducto(0))
             // dispatch(solicitudActions.setIdSubProducto(0))
         }
-    dispatch(getSolicitudClienteAction())
+
+    
+        dispatch(getSolicitudClienteAction());
 
     }
 
@@ -78,8 +80,8 @@ const SubirDocumentoPage = ()  => {
     
     const handleClickAtras = () => {
         if (page === -1) {
-            router.push('./solicitud')
-            // dispatch(solicitudActions.setIdProducto(0))
+            router.push('/solicitud')
+            // dispatch(solicitudActions)
             // dispatch(solicitudActions.setIdSubProducto(0))
             dispatch(etiquetaVariableActions.etiquetaVariableReset());
         }
@@ -101,11 +103,10 @@ const SubirDocumentoPage = ()  => {
         console.log(event);
 
         if (tieneDocumento) return;
-        
-        const idx = event.dataTransfer.getData("file")        
         // Comprobar el tipo de dato de una variable
         // console.log(typeof file);       
         // console.log(typeof file === "string")
+        const idx = event.dataTransfer.getData("file")        
         console.log(files[Number(idx)]);    
 
         const reader = new FileReader();
@@ -121,7 +122,8 @@ const SubirDocumentoPage = ()  => {
                     base64: reader.result?.toString() ?? "",
                     base64Modified: reader.result?.toString() ?? "", 
                     totalPages: pdfDoc.getPageCount(),
-                    size: files[Number(idx)].size / 1000000                    
+                    size: files[Number(idx)].size / 1000000,
+                    // fileName: files(String).fileName ?? ""                  
                 }));
             })                                         
         }

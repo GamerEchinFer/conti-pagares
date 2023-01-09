@@ -3,8 +3,6 @@ let AppConfig = {
         auth:{
             token: '/api/datos/token',
             cliente: '/api/datos/cliente',
-            asignarMarcaPLA: '/api/datos/actualizacion/marca',
-            producto: '/api/datos/producto',
         },
         utilitarios: {
             monedas: '/api/utilitarios/monedas',

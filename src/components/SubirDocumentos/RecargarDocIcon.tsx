@@ -36,7 +36,7 @@ const RecargarDocIcon = ({imagen = CheckDocumento, onClick}:RecargarDocIconProps
             title="Volver a cargar"
             arrow>
             <div className="relative h-8 w-8">
-                <Image src={ isCheckedIcon ? imagen : RecargarDocumento}  alt='imagenDoc' />
+                <Image src={ isCheckedIcon ? imagen : RecargarDocumento}  alt='imagenDoc' className='w-100'/>
             </div> 
           </LightTooltip>
         </List>

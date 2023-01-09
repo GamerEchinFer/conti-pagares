@@ -74,12 +74,14 @@ export interface EtiquetaVariableResponse {
     file?: any; // Dentro del frontend
     openModal?: boolean;
     openModalPeriodo?: boolean;
+    openModalView?: boolean;
     base64?: string;
     base64Modified?: string;
     totalPages?: number;
     totalPagesModified?: number;
     size?: number;
     sizeModified?: number;
+    filename: string;
 }
 
 export interface AutenticarServicioHeader {
@@ -168,7 +170,7 @@ export interface GuardarDocumentoRequest {
     codigoTipoDocumento: number,
     rutaDocumento: string;
     fechaRegistro?: any;
-    fechaEmision: Date;
+    fechaEmision: any;
     descripcionDocumento: string;
     hadoop: string;
     codigoCliente: string;

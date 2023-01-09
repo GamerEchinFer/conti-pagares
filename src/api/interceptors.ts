@@ -66,8 +66,8 @@ const interceptors = () => {
 
     axios.interceptors.request.use((config: AxiosRequestConfig) => {
         if(typeof window !== 'undefined'){
-            if(store.getState().auth.datosAgente !== null){
-                UserInfo = encriptar(`${JSON.stringify(store.getState().auth.datosAgente)}`)
+            if(store.getState().auth.cliente !== null){
+                UserInfo = encriptar(`${JSON.stringify(store.getState().auth.cliente)}`)
             };
 
             if(cookies.get('Cookie') === undefined || cookies.get('Cookie').length === 0){
@@ -105,9 +105,9 @@ const interceptors = () => {
     const alertDescription = error.response?.data?.errorDescription || error.response?.data?.errorMessage || error.response?.data?.message || defaultErrorDescription;
        if (typeof window !== 'undefined') {
         store.dispatch(uiSetError(alertDescription));
-        // if (error.response?.status !== 401 && (error.config.url?.includes(AppConfig.interna.auth.actualizarParticulares) || error.config.url?.includes(AppConfig.interna.auth.actualizarLaborales) || error.config.url?.includes(AppConfig.interna.auth.asignarMarcaPLA))){
-        //     return error.response;
-        // }
+        if (error.response?.status !== 401 && (error.config.url?.includes(AppConfig.interna.auth.cliente))){
+            return error.response;
+        }
         switch (error.response?.status) {
             case 400:
                 store.dispatch(dataError({

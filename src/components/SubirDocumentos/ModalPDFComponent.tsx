@@ -1,4 +1,4 @@
-import { Checkbox, TextField } from '@mui/material';
+import { Button, Checkbox, TextField, Tooltip } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -50,9 +50,9 @@ export default function ModalPDFComponent({item}: ModalPDFComponentProps) {
   const [filter, setFilter] = useState(filterPdf());
   const debouncedValue = useDebounce(filter, { wait: 500 });  
   const files = useSelector((state: RootState) => state.hadoopDirecto.files);
-  const saveDoc = useSelector((state: RootState) => state.guardarDocumento.response);
-  const saveDate = useSelector((state: RootState) => state.guardarDocumento.response);
-
+  const [fechaEmision, setFechaEmision] = useState(new Date().toISOString());
+  const [operacion, setOperacion] = useState(); 
+  
   useEffect(() => {
     confirmCutPdf()    
   }, [debouncedValue])
@@ -114,14 +114,16 @@ export default function ModalPDFComponent({item}: ModalPDFComponentProps) {
 
   const confirm = async () => {
 
-    const res = await documento.guardarDocumento(item);
+    const res = await documento.guardarDocumento(item, fechaEmision);
     //update list check    
     dispatch(etiquetaVariableActions.etiquetaVariableRequest());
     // setHref(res.LOC)
     // setFileName("test")
 
     console.log(res);                
+    
   }
+
 
   const handleChangeFilter = (event: ChangeEvent<HTMLInputElement>) => {
     setFilter({
@@ -131,12 +133,12 @@ export default function ModalPDFComponent({item}: ModalPDFComponentProps) {
   }
 
   return (          
-      <Dialog
-        fullScreen={fullScreen}
-        open={!!item.openModal}
-        onClose={handleClose}
-        aria-labelledby="responsive-dialog-title"
-      >       
+    <Dialog
+      fullScreen={fullScreen}
+      open={!!item.openModal}
+      onClose={handleClose}
+      aria-labelledby="responsive-dialog-title"
+    >       
         <DialogActions>
           <ButtonIconClose autoFocus={true} onClick={handleClose} />
         </DialogActions>
@@ -145,7 +147,7 @@ export default function ModalPDFComponent({item}: ModalPDFComponentProps) {
           className="right-4"
         >
           {capitalize(`${item.tipoDocumento}`)}
-        </DialogTitle>          
+        </DialogTitle>      
           <div className="max-w-6xl grid grid-cols-2 gap-10">
             <DialogContent>
               <DialogContentText
@@ -158,8 +160,8 @@ export default function ModalPDFComponent({item}: ModalPDFComponentProps) {
                   <DesktopDatePicker
                     label="Fecha de Expedición"
                     inputFormat="DD - MM - YYYY"
-                    value={saveDate.fechaEmision}
-                    onChange={handleChange}
+                    value={fechaEmision}
+                    onChange={(value) => setFechaEmision(value as string)}
                     renderInput={(params) => <TextField {...params}  sx={{ width: 508 }}/>}
                   />
                 </LocalizationProvider>
@@ -179,7 +181,7 @@ export default function ModalPDFComponent({item}: ModalPDFComponentProps) {
                 <div className="pb-4 pt-4">
                   <TextField
                     label="Asociar a Operación"
-                    value={saveDoc.operacion}
+                    value={operacion}
                     placeholder="74783648247234"
                     fullWidth
                   />
@@ -195,7 +197,7 @@ export default function ModalPDFComponent({item}: ModalPDFComponentProps) {
             <DialogContent>
               <PDFComponent base64={item?.base64Modified ?? ""}  />
             </DialogContent>   
-          </div>
+            </div>
           </div>
       </Dialog>    
   );

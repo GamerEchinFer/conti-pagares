@@ -13,6 +13,12 @@ import ModalPDFComponent from './ModalPDFComponent';
 import * as pdfjsLib from 'pdf-lib'
 import { etiquetaVariableActions } from '../../redux/slices/etiquetaVariable.slice';
 import RecargarDocIcon from './RecargarDocIcon';
+import { fontWeight } from '@mui/system';
+import ViewPDFComponent from './ViewPDFComponent';
+
+const buttonStyle = (item: EtiquetaVariableResponse) =>  ({
+  fontSize:"20px", color: item.tieneDocumento ? "#BEC400" : "#1D428A", fontWeight:"400"
+})
 
 type DocumentListComponentProps = {
   item: EtiquetaVariableResponse
@@ -57,7 +63,8 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
               base64: reader.result?.toString() ?? "",
               base64Modified: reader.result?.toString() ?? "", 
               totalPages: pdfDoc.getPageCount(),
-              size: files[Number(0)].size / 1000000                    
+              size: files[Number(0)].size / 1000000,
+              filename: files[Number(0)].name ?? ""                  
           }));
       })                                         
     }
@@ -75,29 +82,45 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
     console.log(event.target);
   }
 
+  const openViewPdfModal = (item: EtiquetaVariableResponse) => {        
+    dispatch(etiquetaVariableActions.setOpenModalView({idTipoDocumento: item.idTipoDocumento, openModalView: true}))
+  }
+
   return (
-    <>
+    <> 
       <ListItem 
         component="div" 
         disablePadding 
         className="pb-2 pt-2"
         secondaryAction={                      
           item.tieneDocumento 
-            ? <RecargarDocIcon onClick={() => handleClickModificarDoc}  />                        
+            ? <RecargarDocIcon onClick={() => inputRef.current.click()}  />                        
             : <FileUploadIconComponent onClick={() => inputRef.current.click()} />          
         }
       >
-                 
-        <LightTooltip 
+                
+        {/* <LightTooltip 
           disableTouchListener 
           title="Visualizar archivo cargado" 
-          arrow>
+          arrow> */}
           <ListItemText
             className="pr-2"
-            primary={capitalize(`${item.tipoDocumento}`)}       
+            primary={
+              item.tieneDocumento 
+              ? (
+                <>
+                  <LightTooltip disableTouchListener title="Visualizar archivo cargado" arrow>
+                    <button style={buttonStyle(item)} onClick={() => openViewPdfModal(item)}>                  
+                      {(capitalize(`${item.tipoDocumento}`))}                      
+                    </button>
+                  </LightTooltip>
+                </> 
+              )                
+              : capitalize(`${item.tipoDocumento}`)
+              }       
             primaryTypographyProps={{fontSize:"20px", color: item.tieneDocumento ? "#BEC400" : "#1D428A", fontWeight:"400"}}
-            // onClick={(e) => handleClickViewDoc(e)}
             secondary={
+              (capitalize(`${item.tipoDocumento}`)) &&
               !item.tieneDocumento ?
               <>
                 <Typography
@@ -109,12 +132,12 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
                   Subir desde el histórico
                   </div>
                 </span>
-              </> : null}
+              </> : null
+              }
           />
+          {/* </LightTooltip> */}
           
-          </LightTooltip>
-          
-        <ListItemButton>            
+        <ListItemButton>
           <ModalPDFComponent item={item} />
           <DialogPeriodoComponent item={item} />            
         </ListItemButton>                  
@@ -137,6 +160,7 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
         </div>
       )
     }
+    <ViewPDFComponent item={item} />
     </>
   );
 }

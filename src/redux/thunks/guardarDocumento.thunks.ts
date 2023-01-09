@@ -11,8 +11,10 @@ export const postGuardarDocumentoAction: any = (body: GuardarDocumentoRequest) =
         
       const data = await postGuardarDocumento(body);
 
-        if (data && data.idDocumentos) {
-          dispatch(guardarDocumentoActions.guardarDocumentoSuccess(data))
+        // if (data && data.idDocumentos) {
+        if (data) {
+          // dispatch(guardarDocumentoActions.guardarDocumentoSuccess(data))
+          dispatch(guardarDocumentoActions.guardarDocumentoSuccess);
         }
 
     } catch(ex: any) {
