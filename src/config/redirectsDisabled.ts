@@ -13,7 +13,7 @@ const redirectsDisabled = [
     },
     {
         descripcion: 'subirDocumento',
-        path: 'subierDocumento'
+        path: 'subirDocumento'
     }
 ]
 

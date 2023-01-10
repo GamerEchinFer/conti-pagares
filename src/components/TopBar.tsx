@@ -16,7 +16,7 @@ import { RootState } from '../redux/store';
 
 const ResponsiveAppBar = () => {
 
-	const { usuarioKeycloack } = useSelector((state:RootState)=>state.auth)
+	const { usuarioKeycloack } = useSelector((state:RootState)=>state.auth);
 	const router = useRouter();
     // const { keycloak } = useKeycloak();
 

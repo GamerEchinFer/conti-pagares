@@ -41,6 +41,16 @@ const TipoBusquedaPage = () => {
 
   const router = useRouter();
 
+  // const storedToken = localStorage.getItem("token");
+  //   if (storedToken){
+  //   let decodedData = decode(storedToken, { header: true });
+  //   let expirationDate = decodedData.exp;
+  //     var current_time = Date.now() / 1000;
+  //     if(expirationDate < current_time)
+  //     {
+  //         localStorage.removeItem("token");
+  //     }
+  //   }
   useMount(() => {
     dispatch(clienteDatosActions.clienteDatosReset())
     dispatch(clienteDocumentoActions.clienteDocumentoReset()) 
@@ -49,7 +59,7 @@ const TipoBusquedaPage = () => {
       console.log(value);      
       dispatch(getProductosAction())
     }).finally(() => {
-        
+
     })
   })
 

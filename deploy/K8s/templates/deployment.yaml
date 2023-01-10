@@ -1,0 +1,42 @@
+apiVersion: apps/v1 # Qué versión de la API de Kubernetes estás usando para crear este objeto
+kind: Deployment # Un controlador de Deployment proporciona actualizaciones declarativas para los Pods y los ReplicaSets.
+metadata:
+  name: {{ .Values.releaseName }} # Nombre del deployment
+  labels:
+    app: {{ .Values.releaseName }}-app
+    service: {{ .Values.releaseName }}
+spec:
+  replicas: {{ .Values.deployment.replicas }} # para mantener un conjunto estable de réplicas de Pods ejecutándose en todo momento.
+  selector: # El campo selector define cómo el Deployment identifica los Pods que debe gestionar
+    matchLabels:
+      service: {{ .Values.releaseName }} 
+  template: # 
+    metadata:
+      labels:
+        app: {{ .Values.releaseName }}-app
+        service: {{ .Values.releaseName }}
+      annotations: # Puedes usar las anotaciones de Kubernetes para adjuntar metadatos arbitrarios a los objetos.
+        linkerd.io/inject: enabled # Referencia habilitada para linkerd
+        config.linkerd.io/opaque-ports: "80" 
+    spec:
+      imagePullSecrets: # Registro de docker para la autenticación y pull de imágenes.
+        - name: registry-pull # nombre del secret de pull de docker
+      containers: # datos del contenedor a levantar
+        - name: {{ .Values.releaseName }} # Nombre del contenedor
+          image: {{ .Values.container.registry }}/{{ .Values.releaseName }}:{{ .Chart.AppVersion }} # dirección/repositorio/nombreImagen y versión que el contenedor levantará
+          imagePullPolicy: {{ .Values.container.imagePullPolicy }} # Política para el pull de la imagen, por default el valor es Always.
+          ports:
+            - containerPort: 80 #puerto del contenedor
+              protocol: TCP # Protocolo de comunicación al contenedor
+          envFrom: # Declaración o referencia de variables de entorno
+            - configMapRef: # ConfigMap es utilizado para variables de entorno no sensibles ni confidenciales
+                name: {{ .Values.releaseName }}-env # Nombre del configMap a utilizar
+            - secretRef: # Secret es utilizado para variables de entorno confidenciales, sus valores son encriptados en base64
+                name: {{ .Values.releaseName }}-secret # Nombre del secret a utilizar
+          resources: # Limitaciones de recursos para el pod.
+            limits:
+              cpu: 200m
+              memory: 256Mi
+            requests:
+              cpu: 50m
+              memory: 128M

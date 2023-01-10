@@ -12,6 +12,7 @@ import interceptors from '../api/interceptors'
 import { ReactKeycloakProvider } from '@react-keycloak/web'
 import keycloak from '../config/Keycloak'
 import ErrorBar from '../components/shared/ErrorBar'
+import TipoBusquedaPage from './tipoBusqueda'
 
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -25,6 +26,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <Provider store={store}>
             <PersistGate loading={null} persistor={persistor as Persistor}>
               <ThemeProvider theme={theme}>
+                  {/* <TipoBusquedaPage /> */}
                   <ErrorBar />
                   <ResponsiveAppBar />
                   <Component {...pageProps} />

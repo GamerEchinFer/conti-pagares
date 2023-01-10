@@ -10,7 +10,6 @@ export const useTipoBusqueda = () => {
     useEffect(() => {
         getTipoBusqueda()
         .then((response) => {
-          // debugger;
           setTipoBusqueda(response.data);
         });
       },[]);

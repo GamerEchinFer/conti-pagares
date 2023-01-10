@@ -5,6 +5,7 @@ import { EtiquetaVariableResponse, GuardarDocumentoRequest } from '../../../inte
 import { RootState } from '../../../redux/store';
 import { postEtiquetasVariablesAction } from '../../../redux/thunks/etiqueta.thunk';
 import { etiquetaVariable } from '../../../redux/slices/etiquetaVariable.slice';
+import { useEffect, useState } from 'react';
 
 
 export const useDocumento = () => {
@@ -13,6 +14,21 @@ export const useDocumento = () => {
     const clienteDatos = useSelector((state: RootState) => state.clienteDatos.items);
     const numeroDeLegajo = useSelector((state: RootState) => state.numeroLegajo.items);    
     const saveDoc = useSelector((state: RootState) => state.guardarDocumento.response);
+
+    const [body, setBody] = useState<any>({});
+    useEffect(() => {
+        const jsonString = localStorage.getItem("etiqueta-variable-body");             
+          if (jsonString) {
+            const data = JSON.parse(jsonString)
+            setBody(data)
+            body.id_producto.valor,
+            body.id_subproducto.valor,
+            body.id_actividad.valor,
+            body.id_riesgo.valor,
+            body.codigoCliente.valor,
+            body.tipoPersona.valor
+        }
+    }, []);
 
     const guardarDocumento = async (item: EtiquetaVariableResponse) => {
         const file = await base64ToFile(item?.base64Modified ?? "", "test");  

@@ -20,36 +20,36 @@ import { getNumeroLegajoAction } from '../../redux/thunks/numeroLegajo.thunks';
 import LoadingIcon from '../shared/LoadingIcon';
 
 const initialBody = (body: EtiquetaVariableBody) => ({
-  codigoCliente: {
-    "nombre": "codigoCliente",
-    "valor": "000666"
-  },
-  tipo_persona: {
-    "nombre": "tipo_persona",
-    "valor": "F"
-  },
-  id_producto: {
-    "nombre": "id_producto",
-    "valor": "7"
-  },
-  id_subproducto: {
-    "nombre": "id_subproducto",
-    "valor": "146"
-  },
-  id_actividad: {
-    "nombre": "id_actividad",
-    "valor": "1"
-  },
-  id_riesgo: {
-    "nombre": "id_riesgo",
-    "valor": "4"
-  },
-  id_destino: {
-    "nombre": "id_destino",
-    "valor": "1"        
-  },
+  // // codigoCliente: {
+  // //   "nombre": "codigoCliente",
+  // //   "valor": "000666"
+  // // },
+  // // tipo_persona: {
+  // //   "nombre": "tipo_persona",
+  // //   "valor": "F"
+  // // },
+  // id_producto: {
+  //   "nombre": "id_producto",
+  //   "valor": "7"
+  // },
+  // id_subproducto: {
+  //   "nombre": "id_subproducto",
+  //   "valor": "146"
+  // },
+  // id_actividad: {
+  //   "nombre": "id_actividad",
+  //   "valor": "1"
+  // },
+  // id_riesgo: {
+  //   "nombre": "id_riesgo",
+  //   "valor": "4"
+  // },
+  // id_destino: {
+  //   "nombre": "id_destino",
+  //   "valor": "1"        
+  // },
   
-  ...body
+  // ...body
 })
 
 type NuevaSolicitudComponentProps = {
@@ -71,7 +71,7 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
   const [nuevaSolicitud, setNuevaSolicitud] = useState(0);
   const [idProducto, setIdProducto] = useState(0);
   const [idSubProducto, setIdSubProducto] = useState(0);
-  const [isChangeSelected, setIsChangeSelected] = useState(false)
+  const [isChangeSelected, setIsChangeSelected] = useState(false);
 
   const [body, setBody] = useState<EtiquetaVariableBody>(initialBody(etiquetaVariableBody as EtiquetaVariableBody))
 
@@ -122,7 +122,8 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
     dispatch(etiquetaVariableActions.setEtiquetaVariableBody(body));
 
     // True si cambia la combinacion de productos and false si no cambia
-
+    
+    localStorage.setItem("etiquetas-variable-body", JSON.stringify(body));
     if (isChangeSelected) {
       dispatch(getNumeroLegajoAction());
       dispatch(postEtiquetasVariablesAction(Object.values(body)));
@@ -145,10 +146,12 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
     setBody({...body, [nombre]: item})
 
     setIsChangeSelected(true)
+
   }
 
   return (
     <>
+    <pre></pre>
       <div className="grid grid-cols-2 gap-2 pt-4">
         <div 
           className="text-left pl-5"

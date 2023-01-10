@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { baseUrl, baseUrl2 } from '../constants/constants';
+import { baseUrl } from '../constants/constants';
 import { apmAuthInterceptor, apmAuthInterceptorHadoop } from './interceptors';
 
 export const api = axios.create(
@@ -8,11 +8,11 @@ export const api = axios.create(
     }
 );
 
-export const continentalApi = axios.create(
-    {
-        baseURL: baseUrl2  
-    }
-);
+// export const continentalApi = axios.create(
+//     {
+//         baseURL: baseUrl2  
+//     }
+// );
 
 // ES PARA CONECTARSR CON KEYCLOAK Y GENERA EL ACCESS TOKEN. PERO ESTE TIENE QUE ESTAR EN NEXTJS
 export const authApi = axios.create(

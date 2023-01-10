@@ -6,13 +6,15 @@ import { useMount } from 'ahooks';
 import { postAutenticarServicio } from '../api/keycloakApi';
 import { keycloakHeaders } from '../constants/constants';
 import { getProductosAction } from '../redux/thunks/producto.thunks';
+import { useEffect } from 'react';
+import { getIpGeolocation } from '../actions/Auth.actions';
 
 interface props {
   resp: string
 }
 
 const HomePage: NextPage<props> = () => {
-	const dispatch = useAppDispatch()
+	const dispatch = useAppDispatch();
   useMount(() => {
     postAutenticarServicio(keycloakHeaders).then((value) => {            
       localStorage.setItem("gdi-auth", JSON.stringify(value));
@@ -22,6 +24,10 @@ const HomePage: NextPage<props> = () => {
       
   })
 })
+
+  // useEffect(() => {
+  //   dispatch(getIpGeolocation());
+  // })
 
   return (
     <>
