@@ -3,7 +3,7 @@ import { getClienteDocumento } from "../../api/apmDesaApi";
 import { clienteDocumentoActions } from "../slices/clienteDocumento.slice";
 import { AppDispatch } from "../store";
 
-export const getClienteDocumentoAction: any = (nroDocumento: number) => async (dispatch: AppDispatch) => {
+export const getClienteDocumentoAction: any = (nroDocumento: any) => async (dispatch: AppDispatch) => {
     dispatch(clienteDocumentoActions.clienteDocumentoRequest());
     return getClienteDocumento(nroDocumento)
     .then((response) => {

@@ -102,7 +102,8 @@ const ViewPDFComponent = ({item}: ModalPDFComponentProps) => {
 
     const getHadoop = async () => {
 
-        const res = await documento.guardarDocumento(item, fechaEmision);
+        // const res = await documento.guardarDocumento(item, fechaEmision);
+        const res = await documento.guardarDocumento(item);
         //update list check    
         dispatch(etiquetaVariableActions.etiquetaVariableRequest());
         // setHref(res.LOC)

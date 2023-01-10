@@ -1,9 +1,8 @@
 
-import { AxiosResponse } from 'axios';
-import { apiKey, baseUrl } from '../constants/constants';
+import { baseUrl } from '../constants/constants';
 import { DatosCliente, EtiquetaVariable, EtiquetaVariableResponse, Parametros, ParametrosVisibleLista, ParametrosVisibles, PeriodicidadTipoDocumento, Producto, SolicitudCliente, SubProducto, TipoBusqueda } from '../interfaces/interfaces';
 
-import { api, continentalApi } from './index';
+import { api} from './index';
 
 export async function apiGDI() {    
     const solicitud = await api.get(`/solicitudCliente`);        
