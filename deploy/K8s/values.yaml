@@ -17,3 +17,9 @@ container:
   registry: localhost:5000
   imagePullPolicy: Always
   version: 0.1.8
+
+ingress:
+  name: escribania-ing
+  tlsSecret: escribania-cer
+  host: portal-escribania-desa.bancontinental.com.py
+  create: true
