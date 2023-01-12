@@ -7,7 +7,8 @@ config:
   NEXT_PUBLIC_SUSCRIPTION_KEY: '578a3e189d3a4da791ad1aa2a00bae3c'
   NEXT_PUBLIC_CLIENT_SECRET: '3447f4cb-a77b-4255-8989-c51e4fc476e1'
   NEXT_PUBLIC_CLIENTE_ID: 'gestion-documental'
-  NEXT_PUBLIC_HOST_VALIDO: 'http://localhost:9000/'
+  # NEXT_PUBLIC_HOST_VALIDO: 'http://localhost:9000/'
+  NEXT_PUBLIC_HOST_VALIDO: 'https://gdi-desa.bancontinental.com.py/'
   NEXT_PUBLIC_URL_REDIRECT: 'https://www.bancontinental.com.py/' 
 
 deployment:  
