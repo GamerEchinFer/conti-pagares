@@ -20,5 +20,5 @@ container:
 
 ingress:
   tlsSecret: gdi-cer
-  host: gdi-desa.bancontinental.com.py
+  host: gdi-desa.bancontinental.com.py/
   create: true
