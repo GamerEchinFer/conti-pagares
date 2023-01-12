@@ -17,3 +17,8 @@ container:
   registry: localhost:5000
   imagePullPolicy: Always
   version: 0.1.8
+
+ingress:
+  tlsSecret: gdi-cer
+  host: gdi-desa.bancontinental.com.py
+  create: true

@@ -11,6 +11,6 @@ spec:
     - port: 80 # puerto por donde accederá el servicio
       protocol: TCP # Protocolo de comunicación
       name: http 
-      targetPort: 3000
+      targetPort: 9000
   selector: 
     service: {{ .Values.releaseName }}

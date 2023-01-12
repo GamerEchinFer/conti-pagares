@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Values.releaseName }}-ing
+  labels:
+    app: {{ .Values.releaseName }}-app
+    service: {{ .Values.releaseName }}
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-expose-headers: "*"
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+spec:
+  tls:
+  - hosts:
+    - {{ .Values.ingress.host }}
+    secretName: {{ .Values.ingress.tlsSecret }}
+  rules:
+  - host: {{ .Values.ingress.host }}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ .Values.releaseName }} 
+            port:
+              number: 80
