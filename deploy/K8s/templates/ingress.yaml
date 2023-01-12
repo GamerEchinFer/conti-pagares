@@ -26,17 +26,3 @@ spec:
             name: {{ .Values.releaseName }} 
             port:
               number: 80
-      - path: /backend
-        pathType: Prefix
-        backend:
-          service:
-            name: {{ .Values.images.backend.name }}
-            port:
-              number: 80
-      - path: /postgres
-        pathType: Prefix
-        backend:
-          service:
-            name: {{ .Values.images.postgresql.name }} 
-            port:
-              number: 80
