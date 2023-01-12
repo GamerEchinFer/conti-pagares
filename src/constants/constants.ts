@@ -1,8 +1,7 @@
 import { AutenticarServicioHeader, AuthHadoop } from "../interfaces/interfaces"
 
 export const baseUrl = process.env.NODE_ENV === "development" ? 
-    "http://localhost:3000" : "http://localhost:3000"
-
+    "https://gdi-desa.bancontinental.com.py/" : "https://gdi-desa.bancontinental.com.py/"
 
 export const keycloakHeaders: AutenticarServicioHeader = {
     // APIM DESA

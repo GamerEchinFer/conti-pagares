@@ -24,7 +24,7 @@ const HomePage: NextPage<props> = () => {
       
   })
 })
-
+ 
   // useEffect(() => {
   //   dispatch(getIpGeolocation());
   // })
