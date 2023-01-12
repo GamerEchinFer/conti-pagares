@@ -19,7 +19,6 @@ container:
   version: 0.1.8
 
 ingress:
-  name: escribania-ing
-  tlsSecret: escribania-cer
-  host: portal-escribania-desa.bancontinental.com.py
+  tlsSecret: gdi-cer
+  host: gdi-desa.bancontinental.com.py
   create: true
