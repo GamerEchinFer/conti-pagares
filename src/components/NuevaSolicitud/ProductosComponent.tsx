@@ -38,7 +38,7 @@ const ProductosComponent = ({idProducto, setIdProducto}: ProductosComponentProps
               }}
             >
               {
-                productos.map((item) => {
+                productos.map((item: any) => {
                   return <MenuItem key={item.idProducto} value={item.idProducto} >{capitalize(`${item.descripcion}`)}</MenuItem>
                 })
               } 

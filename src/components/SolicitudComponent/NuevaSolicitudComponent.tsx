@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import ProductosComponent from '../NuevaSolicitud/ProductosComponent';
 import ArrowIconBack from '../ArrowIconsComponent/ArrowIconBack';
-import FormularioNuevaSolicitud from '../NuevaSolicitud/FormularioNuevaSolicitud';
 import SubProductosComponent from '../NuevaSolicitud/SubProductosComponent';
 import { useDispatch, useSelector } from 'react-redux';
 import ParametroSelectComponent from '../NuevaSolicitud/ParametroSelectComponent';
@@ -20,34 +19,34 @@ import { getNumeroLegajoAction } from '../../redux/thunks/numeroLegajo.thunks';
 import LoadingIcon from '../shared/LoadingIcon';
 
 const initialBody = (body: EtiquetaVariableBody) => ({
-  // // codigoCliente: {
-  // //   "nombre": "codigoCliente",
-  // //   "valor": "000666"
-  // // },
-  // // tipo_persona: {
-  // //   "nombre": "tipo_persona",
-  // //   "valor": "F"
-  // // },
-  // id_producto: {
-  //   "nombre": "id_producto",
-  //   "valor": "7"
-  // },
-  // id_subproducto: {
-  //   "nombre": "id_subproducto",
-  //   "valor": "146"
-  // },
-  // id_actividad: {
-  //   "nombre": "id_actividad",
-  //   "valor": "1"
-  // },
-  // id_riesgo: {
-  //   "nombre": "id_riesgo",
-  //   "valor": "4"
-  // },
-  // id_destino: {
-  //   "nombre": "id_destino",
-  //   "valor": "1"        
-  // },
+  /*codigoCliente: {
+     "nombre": "codigoCliente",
+     "valor": "000666"
+  },
+  tipo_persona: {
+     "nombre": "tipo_persona",
+     "valor": "F"
+  },
+  id_producto: {
+    "nombre": "id_producto",
+    "valor": "7"
+  },
+  id_subproducto: {
+    "nombre": "id_subproducto",
+    "valor": "146"
+  },
+  id_actividad: {
+    "nombre": "id_actividad",
+    "valor": "1"
+  },
+  id_riesgo: {
+    "nombre": "id_riesgo",
+    "valor": "4"
+  },
+  id_destino: {
+    "nombre": "id_destino",
+    "valor": "1"        
+  },*/
   
   // ...body
 })
@@ -81,6 +80,18 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
   setNuevaSolicitud(event.target.value);
 
   useEffect(() => {
+    dispatch(etiquetaVariableActions.etiquetaVariableResponseReset())
+  }, [])
+
+  useEffect(() => {
+      if (clienteDatos && clienteDatos.codigoCliente) {                
+        agregarNombreValor("codigoCliente", clienteDatos.codigoCliente)
+        agregarNombreValor("tipo_persona", clienteDatos.tipoPersona)
+      }    
+  }, [])  
+
+  useEffect(() => {
+
     // Clean or Clear    
     dispatch(parametroActions.parametroSuccess({}))
   }, [])
@@ -118,18 +129,19 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
   if(!solicitud) return null;
 
   const handleClickNext = () => {
+    
     dispatch(postEtiquetasVariablesAction(Object.values(body)));
     dispatch(etiquetaVariableActions.setEtiquetaVariableBody(body));
 
     // True si cambia la combinacion de productos and false si no cambia
     
     localStorage.setItem("etiquetas-variable-body", JSON.stringify(body));
-    if (isChangeSelected) {
+    // if (isChangeSelected) {
       dispatch(getNumeroLegajoAction());
       dispatch(postEtiquetasVariablesAction(Object.values(body)));
       // dispatch(etiquetaVariableActions.setEtiquetaVariableBody(body));
       // dispatch(postEtiquetasVariablesAction().setEtiquetaVariableBody(body));
-    }
+    // }
     
     router.push('/subirDocumento');
   }
@@ -151,8 +163,8 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
 
   return (
     <>
-    <pre></pre>
-      <div className="grid grid-cols-2 gap-2 pt-4">
+      
+      <div className="grid grid-cols-2 gap-2 pt-4">      
         <div 
           className="text-left pl-5"
           style={{

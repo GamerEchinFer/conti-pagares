@@ -26,7 +26,6 @@ export default function App({ Component, pageProps }: AppProps) {
           <Provider store={store}>
             <PersistGate loading={null} persistor={persistor as Persistor}>
               <ThemeProvider theme={theme}>
-                  {/* <TipoBusquedaPage /> */}
                   <ErrorBar />
                   <ResponsiveAppBar />
                   <Component {...pageProps} />

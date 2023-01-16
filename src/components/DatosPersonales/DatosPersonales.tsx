@@ -8,6 +8,9 @@ import { RootState } from '../../redux/store';
 import { useSelector } from 'react-redux';
 import { datosCliente } from '../../redux/slices/datosCliente.slice';
 import { capitalizePorPalabra } from '../../helpers/capitalize';
+import NextButtonTB from '../Buttons/NextButtonTB';
+import { solicitudActions } from '../../redux/slices/solicitud.slice';
+import router from 'next/router';
 
 type ClienteDatosProps = {
     imagen? : string,    
@@ -26,6 +29,11 @@ const DatosPersonales = ({imagen = DatosPersonalesImage } : ClienteDatosProps) =
     const [clientDate, setClientDate] = useState<any>(null);   
     
     if (!clienteDatos || !clienteDatos.codigoCliente) return null;
+
+    const handleClickNext = () => {
+        // dispatch(solicitudActions.setPage(-1))
+        router.push('/solicitud');
+      };
     
     return (
     <>          
@@ -143,8 +151,15 @@ const DatosPersonales = ({imagen = DatosPersonalesImage } : ClienteDatosProps) =
                 </Grid>
             </Box>
         </Grid>
+        <div className="flex flex-row justify-center gap-8 pb-8">
+            <NextButtonTB disabled={!clienteDatos || !clienteDatos.codigoCliente} onClick={handleClickNext} />
+        </div>
     </>
   )
 }
 
 export default DatosPersonales
+
+function dispatch(arg0: { payload: number; type: "solicitud/setPage"; }) {
+    throw new Error('Function not implemented.');
+}

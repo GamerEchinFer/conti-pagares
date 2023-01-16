@@ -96,7 +96,7 @@ const SubirDocumentoPage = ()  => {
 
     /// En caso de necesitar subir más documentos, insertar lista
     const handleClickAdd = () => {
-        router.push("/addDocumentList");
+        // router.push("/addDocumentList");
     };
 
     const onDrop = (event: DragEvent<HTMLDivElement>, {idTipoDocumento, periodicidad, tieneDocumento}: EtiquetaVariableResponse) => {

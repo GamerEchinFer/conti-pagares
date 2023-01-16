@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ClienteDatos } from "../../interfaces/interfaces";
 
 const initialState = () => ({
-    items: {} as ClienteDatos,
+    items: {tipoPersona: "J", codigoCliente: "123"} as ClienteDatos,
     loading: false, //luego de ejecutar is true
     success: false,
     error: null as any

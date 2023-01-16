@@ -64,15 +64,15 @@ const TipoBusquedaPage = () => {
   })
 
   useEffect(() => {
-      getTipoBusquedaById(tipoBusquedaSelected).then((response) => {
-        setTipoBusqueda(response.data)
-      })
+    getTipoBusquedaById(tipoBusquedaSelected).then((response) => {
+      setTipoBusqueda(response.data)
+    })
   }, [tipoBusquedaSelected])
 
-  const handleClickNext = () => {
-    dispatch(solicitudActions.setPage(-1))
-    router.push('/solicitud');
-  };
+  // const handleClickNext = () => {
+  //   dispatch(solicitudActions.setPage(-1))
+  //   router.push('/solicitud');
+  // };
 
   const handleClickPrevius = () => {
     router.push('/');
@@ -125,23 +125,23 @@ const TipoBusquedaPage = () => {
                       dispatch(getClienteDocumentoAction(clienteDocumento))}  /> : null} */}
                  </div>
               </div>
-                      {
-                      loading
-                      ? (
-                        <div className="flex justify-center pt-10 pb-10 w-200">
-                          <LoadingIcon />
-                        </div>
-                        )
-                        : null
-                      }
+                {
+                loading
+                ? (
+                  <div className="flex justify-center pt-10 pb-10 w-200">
+                    <LoadingIcon />
+                  </div>
+                  )
+                  : null
+                }
             </div>
           </div>
-          
           <DatosPersonales />
+          
         </div>
-        <div className="flex flex-row justify-center gap-8 pb-8">
+        {/* <div className="flex flex-row justify-center gap-8 pb-8">
             <NextButtonTB disabled={!clienteDatos || !clienteDatos.codigoCliente} onClick={handleClickNext} />
-          </div>
+        </div> */}
         </Box>
       </Grid>
     </>

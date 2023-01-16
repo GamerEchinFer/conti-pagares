@@ -6,7 +6,7 @@ import { RootState } from '../../../redux/store';
 import { postEtiquetasVariablesAction } from '../../../redux/thunks/etiqueta.thunk';
 import { etiquetaVariable } from '../../../redux/slices/etiquetaVariable.slice';
 import { useEffect, useState } from 'react';
-
+import moment from 'moment';
 
 export const useDocumento = () => {
 
@@ -30,18 +30,19 @@ export const useDocumento = () => {
         }
     }, []);
 
-    const guardarDocumento = async (item: EtiquetaVariableResponse) => {
+    const guardarDocumento = async (item: EtiquetaVariableResponse, fechaEmision: any) => {
         const file = await base64ToFile(item?.base64Modified ?? "", "test");  
         const formData = new FormData();        
         formData.append("file", file);
         const resHadoop = await postAlzarHadoopDirecto(formData, "", false, 255);
         console.log(resHadoop);     
-        
+
+        // Number(value) o parseInt(value)
+        let newFech = moment(fechaEmision).format('DDMMYYYY');
         const body: GuardarDocumentoRequest = {
-            // codigoTipoDocumento:Number(etiquetas),
-            codigoTipoDocumento: 6654,
+            codigoTipoDocumento: Number(item.idTipoDocumento),
             rutaDocumento: resHadoop.LOC,
-            fechaEmision: "09012023",
+            fechaEmision: newFech,
             descripcionDocumento: item.filename,
             codigoCliente: clienteDatos.codigoCliente,
             codigoLegajo: numeroDeLegajo[0].nextSequence,

@@ -45,4 +45,4 @@ export const apmHadoopApi = axios.create(
 );
 
 // comment the subscription key for use unique without problems
-// apmHadoopApi.interceptors.request.use(apmAuthInterceptorHadoop);
+apmHadoopApi.interceptors.request.use(apmAuthInterceptorHadoop);

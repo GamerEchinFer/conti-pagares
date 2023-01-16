@@ -53,6 +53,7 @@ export default function ModalPDFComponent({item}: ModalPDFComponentProps) {
   const [fechaEmision, setFechaEmision] = useState(new Date().toISOString());
   const [operacion, setOperacion] = useState(); 
   
+  
   useEffect(() => {
     confirmCutPdf()    
   }, [debouncedValue])
@@ -115,11 +116,12 @@ export default function ModalPDFComponent({item}: ModalPDFComponentProps) {
   const confirm = async () => {
 
     // const res = await documento.guardarDocumento(item, fechaEmision);
-    const res = await documento.guardarDocumento(item);
-    //update list check    
+    const res = await documento.guardarDocumento(item, fechaEmision);
+    //update list check
+        
     dispatch(etiquetaVariableActions.etiquetaVariableRequest());
     // setHref(res.LOC)
-    // setFileName("test")
+    // setFileName("test") 
 
     console.log(res);                
     
@@ -160,11 +162,11 @@ export default function ModalPDFComponent({item}: ModalPDFComponentProps) {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DesktopDatePicker
                     label="Fecha de Expedición"
-                    inputFormat="DD - MM - YYYY"
+                    inputFormat="DD-MM-YYYY"
                     value={fechaEmision}
                     onChange={(value) => setFechaEmision(value as string)}
                     renderInput={(params) => <TextField {...params}  sx={{ width: 508 }}/>}
-                  />
+                    />
                 </LocalizationProvider>
                   
                 </div>

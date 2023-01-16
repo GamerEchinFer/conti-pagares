@@ -42,7 +42,8 @@ const combinedReducers = combineReducers({
   guardarDocumento,
   clienteDocumento: clienteDocumento,
   numeroLegajo: numeroLegajo,
-  tipoDocumento: tipoDocumento
+  tipoDocumento: tipoDocumento,
+  
 })
 
 export type OurStore = ReturnType<typeof combineReducers>

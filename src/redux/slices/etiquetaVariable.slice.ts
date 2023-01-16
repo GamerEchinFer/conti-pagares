@@ -99,6 +99,9 @@ const etiquetaVariableSlice = createSlice({
             state.loading = false;
             state.success = false;            
         },
+        etiquetaVariableResponseReset(state) {
+            state.response = []         
+        },
         setOpenModal(state, action: PayloadAction<boolean>) {
             // state.openModal = action.payload
         },

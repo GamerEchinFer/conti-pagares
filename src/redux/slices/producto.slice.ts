@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Producto } from "../../interfaces/interfaces";
 
 const initialState = () => ({
-    items: [] as Producto[],
+    items: [] as Producto[],    
     loading: false, //luego de ejecutar is true
     success: false,
     error: null as any
