@@ -30,7 +30,7 @@ const ProductosComponent = ({idProducto, setIdProducto}: ProductosComponentProps
                   fontWeight: "400",
                   fontSize:"16px",
                 }}
-              IconComponent={ArrowSelect}
+              // IconComponent={ArrowSelect}
               value={idProducto}
               label="productos"
               onChange={(item) => {

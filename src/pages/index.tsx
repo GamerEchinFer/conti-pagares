@@ -17,21 +17,20 @@ interface props {
 
 const HomePage: NextPage<props> = () => {
     useMount(() => {
-        postAutenticarServicio(keycloakHeaders).then((value) => {            
-            localStorage.setItem("gdi-auth", JSON.stringify(value));
-            console.log(value);      
-            dispatch(getProductosAction())
-        }).finally(() => {
-        
-          })
+      postAutenticarServicio(keycloakHeaders).then((value) => {            
+          localStorage.setItem("gdi-auth", JSON.stringify(value));
+          console.log(value);      
+          dispatch(getProductosAction())
+      }).finally(() => {
+
         })
+      })
         
 const dispatch = useAppDispatch();
 
   return (
     <>
       <TipoBusquedaPage />
-      {/* <InicioComponent />  */}
     </>
   )
 }

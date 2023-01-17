@@ -12,7 +12,12 @@ import { useRouter } from 'next/router';
 import logo from '../assets/img/generales/logo-continental-blanco.svg';
 import { useSelector } from 'react-redux';
 import { useKeycloak } from '@react-keycloak/web';
-import { RootState } from '../redux/store';
+import { RootState, useAppDispatch } from '../redux/store';
+import { useMount } from 'ahooks';
+import { postAutenticarServicio } from '../api/keycloakApi';
+import { keycloakHeaders } from '../constants/constants';
+import { getProductosAction } from '../redux/thunks/producto.thunks';
+import { getClienteDatosAction } from '../redux/thunks/clienteDatos.thunks';
 
 const ResponsiveAppBar = () => {
 
@@ -26,10 +31,19 @@ const ResponsiveAppBar = () => {
 
 	const imageRedirect = () => {
 		if (router.pathname !== '/' && router.pathname !== '/tipoBusqueda'){
-			router.push('/tipoBusqueda')
+				postAutenticarServicio(keycloakHeaders).then((value) => {            
+				localStorage.setItem("gdi-auth", JSON.stringify(value));
+				console.log(value);
+				dispatch(getClienteDatosAction())      
+			}).finally(() => {
+	
+			})
+
 		}
 	}
 
+	const dispatch = useAppDispatch();
+	
 	return (
 		<AppBar style={{ background: '#1D428A' }}>
 			<Container maxWidth="xl">

@@ -42,7 +42,6 @@ function SolicitudPage() {
     dispatch(solicitudActions.solicitudRequest())
     postAutenticarServicio(keycloakHeaders).then((value) => {            
       localStorage.setItem("gdi-auth", JSON.stringify(value));
-      console.log(value);      
       dispatch(getSolicitudClienteAction())
     }).finally(() => {
         
@@ -75,8 +74,6 @@ function SolicitudPage() {
   }
 
   const handleClickPrevius = () => {
-    // router.push('/tipoBusqueda');
-    // OPERACION TERNARIA TU_CONDIDICION ? RENDERIZA : NULL
     if (page === -1) {
       router.push('/tipoBusqueda');
     } else {
@@ -86,9 +83,6 @@ function SolicitudPage() {
     }    
   };
 
-  const handleClickNext = () => {
-    router.push('/subirDocumentos');
-  };
 
   // Dictionary 
   const items: any = {

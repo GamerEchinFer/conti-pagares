@@ -32,7 +32,7 @@ const ParametroSelectComponent = ({onChange}: any) => {
                                 fontWeight: "400",
                                 fontSize:"16px",
                             }}
-                            IconComponent={ArrowSelect}
+                            // IconComponent={ArrowSelect}
                             label={item}
                             onChange={(event) => {
                                 onChange(item, event.target?.value ?? 1)

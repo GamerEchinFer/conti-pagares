@@ -26,7 +26,7 @@ const SubProductosComponent = ({idSubProducto, setIdSubProducto}: SubProductosCo
               }}
               value={idSubProducto}
               label="subproductos"
-              IconComponent={ArrowSelect}
+              // IconComponent={ArrowSelect}
               onChange={(item) => {
                   setIdSubProducto(Number(item.target?.value ?? 1));
                 }}

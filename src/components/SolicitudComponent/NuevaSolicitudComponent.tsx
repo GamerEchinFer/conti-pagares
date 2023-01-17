@@ -98,15 +98,15 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
 
 
   // CUANDO TRAE LAS ETIQUETAS VARIABLES CORRECTAMENTE SE VA A LA SIGUIENTE PANTALLA
-  useEffect(() => {
-    if (etiquetaVariableSuccess) {
-      router.push('/subirDocumento');
-    }
+  // useEffect(() => {
+  //   if (etiquetaVariableSuccess) {
+  //     router.push('/subirDocumento');
+  //   }
 
-    return () => {
-      dispatch(etiquetaVariableActions.etiquetaVariableReset())
-    }
-  }, [etiquetaVariableSuccess])
+  //   return () => {
+  //     dispatch(etiquetaVariableActions.etiquetaVariableReset())
+  //   }
+  // }, [etiquetaVariableSuccess])
 
   useEffect(() => {
 
@@ -128,23 +128,22 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
 
   if(!solicitud) return null;
 
-  const handleClickNext = () => {
+  // const handleClickNext = () => {
     
-    dispatch(postEtiquetasVariablesAction(Object.values(body)));
-    dispatch(etiquetaVariableActions.setEtiquetaVariableBody(body));
+    // dispatch(etiquetaVariableActions.setEtiquetaVariableBody(body));
 
     // True si cambia la combinacion de productos and false si no cambia
     
-    localStorage.setItem("etiquetas-variable-body", JSON.stringify(body));
+    // localStorage.setItem("etiquetas-variable-body", JSON.stringify(body));
     // if (isChangeSelected) {
-      dispatch(getNumeroLegajoAction());
-      dispatch(postEtiquetasVariablesAction(Object.values(body)));
+      // dispatch(getNumeroLegajoAction());
+      // dispatch(postEtiquetasVariablesAction(Object.values(body)));
       // dispatch(etiquetaVariableActions.setEtiquetaVariableBody(body));
       // dispatch(postEtiquetasVariablesAction().setEtiquetaVariableBody(body));
     // }
     
-    router.push('/subirDocumento');
-  }
+  //   router.push('/subirDocumento');
+  // }
 
   const handleIconBack = () => {
     // router.push('/solicitud');
@@ -152,13 +151,21 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
   }
 
   const agregarNombreValor = (nombre: string, valor: string) => {
-
+    
     const item = {nombre, valor}    
 
     setBody({...body, [nombre]: item})
 
     setIsChangeSelected(true)
+    dispatch (postEtiquetasVariablesAction(Object.values(body)))
+    
+  }
 
+  const handleClickNext = () => {
+      localStorage.setItem("etiquetas-variable-body", JSON.stringify(body));
+      dispatch(getNumeroLegajoAction());
+      dispatch(etiquetaVariableActions.etiquetaVariableResponseReset); 
+      router.push('/subirDocumento');
   }
 
   return (

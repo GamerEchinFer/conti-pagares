@@ -34,7 +34,6 @@ const SubirDocumentoPage = ()  => {
     // The Files of redux but cant use in others components
     const files = useSelector((state: RootState) => state.hadoopDirecto.files);
 
-
     useMount(() => {                
         hadoopDirectoActions.setFiles(null);
     })
@@ -45,27 +44,16 @@ const SubirDocumentoPage = ()  => {
         
     });
 
-    useMount(() => {
-        // hadoopDirectoActions.setFiles(null);
-        initialize();
-        // add for exmaple token
-        dispatch(etiquetaVariableActions.etiquetaVariableCloseAllModals())
-        postAutenticarServicio(keycloakHeaders).then((value) => {            
-          localStorage.setItem("gdi-auth", JSON.stringify(value));
-          console.log(value);
-        }).finally(() => {
-            
-        })
-    })
+    // useMount(() => {
+    //     dispatch(etiquetaVariableActions.etiquetaVariableCloseAllModals())
+    // })
 
     const initialize = () => {
         if(page === -1){
             setSolicitud(null)
             // dispatch(solicitudActions.setIdProducto(0))
             // dispatch(solicitudActions.setIdSubProducto(0))
-        }
-
-    
+        }    
         dispatch(getSolicitudClienteAction());
 
     }
@@ -88,7 +76,6 @@ const SubirDocumentoPage = ()  => {
     }; 
 
     const handleClickCargar = () => {
-        console.log("cargando...");
         // hadoopDirectoActions.setFiles(null);
         // finzalizar a traves del historial
         router.push("/tipoBusqueda");
@@ -123,7 +110,6 @@ const SubirDocumentoPage = ()  => {
                     base64Modified: reader.result?.toString() ?? "", 
                     totalPages: pdfDoc.getPageCount(),
                     size: files[Number(idx)].size / 1000000,
-                    // fileName: files(String).fileName ?? ""                  
                 }));
             })                                         
         }
