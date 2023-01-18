@@ -10,6 +10,7 @@ import { useEffect } from 'react';
 import { getIpGeolocation } from '../actions/Auth.actions';
 import InicioComponent from '../components/Inicio/InicioComponent';
 import { getTipoBusqueda } from '../api/apmDesaApi';
+import { getBusquedaAction } from '../redux/thunks/busqueda.thunks';
 
 interface props {
   resp: string
@@ -20,7 +21,8 @@ const HomePage: NextPage<props> = () => {
       postAutenticarServicio(keycloakHeaders).then((value) => {            
           localStorage.setItem("gdi-auth", JSON.stringify(value));
           console.log(value);      
-          dispatch(getProductosAction())
+          // dispatch(getProductosAction())
+          dispatch(getBusquedaAction)
       }).finally(() => {
 
         })

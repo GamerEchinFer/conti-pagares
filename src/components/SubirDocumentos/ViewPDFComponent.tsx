@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from 'react'
 import { useMount } from 'ahooks';
-import { hadoopDownloadActions } from '../../redux/slices/hadoopDownload.slice';
-import { useDispatch } from 'react-redux';
+import { hadoopDownload, hadoopDownloadActions } from '../../redux/slices/hadoopDownload.slice';
+import { useDispatch, useSelector } from 'react-redux';
 import { etiquetaVariableActions } from '../../redux/slices/etiquetaVariable.slice';
 import { useRef } from 'react';
 import ButtonModificar from '../Buttons/ButtonModificar';
@@ -19,6 +19,9 @@ import dayjs, { Dayjs } from 'dayjs';
 import PDFComponent from './PDFComponent';
 import { cutPdf, parsePdfBase64 } from '../../helpers/cutPdf';
 import { useDocumento } from './hooks/useDocumento';
+import ButtonConfirmar from '../Buttons/ButtonConfirmar';
+import { getDescargarHadoopDirecto } from '../../api/apmDesaApi';
+import { RootState } from '../../redux/store';
 
 type ModalPDFComponentProps = {
     item: EtiquetaVariableResponse
@@ -30,18 +33,18 @@ const filterPdf = () => ({
 })
 
 const ViewPDFComponent = ({item}: ModalPDFComponentProps) => {
+    const dispatch = useDispatch();
     const fullScreen = useMediaQuery(theme.breakpoints.down('xl'));
-    const inputRef = useRef<any>();
     const [filter, setFilter] = useState(filterPdf());
     const label = { inputProps: { 'aria-label': 'Checkbox demo' } }; 
     const [href, setHref] = useState("");
-    const dispatch = useDispatch();
     const documento = useDocumento();
+    const [download, setDownload] = useState("");
+    const getFile = useSelector((state: RootState) => state.hadoopDirecto.files);
+    const downFile = useSelector((state: RootState) => state.hadoopDownload.response);
     const [fechaEmision, setFechaEmision] = useState(new Date().toISOString());
-
-    useMount(() => {
-        hadoopDownloadActions.hadoopDownloadRequest();
-    })
+    const [fileName, setFileName] = useState("");
+    const inputRef = useRef<any>();
 
     const handleClose = () => {                        
         dispatch(etiquetaVariableActions.etiquetaVariableCloseAllModals())                
@@ -82,24 +85,47 @@ const ViewPDFComponent = ({item}: ModalPDFComponentProps) => {
       const sizeModified = Number(buffer.length / 1e+6)
       console.log("mb:" + buffer.length / 1e+6);
 
-      
-      // tomamos de la base64 original para crear una instancia de pdfkit
       try {        
         const base64Modified = await cutPdf(base64, cut_from, cut_to, totalPages, totalPagesModified, sizeModified)       
-                
+        const download = await getDescargarHadoopDirecto(downFile)
+        console.log("El PDF: " + download.data.LOC);
+        
+        const viewPdf = `data:application/pdf;base64Modified,${download.data.LOC}` 
+        setDownload(viewPdf)           
+        
+        const el = document.createElement("a")
+        el.href = viewPdf
+        el.download = fileName
+        el.click()
+        
         dispatch(etiquetaVariableActions.etiquetaVariableUpdateFileModified({
-          idTipoDocumento: item.idTipoDocumento,
-          base64Modified: parsePdfBase64(base64Modified as string),
-          totalPagesModified: (cut_to + 1) - cut_from,
-          sizeModified: sizeModified
+            idTipoDocumento: item.idTipoDocumento,
+            base64Modified: parsePdfBase64(base64Modified as string),
+            totalPagesModified: (cut_to + 1) - cut_from,
+            sizeModified: sizeModified
         })) 
-
-      } catch (err: any) {
+        
+    } catch (err: any) {
         console.log(err);        
-      }
-      // base64 => cortar => base64Modified
     }
+    // base64 => cortar => base64Modified
+}
 
+    const confirm = async () => {
+
+        // const res = await documento.guardarDocumento(item, fechaEmision);
+        const res = await documento.guardarDocumento(item, fechaEmision);
+        //update list check
+            
+        dispatch(etiquetaVariableActions.etiquetaVariableRequest());
+        // setHref(res.LOC)
+        // setFileName("test") 
+    
+        console.log(res);                
+        
+      }
+
+      
     const getHadoop = async () => {
 
         // const res = await documento.guardarDocumento(item, fechaEmision);
@@ -110,20 +136,20 @@ const ViewPDFComponent = ({item}: ModalPDFComponentProps) => {
         // setFileName("test")
     
         console.log(res);                
-        
-      }
+    }
+
   return (
         <Dialog
-            fullScreen={fullScreen}
-            open={item?.openModalView ?? false}
-            onClose={handleClose}
-            aria-labelledby="responsive-dialog-title"
+        fullScreen={fullScreen}
+        open={item?.openModalView ?? false}
+        onClose={handleClose}
+        aria-labelledby="responsive-dialog-title"
         >            
             <DialogActions>
                 <ButtonIconClose 
                     autoFocus={true}
                     onClick={handleClose}
-                />
+                    />
             </DialogActions>
             <DialogTitle
             id="responsive-dialog-title" 
@@ -146,7 +172,7 @@ const ViewPDFComponent = ({item}: ModalPDFComponentProps) => {
                                 onChange={(value) => setFechaEmision(value as string)}
                                 disabled
                                 renderInput={(params) => <TextField {...params} sx={{ width: 508 }} /> }
-                            />
+                                />
                         </LocalizationProvider>
                     </div>
                     <form id="form">
@@ -169,7 +195,11 @@ const ViewPDFComponent = ({item}: ModalPDFComponentProps) => {
                             disabled
                         />
                     </div>
-                
+                    <div className="flex flex-row justify-center gap-8 pb-4">
+                  <CancelButton onClick={handleClose}/>
+                  <ButtonConfirmar onClick={confirm} />
+                  <ButtonModificar onClick={() => inputRef.current.click()}/>
+                </div>
                 </DialogContent>
                 <div className="max-w-10xl grid grid-cols" style={{width:"160%"}}>
                 <DialogContent>

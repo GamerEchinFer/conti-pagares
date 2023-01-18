@@ -51,6 +51,7 @@ const TipoBusquedaPage = () => {
   //         localStorage.removeItem("token");
   //     }
   //   }
+  
   useMount(() => {
     dispatch(clienteDatosActions.clienteDatosReset())
     dispatch(clienteDocumentoActions.clienteDocumentoReset()) 

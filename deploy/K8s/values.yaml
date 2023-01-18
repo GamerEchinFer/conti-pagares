@@ -3,6 +3,7 @@ releaseName: front-finansysweb-modulo-gestion-documental
 
 config: 
   NEXT_PUBLIC_API_BASE_URL: 'https://api-sandbox.bancontinental.com.py/'
+  NEXT_PUBLIC_API_BASE_URL: 'http://10.6.3.84:5051/'
   NEXT_PUBLIC_API_TIME_OUT: 60000
   NEXT_PUBLIC_SUSCRIPTION_KEY: '578a3e189d3a4da791ad1aa2a00bae3c'
   NEXT_PUBLIC_CLIENT_SECRET: '3447f4cb-a77b-4255-8989-c51e4fc476e1'

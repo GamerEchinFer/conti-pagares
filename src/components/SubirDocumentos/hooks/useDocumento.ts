@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { postAlzarHadoopDirecto, postGuardarDocumento } from '../../../api/apmDesaApi';
 import { base64ToFile } from '../../../helpers/base64ToFile';
-import { EtiquetaVariableResponse, GuardarDocumentoRequest } from '../../../interfaces/interfaces';
+import { EtiquetaVariableResponse, GuardarDocumentoRequest, ClienteDatos } from '../../../interfaces/interfaces';
 import { RootState } from '../../../redux/store';
 import { postEtiquetasVariablesAction } from '../../../redux/thunks/etiqueta.thunk';
 import { etiquetaVariable } from '../../../redux/slices/etiquetaVariable.slice';
@@ -25,8 +25,7 @@ export const useDocumento = () => {
             body.id_subproducto.valor,
             body.id_actividad.valor,
             body.id_riesgo.valor,
-            body.codigoCliente.valor,
-            body.tipoPersona.valor
+            body.id_destino.valor
         }
     }, []);
 

@@ -1,20 +1,9 @@
 
 import { baseUrl } from '../constants/constants';
-import { DatosCliente, EtiquetaVariable, EtiquetaVariableResponse, Parametros, ParametrosVisibleLista, ParametrosVisibles, PeriodicidadTipoDocumento, Producto, SolicitudCliente, SubProducto, TipoBusqueda } from '../interfaces/interfaces';
+import { DatosCliente, SolicitudCliente, TipoBusqueda } from '../interfaces/interfaces';
 
 import { api} from './index';
 
-export async function apiGDI() {    
-    const solicitud = await api.get(`/solicitudCliente`);        
-    const busqueda = await api.get(`/tipoBusqueda`);        
-    const datosCliente = await api.get(`/datosCliente`);          
-    
-    return {
-        solicitud: solicitud.data,
-        busqueda: busqueda.data,
-        datosCliente: datosCliente.data,               
-    }
-}
 // Método utilizado para filtrar los elementos utilizando id enfocado a SolicitudCliente
 export async function getSolicitudClienteById(id: number) {    
     const solicitudURL = `${baseUrl}/solicitudCliente/${id}`;

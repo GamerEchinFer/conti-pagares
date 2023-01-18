@@ -19,7 +19,7 @@ import { getNumeroLegajoAction } from '../../redux/thunks/numeroLegajo.thunks';
 import LoadingIcon from '../shared/LoadingIcon';
 
 const initialBody = (body: EtiquetaVariableBody) => ({
-  /*codigoCliente: {
+  codigoCliente: {
      "nombre": "codigoCliente",
      "valor": "000666"
   },
@@ -46,7 +46,7 @@ const initialBody = (body: EtiquetaVariableBody) => ({
   id_destino: {
     "nombre": "id_destino",
     "valor": "1"        
-  },*/
+  }
   
   // ...body
 })
@@ -157,8 +157,7 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
     setBody({...body, [nombre]: item})
 
     setIsChangeSelected(true)
-    dispatch (postEtiquetasVariablesAction(Object.values(body)))
-    
+    dispatch (postEtiquetasVariablesAction(Object.values(body)))    
   }
 
   const handleClickNext = () => {

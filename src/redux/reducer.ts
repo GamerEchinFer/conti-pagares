@@ -12,6 +12,7 @@ import { guardarDocumento } from "./slices/guardarDocumento.slice";
 import { clienteDocumento } from './slices/clienteDocumento.slice';
 import { numeroLegajo } from "./slices/numeroLegajo.slice";
 import { tipoDocumento } from "./slices/tipoDocumento.slice";
+import { busqueda } from "./slices/busqueda.slice";
 
 const reducer = {
     solicitud,
@@ -27,7 +28,8 @@ const reducer = {
     guardarDocumento,
     clienteDocumento: clienteDocumento,
     numeroLegajo: numeroLegajo,
-    tipoDocumento: tipoDocumento
+    tipoDocumento: tipoDocumento,
+    busqueda: busqueda
 }
 
 export default reducer;

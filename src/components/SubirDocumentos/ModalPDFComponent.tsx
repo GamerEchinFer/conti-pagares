@@ -30,6 +30,7 @@ import router from 'next/router';
 import { base64ToFile } from '../../helpers/base64ToFile';
 import { postAlzarHadoopDirecto } from '../../api/apmDesaApi';
 import { useDocumento } from './hooks/useDocumento';
+import { postEtiquetasVariablesAction } from '../../redux/thunks/etiqueta.thunk';
 
 type ModalPDFComponentProps = {
   item: EtiquetaVariableResponse
@@ -117,9 +118,8 @@ export default function ModalPDFComponent({item}: ModalPDFComponentProps) {
 
     // const res = await documento.guardarDocumento(item, fechaEmision);
     const res = await documento.guardarDocumento(item, fechaEmision);
-    //update list check
+    dispatch(etiquetaVariableActions.etiquetaVariableCloseAllModals());
         
-    dispatch(etiquetaVariableActions.etiquetaVariableRequest());
     // setHref(res.LOC)
     // setFileName("test") 
 

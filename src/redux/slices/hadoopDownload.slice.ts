@@ -6,7 +6,8 @@ const initialState = () => ({
     items: {} as HadoopDirectoRequest,
     loading: false,
     success: false,
-    error: null as any
+    error: null as any,
+    response: null as any
 });
 
 const hadoopDownloadSlice = createSlice({
@@ -25,6 +26,9 @@ const hadoopDownloadSlice = createSlice({
             state.loading = false;
             state.success = false;
             state.error = action.payload;
+        },
+        setFiles(state, action: PayloadAction<any>) {
+        state.response = action.payload
         }
     }
 });

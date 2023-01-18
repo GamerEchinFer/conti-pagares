@@ -18,6 +18,8 @@ import { postAutenticarServicio } from '../api/keycloakApi';
 import { keycloakHeaders } from '../constants/constants';
 import { getProductosAction } from '../redux/thunks/producto.thunks';
 import { getClienteDatosAction } from '../redux/thunks/clienteDatos.thunks';
+import { getBusquedaAction } from '../redux/thunks/busqueda.thunks';
+import { getSolicitudClienteAction } from '../redux/thunks/solicitud.thunks';
 
 const ResponsiveAppBar = () => {
 
@@ -34,9 +36,10 @@ const ResponsiveAppBar = () => {
 				postAutenticarServicio(keycloakHeaders).then((value) => {            
 				localStorage.setItem("gdi-auth", JSON.stringify(value));
 				console.log(value);
-				dispatch(getClienteDatosAction())      
+				dispatch(getBusquedaAction())      
+				dispatch(getSolicitudClienteAction())      
 			}).finally(() => {
-	
+				localStorage.setItem("gdi-auth", JSON.stringify(""))
 			})
 
 		}

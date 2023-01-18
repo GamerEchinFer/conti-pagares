@@ -110,7 +110,8 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
               ? (
                 <>
                   <LightTooltip disableTouchListener title="Visualizar archivo cargado" arrow>
-                    <button style={buttonStyle(item)} onClick={() => openViewPdfModal(item)}>                  
+                    {/* <button style={buttonStyle(item)} onClick={() => openViewPdfModal(item)}>                   */}
+                    <button style={buttonStyle(item)}>                  
                       {(capitalize(`${item.tipoDocumento}`))}                      
                     </button>
                   </LightTooltip>
