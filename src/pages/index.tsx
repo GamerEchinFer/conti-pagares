@@ -6,10 +6,6 @@ import { useMount } from 'ahooks';
 import { postAutenticarServicio } from '../api/keycloakApi';
 import { keycloakHeaders } from '../constants/constants';
 import { getProductosAction } from '../redux/thunks/producto.thunks';
-import { useEffect } from 'react';
-import { getIpGeolocation } from '../actions/Auth.actions';
-import InicioComponent from '../components/Inicio/InicioComponent';
-import { getTipoBusqueda } from '../api/apmDesaApi';
 import { getBusquedaAction } from '../redux/thunks/busqueda.thunks';
 
 interface props {

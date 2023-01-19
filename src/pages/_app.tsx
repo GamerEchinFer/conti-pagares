@@ -12,7 +12,6 @@ import interceptors from '../api/interceptors'
 import { ReactKeycloakProvider } from '@react-keycloak/web'
 import keycloak from '../config/Keycloak'
 import ErrorBar from '../components/shared/ErrorBar'
-import TipoBusquedaPage from './tipoBusqueda'
 
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -22,7 +21,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <Head>
         <title>Carpeta Digital | Banco Continental </title>
        </Head>
-       <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+       {/* <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" /> */}
         <ReactKeycloakProvider authClient={keycloak as any} initOptions={{onLoad: 'login-required'}} >
           <Provider store={store}>
             <PersistGate loading={null} persistor={persistor as Persistor}>

@@ -197,11 +197,11 @@ const ViewPDFComponent = ({item}: ModalPDFComponentProps) => {
                     </div>
                     <div className="flex flex-row justify-center gap-8 pb-4">
                   <CancelButton onClick={handleClose}/>
-                  <ButtonConfirmar onClick={confirm} />
-                  <ButtonModificar onClick={() => inputRef.current.click()}/>
+                  {/* <ButtonConfirmar onClick={confirm} /> */}
+                  <ButtonModificar onClick={handleClose}/>
                 </div>
                 </DialogContent>
-                <div className="max-w-10xl grid grid-cols" style={{width:"160%"}}>
+                <div className="max-w-10xl grid grid-cols" style={{width:"160%"}} >
                 <DialogContent>
                 <PDFComponent base64={item?.base64Modified ?? ""}  />
                 </DialogContent>   
