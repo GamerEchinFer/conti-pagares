@@ -5,7 +5,7 @@ import DatosPersonalesImage from '../../assets/svg/DatosPersonalesImage.svg'
 import Image from 'next/image';
 import styles from '../DatosPersonales/DatosPersonales.module.css';
 import { RootState } from '../../redux/store';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { datosCliente } from '../../redux/slices/datosCliente.slice';
 import { capitalizePorPalabra } from '../../helpers/capitalize';
 import NextButtonTB from '../Buttons/NextButtonTB';
@@ -27,11 +27,12 @@ const DatosPersonales = ({imagen = DatosPersonalesImage } : ClienteDatosProps) =
 	const [estado, setEstado] = useState();
     const clienteDatos = useSelector((state: RootState) => state.clienteDatos.items);    
     const [clientDate, setClientDate] = useState<any>(null);   
+    const dispatch = useDispatch(); 
     
     if (!clienteDatos || !clienteDatos.codigoCliente) return null;
 
     const handleClickNext = () => {
-        // dispatch(solicitudActions.setPage(-1))
+        dispatch(solicitudActions.setPage(-1))
         router.push('/solicitud');
       };
     
@@ -160,6 +161,3 @@ const DatosPersonales = ({imagen = DatosPersonalesImage } : ClienteDatosProps) =
 
 export default DatosPersonales
 
-function dispatch(arg0: { payload: number; type: "solicitud/setPage"; }) {
-    throw new Error('Function not implemented.');
-}

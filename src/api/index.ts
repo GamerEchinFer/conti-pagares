@@ -8,6 +8,7 @@ export const api = axios.create(
     }
 );
 
+
 // export const continentalApi = axios.create(
 //     {
 //         baseURL: baseUrl2  
@@ -46,3 +47,9 @@ export const apmHadoopApi = axios.create(
 
 // comment the subscription key for use unique without problems
 apmHadoopApi.interceptors.request.use(apmAuthInterceptorHadoop);
+
+export const tokenUserDocumento = axios.create(
+    {
+        baseURL: "http://10.6.2.40:8990/v1/api/Archivo"
+    }
+)

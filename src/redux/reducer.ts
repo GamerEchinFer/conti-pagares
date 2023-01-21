@@ -13,23 +13,27 @@ import { clienteDocumento } from './slices/clienteDocumento.slice';
 import { numeroLegajo } from "./slices/numeroLegajo.slice";
 import { tipoDocumento } from "./slices/tipoDocumento.slice";
 import { busqueda } from "./slices/busqueda.slice";
+import { documentosUser } from './slices/documentosUser.slice';
+import { extractos } from './slices/extractos.slice';
 
 const reducer = {
     solicitud,
-    producto : producto,
-    subProducto: subProducto,
-    datosCliente: datosCliente,
+    producto,
+    subProducto,
+    datosCliente,
     parametroVisible,
-    parametro: parametro,
+    parametro,
     etiquetaVariable,
     hadoopDirecto,
     hadoopDownload,
     clienteDatos,
     guardarDocumento,
-    clienteDocumento: clienteDocumento,
-    numeroLegajo: numeroLegajo,
-    tipoDocumento: tipoDocumento,
-    busqueda: busqueda
+    clienteDocumento,
+    numeroLegajo,
+    tipoDocumento,
+    busqueda,
+    documentosUser,
+    extractos
 }
 
 export default reducer;

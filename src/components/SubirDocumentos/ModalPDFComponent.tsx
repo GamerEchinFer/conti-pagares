@@ -31,6 +31,7 @@ import { base64ToFile } from '../../helpers/base64ToFile';
 import { postAlzarHadoopDirecto } from '../../api/apmDesaApi';
 import { useDocumento } from './hooks/useDocumento';
 import { postEtiquetasVariablesAction } from '../../redux/thunks/etiqueta.thunk';
+import { postAlzarArchivoAction } from '../../redux/thunks/extractos.thunks';
 
 type ModalPDFComponentProps = {
   item: EtiquetaVariableResponse
@@ -115,15 +116,20 @@ export default function ModalPDFComponent({item}: ModalPDFComponentProps) {
   }
 
   const confirm = async () => {
-
+    
     // const res = await documento.guardarDocumento(item, fechaEmision);
-    const res = await documento.guardarDocumento(item, fechaEmision);
+    dispatch(postAlzarArchivoAction({
+      descripcion: "test3",
+      fileStringBase64: item.base64Modified,
+      fileName: "test3.pdf",
+      convertirPDF: true,
+      path: "digitalizacion_documento\\gdi\\documento"
+    }))
+    
     dispatch(etiquetaVariableActions.etiquetaVariableCloseAllModals());
         
     // setHref(res.LOC)
-    // setFileName("test") 
-
-    console.log(res);                
+    // setFileName("test")     
     
   }
 

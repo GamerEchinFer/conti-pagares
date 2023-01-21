@@ -227,6 +227,14 @@ a {
   text-align: center;
 }
 
+.btnFiltro {
+  font-family: 'ContiSans' !important;
+  padding: 6px 16px 4px !important;
+  border-radius: 5px !important;
+  text-transform:capitalize !important;
+  /* color: #ffffff; */
+}
+
 @font-face {
   font-family: 'ContiSans';
   src: url('../src/assets/fonts/ContiSans.otf') format('opentype');

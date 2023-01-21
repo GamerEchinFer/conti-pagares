@@ -21,6 +21,7 @@ import { subProducto } from './slices/subProducto.slice';
 import { tipoDocumento } from './slices/tipoDocumento.slice';
 import uiSlice from './slices/ui/ui.slice';
 import { busqueda } from './slices/busqueda.slice';
+import { documentosUser } from './slices/documentosUser.slice';
 
 const persistConfig = {
   key: 'root',
@@ -44,7 +45,8 @@ const combinedReducers = combineReducers({
   clienteDocumento: clienteDocumento,
   numeroLegajo: numeroLegajo,
   tipoDocumento: tipoDocumento,
-  busqueda: busqueda
+  busqueda: busqueda,
+  documentosUser: documentosUser
   
 })
 

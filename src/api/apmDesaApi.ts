@@ -1,6 +1,9 @@
-import { AxiosResponse } from 'axios';
-import { ClienteDatos,
+import axios, { AxiosResponse } from 'axios';
+import { AlzarArchivoRequest, AlzarArchivoResponse, ClienteDatos,
         ClienteDocumento,
+        ConsultaDocumentosUser,
+        CreateTokenInternoRequest,
+        DescargarArchivo,
         EtiquetaVariable,
         EtiquetaVariableResponse,
         GuardarDocumentoRequest,                
@@ -13,8 +16,10 @@ import { ClienteDatos,
         SolicitudCliente,
         SubProducto, 
         TipoBusqueda, 
-        TiposDocumentos} from '../interfaces/interfaces';
-import { apmApi, apmHadoopApi } from './index';
+        TiposDocumentos,
+        } from '../interfaces/interfaces';
+import { apmApi, apmHadoopApi, authApi, tokenUserDocumento } from './index';
+import { CreateTokenInternoResponse } from '../interfaces/interfaces';
 
 export async function getProductos() {    
     const URL = `/productos`;    
@@ -115,4 +120,43 @@ export async function getTipoBusqueda() {
     const URL = `/menus-frontEnd/tipo-busqueda`;
     const response = await apmApi.get<TipoBusqueda[]>(URL);
     return response
+}
+
+export async function getConsultaDocumentosUser(codigoCliente: string) {
+    const URL = `/documentos-usuario`;
+    const response = await apmApi.get<ConsultaDocumentosUser>(URL, {
+        params: {codigoCliente},
+    });
+
+    return response;
+
+}
+
+// EXTRACT SERVICE
+export const postCreateTokenInterno = async (body: CreateTokenInternoRequest) => {    
+    const URL = `http://10.6.2.40:81/v1/api/Token/CreateTokenInterno`
+    const {data} = await axios.post<AlzarArchivoRequest, AxiosResponse<CreateTokenInternoResponse>>(URL, body,
+        {headers: {
+            "x-api-canal": `FSYS-WEB`,
+            "Content-Type": "application/json"
+        }
+    });
+     
+    return data;
+}
+
+export const postAlzarArchivo = async (body: AlzarArchivoRequest, token: string) => {    
+    const {data} = await tokenUserDocumento.post<AlzarArchivoRequest, AxiosResponse<AlzarArchivoResponse>>(`/AlzarArchivo`, body,
+        {headers: {
+            "Content-Type": "application/json",            
+            Authorization: `Bearer ${token}`}});
+     
+    return data;
+}
+
+export const postDescargarArchivo = async (body: DescargarArchivo, token: string) => {    
+    const {data} = await tokenUserDocumento.post<DescargarArchivo, AxiosResponse<string>>(`/DescargarArchivo`, body, {
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json"}});
+
+    return data;
 }

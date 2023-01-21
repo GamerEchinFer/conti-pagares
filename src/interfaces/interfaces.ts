@@ -197,3 +197,32 @@ export interface TiposDocumentos {
     esDocumentoLegales: boolean;
     periodicidad: number;
 }
+
+export interface AlzarArchivoRequest {
+    descripcion: string;
+    fileStringBase64: string;
+    fileName: string;
+    convertirPDF: boolean;
+    path: string;
+}
+
+export interface AlzarArchivoResponse {
+    path: string;
+}
+
+export interface DescargarArchivo {
+    path: string;
+}
+
+export interface CreateTokenInternoRequest {
+    usuario: string;
+    password: string;
+}
+
+export interface CreateTokenInternoResponse {
+    token: string;
+}
+
+export interface ConsultaDocumentosUser {
+    codigoCliente: string;
+}

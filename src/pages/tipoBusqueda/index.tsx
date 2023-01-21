@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { getTipoBusquedaById } from "../../api/gdiApi";
 import NextButtonTB from "../../components/Buttons/NextButtonTB";
 import SearchbarButton from "../../components/Buttons/SearchbarButton";
-import DatosPersonales from "../../components/DatosPersonales/DatosPersonales";
 import RadioButtonOption from "../../components/RadioButtonOption";
 import TBBodyPrincipal from "../../components/TipoBusqueda/TBBodyPrincipal";
 import GDITitulosComponent from "../../components/TituloySubtitulo/GDITitulosComponent";
@@ -23,6 +22,7 @@ import { clienteDocumentoActions } from "../../redux/slices/clienteDocumento.sli
 import { getClienteDocumentoAction } from "../../redux/thunks/clienteDocumento.thunks";
 import { RootState } from "../../redux/store";
 import LoadingIcon from "../../components/shared/LoadingIcon";
+import DatosPersonales from '../../components/DatosPersonales/DatosPersonales';
 
 const filtros = ["codigo", "documento"]
 
