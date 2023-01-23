@@ -15,6 +15,8 @@ import { etiquetaVariableActions } from '../../redux/slices/etiquetaVariable.sli
 import RecargarDocIcon from './RecargarDocIcon';
 import { fontWeight } from '@mui/system';
 import ViewPDFComponent from './ViewPDFComponent';
+import { getDescargarHadoopDirecto } from '../../api/apmDesaApi';
+import { parsePdfBase64 } from '../../helpers/cutPdf';
 
 const buttonStyle = (item: EtiquetaVariableResponse) =>  ({
   fontSize:"20px", color: item.tieneDocumento ? "#BEC400" : "#1D428A", fontWeight:"400"
@@ -70,6 +72,35 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
     }
   }
 
+  
+  const handleClickTieneDocumento = async ({datosAdicionales}: EtiquetaVariableResponse) => {
+      // Cuando tiene documento
+      if (!datosAdicionales || !Array.isArray(datosAdicionales) || !datosAdicionales.length ) return;
+
+      // Descargar el documento
+      const rutaHadoop = datosAdicionales[0].rutaHadoop
+      const descripcion = datosAdicionales[0].descripcion
+
+      const download = await getDescargarHadoopDirecto(rutaHadoop) // Ver si es la ruta correcta o probar uno de prueba
+
+      const viewPdf = `data:application/pdf;base64Modified,${download.data.LOC}` 
+        // setDownload(viewPdf)           
+         // Probar y despues borrar porque lo que hace es hacer que el navegador descargue el pdf
+        const el = document.createElement("a")
+        el.href = viewPdf
+        el.download = descripcion // Descubrir como se le llamo al pdf cargado anteriormente
+        el.click()
+        
+        dispatch(etiquetaVariableActions.etiquetaVariableUpdateFileModified({
+            idTipoDocumento: item.idTipoDocumento,
+            base64Modified: parsePdfBase64(viewPdf as string),
+            totalPagesModified: 1, // TODO - Saber el total de las paginas nose como
+            sizeModified: 1000 // TODO - Calcular size cuando abre un documento que tiene documento
+        })) 
+
+
+  }
+
   const handleClickModificarDoc = () => {
 
   }
@@ -82,7 +113,8 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
     console.log(event.target);
   }
 
-  const openViewPdfModal = (item: EtiquetaVariableResponse) => {        
+  const openViewPdfModal = (item: EtiquetaVariableResponse) => {    
+    handleClickTieneDocumento(item) // Aca hay que generar el pdf     
     dispatch(etiquetaVariableActions.setOpenModalView({idTipoDocumento: item.idTipoDocumento, openModalView: true}))
   }
 

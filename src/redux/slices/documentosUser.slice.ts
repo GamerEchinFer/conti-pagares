@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ConsultaDocumentosUser } from "../../interfaces/interfaces";
+import { ConsultaDocumentosUser, DocumentosUsuarioResponse } from '../../interfaces/interfaces';
 
 const initialState = () => ({
-    items: {} as ConsultaDocumentosUser,
+    items: undefined as DocumentosUsuarioResponse | undefined,
     loading: false,
     success: false,
     error: null as any
@@ -15,7 +15,7 @@ const documentosUserSlice = createSlice({
         documentosUserRequest(state) {
             state.loading = true;
         },
-        documentosUserSuccess(state, action:PayloadAction<ConsultaDocumentosUser>) {
+        documentosUserSuccess(state, action:PayloadAction<DocumentosUsuarioResponse>) {
             state.items = action.payload;
             state.loading = false;
             state.success = true;
@@ -29,7 +29,7 @@ const documentosUserSlice = createSlice({
             state.loading = false;
             state.success = false;
             state.error = null as any;
-            state.items = {} as ConsultaDocumentosUser
+            state.items = undefined
         },
     }
 })

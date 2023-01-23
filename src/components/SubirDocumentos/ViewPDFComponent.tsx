@@ -69,6 +69,8 @@ const ViewPDFComponent = ({item}: ModalPDFComponentProps) => {
         })
     }
 
+    
+
     const confirmar = async () => {
         const base64 = item?.base64 ?? ""
 
@@ -110,6 +112,8 @@ const ViewPDFComponent = ({item}: ModalPDFComponentProps) => {
     }
     // base64 => cortar => base64Modified
 }
+
+
 
     const confirm = async () => {
 

@@ -4,6 +4,7 @@ import { AlzarArchivoRequest, AlzarArchivoResponse, ClienteDatos,
         ConsultaDocumentosUser,
         CreateTokenInternoRequest,
         DescargarArchivo,
+        DocumentosUsuarioResponse,
         EtiquetaVariable,
         EtiquetaVariableResponse,
         GuardarDocumentoRequest,                
@@ -124,7 +125,7 @@ export async function getTipoBusqueda() {
 
 export async function getConsultaDocumentosUser(codigoCliente: string) {
     const URL = `/documentos-usuario`;
-    const response = await apmApi.get<ConsultaDocumentosUser>(URL, {
+    const response = await apmApi.get<DocumentosUsuarioResponse>(URL, {
         params: {codigoCliente},
     });
 

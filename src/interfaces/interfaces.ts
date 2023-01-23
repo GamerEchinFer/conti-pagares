@@ -226,3 +226,44 @@ export interface CreateTokenInternoResponse {
 export interface ConsultaDocumentosUser {
     codigoCliente: string;
 }
+
+export interface DocumentosUsuarioResponse {
+    filtroGrupo:        DocumentosUsuarioFiltro[];
+    coleccionDocumento: ColeccionDocumento[];
+}
+
+export interface ColeccionDocumento {
+    datosAdicionales: DatosAdicionales;
+    filtroDocumento:  DocumentosUsuarioFiltro[];
+}
+
+export interface DatosAdicionales {
+    idDocumento:           number;
+    codigoTipoDocumento:   number;
+    descripcion:           string;
+    codigoEstadoDocumento: string;
+    fechaEmision:          Date;
+    fechaVencimiento:      Date;
+    periodo:               string;
+    numeroOperacion:       null | string;
+    rutaHadoop:            string;
+    usuarioCarga:          string;
+    fechaRegistro:         Date;
+    userAprobador:         null;
+    fechaArobacion:        Date;
+    usuarioVerificador:    null;
+    fechaVerificacion:     null;
+}
+
+export interface DocumentosUsuarioFiltro {
+    idGrupo:          number;
+    grupoDescripcion: string;
+    filtroSubgrupo:   DocumentosUsuarioFiltroSubgrupo[];
+}
+
+export interface DocumentosUsuarioFiltroSubgrupo {
+    idSubgrupo:          number;
+    subgrupoDescripcion: string;
+}
+
+
