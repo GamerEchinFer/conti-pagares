@@ -18,7 +18,7 @@ const PendienteIcon = ({imagen = Pendiente}:PendienteIconProps)  => {
                 <div className="w-10">
                     
                     {/* <Image src={imagen}  alt='pendiente' className="absolute top-0 right-0 h-8 w-8" /> */}
-                    <WarningAmberIcon style={{ color:"#FCAC00"}} />
+                    <WarningAmberIcon style={{ color:"#5B9FAA"}} />
                 </div>
             {/* </button> */}
       </List>

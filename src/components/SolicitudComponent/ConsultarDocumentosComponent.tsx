@@ -168,7 +168,7 @@ function ConsultarDocumentosComponent() {
                 style={{
                   fontWeight:"200",
                   fontSize:"16px",
-                  color:"#FCAC00"
+                  color:"#5B9FAA"
                 }}>
               {(capitalize(`${row.datosAdicionales.codigoEstadoDocumento}`))}
               </TableCell>
@@ -179,6 +179,7 @@ function ConsultarDocumentosComponent() {
               </TableCell>
             </TableRow>
             )): null}
+            
           
         </TableBody>
       </Table>
