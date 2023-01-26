@@ -2,7 +2,6 @@
   "name": "gdi-frontend-next",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://10.6.2.40:81/v1/api/Token/CreateTokenInterno",
   "scripts": {
     "dev": "next dev -p 9000",
     "build": "next build",
