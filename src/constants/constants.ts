@@ -6,7 +6,7 @@ export const baseUrl = process.env.NODE_ENV === "development" ?
 export const keycloakHeaders: AutenticarServicioHeader = {
     // APIM DESA
     "Client-Id": "gestion-documental",
-    "Client-Secret": "157a0c08-bb2e-451d-895d-5a43d90fb3ae",
+    "Client-Secret": "c7cb38ff-abe0-4714-89e2-457eff7c00bf",
     "Grant-Type": "client_credentials",
     "Subscription-Key": "cc665137fcfb4a95a0c2701e58828e7c",
     Scope: "profile"

@@ -46,6 +46,9 @@ function ConsultarDocumentosComponent() {
   const handleClickCollapse = () => {
 
   }  
+  const handleClickButtonFiltro = () => {
+    
+  }
   
   // if(!solicitud) return null;
 
@@ -86,31 +89,14 @@ function ConsultarDocumentosComponent() {
         <ListItem className="">
           {            
             documentosUser && documentosUser.filtroGrupo ? documentosUser?.filtroGrupo?.map(item => 
-              <ButtonFiltro key={item.idGrupo} onClick={handleIconBack} descripcion={(capitalize(`${item.grupoDescripcion}`))} />
+              <ButtonFiltro key={item.idGrupo} onClick={handleClickButtonFiltro} descripcion={(capitalize(`${item.grupoDescripcion}`))} />
             ) : null
           }          
         </ListItem>
       </div>
 
-      {/* <div>
-        {
-          documentosUser && documentosUser.coleccionDocumento ? documentosUser.coleccionDocumento.map(item => (
-            <ListItem key={item.datosAdicionales.idDocumento}>
-              <ListItemText 
-              primary={item.datosAdicionales.descripcion} 
-              primaryTypographyProps={{ style: {
-                color: "#373A3C",
-                fontWeight: "normal",
-                fontSize: "16px !important"
-              } }}              
-              />              
-            </ListItem>
-          )) : null
-        }
-      </div> */}
-
       <Box
-        sx={{ width: 800, maxWidth: '100%'}}
+        sx={{ width: 850, maxWidth: '100%'}}
       >
         <div className="pb-10">
           <div className="flex flex-row justify-content-center items-center">
@@ -118,16 +104,16 @@ function ConsultarDocumentosComponent() {
               <InputLabel htmlFor="outlined-adornment-amount">
                 Buscar Documento
               </InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-amount"
-                endAdornment={
-                <InputAdornment position="end">
-                  <button>
-                    <SearchIcon />
-                  </button>
-                </InputAdornment>}
-                label="Buscar Documento"
-              />
+                <OutlinedInput
+                  id="outlined-adornment-amount"
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <button>
+                        <SearchIcon />
+                      </button>
+                    </InputAdornment>}
+                  label="Buscar Documento"
+                />
             </FormControl>
             <ButtonExpand onClick={handleClickExpand} />
             <ButtonCollapse onClick={handleClickCollapse} />
@@ -136,7 +122,7 @@ function ConsultarDocumentosComponent() {
       </Box>
 
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <Table sx={{ minWidth: 850 }} aria-label="simple table">
         <TableBody>
           {
             documentosUser && documentosUser.coleccionDocumento ? documentosUser.coleccionDocumento.map(row => (
@@ -144,16 +130,17 @@ function ConsultarDocumentosComponent() {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               key={row.datosAdicionales.idDocumento}
             >
-              {/* <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell> */}
               <TableCell 
-              align="left"
-              style={{
-                fontWeight: "200",
-                fontSize:"16px"
-              }}
-              >{(capitalize(`${row.datosAdicionales.descripcion}`))}</TableCell>
+                align="left"
+                style={{
+                  fontWeight: "200",
+                  fontSize:"16px"
+                }}
+              >
+                <div className="flex justify-start pl-8">
+                  {(capitalize(`${row.datosAdicionales.descripcion}`))}
+                </div>
+              </TableCell>
               
               <TableCell
                 style={{
@@ -161,26 +148,97 @@ function ConsultarDocumentosComponent() {
                   fontWeight: "200",
                   fontSize:"16px"
                 }}
-                >
-                Consultar Histórico
+              >
+                <button>
+                  Consultar Histórico
+                </button>
               </TableCell>
-              <TableCell
-                style={{
-                  fontWeight:"200",
-                  fontSize:"16px",
-                  color:"#5B9FAA"
-                }}>
-              {(capitalize(`${row.datosAdicionales.codigoEstadoDocumento}`))}
+
+              <TableCell>
+                {/* {(capitalize(`${row.datosAdicionales.codigoEstadoDocumento}`))} */}
+                <div className="flex justify-start pr-20">
+                  {(() => {
+                    switch(capitalize(`${row.datosAdicionales.codigoEstadoDocumento}`)) {
+                      case 'PENDIENTE':
+                        return <span style={{color: "#5B9FAA"}}></span>
+                      case 'CERTIFICADO':
+                        return <span style={{color: "#BEC400"}}><PendienteIcon /></span>
+                      case 'RECHAZADO':
+                        return <span><PendienteIcon /></span>
+                      case 'VERIFICADO':
+                        return <span><PendienteIcon /></span>
+                      case 'Vencido':
+                        return <span style={{color: "#FCAC00"}}><PendienteIcon /></span>
+                      default:
+                        return null
+                    }
+                  })()}
+                </div>
               </TableCell>
+
               <TableCell
                 align="left"
               >
-                <PendienteIcon />
+                <div className="flex justify-start pr-20">
+                  {(() => {
+                    switch(row.datosAdicionales.codigoEstadoDocumento) {
+                      case 'PENDIENTE':
+                        return <span style={{color: "#5B9FAA"}}><PendienteIcon /></span>
+                      case 'CERTIFICADO':
+                        return <span style={{color: "#BEC400"}}><PendienteIcon /></span>
+                      case 'RECHAZADO':
+                        return <span><PendienteIcon /></span>
+                      case 'VERIFICADO':
+                        return <span><PendienteIcon /></span>
+                      case 'Vencido':
+                        return <span style={{color: "#FCAC00"}}><PendienteIcon /></span>
+                      default:
+                        return null
+                    }
+                  })()}
+                </div>
               </TableCell>
             </TableRow>
-            )): null}
-            
-          
+            )): null
+            }
+
+            <TableRow>
+              <TableCell
+                align="left"
+                style={{
+                  fontWeight:"600",
+                  fontSize:"16px",
+                  color:"#1D428A"
+                }}>
+                {
+                  (capitalize(`${documentosUser?.filtroGrupo[0].filtroSubgrupo[0].subgrupoDescripcion}`))
+                }
+              </TableCell>
+              <TableCell
+                align="right"
+                style={{
+                  fontWeight:"600",
+                  fontSize:"16px",
+                  color:"#1D428A"
+                }}>
+                
+              </TableCell>
+
+            </TableRow>
+
+            <TableRow>
+              <TableCell
+                align="left"
+                style={{
+                  fontWeight:"600",
+                  fontSize:"16px",
+                  color:"#1D428A"
+                }}>
+                {
+                  (capitalize(`${documentosUser?.filtroGrupo[0].filtroSubgrupo[1].subgrupoDescripcion}`))
+                }
+              </TableCell>
+            </TableRow>
         </TableBody>
       </Table>
     </TableContainer>

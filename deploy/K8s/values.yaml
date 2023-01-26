@@ -5,8 +5,8 @@ config:
   NEXT_PUBLIC_API_BASE_URL: 'https://api-sandbox.bancontinental.com.py/'
   NEXT_PUBLIC_API_BASE_URL: 'http://10.6.3.84:5051/'
   NEXT_PUBLIC_API_TIME_OUT: 60000
-  NEXT_PUBLIC_SUSCRIPTION_KEY: '578a3e189d3a4da791ad1aa2a00bae3c'
-  NEXT_PUBLIC_CLIENT_SECRET: '3447f4cb-a77b-4255-8989-c51e4fc476e1'
+  NEXT_PUBLIC_SUSCRIPTION_KEY: 'cc665137fcfb4a95a0c2701e58828e7c'
+  NEXT_PUBLIC_CLIENT_SECRET: 'c7cb38ff-abe0-4714-89e2-457eff7c00bf'
   NEXT_PUBLIC_CLIENTE_ID: 'gestion-documental'
   # NEXT_PUBLIC_HOST_VALIDO: 'http://localhost:9000/'
   NEXT_PUBLIC_HOST_VALIDO: 'https://gdi-desa.bancontinental.com.py/'

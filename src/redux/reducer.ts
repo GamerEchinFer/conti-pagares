@@ -15,6 +15,7 @@ import { tipoDocumento } from "./slices/tipoDocumento.slice";
 import { busqueda } from "./slices/busqueda.slice";
 import { documentosUser } from './slices/documentosUser.slice';
 import { extractos } from './slices/extractos.slice';
+import { documentosUserFiltro } from './slices/documentosUserFiltro';
 
 const reducer = {
     solicitud,
@@ -33,7 +34,8 @@ const reducer = {
     tipoDocumento,
     busqueda,
     documentosUser,
-    extractos
+    extractos,
+    documentosUserFiltro
 }
 
 export default reducer;

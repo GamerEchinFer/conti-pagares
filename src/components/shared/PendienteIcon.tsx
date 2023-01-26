@@ -14,13 +14,9 @@ const PendienteIcon = ({imagen = Pendiente}:PendienteIconProps)  => {
       <List
         // onClick={() => onClick()}
         >
-            {/* <button> */}
-                <div className="w-10">
-                    
-                    {/* <Image src={imagen}  alt='pendiente' className="absolute top-0 right-0 h-8 w-8" /> */}
-                    <WarningAmberIcon style={{ color:"#5B9FAA"}} />
-                </div>
-            {/* </button> */}
+        <div className="w-10">
+          <Image src={imagen}  alt='pendiente' className="absolute bottom-10 right-10 h-10 w-5" style={{ color:"#5B9FAA"}} />
+        </div>
       </List>
     </>
   )

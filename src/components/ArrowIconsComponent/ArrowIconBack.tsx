@@ -16,7 +16,7 @@ const ArrowIconBack = ({onClick} : ArrowIconBackProps) => (
         color: "#1D428A",
         ":hover": {background: "#1D428A", color: "#ffffff", borderRadius: "80px"}}} 
         onClick={() => onClick()}
-        />
+        /> 
 
     </ListItemIcon>
 )
