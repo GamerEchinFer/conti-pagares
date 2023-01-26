@@ -25,6 +25,10 @@ module.exports = {
       {
         source: '/api/Token/CreateTokenInterno',
         destination: 'http://10.6.2.40:81/v1/api/Token/CreateTokenInterno'
+      },
+      {
+        source: '/api/Archivo/AlzarArchivo',
+        destination: 'http://10.6.2.40:8990/v1/api/Archivo/AlzarArchivo'
       }
     ]
   },
