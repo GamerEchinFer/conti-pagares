@@ -56,7 +56,7 @@ function ConsultarDocumentosComponent() {
 
   const [ query, setQuery ] = useState("");
   
-  if(!solicitud) return null;
+  // if(!solicitud) return null;
 
   // <SolicitudItem 
   //   solicitud={solicitud}
@@ -209,7 +209,7 @@ function ConsultarDocumentosComponent() {
             )): null
             }
 
-            <TableRow>
+            {/* <TableRow>
               <TableCell
                 align="left"
                 style={{
@@ -231,7 +231,7 @@ function ConsultarDocumentosComponent() {
                 
               </TableCell>
 
-            </TableRow>
+            </TableRow> */}
 
             <TableRow>
               <TableCell
@@ -241,9 +241,10 @@ function ConsultarDocumentosComponent() {
                   fontSize:"16px",
                   color:"#1D428A"
                 }}>
-                {
+                {/* {
                   (capitalize(`${documentosUser?.filtroGrupo[0].filtroSubgrupo[1].subgrupoDescripcion}`))
-                }
+                } */}
+                información económico financiera
               </TableCell>
             </TableRow>
         </TableBody>
