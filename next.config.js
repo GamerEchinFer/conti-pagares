@@ -19,6 +19,7 @@ module.exports = {
     NEXT_PUBLIC_URL_KEYCLOAK: process.env.NEXT_PUBLIC_URL_KEYCLOAK,
     NEXT_PUBLIC_KEY_AES: process.env.NEXT_PUBLIC_KEY_AES,
   },
+  output: 'standalone',
   async headers() {
     return [      
       {
