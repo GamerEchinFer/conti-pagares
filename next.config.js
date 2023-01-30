@@ -19,19 +19,6 @@ module.exports = {
     NEXT_PUBLIC_URL_KEYCLOAK: process.env.NEXT_PUBLIC_URL_KEYCLOAK,
     NEXT_PUBLIC_KEY_AES: process.env.NEXT_PUBLIC_KEY_AES,
   },
-  output: 'standalone',
-  async rewrites() {
-    return [
-      {
-        source: '/api/Token/CreateTokenInterno',
-        destination: 'http://10.6.2.40:81/v1/api/Token/CreateTokenInterno'
-      },
-      {
-        source: '/api/Archivo/AlzarArchivo',
-        destination: 'http://10.6.2.40:8990/v1/api/Archivo/AlzarArchivo'
-      }
-    ]
-  },
   async headers() {
     return [      
       {

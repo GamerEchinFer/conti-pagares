@@ -50,6 +50,6 @@ apmHadoopApi.interceptors.request.use(apmAuthInterceptorHadoop);
 
 export const tokenUserDocumento = axios.create(
     {
-        baseURL: "/api/Archivo/AlzarArchivo"
+        baseURL: "/api/Archivo/"
     }
 )

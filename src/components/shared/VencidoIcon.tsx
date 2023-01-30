@@ -1,24 +1,24 @@
 import { List, ListItemIcon } from '@mui/material'
 import Image from "next/image";
-import Pendiente from '../../assets/svg/Pendiente.svg' 
+import Vencido from '../../assets/svg/Vencido.svg' 
 
-type PendienteIconProps = {
+type VencidoIconProps = {
 //   onClick: () => void,
   imagen?: string;
 }
 
-const PendienteIcon = ({imagen = Pendiente}:PendienteIconProps)  => {
+const VencidoIcon = ({imagen = Vencido}:VencidoIconProps)  => {
   return (
     <>
       <List
         // onClick={() => onClick()}
         >
         <div className="w-10">
-          <Image src={imagen}  alt='pendiente' style={{ color:"#5B9FAA"}} />
+          <Image src={imagen}  alt='rechazado' style={{color: "#FCAC00"}} />
         </div>
       </List>
     </>
   )
 }
 
-export default PendienteIcon
+export default VencidoIcon

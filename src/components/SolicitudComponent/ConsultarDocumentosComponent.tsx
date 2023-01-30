@@ -3,18 +3,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useSolicitud } from '../../hooks/useSolicitud';
 import { solicitudActions } from '../../redux/slices/solicitud.slice';
 import ArrowIconBack from '../ArrowIconsComponent/ArrowIconBack';
-import SolicitudItem from '../SolicitudItem';
 import ButtonFiltro from '../Buttons/ButtonFiltro';
-import { Box, FormControl, IconButton, Input, InputAdornment, InputLabel, ListItem, ListItemText, OutlinedInput, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
+import { Box, FormControl, InputAdornment, InputLabel, ListItem, ListItemText, OutlinedInput, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { getDocumentosUserAction } from '../../redux/thunks/documentosUser.thunks';
-import { documentosUser } from '../../redux/slices/documentosUser.slice';
 import { RootState } from '../../redux/store';
 import ButtonExpand from '../Buttons/ButtonExpand';
 import ButtonCollapse from '../Buttons/ButtonCollapse';
 import Paper from '@mui/material/Paper';
-import { capitalize, capitalizePorPalabra } from '../../helpers/capitalize';
+import { capitalize } from '../../helpers/capitalize';
 import PendienteIcon from '../shared/PendienteIcon';
+import CertificadoIcon from '../shared/CertificadoIcon';
+import RechazadoIcon from '../shared/Rechazado';
+import VencidoIcon from '../shared/VencidoIcon';
+import ButtonIconRefresh from '../Buttons/ButtonIconRefresh';
 
 
 function ConsultarDocumentosComponent() {
@@ -49,6 +51,8 @@ function ConsultarDocumentosComponent() {
   const handleClickButtonFiltro = () => {
     
   }
+
+  const [ query, setQuery ] = useState("");
   
   // if(!solicitud) return null;
 
@@ -96,12 +100,12 @@ function ConsultarDocumentosComponent() {
       </div>
 
       <Box
-        sx={{ width: 850, maxWidth: '100%'}}
+        sx={{ width: 950, maxWidth: '100%'}}
       >
         <div className="pb-10">
           <div className="flex flex-row justify-content-center items-center">
             <FormControl fullWidth>
-              <InputLabel htmlFor="outlined-adornment-amount">
+              <InputLabel htmlFor="outlined-adornment-amount" >
                 Buscar Documento
               </InputLabel>
                 <OutlinedInput
@@ -115,6 +119,7 @@ function ConsultarDocumentosComponent() {
                   label="Buscar Documento"
                 />
             </FormControl>
+            <ButtonIconRefresh onClick={handleClickExpand} />
             <ButtonExpand onClick={handleClickExpand} />
             <ButtonCollapse onClick={handleClickCollapse} />
           </div>
@@ -159,16 +164,16 @@ function ConsultarDocumentosComponent() {
                 <div className="flex justify-start pr-20">
                   {(() => {
                     switch(capitalize(`${row.datosAdicionales.codigoEstadoDocumento}`)) {
-                      case 'PENDIENTE':
-                        return <span style={{color: "#5B9FAA"}}></span>
-                      case 'CERTIFICADO':
-                        return <span style={{color: "#BEC400"}}><PendienteIcon /></span>
-                      case 'RECHAZADO':
-                        return <span><PendienteIcon /></span>
-                      case 'VERIFICADO':
-                        return <span><PendienteIcon /></span>
+                      case 'Pendiente':
+                        return <span style={{color: "#5B9FAA"}}>Pendiente</span>
+                      case 'Certificado':
+                        return <span style={{color: "#BEC400"}}>Certificado</span>
+                      case 'Rechazado':
+                        return <span style={{color:"#D12103"}}>Rechazado</span>
+                      case 'Verificado':
+                        return <span style={{color:""}}>Verificado</span>
                       case 'Vencido':
-                        return <span style={{color: "#FCAC00"}}><PendienteIcon /></span>
+                        return <span style={{color: "#FCAC00"}}>Vencido</span>
                       default:
                         return null
                     }
@@ -181,17 +186,17 @@ function ConsultarDocumentosComponent() {
               >
                 <div className="flex justify-start pr-20">
                   {(() => {
-                    switch(row.datosAdicionales.codigoEstadoDocumento) {
-                      case 'PENDIENTE':
-                        return <span style={{color: "#5B9FAA"}}><PendienteIcon /></span>
-                      case 'CERTIFICADO':
-                        return <span style={{color: "#BEC400"}}><PendienteIcon /></span>
-                      case 'RECHAZADO':
-                        return <span><PendienteIcon /></span>
-                      case 'VERIFICADO':
-                        return <span><PendienteIcon /></span>
+                    switch(capitalize(`${row.datosAdicionales.codigoEstadoDocumento}`)) {
+                      case 'Pendiente':
+                        return <PendienteIcon />
+                      case 'Certificado':
+                        return <CertificadoIcon />
+                      case 'Rechazado':
+                        return <RechazadoIcon />
+                      case 'Verificado':
+                        return <PendienteIcon />
                       case 'Vencido':
-                        return <span style={{color: "#FCAC00"}}><PendienteIcon /></span>
+                        return <VencidoIcon />
                       default:
                         return null
                     }
