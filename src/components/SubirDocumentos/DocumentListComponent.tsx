@@ -94,7 +94,7 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
         dispatch(etiquetaVariableActions.etiquetaVariableUpdateFileModified({
             idTipoDocumento: item.idTipoDocumento,
             base64Modified: parsePdfBase64(viewPdf as string),
-            totalPagesModified: 1, // TODO - Saber el total de las paginas nose como
+            totalPagesModified: 1, // TODO - Saber el total de las paginas
             sizeModified: 1000 // TODO - Calcular size cuando abre un documento que tiene documento
         })) 
 

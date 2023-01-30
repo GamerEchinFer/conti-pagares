@@ -1,13 +1,13 @@
 import { List, ListItemIcon } from '@mui/material'
 import Image from "next/image";
-import Certificado2 from '../../assets/svg/Certificado2.svg' 
+import Verificado from '../../assets/svg/Verificado.svg' 
 
-type CertificadoIconProps = {
+type VerificadoIconProps = {
 //   onClick: () => void,
   imagen?: string;
 }
 
-const CertificadoIcon = ({imagen = Certificado2}:CertificadoIconProps)  => {
+const VerificadoIcon = ({imagen = Verificado}:VerificadoIconProps)  => {
   return (
     <>
       <List
@@ -21,4 +21,4 @@ const CertificadoIcon = ({imagen = Certificado2}:CertificadoIconProps)  => {
   )
 }
 
-export default CertificadoIcon
+export default VerificadoIcon

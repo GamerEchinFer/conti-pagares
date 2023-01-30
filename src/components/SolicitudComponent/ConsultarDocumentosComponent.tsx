@@ -17,6 +17,8 @@ import CertificadoIcon from '../shared/CertificadoIcon';
 import RechazadoIcon from '../shared/Rechazado';
 import VencidoIcon from '../shared/VencidoIcon';
 import ButtonIconRefresh from '../Buttons/ButtonIconRefresh';
+import VerificadoIcon from '../shared/VerificadoIcon';
+import SolicitudItem from '../SolicitudItem';
 
 
 function ConsultarDocumentosComponent() {
@@ -54,7 +56,7 @@ function ConsultarDocumentosComponent() {
 
   const [ query, setQuery ] = useState("");
   
-  // if(!solicitud) return null;
+  if(!solicitud) return null;
 
   // <SolicitudItem 
   //   solicitud={solicitud}
@@ -161,19 +163,19 @@ function ConsultarDocumentosComponent() {
 
               <TableCell>
                 {/* {(capitalize(`${row.datosAdicionales.codigoEstadoDocumento}`))} */}
-                <div className="flex justify-start pr-20">
+                <div className="flex justify-start">
                   {(() => {
                     switch(capitalize(`${row.datosAdicionales.codigoEstadoDocumento}`)) {
                       case 'Pendiente':
-                        return <span style={{color: "#5B9FAA"}}>Pendiente</span>
+                        return <span>Pendiente</span>
                       case 'Certificado':
-                        return <span style={{color: "#BEC400"}}>Certificado</span>
+                        return <span>Certificado</span>
                       case 'Rechazado':
-                        return <span style={{color:"#D12103"}}>Rechazado</span>
+                        return <span>Rechazado</span>
                       case 'Verificado':
-                        return <span style={{color:""}}>Verificado</span>
+                        return <span>Verificado</span>
                       case 'Vencido':
-                        return <span style={{color: "#FCAC00"}}>Vencido</span>
+                        return <span>Vencido</span>
                       default:
                         return null
                     }
@@ -184,7 +186,7 @@ function ConsultarDocumentosComponent() {
               <TableCell
                 align="left"
               >
-                <div className="flex justify-start pr-20">
+                <div className="flex justify-start pr-2">
                   {(() => {
                     switch(capitalize(`${row.datosAdicionales.codigoEstadoDocumento}`)) {
                       case 'Pendiente':
@@ -194,7 +196,7 @@ function ConsultarDocumentosComponent() {
                       case 'Rechazado':
                         return <RechazadoIcon />
                       case 'Verificado':
-                        return <PendienteIcon />
+                        return <VerificadoIcon />
                       case 'Vencido':
                         return <VencidoIcon />
                       default:
