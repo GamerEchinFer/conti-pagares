@@ -136,7 +136,7 @@ export async function getConsultaDocumentosUser(codigoCliente: string) {
 
 // EXTRACT SERVICE
 export const postCreateTokenInterno = async (body: CreateTokenInternoRequest) => {    
-    const URL = `/api/Token/CreateTokenInterno`
+    const URL = `http://10.6.2.40:81/v1/api/Token/CreateTokenInterno`
     const {data} = await axios.post<AlzarArchivoRequest, AxiosResponse<CreateTokenInternoResponse>>(URL, body,
         {headers: {
             "x-api-canal": `FSYS-WEB`,
