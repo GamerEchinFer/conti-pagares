@@ -4,7 +4,7 @@ import { useSolicitud } from '../../hooks/useSolicitud';
 import { solicitudActions } from '../../redux/slices/solicitud.slice';
 import ArrowIconBack from '../ArrowIconsComponent/ArrowIconBack';
 import ButtonFiltro from '../Buttons/ButtonFiltro';
-import { Box, FormControl, InputAdornment, InputLabel, ListItem, ListItemText, OutlinedInput, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
+import { Autocomplete, Box, FormControl, InputAdornment, InputLabel, ListItem, ListItemText, OutlinedInput, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { getDocumentosUserAction } from '../../redux/thunks/documentosUser.thunks';
 import { RootState } from '../../redux/store';
@@ -22,7 +22,10 @@ import SolicitudItem from '../SolicitudItem';
 
 
 function ConsultarDocumentosComponent() {
-  const [name, setName] = useState("")
+  const [ name, setName ] = useState("");
+  const [ search, setSearch ] = useState("");
+  const [ searchShow, setSearchShow ] = useState(false);
+
   const dispatch = useDispatch(); 
 
   const documentosUser = useSelector((state: RootState) => state.documentosUser.items);        
@@ -54,8 +57,35 @@ function ConsultarDocumentosComponent() {
     
   }
 
-  const [ query, setQuery ] = useState("");
-  
+  const handleChangeSearch = (e:any) => {
+    e.preventDefault();
+    setSearch(e.target.value);
+    if(e.target.value==="") {
+      setSearchShow(false)
+    }
+    else {
+      setSearchShow(true);
+    } 
+    
+    // if(search.length > 0) {
+    //   documentosUser?.coleccionDocumento.filter((item) => {
+    //     return item.datosAdicionales.descripcion(search);
+    //   });
+    // }
+  }
+
+  const filteredDocuments = documentosUser?.coleccionDocumento.filter(
+    item => {
+      return (
+        item
+        .datosAdicionales.descripcion
+        .toLowerCase()
+        .includes(search.toLowerCase())
+      )
+    }
+  )
+
+
   // if(!solicitud) return null;
 
   // <SolicitudItem 
@@ -106,10 +136,14 @@ function ConsultarDocumentosComponent() {
       >
         <div className="pb-10">
           <div className="flex flex-row justify-content-center items-center">
-            <FormControl fullWidth>
-              <InputLabel htmlFor="outlined-adornment-amount" >
+              <FormControl fullWidth>
+              <InputLabel 
+                htmlFor="outlined-adornment-amount"
+                onChange={handleChangeSearch}
+              >
                 Buscar Documento
               </InputLabel>
+              
                 <OutlinedInput
                   id="outlined-adornment-amount"
                   endAdornment={

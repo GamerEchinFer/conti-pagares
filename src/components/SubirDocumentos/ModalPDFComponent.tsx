@@ -117,14 +117,14 @@ export default function ModalPDFComponent({item}: ModalPDFComponentProps) {
 
   const confirm = async () => {
     
-    // const res = await documento.guardarDocumento(item, fechaEmision);
-    dispatch(postAlzarArchivoAction({
-      descripcion: "test3",
-      fileStringBase64: item.base64Modified,
-      fileName: "test3.pdf",
-      convertirPDF: true,
-      path: "digitalizacion_documento\\gdi\\documento"
-    }))
+    const res = await documento.guardarDocumento(item, fechaEmision);
+    // dispatch(postAlzarArchivoAction({
+    //   descripcion: "test3",
+    //   fileStringBase64: item.base64Modified,
+    //   fileName: "test3.pdf",
+    //   convertirPDF: true,
+    //   path: "digitalizacion_documento\\gdi\\documento"
+    // }))
     
     dispatch(etiquetaVariableActions.etiquetaVariableCloseAllModals());
         
