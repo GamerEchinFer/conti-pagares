@@ -1,8 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ConsultaDocumentosUser, DocumentosUsuarioResponse } from '../../interfaces/interfaces';
+import { DocumentosUsuarioResponse } from '../../interfaces/interfaces';
+import { DocumentoUsuarioResult } from '../../helpers/documentUserMapper';
 
 const initialState = () => ({
     items: undefined as DocumentosUsuarioResponse | undefined,
+    itemsMapped: undefined as DocumentoUsuarioResult | undefined,
     loading: false,
     success: false,
     error: null as any
@@ -15,10 +17,14 @@ const documentosUserSlice = createSlice({
         documentosUserRequest(state) {
             state.loading = true;
         },
-        documentosUserSuccess(state, action:PayloadAction<DocumentosUsuarioResponse>) {
-            state.items = action.payload;
+        documentosUserSuccess(state, action:PayloadAction<{items: DocumentosUsuarioResponse, itemsMapped: DocumentoUsuarioResult}>) {
+            state.items = action.payload.items;
+            state.itemsMapped = action.payload.itemsMapped;
             state.loading = false;
             state.success = true;
+        },
+        setItemsMapped(state, action:PayloadAction<DocumentoUsuarioResult>) {            
+            state.itemsMapped = action.payload;            
         },
         documentosUserError(state, action: PayloadAction<any>) {
             state.loading = false;

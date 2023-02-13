@@ -34,6 +34,7 @@
     "next-redux-wrapper": "^7.0.5",
     "pdf-lib": "^1.17.1",
     "react": "18.2.0",
+    "react-collapsed": "^3.6.0",
     "react-device-detect": "^2.2.2",
     "react-dom": "18.2.0",
     "react-redux": "^8.0.2",
@@ -57,6 +58,4 @@
     "tailwindcss": "^3.2.4",
     "typescript": "4.8.4"
   }
-
-  
 }

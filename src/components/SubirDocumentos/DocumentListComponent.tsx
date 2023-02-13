@@ -6,14 +6,12 @@ import { capitalize } from '../../helpers/capitalize';
 import { EtiquetaVariableResponse } from '../../interfaces/interfaces';
 import { hadoopDirectoActions } from '../../redux/slices/hadoop.slice';
 import { LightTooltip } from '../shared/LightTooltip';
-import CheckUploadIconComponent from './CheckUploadIconComponent';
 import DialogPeriodoComponent from './DialogPeriodoComponent';
 import FileUploadIconComponent from './FileUploadIconComponent';
 import ModalPDFComponent from './ModalPDFComponent';
 import * as pdfjsLib from 'pdf-lib'
 import { etiquetaVariableActions } from '../../redux/slices/etiquetaVariable.slice';
 import RecargarDocIcon from './RecargarDocIcon';
-import { fontWeight } from '@mui/system';
 import ViewPDFComponent from './ViewPDFComponent';
 import { getDescargarHadoopDirecto } from '../../api/apmDesaApi';
 import { parsePdfBase64 } from '../../helpers/cutPdf';
@@ -78,6 +76,7 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
       if (!datosAdicionales || !Array.isArray(datosAdicionales) || !datosAdicionales.length ) return;
 
       // Descargar el documento
+      //TODO: SWITCH PARA HADOOP Y SOAP
       const rutaHadoop = datosAdicionales[0].rutaHadoop
       const descripcion = datosAdicionales[0].descripcion
 

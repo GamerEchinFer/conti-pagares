@@ -1,6 +1,4 @@
 import React, { ChangeEvent, useState } from 'react'
-import { useMount } from 'ahooks';
-import { hadoopDownload, hadoopDownloadActions } from '../../redux/slices/hadoopDownload.slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { etiquetaVariableActions } from '../../redux/slices/etiquetaVariable.slice';
 import { useRef } from 'react';
@@ -19,7 +17,6 @@ import dayjs, { Dayjs } from 'dayjs';
 import PDFComponent from './PDFComponent';
 import { cutPdf, parsePdfBase64 } from '../../helpers/cutPdf';
 import { useDocumento } from './hooks/useDocumento';
-import ButtonConfirmar from '../Buttons/ButtonConfirmar';
 import { getDescargarHadoopDirecto } from '../../api/apmDesaApi';
 import { RootState } from '../../redux/store';
 
@@ -144,16 +141,16 @@ const ViewPDFComponent = ({item}: ModalPDFComponentProps) => {
 
   return (
         <Dialog
-        fullScreen={fullScreen}
-        open={item?.openModalView ?? false}
-        onClose={handleClose}
-        aria-labelledby="responsive-dialog-title"
-        >            
+            fullScreen={fullScreen}
+            open={item?.openModalView ?? false}
+            onClose={handleClose}
+            aria-labelledby="responsive-dialog-title"
+        >             
             <DialogActions>
                 <ButtonIconClose 
                     autoFocus={true}
                     onClick={handleClose}
-                    />
+                />
             </DialogActions>
             <DialogTitle
             id="responsive-dialog-title" 

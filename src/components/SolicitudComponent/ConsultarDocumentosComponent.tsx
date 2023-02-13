@@ -4,31 +4,44 @@ import { useSolicitud } from '../../hooks/useSolicitud';
 import { solicitudActions } from '../../redux/slices/solicitud.slice';
 import ArrowIconBack from '../ArrowIconsComponent/ArrowIconBack';
 import ButtonFiltro from '../Buttons/ButtonFiltro';
-import { Autocomplete, Box, FormControl, InputAdornment, InputLabel, ListItem, ListItemText, OutlinedInput, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
+import { 
+  Box,
+  FormControl,
+  InputAdornment,
+  InputLabel,
+  ListItem,
+  OutlinedInput,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow
+ } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { getDocumentosUserAction } from '../../redux/thunks/documentosUser.thunks';
 import { RootState } from '../../redux/store';
 import ButtonExpand from '../Buttons/ButtonExpand';
 import ButtonCollapse from '../Buttons/ButtonCollapse';
-import Paper from '@mui/material/Paper';
 import { capitalize } from '../../helpers/capitalize';
-import PendienteIcon from '../shared/PendienteIcon';
-import CertificadoIcon from '../shared/CertificadoIcon';
-import RechazadoIcon from '../shared/Rechazado';
-import VencidoIcon from '../shared/VencidoIcon';
 import ButtonIconRefresh from '../Buttons/ButtonIconRefresh';
-import VerificadoIcon from '../shared/VerificadoIcon';
-import SolicitudItem from '../SolicitudItem';
+import DocumentoUserTable from '../ConsultarDocumentos/DocumentoUserTable';
+import DocumentoUserSubGrupoTable from '../ConsultarDocumentos/DocumentoUserSubGrupoTable';
+import { getTipoDocumentoHistoricoAction } from '../../redux/thunks/documentoHistorico.thunks';
+import { tipoDocumentoHistorico, tipoDocumentoHistoricoActions } from '../../redux/slices/documentoHistorico.slice';
+import { documentUserMapper } from '../../helpers/documentUserMapper';
+import { DocumentosUsuarioResponse } from '../../interfaces/interfaces';
+import { documentosUserActions } from '../../redux/slices/documentosUser.slice';
 
-
+// TODO:componente search, componente grupo, componente subGrupo, componente preVisualización, componente tabla historico
 function ConsultarDocumentosComponent() {
   const [ name, setName ] = useState("");
-  const [ search, setSearch ] = useState("");
-  const [ searchShow, setSearchShow ] = useState(false);
+  const [ query, setQuery ] = useState("");
 
   const dispatch = useDispatch(); 
 
   const documentosUser = useSelector((state: RootState) => state.documentosUser.items);        
+  const documentosUserMapped = useSelector((state: RootState) => state.documentosUser.itemsMapped);    
+  const [subGruposActive, setSubGruposActive] = useState<{[key: string]: boolean}>({});
 
   const handleChangeNewSolicitud = (event : any) =>
   setName("nuevoSolicitud");
@@ -36,7 +49,9 @@ function ConsultarDocumentosComponent() {
   const solicitud = useSolicitud(4)
 
   useEffect(() => {
-    dispatch(getDocumentosUserAction("000666"))    
+    dispatch(getDocumentosUserAction("000666", 12))
+    dispatch(tipoDocumentoHistoricoActions.tipoDocumentoHistoricoReset())
+    
   }, [])
 
   const handleIconBack = () => {
@@ -44,46 +59,20 @@ function ConsultarDocumentosComponent() {
     dispatch(solicitudActions.setPage(-1))
   }
 
-  const handleClickSearch = () => {
-
-  }  
   const handleClickExpand = () => {
 
   }  
   const handleClickCollapse = () => {
 
   }  
-  const handleClickButtonFiltro = () => {
-    
+  const handleClickButtonFiltro = (idGrupo: number) => {
+    const dataMapped = documentUserMapper(documentosUser as DocumentosUsuarioResponse, idGrupo) 
+    dispatch(documentosUserActions.setItemsMapped(dataMapped))
   }
 
-  const handleChangeSearch = (e:any) => {
-    e.preventDefault();
-    setSearch(e.target.value);
-    if(e.target.value==="") {
-      setSearchShow(false)
-    }
-    else {
-      setSearchShow(true);
-    } 
+  const handleClickViewDoc = () => {
     
-    // if(search.length > 0) {
-    //   documentosUser?.coleccionDocumento.filter((item) => {
-    //     return item.datosAdicionales.descripcion(search);
-    //   });
-    // }
   }
-
-  const filteredDocuments = documentosUser?.coleccionDocumento.filter(
-    item => {
-      return (
-        item
-        .datosAdicionales.descripcion
-        .toLowerCase()
-        .includes(search.toLowerCase())
-      )
-    }
-  )
 
 
   // if(!solicitud) return null;
@@ -91,10 +80,14 @@ function ConsultarDocumentosComponent() {
   // <SolicitudItem 
   //   solicitud={solicitud}
   //   handleChangeNewSolicitud={handleChangeNewSolicitud}
-  // />
+
+  const documentosUserFilter = documentosUser && documentosUser.coleccionDocumento ? documentosUser.coleccionDocumento
+  .filter((index) =>
+    index.datosAdicionales.descripcion.trim().toLowerCase().includes(query.trim().toLowerCase())
+  ) : []
   return (
-    <>
-      <div className="grid grid-cols-2 gap-2 pt-4">      
+    <>      
+      <div className="grid grid-cols-2 gap-2 pt-4">         
         <div 
           className="text-left pl-5"
           style={{
@@ -112,7 +105,7 @@ function ConsultarDocumentosComponent() {
         </div>
       </div>                                              
       <div 
-        className="text-left pl-5"
+        className="text-left pl-5 pb-5"
         style={{
           color: "#6C6C6C",
           fontWeight: "400",
@@ -122,11 +115,11 @@ function ConsultarDocumentosComponent() {
         Para consultar el estado de los documentos cargados del cliente 
       </div>
       <div className="flex justify-start">
-        <ListItem className="">
+        <ListItem className="right-20 bottom-10">
           {            
             documentosUser && documentosUser.filtroGrupo ? documentosUser?.filtroGrupo?.map(item => 
-              <ButtonFiltro key={item.idGrupo} onClick={handleClickButtonFiltro} descripcion={(capitalize(`${item.grupoDescripcion}`))} />
-            ) : null
+              <ButtonFiltro key={item.idGrupo} onClick={() => handleClickButtonFiltro(item.idGrupo)} descripcion={(capitalize(`${item.grupoDescripcion}`))} />
+            ): null
           }          
         </ListItem>
       </div>
@@ -137,10 +130,7 @@ function ConsultarDocumentosComponent() {
         <div className="pb-10">
           <div className="flex flex-row justify-content-center items-center">
               <FormControl fullWidth>
-              <InputLabel 
-                htmlFor="outlined-adornment-amount"
-                onChange={handleChangeSearch}
-              >
+              <InputLabel htmlFor="outlined-adornment-amount">
                 Buscar Documento
               </InputLabel>
               
@@ -153,120 +143,36 @@ function ConsultarDocumentosComponent() {
                       </button>
                     </InputAdornment>}
                   label="Buscar Documento"
-                />
+                  onChange={(e:any) => setQuery(e.target.value)}
+                />                             
             </FormControl>
+            {/* <input
+              type="text"
+              placeholder="search documents"
+              onChange={(e) => setQuery(e.target.value)}
+            /> */}
             <ButtonIconRefresh onClick={handleClickExpand} />
             <ButtonExpand onClick={handleClickExpand} />
             <ButtonCollapse onClick={handleClickCollapse} />
           </div>
         </div>
       </Box>
-
-    <TableContainer component={Paper}>
+    <TableContainer>
       <Table sx={{ minWidth: 850 }} aria-label="simple table">
         <TableBody>
-          {
-            documentosUser && documentosUser.coleccionDocumento ? documentosUser.coleccionDocumento.map(row => (
-            <TableRow
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              key={row.datosAdicionales.idDocumento}
-            >
-              <TableCell 
-                align="left"
-                style={{
-                  fontWeight: "200",
-                  fontSize:"16px"
-                }}
-              >
-                <div className="flex justify-start pl-8">
-                  {(capitalize(`${row.datosAdicionales.descripcion}`))}
-                </div>
-              </TableCell>
-              
-              <TableCell
-                style={{
-                  color:"#1D428A",
-                  fontWeight: "200",
-                  fontSize:"16px"
-                }}
-              >
-                <button>
-                  Consultar Histórico
-                </button>
-              </TableCell>
-
-              <TableCell>
-                {/* {(capitalize(`${row.datosAdicionales.codigoEstadoDocumento}`))} */}
-                <div className="flex justify-start">
-                  {(() => {
-                    switch(capitalize(`${row.datosAdicionales.codigoEstadoDocumento}`)) {
-                      case 'Pendiente':
-                        return <span>Pendiente</span>
-                      case 'Certificado':
-                        return <span>Certificado</span>
-                      case 'Rechazado':
-                        return <span>Rechazado</span>
-                      case 'Verificado':
-                        return <span>Verificado</span>
-                      case 'Vencido':
-                        return <span>Vencido</span>
-                      default:
-                        return null
-                    }
-                  })()}
-                </div>
-              </TableCell>
-
-              <TableCell
-                align="left"
-              >
-                <div className="flex justify-start pr-2">
-                  {(() => {
-                    switch(capitalize(`${row.datosAdicionales.codigoEstadoDocumento}`)) {
-                      case 'Pendiente':
-                        return <PendienteIcon />
-                      case 'Certificado':
-                        return <CertificadoIcon />
-                      case 'Rechazado':
-                        return <RechazadoIcon />
-                      case 'Verificado':
-                        return <VerificadoIcon />
-                      case 'Vencido':
-                        return <VencidoIcon />
-                      default:
-                        return null
-                    }
-                  })()}
-                </div>
-              </TableCell>
-            </TableRow>
-            )): null
-            }
-
-            {/* <TableRow>
-              <TableCell
-                align="left"
-                style={{
-                  fontWeight:"600",
-                  fontSize:"16px",
-                  color:"#1D428A"
-                }}>
-                {
-                  (capitalize(`${documentosUser?.filtroGrupo[0].filtroSubgrupo[0].subgrupoDescripcion}`))
-                }
-              </TableCell>
-              <TableCell
-                align="right"
-                style={{
-                  fontWeight:"600",
-                  fontSize:"16px",
-                  color:"#1D428A"
-                }}>
-                
-              </TableCell>
-
-            </TableRow> */}
-
+          <div className="overflow-auto h-96">
+            <DocumentoUserTable 
+              documentosUser={documentosUser} 
+              query={query} 
+              handleClickViewDoc={handleClickViewDoc} 
+              />
+  {/* 
+              <DocumentoUserSubGrupoTable 
+              toggle={subGruposActive}
+              setToggle={(value) => console.log(value)}
+              documentosUser={documentosUserMapped} 
+              query={query} 
+              handleClickViewDoc={handleClickViewDoc} /> */}
             <TableRow>
               <TableCell
                 align="left"
@@ -275,12 +181,16 @@ function ConsultarDocumentosComponent() {
                   fontSize:"16px",
                   color:"#1D428A"
                 }}>
-                {/* {
-                  (capitalize(`${documentosUser?.filtroGrupo[0].filtroSubgrupo[1].subgrupoDescripcion}`))
-                } */}
-                información económico financiera
+                <DocumentoUserSubGrupoTable 
+                  toggle={subGruposActive}
+                  setToggle={(value) => console.log(value)}
+                  documentosUser={documentosUserMapped} 
+                  query={query} 
+                  handleClickViewDoc={handleClickViewDoc} 
+                />
               </TableCell>
-            </TableRow>
+            </TableRow>  
+          </div>          
         </TableBody>
       </Table>
     </TableContainer>

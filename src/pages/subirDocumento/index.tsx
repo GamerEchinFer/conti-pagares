@@ -10,17 +10,13 @@ import { DragEvent } from 'react';
 import { etiquetaVariableActions } from '../../redux/slices/etiquetaVariable.slice';
 import { useUnmount, useMount } from 'ahooks';
 import ButtonFinalizar from "../../components/Buttons/ButtonFinalizar";
-import { EtiquetaVariableResponse, Parametros, SolicitudCliente } from '../../interfaces/interfaces';
+import { EtiquetaVariableResponse, Parametros } from '../../interfaces/interfaces';
 import { hadoopDirectoActions } from '../../redux/slices/hadoop.slice';
 import { SubirDocumentoProvider } from '../../context/subirDocumento/SubirDocumentoProvider';
 import * as pdfjsLib from 'pdf-lib'
 import { Box } from "@mui/material";
 // import { getAllSolicitudClienteAction } from "../../redux/thunks/solicitud.thunks";
-import { solicitudActions } from "../../redux/slices/solicitud.slice";
 import { parametroActions } from "../../redux/slices/parametro.slice";
-import { postAutenticarServicio } from "../../api/keycloakApi";
-import { keycloakHeaders } from "../../constants/constants";
-import { postEtiquetaVariable } from '../../api/apmDesaApi';
 import { getSolicitudClienteAction } from "../../redux/thunks/solicitud.thunks";
 
 const SubirDocumentoPage = ()  => {

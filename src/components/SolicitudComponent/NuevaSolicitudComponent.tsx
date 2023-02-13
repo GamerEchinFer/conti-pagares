@@ -18,37 +18,37 @@ import { solicitudActions } from '../../redux/slices/solicitud.slice';
 import { getNumeroLegajoAction } from '../../redux/thunks/numeroLegajo.thunks';
 import LoadingIcon from '../shared/LoadingIcon';
 
-const initialBody = (body: EtiquetaVariableBody) => ({
-  codigoCliente: {
-     "nombre": "codigoCliente",
-     "valor": "000666"
-  },
-  tipo_persona: {
-     "nombre": "tipo_persona",
-     "valor": "F"
-  },
-  id_producto: {
-    "nombre": "id_producto",
-    "valor": "7"
-  },
-  id_subproducto: {
-    "nombre": "id_subproducto",
-    "valor": "146"
-  },
-  id_actividad: {
-    "nombre": "id_actividad",
-    "valor": "1"
-  },
-  id_riesgo: {
-    "nombre": "id_riesgo",
-    "valor": "4"
-  },
-  id_destino: {
-    "nombre": "id_destino",
-    "valor": "1"        
-  }
+const initialBody = (body?: EtiquetaVariableBody) => ({
+  // codigoCliente: {
+  //    "nombre": "codigoCliente",
+  //    "valor": "000666"
+  // },
+  // tipo_persona: {
+  //    "nombre": "tipo_persona",
+  //    "valor": "F"
+  // },
+  // id_producto: {
+  //   "nombre": "id_producto",
+  //   "valor": "7"
+  // },
+  // id_subproducto: {
+  //   "nombre": "id_subproducto",
+  //   "valor": "146"
+  // },
+  // id_actividad: {
+  //   "nombre": "id_actividad",
+  //   "valor": "1"
+  // },
+  // id_riesgo: {
+  //   "nombre": "id_riesgo",
+  //   "valor": "4"
+  // },
+  // id_destino: {
+  //   "nombre": "id_destino",
+  //   "valor": "1"        
+  // }
   
-  // ...body
+  ...body
 })
 
 type NuevaSolicitudComponentProps = {
@@ -72,7 +72,7 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
   const [idSubProducto, setIdSubProducto] = useState(0);
   const [isChangeSelected, setIsChangeSelected] = useState(false);
 
-  const [body, setBody] = useState<EtiquetaVariableBody>(initialBody(etiquetaVariableBody as EtiquetaVariableBody))
+  const [body, setBody] = useState<EtiquetaVariableBody>({})
 
   const solicitudes = useSolicitudes()
 
@@ -81,19 +81,24 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
 
   useEffect(() => {
     dispatch(etiquetaVariableActions.etiquetaVariableResponseReset())
+    dispatch(etiquetaVariableActions.etiquetaVariableBodyReset())
   }, [])
 
-  useEffect(() => {
-      if (clienteDatos && clienteDatos.codigoCliente) {                
-        agregarNombreValor("codigoCliente", clienteDatos.codigoCliente)
-        agregarNombreValor("tipo_persona", clienteDatos.tipoPersona)
-      }    
+  useEffect(() => {    
+    if (clienteDatos && clienteDatos.codigoCliente) {                  
+      const itemCodigoCliente = {nombre: "codigoCliente", valor: clienteDatos.codigoCliente}    
+      const itemTipoPersona = {nombre: "tipo_persona", valor: clienteDatos.tipoPersona}    
+      
+      setBody({
+        ...body, 
+        [itemCodigoCliente.nombre]: itemCodigoCliente,
+        [itemTipoPersona.nombre]: itemTipoPersona
+      })
+    }    
   }, [])  
 
   useEffect(() => {
-
-    // Clean or Clear    
-    dispatch(parametroActions.parametroSuccess({}))
+    dispatch(parametroActions.parametroSuccess({})) 
   }, [])
 
 
@@ -109,18 +114,12 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
   // }, [etiquetaVariableSuccess])
 
   useEffect(() => {
-
-    // Cada vez que el estado id producto cambia se vuelve a ejecutar este codigo 
-
     if (idProducto) {
       dispatch(getSubProductosAction(idProducto))
     }
   }, [idProducto])
 
   useEffect(() => {
-
-    // Cada vez que el estado id subproducto cambia se vuelve a ejecutar este codigo 
-
     if (idProducto && idSubProducto) {
       dispatch(getParametroAction(idProducto, idSubProducto))
     }
@@ -128,36 +127,20 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
 
   if(!solicitud) return null;
 
-  // const handleClickNext = () => {
-    
-    // dispatch(etiquetaVariableActions.setEtiquetaVariableBody(body));
-
-    // True si cambia la combinacion de productos and false si no cambia
-    
-    // localStorage.setItem("etiquetas-variable-body", JSON.stringify(body));
-    // if (isChangeSelected) {
-      // dispatch(getNumeroLegajoAction());
-      // dispatch(postEtiquetasVariablesAction(Object.values(body)));
-      // dispatch(etiquetaVariableActions.setEtiquetaVariableBody(body));
-      // dispatch(postEtiquetasVariablesAction().setEtiquetaVariableBody(body));
-    // }
-    
-  //   router.push('/subirDocumento');
-  // }
-
   const handleIconBack = () => {
-    // router.push('/solicitud');
     dispatch(solicitudActions.setPage(-1))
   }
 
   const agregarNombreValor = (nombre: string, valor: string) => {
     
-    const item = {nombre, valor}    
+    const item = {nombre, valor}
+    
+    const newBody = {...body, [nombre]: item}
 
-    setBody({...body, [nombre]: item})
+    setBody(newBody)
 
     setIsChangeSelected(true)
-    dispatch (postEtiquetasVariablesAction(Object.values(body)))    
+    dispatch (postEtiquetasVariablesAction(Object.values(newBody)));    
   }
 
   const handleClickNext = () => {
@@ -169,8 +152,8 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
 
   return (
     <>
-      
-      <div className="grid grid-cols-2 gap-2 pt-4">      
+      <div className="grid grid-cols-2 gap-2 pt-4">
+        {/* {JSON.stringify(body)}       */}
         <div 
           className="text-left pl-5"
           style={{
@@ -198,30 +181,19 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
           Para cargar documentos a partir de una solicitud de productos
         </div> 
         <div className="pt-8">
-          {/* {idProducto} */}
-          
-          {/* {idProducto === 0 ? <ProductosComponent 
-            idProducto={idProducto}
-            setIdProducto={setIdProducto}
-          /> : items[idProducto]} */}
-
           {<ProductosComponent 
             idProducto={idProducto}
             setIdProducto={(id: any) => {
               agregarNombreValor("id_producto", `${id}`)
-              // dispatch(solicitudActions.setIdProducto(id))
               setIdProducto(id)
-              
             }}
           />}
           
           {idProducto !== 0 ? (
-            
-              <SubProductosComponent 
+            <SubProductosComponent 
               idSubProducto={idSubProducto}
               setIdSubProducto={(id: any) => {
                 agregarNombreValor("id_subproducto", `${id}`)
-                // dispatch(solicitudActions.setIdSubProducto(id))
                 setIdSubProducto(id)
               }}            
               /> 
@@ -236,12 +208,9 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
               ) 
               : null
             }
-              
               <ParametroSelectComponent onChange={(nombre: string, id: any) => {
                 agregarNombreValor(`id_${nombre}`, `${id}`)
               }} />
-
-              
             </div>  
             <div className="flex flex-row justify-center">
               <NextButton onClick={handleClickNext} />

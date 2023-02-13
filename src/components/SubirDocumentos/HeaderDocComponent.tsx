@@ -13,7 +13,6 @@ const HeaderDocComponent = () => {
       <div 
         className="max-w-md mx-auto md:max-w-2xl pb-2 pt-6"
         style={{fontSize:"24px", color:"#1D428A", fontWeight:"400"}}>
-          
           <div className="static">
             <div className="absolute pt-0 right-60">
               {

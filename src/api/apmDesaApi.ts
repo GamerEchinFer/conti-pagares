@@ -1,26 +1,26 @@
 import axios, { AxiosResponse } from 'axios';
-import { AlzarArchivoRequest, AlzarArchivoResponse, ClienteDatos,
-        ClienteDocumento,
-        ConsultaDocumentosUser,
-        CreateTokenInternoRequest,
-        DescargarArchivo,
-        DocumentosUsuarioFiltro,
-        DocumentosUsuarioResponse,
-        EtiquetaVariable,
-        EtiquetaVariableResponse,
-        GuardarDocumentoRequest,                
-        HadoopDirectoRequest,
-        HadoopDirectoResponse,
-        NumeroLegajo,
-        Parametros,
-        ParametrosVisibles,
-        Producto,
-        SolicitudCliente,
-        SubProducto, 
-        TipoBusqueda, 
-        TiposDocumentos,
-        } from '../interfaces/interfaces';
-import { apmApi, apmHadoopApi, authApi, tokenUserDocumento } from './index';
+import {
+    AlzarArchivoRequest, AlzarArchivoResponse, ClienteDatos,
+    ClienteDocumento,
+    CreateTokenInternoRequest,
+    DescargarArchivo,
+    DocumentosUsuarioResponse,
+    EtiquetaVariable,
+    EtiquetaVariableResponse,
+    GuardarDocumentoRequest,                
+    HadoopDirectoRequest,
+    HadoopDirectoResponse,
+    NumeroLegajo,
+    Parametros,
+    ParametrosVisibles,
+    Producto,
+    SolicitudCliente,
+    SubProducto, 
+    TipoBusqueda, 
+    TipoDocumentoHistoricoResponse, 
+    TiposDocumentos,
+    } from '../interfaces/interfaces';
+import { apmApi, apmHadoopApi, tokenUserDocumento } from './index';
 import { CreateTokenInternoResponse } from '../interfaces/interfaces';
 
 export async function getProductos() {    
@@ -133,6 +133,16 @@ export async function getConsultaDocumentosUser(codigoCliente: string) {
     return response;
 
 }
+export async function getTipoDocumentoHistorico(codigoCliente: string, codigoTipoDocumento: number) {
+    const URL = `/tipo-documento-historico`;
+    const response = await apmApi.get<TipoDocumentoHistoricoResponse[]>(URL, {
+        params: {codigoCliente, codigoTipoDocumento},
+    });
+
+    return response;
+
+}
+
 
 // EXTRACT SERVICE
 export const postCreateTokenInterno = async (body: CreateTokenInternoRequest) => {    

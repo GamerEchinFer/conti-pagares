@@ -96,29 +96,25 @@ function SolicitudPage() {
     <>
       <Grid container pt={3} style={{ justifyContent: 'center' }}>
 				<Box className={styles['box-user']} style={{padding: mediaQueryPadding ? '0px 0px' : '0px'}}>
-        <DatosClienteComponent />
-        <div className="pl-9">
-          <List 
-            component="nav"
-            aria-label="activity folders">
-            {page === -1 ? solicitudes.map((solicitud) => <SolicitudItem 
+          <DatosClienteComponent />
+          <div className="pl-9">
+            <List 
+              component="nav"
+              aria-label="activity folders">
+              {page === -1 ? solicitudes.map((solicitud) => <SolicitudItem 
                 key={solicitud.id}
                 solicitud={solicitud}
                 handleChangeNewSolicitud={handleChangeSolicitud}
-            />
-            
-            
-            ) : items[page]}    
-
-          </List>
-          
-        <div className="flex flex-row justify-center">
-            <BackButton onClick={handleClickPrevius} />          
-        </div>
-        </div>
-    </Box>
-    </Grid>
-  </>
+              />
+              ) : items[page]}    
+            </List>
+            <div className="flex flex-row justify-center">
+              <BackButton onClick={handleClickPrevius} />          
+            </div>
+          </div>
+        </Box>
+      </Grid>
+    </>
   )
 }
 export default SolicitudPage

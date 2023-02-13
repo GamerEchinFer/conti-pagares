@@ -23,6 +23,7 @@ import uiSlice from './slices/ui/ui.slice';
 import { busqueda } from './slices/busqueda.slice';
 import { documentosUser } from './slices/documentosUser.slice';
 import { documentosUserFiltro } from './slices/documentosUserFiltro';
+import { tipoDocumentoHistorico } from './slices/documentoHistorico.slice';
 
 const persistConfig = {
   key: 'root',
@@ -48,7 +49,8 @@ const combinedReducers = combineReducers({
   tipoDocumento: tipoDocumento,
   busqueda: busqueda,
   documentosUser: documentosUser,
-  documentosUserFiltro
+  documentosUserFiltro,
+  tipoDocumentoHistorico
 })
 
 export type OurStore = ReturnType<typeof combineReducers>

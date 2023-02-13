@@ -23,6 +23,11 @@ interface EtiquetaVariableSetOpenModalView {
     openModalView: boolean
 }
 
+interface OpenModalConsultaDocumentos {
+    idTipoDocumento: string,
+    openModalConsultaDocumentos: boolean
+}
+
 // MUTABLE
 const initialState = () => ({
     response: [] as EtiquetaVariableResponse[],
@@ -82,6 +87,7 @@ const etiquetaVariableSlice = createSlice({
                 item.openModal = false
                 item.openModalPeriodo = false
                 item.openModalView = false
+                item.openModalConsultaDocumentos = false
                 return item;
             })
         },
@@ -117,6 +123,17 @@ const etiquetaVariableSlice = createSlice({
                 return item;
             })            
         },
+        setOpenModalConsultaDocumentos(state, action: PayloadAction<OpenModalConsultaDocumentos>) {
+            state.response = state.response.map(item => {
+                if(Number(item.idTipoDocumento) === Number(action.payload.idTipoDocumento)) {
+                    item.openModalConsultaDocumentos = action.payload.openModalConsultaDocumentos
+                }
+                return item;
+            })
+        },
+        etiquetaVariableBodyReset(state) {
+            state.etiquetaVariableBody = null
+        }
     }
 });
 

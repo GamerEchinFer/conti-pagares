@@ -75,6 +75,7 @@ export interface EtiquetaVariableResponse {
     openModal?: boolean;
     openModalPeriodo?: boolean;
     openModalView?: boolean;
+    openModalConsultaDocumentos?: boolean;
     base64?: string;
     base64Modified?: string;
     totalPages?: number;
@@ -266,4 +267,20 @@ export interface DocumentosUsuarioFiltroSubgrupo {
     subgrupoDescripcion: string;
 }
 
-
+export interface TipoDocumentoHistoricoResponse {
+    idDocumento: number,
+    codigoTipoDocumento: number,
+    descripcion: string,
+    codigoEstadoDocumento: string,
+    fechaEmision: Date,
+    fechaVencimiento: Date,
+    periodo: number,
+    numeroOperacion: number,
+    rutaHadoop: string,
+    usuarioCarga: string,
+    fechaRegistro: Date,
+    userAprobador: string,
+    fechaArobacion: Date,
+    usuarioVerificador: string,
+    fechaVerificacion: Date
+}

@@ -21,17 +21,11 @@ import ButtonConfirmar from '../Buttons/ButtonConfirmar';
 import ButtonIconClose from '../Buttons/ButtonIconClose';
 import CancelButton from '../Buttons/CancelButton';
 import PDFComponent from './PDFComponent';
-import * as pdfjsLib from 'pdf-lib'
 import { cutPdf, parsePdfBase64 } from '../../helpers/cutPdf';
 import { useEffect } from 'react';
 import  "dayjs/locale/es";
 import { RootState } from '../../redux/store';
-import router from 'next/router';
-import { base64ToFile } from '../../helpers/base64ToFile';
-import { postAlzarHadoopDirecto } from '../../api/apmDesaApi';
 import { useDocumento } from './hooks/useDocumento';
-import { postEtiquetasVariablesAction } from '../../redux/thunks/etiqueta.thunk';
-import { postAlzarArchivoAction } from '../../redux/thunks/extractos.thunks';
 
 type ModalPDFComponentProps = {
   item: EtiquetaVariableResponse

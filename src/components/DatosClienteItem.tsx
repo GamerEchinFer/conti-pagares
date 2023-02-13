@@ -1,4 +1,5 @@
 import { ClienteDatos } from '../interfaces/interfaces';
+import useState from 'react';
 
 type DatosClienteItemProps = {
     datosCliente: ClienteDatos,    
