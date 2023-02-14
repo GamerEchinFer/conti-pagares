@@ -21,7 +21,6 @@ export default function App({ Component, pageProps }: AppProps) {
       <Head>
         <title>Carpeta Digital | Banco Continental </title>
        </Head>
-       <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
         <ReactKeycloakProvider authClient={keycloak as any} initOptions={{onLoad: 'login-required'}} >
           <Provider store={store}>
             <PersistGate loading={null} persistor={persistor as Persistor}>

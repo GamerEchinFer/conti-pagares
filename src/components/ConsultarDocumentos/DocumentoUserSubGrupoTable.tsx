@@ -68,7 +68,8 @@ const DocumentoUserSubGrupoTable = ({documentosUser, query, handleClickViewDoc, 
             <DocumentoUserCollapsible 
               documentosUser={documentosUser} 
               handleClickViewDoc={handleClickViewDoc} 
-              labelSubgrupo={labelSubgrupo} 
+              labelSubgrupo={labelSubgrupo}
+              key={labelSubgrupo} //ware
               />
             // <div key={labelSubgrupo} className={styles.header} {...getToggleProps()}>
                 
