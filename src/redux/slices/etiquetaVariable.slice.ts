@@ -133,7 +133,12 @@ const etiquetaVariableSlice = createSlice({
         },
         etiquetaVariableBodyReset(state) {
             state.etiquetaVariableBody = null
+        },
+
+        etiquetaVariableAppend(state, action: PayloadAction<EtiquetaVariableResponse>) {
+            state.response = [...state.response, {...action.payload}]
         }
+
     }
 });
 

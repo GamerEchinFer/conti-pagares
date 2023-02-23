@@ -10,14 +10,21 @@ type AddIconComponentProps = {
 }
 
 const AddIconComponent = ({onClick,imagen=Add}: AddIconComponentProps) => {
+
+  const handleClickAdd = () =>  {
+
+  }
   return (
     <>
+    {/* TODO: one Modal, use api, design in modal, use api in modal */}
       <ListItemIcon
         className="flex items-center justify-center pt-2 pb-2"
         onClick={() => onClick()}
       >
         <ListItemButton>
-          <Image src={imagen} alt='add' />
+          <button onClick={handleClickAdd}>
+            <Image src={imagen} alt='add' />
+          </button>
         </ListItemButton>
       </ListItemIcon>
     </>

@@ -6,14 +6,16 @@ type ArrowIconUpProps = {
   }
 
 const ArrowIconUp = ({onClick} : ArrowIconUpProps) => (
-  <ListItemIcon className="flex items-center justify-end" sx={{position: "relative" ,height: "40px", width:"600px"}}>          
-    <button>
+  <ListItemIcon className="flex items-end justify-end" sx={{position: "relative" ,height: "40px", width:"500px"}}>          
+    <button className="">
       <ExpandLessOutlinedIcon 
         sx={{ 
           position: "absolute",
+          display: "flex",
           right: 0,
-          top: 20,
-          bottom: 0,
+          top: 25,
+          bottom: 0, 
+          left: 10,
           // color: "#1D428A",
           // ":hover": {background: "#1D428A", color: "#ffffff", borderRadius: "80px"}
           background: "#1D428A",

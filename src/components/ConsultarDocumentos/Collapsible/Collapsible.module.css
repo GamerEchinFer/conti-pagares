@@ -3,6 +3,7 @@
 .collapsible .content {
     padding: 6px;
     background-color: #ffffff;
+    padding-left: 10px;
 }
 .collapsible .header {
     background-color: #ffffff;

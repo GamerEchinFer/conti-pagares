@@ -12,7 +12,8 @@ const DatosClienteItem = ({datosCliente}: DatosClienteItemProps) => { // destruc
       <div className="text-start pl-0 text-2xl md:text-3xl" 
         style={{
           color: "#1D428A",
-          fontWeight: "bold",          
+          fontWeight: "bold",
+          fontSize:"30px"          
         }}        
         >
         <div className="flex flex-row">

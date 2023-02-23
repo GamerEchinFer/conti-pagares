@@ -1,4 +1,3 @@
-
 import { getTipoDocumento } from "../../api/apmDesaApi";
 import { tipoDocumentoActions } from "../slices/tipoDocumento.slice";
 import { AppDispatch } from "../store";

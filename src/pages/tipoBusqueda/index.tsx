@@ -1,8 +1,7 @@
-import { Box, Grid, TextField, Typography, useMediaQuery } from "@mui/material"
+import { Box, Grid, TextField, useMediaQuery } from "@mui/material"
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { getTipoBusquedaById } from "../../api/gdiApi";
-import NextButtonTB from "../../components/Buttons/NextButtonTB";
 import SearchbarButton from "../../components/Buttons/SearchbarButton";
 import RadioButtonOption from "../../components/RadioButtonOption";
 import TBBodyPrincipal from "../../components/TipoBusqueda/TBBodyPrincipal";
@@ -11,18 +10,17 @@ import { TipoBusqueda } from '../../interfaces/interfaces';
 import styles from './TipoBusqueda.module.css';
 import { theme } from "../../../theme/Theme";
 import { useDispatch, useSelector } from 'react-redux';
-import { solicitudActions } from '../../redux/slices/solicitud.slice';
 import { clienteDatosActions } from '../../redux/slices/clienteDatos.slice';
 import { getClienteDatosAction } from '../../redux/thunks/clienteDatos.thunks';
 import { useMount } from 'ahooks';
 import { postAutenticarServicio } from "../../api/keycloakApi";
 import { keycloakHeaders } from "../../constants/constants";
-import { getProductosAction } from "../../redux/thunks/producto.thunks";
 import { clienteDocumentoActions } from "../../redux/slices/clienteDocumento.slice";
-import { getClienteDocumentoAction } from "../../redux/thunks/clienteDocumento.thunks";
 import { RootState } from "../../redux/store";
 import LoadingIcon from "../../components/shared/LoadingIcon";
 import DatosPersonales from '../../components/DatosPersonales/DatosPersonales';
+import { getProductosAction } from "../../redux/thunks/producto.thunks";
+import { busquedaActions } from "../../redux/slices/busqueda.slice";
 
 const filtros = ["codigo", "documento"]
 
@@ -41,24 +39,14 @@ const TipoBusquedaPage = () => {
 
   const router = useRouter();
 
-  // const storedToken = localStorage.getItem("token");
-  //   if (storedToken){
-  //   let decodedData = decode(storedToken, { header: true });
-  //   let expirationDate = decodedData.exp;
-  //     var current_time = Date.now() / 1000;
-  //     if(expirationDate < current_time)
-  //     {
-  //         localStorage.removeItem("token");
-  //     }
-  //   }
-  
   useMount(() => {
-    dispatch(clienteDatosActions.clienteDatosReset())
-    dispatch(clienteDocumentoActions.clienteDocumentoReset()) 
-    postAutenticarServicio(keycloakHeaders).then((value) => {            
+      dispatch(getProductosAction());
+      dispatch(busquedaActions.busquedaRequest());
+      dispatch(clienteDatosActions.clienteDatosReset());
+      dispatch(clienteDocumentoActions.clienteDocumentoReset()); 
+      postAutenticarServicio(keycloakHeaders).then((value) => {            
       localStorage.setItem("gdi-auth", JSON.stringify(value));
-      console.log(value);      
-      dispatch(getProductosAction())
+      
     }).finally(() => {
 
     })
@@ -68,16 +56,8 @@ const TipoBusquedaPage = () => {
     getTipoBusquedaById(tipoBusquedaSelected).then((response) => {
       setTipoBusqueda(response.data)
     })
-  }, [tipoBusquedaSelected])
-
-  // const handleClickNext = () => {
-  //   dispatch(solicitudActions.setPage(-1))
-  //   router.push('/solicitud');
-  // };
-
-  const handleClickPrevius = () => {
-    router.push('/');
-  };
+  }, [tipoBusquedaSelected]);
+    
   return (
     <>
 			<Grid container pt={3} style={{ justifyContent: 'center' }}>

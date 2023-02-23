@@ -17,8 +17,8 @@ import {
     SolicitudCliente,
     SubProducto, 
     TipoBusqueda, 
+    TipoDocumento, 
     TipoDocumentoHistoricoResponse, 
-    TiposDocumentos,
     } from '../interfaces/interfaces';
 import { apmApi, apmHadoopApi, tokenUserDocumento } from './index';
 import { CreateTokenInternoResponse } from '../interfaces/interfaces';
@@ -101,16 +101,18 @@ export const postGuardarDocumento = async (body: GuardarDocumentoRequest) => {
 
 export async function getNumeroLegajo(nextSequence: number) {
     const URL = `/numero-legajo`;
-    const response = await apmApi.get<NumeroLegajo[]>(URL, { params: {nextSequence}});
+    const response = await apmApi.get<NumeroLegajo[]>(URL, { 
+        params: {nextSequence}
+    });
     return response;
 }
 
 export async function getTipoDocumento() {
     const URL = `/tipos-documentos`;
-    const response = await apmApi.get<TiposDocumentos[]>(URL);
+    const response = await apmApi.get<TipoDocumento[]>(URL, {        
+    });
     return response; 
 }
-
 
 export async function getSolicitudCliente() {    
     const URL = `/menus-frontEnd/solicitud-cliente`;

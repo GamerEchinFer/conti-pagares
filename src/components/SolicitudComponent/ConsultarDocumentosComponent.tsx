@@ -26,13 +26,11 @@ import { capitalize } from '../../helpers/capitalize';
 import ButtonIconRefresh from '../Buttons/ButtonIconRefresh';
 import DocumentoUserTable from '../ConsultarDocumentos/DocumentoUserTable';
 import DocumentoUserSubGrupoTable from '../ConsultarDocumentos/DocumentoUserSubGrupoTable';
-import { getTipoDocumentoHistoricoAction } from '../../redux/thunks/documentoHistorico.thunks';
-import { tipoDocumentoHistorico, tipoDocumentoHistoricoActions } from '../../redux/slices/documentoHistorico.slice';
+import { tipoDocumentoHistoricoActions } from '../../redux/slices/documentoHistorico.slice';
 import { documentUserMapper } from '../../helpers/documentUserMapper';
 import { DocumentosUsuarioResponse } from '../../interfaces/interfaces';
 import { documentosUserActions } from '../../redux/slices/documentosUser.slice';
 
-// TODO:componente search, componente grupo, componente subGrupo, componente preVisualización, componente tabla historico
 function ConsultarDocumentosComponent() {
   const [ name, setName ] = useState("");
   const [ query, setQuery ] = useState("");
@@ -48,6 +46,7 @@ function ConsultarDocumentosComponent() {
 
   const solicitud = useSolicitud(4)
 
+  //TODO: Dinamic not Static
   useEffect(() => {
     dispatch(getDocumentosUserAction("000666", 12))
     dispatch(tipoDocumentoHistoricoActions.tipoDocumentoHistoricoReset())
@@ -85,16 +84,13 @@ function ConsultarDocumentosComponent() {
   .filter((index) =>
     index.datosAdicionales.descripcion.trim().toLowerCase().includes(query.trim().toLowerCase())
   ) : []
+  
   return (
     <>      
       <div className="grid grid-cols-2 gap-2 pt-4">         
         <div 
           className="text-left pl-5"
-          style={{
-            color: "#1D428A",
-            fontWeight: "bold",
-            fontSize:"24px"
-          }}
+          style={{ color: "#1D428A", fontWeight: "bold", fontSize:"24px" }}
         >
           Consultar Documentos
         </div>  
@@ -104,14 +100,7 @@ function ConsultarDocumentosComponent() {
           </div>
         </div>
       </div>                                              
-      <div 
-        className="text-left pl-5 pb-5"
-        style={{
-          color: "#6C6C6C",
-          fontWeight: "400",
-          fontSize:"18px"
-        }}
-      >
+      <div className="text-left pl-5 pb-5" style={{ color: "#6C6C6C", fontWeight: "400", fontSize:"18px" }} >
         Para consultar el estado de los documentos cargados del cliente 
       </div>
       <div className="flex justify-start">
@@ -124,48 +113,38 @@ function ConsultarDocumentosComponent() {
         </ListItem>
       </div>
 
-      <Box
-        sx={{ width: 950, maxWidth: '100%'}}
-      >
+      <Box sx={{ width: 950, maxWidth: '100%'}} >
         <div className="pb-10">
           <div className="flex flex-row justify-content-center items-center">
               <FormControl fullWidth>
-              <InputLabel htmlFor="outlined-adornment-amount">
-                Buscar Documento
-              </InputLabel>
-              
+                <InputLabel htmlFor="outlined-adornment-amount">
+                  Buscar Documento
+                </InputLabel>
                 <OutlinedInput
                   id="outlined-adornment-amount"
                   endAdornment={
                     <InputAdornment position="end">
-                      <button>
-                        <SearchIcon />
-                      </button>
+                      <button> <SearchIcon /> </button>
                     </InputAdornment>}
                   label="Buscar Documento"
                   onChange={(e:any) => setQuery(e.target.value)}
                 />                             
-            </FormControl>
-            {/* <input
-              type="text"
-              placeholder="search documents"
-              onChange={(e) => setQuery(e.target.value)}
-            /> */}
-            <ButtonIconRefresh onClick={handleClickExpand} />
-            <ButtonExpand onClick={handleClickExpand} />
-            <ButtonCollapse onClick={handleClickCollapse} />
+              </FormControl>
+              <ButtonIconRefresh onClick={handleClickExpand} />
+              <ButtonExpand onClick={handleClickExpand} />
+              <ButtonCollapse onClick={handleClickCollapse} />
           </div>
         </div>
       </Box>
+      <div className="overflow-auto h-96">
     <TableContainer>
       <Table sx={{ minWidth: 850 }} aria-label="simple table">
         <TableBody>
-          <div className="overflow-auto h-96">
-            <DocumentoUserTable 
-              documentosUser={documentosUser} 
-              query={query} 
-              handleClickViewDoc={handleClickViewDoc} 
-              />
+          <DocumentoUserTable 
+            documentosUser={documentosUser} 
+            query={query} 
+            handleClickViewDoc={handleClickViewDoc} 
+          />
   {/* 
               <DocumentoUserSubGrupoTable 
               toggle={subGruposActive}
@@ -176,24 +155,27 @@ function ConsultarDocumentosComponent() {
             <TableRow>
               <TableCell
                 align="left"
-                style={{
-                  fontWeight:"600",
-                  fontSize:"16px",
-                  color:"#1D428A"
-                }}>
-                <DocumentoUserSubGrupoTable 
+                style={{ fontWeight:"600", fontSize:"16px", color:"#1D428A" }}>
+                {/* <DocumentoUserSubGrupoTable 
                   toggle={subGruposActive}
                   setToggle={(value) => console.log(value)}
                   documentosUser={documentosUserMapped} 
                   query={query} 
                   handleClickViewDoc={handleClickViewDoc} 
-                />
+                /> */}
               </TableCell>
             </TableRow>  
-          </div>          
-        </TableBody>
+            <DocumentoUserSubGrupoTable 
+              toggle={subGruposActive}
+              setToggle={(value) => console.log(value)}
+              documentosUser={documentosUserMapped} 
+              query={query} 
+              handleClickViewDoc={handleClickViewDoc} 
+            />          
+        </TableBody>           
       </Table>
     </TableContainer>
+    </div>
     </>
   ) 
 }

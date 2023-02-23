@@ -1,10 +1,10 @@
 import { Box } from '@mui/material'
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { modalPara, uiSetError } from '../redux/slices/ui/ui.slice';
 import { RootState, useAppDispatch } from '../redux/store';
 import styles from './genericos/Genericos.module.css';
-
 interface HeaderProps {
 icono?: string;
 estilosIcono?: React.CSSProperties;
@@ -49,7 +49,7 @@ const Header = ({icono, estilosIcono, titulo, logo, callBack, showClose=true, es
     <>
       <Box style={{height: 70, display: 'flex', justifyContent: 'center', background: '#1D428A', width: '100%'}}>
         <div className="flex flex-wrap justify-center">
-          <img
+          <Image
             src="@/assets/principal-fondo-azul.png"
             className="max-w-sm h-auto transition-shadow ease-in-out duration-300 shadow-none hover:shadow-xl"
             alt=""

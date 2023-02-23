@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TiposDocumentos } from "../../interfaces/interfaces";
+import { TipoDocumento } from "../../interfaces/interfaces";
 
 const initialState = () => ({
-    items: [] as TiposDocumentos[],
+    items: {} as TipoDocumento[],
     loading: false, //luego de ejecutar is true
     success: false,
     error: null as any
@@ -15,7 +15,7 @@ const tipoDocumentoSlice = createSlice({
         tipoDocumentoRequest(state) {
             state.loading = true;
         },
-        tipoDocumentoSuccess(state, action:PayloadAction<TiposDocumentos[]>) {
+        tipoDocumentoSuccess(state, action:PayloadAction<TipoDocumento[]>) {
             state.items = action.payload;
             state.loading = false;
             state.success = true;
@@ -24,7 +24,13 @@ const tipoDocumentoSlice = createSlice({
             state.loading = false;
             state.success = false;
             state.error = action.payload
-        }
+        },
+        tipoDocumentoReset(state) {
+            state.loading = false;
+            state.success = false;
+            state.items = [];
+            state.error = null as any;
+        },
     }
 })
 

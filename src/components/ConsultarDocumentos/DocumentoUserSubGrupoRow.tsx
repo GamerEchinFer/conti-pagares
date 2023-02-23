@@ -14,13 +14,13 @@ import ConsultarHistoricoContent from './ConsultarHistoricoContent';
 import { getTipoDocumentoHistoricoAction } from '../../redux/thunks/documentoHistorico.thunks';
 import { RootState } from '../../redux/store';
 
-type DocumentoUserTableRowProps = {
+type DocumentoUserSubGrupoRowProps = {
     row: ColeccionDocumento
     handleClickViewDoc: () => void    
 }
 
 
-const DocumentoUserTableRow = ({row, handleClickViewDoc}: DocumentoUserTableRowProps) => {
+const DocumentoUserSubGrupoRow = ({row, handleClickViewDoc}: DocumentoUserSubGrupoRowProps) => {
 
   const datosCliente = useSelector((state: RootState) => state.clienteDatos.items);
   
@@ -32,10 +32,7 @@ const DocumentoUserTableRow = ({row, handleClickViewDoc}: DocumentoUserTableRowP
 
   return (
     <>
-      <TableRow
-        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-        key={row.datosAdicionales.idDocumento}
-      >
+      
       <TableCell 
         align="left"
         style={{
@@ -107,11 +104,10 @@ const DocumentoUserTableRow = ({row, handleClickViewDoc}: DocumentoUserTableRowP
             }
           })()}
         </div>
-      </TableCell>
-      </TableRow>
+      </TableCell>      
       <ConsultarHistoricoContent />
   </>
   )
 }
 
-export default DocumentoUserTableRow
+export default DocumentoUserSubGrupoRow

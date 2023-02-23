@@ -25,10 +25,11 @@ const ResponsiveAppBar = () => {
 
 	const { usuarioKeycloack } = useSelector((state:RootState)=>state.auth);
 	const router = useRouter();
-    // const { keycloak } = useKeycloak();
+    const { keycloak } = useKeycloak();
 
 	const handleOpenUserMenu = () => {
-		//  keycloak.logout({redirectUri: process.env.NEXT_PUBLIC_HOST_VALIDO})
+		 keycloak.logout({redirectUri: process.env.NEXT_PUBLIC_HOST_VALIDO})
+		 
 	};
 
 	const imageRedirect = () => {
@@ -36,10 +37,11 @@ const ResponsiveAppBar = () => {
 				postAutenticarServicio(keycloakHeaders).then((value) => {            
 				localStorage.setItem("gdi-auth", JSON.stringify(value));
 				console.log(value);
+				router.push('/tipoBusqueda')      
 				dispatch(getBusquedaAction())      
-				dispatch(getSolicitudClienteAction())      
+				dispatch(getSolicitudClienteAction())
 			}).finally(() => {
-				localStorage.setItem("gdi-auth", JSON.stringify(""))
+				localStorage.setItem("gdi-auth", JSON.stringify(""));      
 			})
 
 		}
@@ -66,6 +68,7 @@ const ResponsiveAppBar = () => {
 							</Typography>
 							<Tooltip title="Cerrar sesión">
 							<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+							{/* <IconButton onClick={() => window.location.reload()} sx={{ p: 0 }}> */}
 								<LogoutIcon sx={{ display: { md: 'flex' }, mr: 1, color: 'white' }} />
 							</IconButton>
 						</Tooltip>
