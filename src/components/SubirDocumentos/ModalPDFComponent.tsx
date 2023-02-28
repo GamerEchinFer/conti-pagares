@@ -141,6 +141,7 @@ export default function ModalPDFComponent({item}: ModalPDFComponentProps) {
       open={!!item.openModal}
       onClose={handleClose}
       aria-labelledby="responsive-dialog-title"
+      PaperProps={{ sx: { top: 10, m: 0 , maxWidth: "90%", height: "80%" }}}
     >       
         <DialogActions>
           <ButtonIconClose autoFocus={true} onClick={handleClose} />

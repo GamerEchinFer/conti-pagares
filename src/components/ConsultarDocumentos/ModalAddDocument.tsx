@@ -74,7 +74,7 @@ const ModalAddDocument = ({open, onClose}: ModalAddDocumentProps) => {
     const mapDocumentos = (item: EtiquetaVariableResponse) => {
         return (
             <div>
-                <p>{item?.datosAdicionales[0]?.descripcion ?? ""}</p>
+                {/* <p>{item?.datosAdicionales[0]?.descripcion ?? ""}</p> */}
             </div>
         )
     }
