@@ -1,4 +1,5 @@
 import { 
+    Checkbox,
     Dialog,
     DialogContent,
     DialogContentText,
@@ -23,6 +24,18 @@ import { getTipoDocumentoAction } from '../../redux/thunks/tipoDocumento.thunks'
 import { TipoDocumento, EtiquetaVariableResponse } from '../../interfaces/interfaces';
 import { etiquetaVariableActions } from '../../redux/slices/etiquetaVariable.slice';
 import SaveListButton from '../Buttons/SaveListButton';
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
 
 type ModalAddDocumentProps = {
     open: boolean
@@ -56,6 +69,7 @@ function createEtiquetaVariable(data: TipoDocumento): EtiquetaVariableResponse {
         filename:                       "",
     }
 }
+
 
 const ModalAddDocument = ({open, onClose}: ModalAddDocumentProps) => {
 
@@ -95,7 +109,7 @@ const ModalAddDocument = ({open, onClose}: ModalAddDocumentProps) => {
                 }
             }}
 
-            PaperProps={{ sx: { top: 10, m: 0 , maxWidth: "80%", height: "80%" }}}
+            PaperProps={{ sx: { top: 10, m: 0 , maxWidth: "60%", height: "80%" }}}
         >
             <DialogActions>
                 <ButtonIconClose autoFocus={true} onClick={onClose} />
@@ -112,7 +126,7 @@ const ModalAddDocument = ({open, onClose}: ModalAddDocumentProps) => {
             </DialogContentText>
                 <div className="flex justify-start pl-28 pt-6">
                 {documentos.map(mapDocumentos)}
-                <FormControl size="small" sx={{ minWidth: 670}} >
+                <FormControl size="small" sx={{ m: 1, width: 400 }}>
                     <InputLabel id="demo-simple-select-label">Seleccione el tipo de documento</InputLabel>
                     <Select
                         className="text-left"
@@ -136,10 +150,15 @@ const ModalAddDocument = ({open, onClose}: ModalAddDocumentProps) => {
                     >
                         {
                             tipoDocumento.map((item) => {
-                            return <MenuItem key={item.idTipoDocumento} value={item.idTipoDocumento} >{capitalize(`${item.descripcion}`)}</MenuItem>
+                            return (
+                                <MenuItem key={item.idTipoDocumento} value={item.idTipoDocumento} >
+                                    {capitalize(`${item.descripcion}`)}
+                                    <Checkbox />
+                                </MenuItem>
+                            )
                             })
                         } 
-                    </Select>
+                     </Select>
                 </FormControl>
                 </div>         
                 <div className="flex justify-center gap-8">
