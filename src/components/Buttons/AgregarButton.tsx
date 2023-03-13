@@ -7,11 +7,11 @@ const text: CSSProperties = {
   fontSize: "16px"
 };
 
-type SaveListButtonProps = {
+type AgregarButtonProps = {
   onClick: () => void
 }
 
-const SaveListButton = ({onClick}: SaveListButtonProps) => {
+const AgregarButton = ({onClick}: AgregarButtonProps) => {
   
 
   return (
@@ -24,10 +24,10 @@ const SaveListButton = ({onClick}: SaveListButtonProps) => {
           className="btnBack"
           onClick={() => onClick()}
         >
-        Guardar Lista
+        Agregar
         </Button>
       </div>
     </>
   )
 }
-export default SaveListButton
+export default AgregarButton

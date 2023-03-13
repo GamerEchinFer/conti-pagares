@@ -20,7 +20,7 @@ import {
     TipoDocumento, 
     TipoDocumentoHistoricoResponse, 
     } from '../interfaces/interfaces';
-import { apmApi, apmHadoopApi, tokenUserDocumento } from './index';
+import { apmApi, apmHadoopApi, apmHadoopGDI, tokenUserDocumento } from './index';
 import { CreateTokenInternoResponse } from '../interfaces/interfaces';
 
 export async function getProductos() {    

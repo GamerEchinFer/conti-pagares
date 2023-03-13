@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { baseUrl } from '../constants/constants';
-import { apmAuthInterceptor, apmAuthInterceptorHadoop } from './interceptors';
+import { apmAuthInterceptor, apmAuthInterceptorHadoop, apmAuthInterceptorHadoopGDI } from './interceptors';
 
 export const api = axios.create(
     {
@@ -37,7 +37,6 @@ apmApi.interceptors.request.use(apmAuthInterceptor);
 
 export const apmHadoopApi = axios.create(
     {
-        // baseURL: "https://apihadoop-desa.bancontinental.com.py/download?downloadpath=/"
         // baseURL: "http://10.6.3.84:5051"
         // baseURL: "http://10.6.3.84:5055"
         baseURL: "http://10.6.3.84:5051",
@@ -47,6 +46,15 @@ export const apmHadoopApi = axios.create(
 
 // comment the subscription key for use unique without problems
 apmHadoopApi.interceptors.request.use(apmAuthInterceptorHadoop);
+
+
+export const apmHadoopGDI = axios.create(
+    {
+        baseURL: "https://api-test-gw.bancontinental.com.py/hadoop/v1",
+    }
+);
+
+apmHadoopGDI.interceptors.request.use(apmAuthInterceptorHadoopGDI);
 
 export const tokenUserDocumento = axios.create(
     {

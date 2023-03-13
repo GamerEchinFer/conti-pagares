@@ -122,6 +122,9 @@ export interface HadoopDirectoResponse {
 export interface AuthHadoop {
     "Subscription-Key": string;
 }
+export interface AuthHadoopGDI {
+    "Subscription-Key": string;
+}
 
 export interface HadoopDirectoRequest {
     LOC:    string;

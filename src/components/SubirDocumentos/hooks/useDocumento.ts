@@ -48,8 +48,10 @@ export const useDocumento = () => {
             hadoop:resHadoop.LOC,           
             hadoopPath: resHadoop.LOC,
             codigoUsuario:"PER",
-            codigoProducto: Number(etiquetaVariableBody?.id_producto.valor ?? "0") , // no reconoce
-            codigoSubproducto: Number(etiquetaVariableBody?.id_subproducto.valor ?? "0"), // no reconoce
+            // codigoProducto: Number(etiquetaVariableBody?.id_producto.valor ?? "0") , // no reconoce
+            codigoProducto: Number("10") ,
+            // codigoSubproducto: Number(etiquetaVariableBody?.id_subproducto.valor ?? "0"), // no reconoce
+            codigoSubproducto: Number("151"),
             operacion: Number(saveDoc.operacion)
         }
 

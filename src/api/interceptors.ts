@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
-import { keycloakHeaders, keyCloakHeadersHadoop } from "../constants/constants";
+import { keycloakHeaders, keyCloakHeadersHadoop, keyCloakHeadersHadoopGDI } from "../constants/constants";
 import { AuthenticationResponse } from "../interfaces/interfaces";
 import Cookies from "universal-cookie";
 import store from "../redux/store";
@@ -41,6 +41,13 @@ export const apmAuthInterceptor = (config: AxiosRequestConfig) => {
 export const apmAuthInterceptorHadoop = (config: AxiosRequestConfig) => {
     if(config.headers) {
         config.headers["Subscription-Key"] = keyCloakHeadersHadoop["Subscription-Key"];
+    }
+    return config;
+}
+
+export const apmAuthInterceptorHadoopGDI = (config: AxiosRequestConfig) => {
+    if(config.headers) {
+        config.headers["Subscription-Key"] = keycloakHeaders["Subscription-Key"];
     }
     return config;
 }

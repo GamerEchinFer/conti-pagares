@@ -9,20 +9,21 @@ import { LightTooltip } from '../shared/LightTooltip';
 import DialogPeriodoComponent from './DialogPeriodoComponent';
 import FileUploadIconComponent from './FileUploadIconComponent';
 import ModalPDFComponent from './ModalPDFComponent';
-import * as pdfjsLib from 'pdf-lib'
+import * as pdfjsLib from 'pdf-lib';
 import { etiquetaVariableActions } from '../../redux/slices/etiquetaVariable.slice';
 import RecargarDocIcon from './RecargarDocIcon';
 import ViewPDFComponent from './ViewPDFComponent';
 import { getDescargarHadoopDirecto } from '../../api/apmDesaApi';
 import { parsePdfBase64 } from '../../helpers/cutPdf';
 
+type DocumentListComponentProps = {
+  item: EtiquetaVariableResponse
+}
+
 const buttonStyle = (item: EtiquetaVariableResponse) =>  ({
   fontSize:"20px", color: item.tieneDocumento ? "#BEC400" : "#1D428A", fontWeight:"400"
 })
 
-type DocumentListComponentProps = {
-  item: EtiquetaVariableResponse
-}
 
 const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
   // const etiquetasVariables = useSelector((state: RootState) => state.etiquetaVariable.response);
@@ -57,47 +58,43 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
     reader.onload = function () {
 
       pdfjsLib.PDFDocument.load( reader.result?.toString() ?? "").then((pdfDoc) => {          
-          dispatch(etiquetaVariableActions.etiquetaVariableUpdateFile({
-              idTipoDocumento: item.idTipoDocumento, 
-              file: files[Number(0)], 
-              base64: reader.result?.toString() ?? "",
-              base64Modified: reader.result?.toString() ?? "", 
-              totalPages: pdfDoc.getPageCount(),
-              size: files[Number(0)].size / 1000000,
-              filename: files[Number(0)].name ?? ""                  
-          }));
+        dispatch(etiquetaVariableActions.etiquetaVariableUpdateFile({
+          idTipoDocumento: item.idTipoDocumento, 
+          file: files[Number(0)], 
+          base64: reader.result?.toString() ?? "",
+          base64Modified: reader.result?.toString() ?? "", 
+          totalPages: pdfDoc.getPageCount(),
+          size: files[Number(0)].size / 1000000,
+          filename: files[Number(0)].name ?? ""                  
+        }));
       })                                         
     }
   }
 
   
   const handleClickTieneDocumento = async ({datosAdicionales}: EtiquetaVariableResponse) => {
-      // Cuando tiene documento
-      if (!datosAdicionales || !Array.isArray(datosAdicionales) || !datosAdicionales.length ) return;
+    // Cuando tiene documento
+    if (!datosAdicionales || !Array.isArray(datosAdicionales) || !datosAdicionales.length ) return;
 
-      // Descargar el documento
-      //TODO: SWITCH PARA HADOOP Y SOAP
-      const rutaHadoop = datosAdicionales[0].rutaHadoop
-      const descripcion = datosAdicionales[0].descripcion
+    // Descargar el documento
+    //TODO: SWITCH PARA HADOOP Y SOAP
+    const rutaHadoop = datosAdicionales[0].rutaHadoop
+    const descripcion = datosAdicionales[0].descripcion
 
-      const download = await getDescargarHadoopDirecto(rutaHadoop) // Ver si es la ruta correcta o probar uno de prueba
+    const download = await getDescargarHadoopDirecto(rutaHadoop)
 
-      const viewPdf = `data:application/pdf;base64Modified,${download.data.LOC}` 
-        // setDownload(viewPdf)           
-         // Probar y despues borrar porque lo que hace es hacer que el navegador descargue el pdf
-        const el = document.createElement("a")
-        el.href = viewPdf
-        el.download = descripcion // Descubrir como se le llamo al pdf cargado anteriormente
-        el.click()
-        
-        dispatch(etiquetaVariableActions.etiquetaVariableUpdateFileModified({
-            idTipoDocumento: item.idTipoDocumento,
-            base64Modified: parsePdfBase64(viewPdf as string),
-            totalPagesModified: 1, // TODO - Saber el total de las paginas
-            sizeModified: 1000 // TODO - Calcular size cuando abre un documento que tiene documento
-        })) 
-
-
+    const viewPdf = `data:application/pdf;base64Modified,${download.data.LOC}` 
+    const el = document.createElement("a")
+    el.href = viewPdf
+    el.download = descripcion // Descubrir como se le llamo al pdf cargado anteriormente
+    el.click()
+    
+    dispatch(etiquetaVariableActions.etiquetaVariableUpdateFileModified({
+      idTipoDocumento: item.idTipoDocumento,
+      base64Modified: parsePdfBase64(viewPdf as string),
+      totalPagesModified: 1, // TODO - Saber el total de las paginas
+      sizeModified: 1000 // TODO - Calcular size cuando abre un documento que tiene documento
+    })) 
   }
 
   const handleClickModificarDoc = () => {
@@ -129,11 +126,6 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
             : <FileUploadIconComponent onClick={() => inputRef.current.click()} />          
         }
       >
-                
-        {/* <LightTooltip 
-          disableTouchListener 
-          title="Visualizar archivo cargado" 
-          arrow> */}
           <ListItemText
             className="pr-2"
             primary={
@@ -149,7 +141,7 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
                 </> 
               )                
               : capitalize(`${item.tipoDocumento}`)
-              }       
+            }       
             primaryTypographyProps={{fontSize:"20px", color: item.tieneDocumento ? "#BEC400" : "#1D428A", fontWeight:"400"}}
             secondary={
               (capitalize(`${item.tipoDocumento}`)) &&
@@ -167,32 +159,30 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
               </> : null
               }
           />
-          {/* </LightTooltip> */}
-          
         <ListItemButton>
           <ModalPDFComponent item={item} />
           <DialogPeriodoComponent item={item} />            
-        </ListItemButton>                  
-            
+        </ListItemButton>                     
       </ListItem>
       <Divider />
       {
-      !archives && (
-        <div
-        onDragOver={handleDragOver}
-        onDrop={handleDrop}>
-          <input
-            type="file"
-            multiple            
-            onChange={(event) => handleFile(event.target.files)}
-            hidden
-            ref={inputRef}
-            // Only PDF
-            accept=".pdf"></input>
-        </div>
-      )
-    }
-    <ViewPDFComponent item={item} />
+        !archives && (
+          <div
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}>
+              <input
+                type="file"
+                multiple            
+                onChange={(event) => handleFile(event.target.files)}
+                hidden
+                ref={inputRef}
+                // Only PDF
+                accept=".pdf" 
+              />
+          </div>
+        )
+      }
+      <ViewPDFComponent item={item} />
     </>
   );
 }
