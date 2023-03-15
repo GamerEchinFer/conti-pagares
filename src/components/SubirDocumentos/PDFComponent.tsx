@@ -24,9 +24,9 @@ const PDFComponent = ({base64}: PDFComponentProps) => {
     const handleClickOpen = async () => {
         // DESCARGAR PDF
         const download = await getDescargarHadoopDirecto(href)
-        console.log("El PDF: " + download.data.LOC);
+        console.log("El PDF: " + download.data.loc);
 
-        const hrefPdf = `data:application/pdf;base64,${download.data.LOC}` 
+        const hrefPdf = `data:application/pdf;base64,${download.data.loc}` 
         setUrlPdf(hrefPdf)           
 
         // Te permite crear una etiqueta de manera programada o dinamica
@@ -49,7 +49,7 @@ const PDFComponent = ({base64}: PDFComponentProps) => {
         // SUBIR PDF POR ALGUNA RAZON FUNCIONA DA ERROR SI PONES SUBSCRIPTION KEY
         const res = await postAlzarHadoopDirecto(formData, "", false, 255);
 
-        setHref(res.LOC)
+        setHref(res.loc)
         setFileName(fileInput.files[0].name)
     }
 

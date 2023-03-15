@@ -87,10 +87,10 @@ const ViewPDFComponent = ({item}: ModalPDFComponentProps) => {
       try {        
         // const base64Modified = await cutPdf(base64, cut_from, cut_to, totalPages, totalPagesModified, sizeModified)       
         const download = await getDescargarHadoopDirecto(downFile)
-        console.log("El PDF: " + download.data.LOC);
+        console.log("El PDF: " + download.data.loc);
         
         // const viewPdf = `data:application/pdf;base64Modified,${download.data.LOC}` 
-        const viewPdf = `data:application/pdf;base64,${download.data.LOC}` 
+        const viewPdf = `data:application/pdf;base64,${download.data.loc}` 
         setDownload(viewPdf)           
         console.log(viewPdf)
         const el = document.createElement("a")
