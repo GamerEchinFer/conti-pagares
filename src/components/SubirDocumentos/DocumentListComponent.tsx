@@ -83,7 +83,7 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
 
     const download = await getDescargarHadoopDirecto(rutaHadoop)
 
-    const viewPdf = `data:application/pdf;base64,${download.data.LOC}` 
+    const viewPdf = `data:application/pdf;base64,${download.data.loc}` 
     console.log("helloooo",viewPdf);
     const el = document.createElement("a")
     el.href = viewPdf
