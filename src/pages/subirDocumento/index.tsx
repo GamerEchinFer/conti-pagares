@@ -25,8 +25,8 @@ const SubirDocumentoPage = ()  => {
 
     const dispatch = useDispatch();
     const etiquetasVariables = useSelector((state: RootState) => state.etiquetaVariable.response);
-    const page = useSelector((state: RootState) => state.etiquetaVariable.page)
-    const [openAddModal, setOpenAddModal] = useState(false)
+    const page = useSelector((state: RootState) => state.etiquetaVariable.page);
+    const [openAddModal, setOpenAddModal] = useState(false);
 
     // The Files of redux but cant use in others components
     const files = useSelector((state: RootState) => state.hadoopDirecto.files);
@@ -38,6 +38,7 @@ const SubirDocumentoPage = ()  => {
     useUnmount(() => {
         // With redux clear in all modals = false
         dispatch(etiquetaVariableActions.etiquetaVariableCloseAllModals());
+        // dispatch(etiquetaVariableActions.etiquetaVariableUpdateFile);
         
     });
 

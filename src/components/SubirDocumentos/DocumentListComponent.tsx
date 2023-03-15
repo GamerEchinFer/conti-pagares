@@ -83,17 +83,18 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
 
     const download = await getDescargarHadoopDirecto(rutaHadoop)
 
-    const viewPdf = `data:application/pdf;base64Modified,${download.data.LOC}` 
+    const viewPdf = `data:application/pdf;base64,${download.data.LOC}` 
+    console.log("helloooo",viewPdf);
     const el = document.createElement("a")
     el.href = viewPdf
-    el.download = descripcion // Descubrir como se le llamo al pdf cargado anteriormente
+    el.download = descripcion
     el.click()
     
     dispatch(etiquetaVariableActions.etiquetaVariableUpdateFileModified({
       idTipoDocumento: item.idTipoDocumento,
       base64Modified: parsePdfBase64(viewPdf as string),
-      totalPagesModified: 1, // TODO - Saber el total de las paginas
-      sizeModified: 1000 // TODO - Calcular size cuando abre un documento que tiene documento
+      totalPagesModified: 1, 
+      sizeModified: 1000
     })) 
   }
 

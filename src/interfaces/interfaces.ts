@@ -113,9 +113,12 @@ export interface PeriodicidadTipoDocumento {
 }
 
 export interface HadoopDirectoResponse {
-    LOC:    string;
-    MSG:    string;
-    TYPE:   number;
+    // LOC:    string;
+    // MSG:    string;
+    // TYPE:   number;
+    loc:    string;
+    msg:    string;
+    type:   number;
 }
 
 
@@ -127,9 +130,12 @@ export interface AuthHadoopGDI {
 }
 
 export interface HadoopDirectoRequest {
-    LOC:    string;
-    MSG:    string;
-    TYPE:   number;
+    // LOC:    string;
+    // MSG:    string;
+    // TYPE:   number;
+    loc:    string;
+    msg:    string;
+    type:   number;
 }
 
 export interface HadoopDirecto {

@@ -33,20 +33,21 @@ export const useDocumento = () => {
         const file = await base64ToFile(item?.base64Modified ?? "", "test");  
         const formData = new FormData();        
         formData.append("file", file);
-        const resHadoop = await postAlzarHadoopDirecto(formData, "", false, 255);
-        console.log(resHadoop);     
+        const resHadoop = await postAlzarHadoopDirecto(formData, "", false, 65356);
+        console.log("holaaaaa",resHadoop);     
 
         // Number(value) o parseInt(value)
         let newFech = moment(fechaEmision).format('DDMMYYYY');
         const body: GuardarDocumentoRequest = {
             codigoTipoDocumento: Number(item.idTipoDocumento),
-            rutaDocumento: resHadoop.LOC,
+            // rutaDocumento: resHadoop.LOC,
+            rutaDocumento: resHadoop.loc,
             fechaEmision: newFech,
             descripcionDocumento: item.filename,
             codigoCliente: clienteDatos.codigoCliente,
             codigoLegajo: numeroDeLegajo[0].nextSequence,
-            hadoop:resHadoop.LOC,           
-            hadoopPath: resHadoop.LOC,
+            hadoop:resHadoop.loc,           
+            hadoopPath: resHadoop.loc,
             codigoUsuario:"PER",
             // codigoProducto: Number(etiquetaVariableBody?.id_producto.valor ?? "0") , // no reconoce
             codigoProducto: Number("10") ,

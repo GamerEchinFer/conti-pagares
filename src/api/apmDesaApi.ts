@@ -56,8 +56,8 @@ export const postEtiquetaVariable = async (body: EtiquetaVariable[]) => {
 }
 
 export async function getDescargarHadoopDirecto(downloadpath: string) {
-    const URL = `/download`;
-    const response = await apmHadoopApi.get<HadoopDirectoRequest>(URL, {
+    const URL = `https://desa-docker01.bancontinental.com.py:8200/download`;
+    const response = await axios.get<HadoopDirectoRequest>(URL, {
     params: {downloadpath},
     });
     return response;
@@ -65,8 +65,8 @@ export async function getDescargarHadoopDirecto(downloadpath: string) {
 
 export const postAlzarHadoopDirecto = async (body: FormData, path_images: string, overwrite: boolean, chunksize: number) => {
     // const URL = `/upload?path_images`;
-    const URL = `/upload`;
-    const {data} = await apmHadoopApi.post<FormData, AxiosResponse<HadoopDirectoResponse>>(
+    const URL = `https://desa-docker01.bancontinental.com.py:8200/upload`;
+    const {data} = await axios.post<FormData, AxiosResponse<HadoopDirectoResponse>>(
         URL,body, {headers: {'Content-Type':'multipart/form-data'},
                     params:{path_images, overwrite, chunk_size: chunksize},
 });

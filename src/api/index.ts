@@ -39,13 +39,13 @@ export const apmHadoopApi = axios.create(
     {
         // baseURL: "http://10.6.3.84:5051"
         // baseURL: "http://10.6.3.84:5055"
-        baseURL: "http://10.6.3.84:5051",
+        baseURL: "http://10.6.3.84:8200",
         // baseURL: "https://apihadoop-desa.bancontinental.com.py"
     }
 );
 
 // comment the subscription key for use unique without problems
-apmHadoopApi.interceptors.request.use(apmAuthInterceptorHadoop);
+// apmHadoopApi.interceptors.request.use(apmAuthInterceptorHadoop);
 
 
 export const apmHadoopGDI = axios.create(

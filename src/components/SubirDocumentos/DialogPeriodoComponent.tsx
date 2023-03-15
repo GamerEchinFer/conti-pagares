@@ -107,7 +107,7 @@ const meses: {[key: number]: JSX.Element} = {
 
     const download = await getDescargarHadoopDirecto(rutaHadoop)
 
-    const viewPdf = `data:application/pdf;base64Modified,${download.data.LOC}` 
+    const viewPdf = `data:application/pdf;base64Modified,${download.data.loc}` 
 
     const el = document.createElement("a");
     el.href = viewPdf;
@@ -227,8 +227,8 @@ const meses: {[key: number]: JSX.Element} = {
                         </button>
                       </LightTooltip>
                     </>
-                  // ) : capitalize(`${item.filename}`)"Nombre_documento1"
-                  ) : null
+                  ) : capitalize(`${item.filename}`)
+                  // ) : null
                 }
                   sx={{fontSize:"12px", color:"#1D428A", fontWeight:"400"}}
                 />

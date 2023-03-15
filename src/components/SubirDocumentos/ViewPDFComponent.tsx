@@ -85,13 +85,14 @@ const ViewPDFComponent = ({item}: ModalPDFComponentProps) => {
       console.log("mb:" + buffer.length / 1e+6);
 
       try {        
-        const base64Modified = await cutPdf(base64, cut_from, cut_to, totalPages, totalPagesModified, sizeModified)       
+        // const base64Modified = await cutPdf(base64, cut_from, cut_to, totalPages, totalPagesModified, sizeModified)       
         const download = await getDescargarHadoopDirecto(downFile)
         console.log("El PDF: " + download.data.LOC);
         
-        const viewPdf = `data:application/pdf;base64Modified,${download.data.LOC}` 
+        // const viewPdf = `data:application/pdf;base64Modified,${download.data.LOC}` 
+        const viewPdf = `data:application/pdf;base64,${download.data.LOC}` 
         setDownload(viewPdf)           
-        
+        console.log(viewPdf)
         const el = document.createElement("a")
         el.href = viewPdf
         el.download = fileName
@@ -99,7 +100,8 @@ const ViewPDFComponent = ({item}: ModalPDFComponentProps) => {
         
         dispatch(etiquetaVariableActions.etiquetaVariableUpdateFileModified({
             idTipoDocumento: item.idTipoDocumento,
-            base64Modified: parsePdfBase64(base64Modified as string),
+            // base64Modified: parsePdfBase64(base64Modified as string),
+            base64Modified: parsePdfBase64(base64 as string),
             totalPagesModified: (cut_to + 1) - cut_from,
             sizeModified: sizeModified
         })) 
@@ -110,33 +112,16 @@ const ViewPDFComponent = ({item}: ModalPDFComponentProps) => {
     // base64 => cortar => base64Modified
 }
 
-
-
     const confirm = async () => {
-
-        // const res = await documento.guardarDocumento(item, fechaEmision);
         const res = await documento.guardarDocumento(item, fechaEmision);
-        //update list check
-            
         dispatch(etiquetaVariableActions.etiquetaVariableRequest());
-        // setHref(res.LOC)
-        // setFileName("test") 
-    
-        console.log(res);                
-        
-      }
+        // console.log(res);                
+    }
 
-      
     const getHadoop = async () => {
-
-        // const res = await documento.guardarDocumento(item, fechaEmision);
         const res = await documento.guardarDocumento(item, fechaEmision);
-        //update list check    
         dispatch(etiquetaVariableActions.etiquetaVariableRequest());
-        // setHref(res.LOC)
-        // setFileName("test")
-    
-        console.log(res);                
+        // console.log(res);                
     }
 
   return (
@@ -190,10 +175,10 @@ const ViewPDFComponent = ({item}: ModalPDFComponentProps) => {
                     <div className="pb-4 pt-4">
                         <TextField
                             label="Asociar a Operación"
-                            value={3465788}
+                            value={356600}
                             placeholder="74783648247234"
                             fullWidth
-                            disabled
+                            // disabled
                         />
                     </div>
                     <div className="flex flex-row justify-center gap-8 pb-4">
@@ -204,11 +189,10 @@ const ViewPDFComponent = ({item}: ModalPDFComponentProps) => {
                 </DialogContent>
                 <div className="max-w-10xl grid grid-cols" style={{width:"160%"}} >
                 <DialogContent>
-                <PDFComponent base64={item?.base64Modified ?? ""}  />
+                <PDFComponent base64={item?.base64 ?? ""}  />
                 </DialogContent>   
                 </div>
             </div>
-
         </Dialog>
   )
 }
