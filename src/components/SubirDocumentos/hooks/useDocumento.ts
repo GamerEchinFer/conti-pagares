@@ -33,8 +33,8 @@ export const useDocumento = () => {
         const file = await base64ToFile(item?.base64Modified ?? "", "test");  
         const formData = new FormData();        
         formData.append("file", file);
-        const resHadoop = await postAlzarHadoopDirecto(formData, "", false, 65356);
-        console.log("holaaaaa",resHadoop);     
+        const resHadoop = await postAlzarHadoopDirecto(formData, "/datalake/Continental-desa", false, 65356);
+        console.log("holaaaaasdsssssa",resHadoop);     
 
         // Number(value) o parseInt(value)
         let newFech = moment(fechaEmision).format('DDMMYYYY');
