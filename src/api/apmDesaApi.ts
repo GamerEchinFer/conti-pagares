@@ -7,6 +7,7 @@ import {
     DocumentosUsuarioResponse,
     EtiquetaVariable,
     EtiquetaVariableResponse,
+    ExtractosServiceDescargarArchivo,
     GuardarDocumentoRequest,                
     HadoopDirectoRequest,
     HadoopDirectoResponse,
@@ -76,15 +77,15 @@ export const postAlzarHadoopDirecto = async (body: FormData, path_images: string
 
 
 export async function getClienteDatos(codigoCliente: string) {    
-    const URL = `https://api-sandbox.bancontinental.com.py/interno/clientes/datos/v1/clientes/${codigoCliente}`;    
-    // const URL = `https://api-test.bancontinental.com.py/interno/clientes/datos/v1/clientes/${codigoCliente}`;    
+    // const URL = `https://api-sandbox.bancontinental.com.py/interno/clientes/datos/v1/clientes/${codigoCliente}`;    
+    const URL = `https://api-test.bancontinental.com.py/interno/clientes/datos/v1/clientes/${codigoCliente}`;    
     const response = await apmApi.get<ClienteDatos>(URL);
     return response
 }
 
 export async function getClienteDocumento(numeroDocumento: string) {    
-    const URL = `https://api-sandbox.bancontinental.com.py/interno/clientes/datos/v1/clientes/datos`;            
-    // const URL = `https://api-test.bancontinental.com.py/interno/clientes/datos/v1/clientes/datos`;            
+    // const URL = `https://api-sandbox.bancontinental.com.py/interno/clientes/datos/v1/clientes/datos`;            
+    const URL = `https://api-test.bancontinental.com.py/interno/clientes/datos/v1/clientes/datos`;            
     const response = await apmApi.get<ClienteDocumento>(URL, {
         params: {numeroDocumento},        
     });
@@ -171,6 +172,12 @@ export const postAlzarArchivo = async (body: AlzarArchivoRequest, token: string)
 export const postDescargarArchivo = async (body: DescargarArchivo, token: string) => {    
     const {data} = await tokenUserDocumento.post<DescargarArchivo, AxiosResponse<string>>(`/DescargarArchivo`, body, {
         headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json"}});
+
+    return data;
+}
+export const postEstractosServiceDescargar = async (body: ExtractosServiceDescargarArchivo) => {    
+    const {data} = await axios.post<ExtractosServiceDescargarArchivo, AxiosResponse<string>>( ``, {
+        headers: { "Content-Type": "application/xml"}});
 
     return data;
 }

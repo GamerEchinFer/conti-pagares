@@ -5,18 +5,18 @@ export const baseUrl = process.env.NODE_ENV === "development" ?
 
 export const keycloakHeaders: AutenticarServicioHeader = {
     // APIM DESA
-    // "Client-Id": "gestion-documental",
-    // "Client-Secret": "62acef17-4d09-4620-a480-7f8a4b4f7472",
-    // "Grant-Type": "client_credentials",
-    // "Subscription-Key": "cc665137fcfb4a95a0c2701e58828e7c",
-    // Scope: "profile"
+    "Client-Id": "gestion-documental",
+    "Client-Secret": "62acef17-4d09-4620-a480-7f8a4b4f7472",
+    "Grant-Type": "client_credentials",
+    "Subscription-Key": "cc665137fcfb4a95a0c2701e58828e7c",
+    Scope: "profile"
     
     // APIM QA
-    "Client-Id": "gestion-documental",
-    "Client-Secret": "c2173556-7eeb-42b7-9150-50c90520a7f6",
-    "Grant-Type": "client_credentials",
-    "Subscription-Key": "578a3e189d3a4da791ad1aa2a00bae3c",
-    Scope: "profile",    
+    // "Client-Id": "gestion-documental",
+    // "Client-Secret": "c2173556-7eeb-42b7-9150-50c90520a7f6",
+    // "Grant-Type": "client_credentials",
+    // "Subscription-Key": "578a3e189d3a4da791ad1aa2a00bae3c",
+    // Scope: "profile",    
 }
 
 export const keyCloakHeadersHadoop : AuthHadoop = {

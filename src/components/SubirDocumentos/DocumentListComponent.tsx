@@ -33,6 +33,7 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
   const [archives, setArchives] = useState(null);
   const [isCheckedIcon, setisCheckedIcon] = useState(true)
   const [isShown, setIsShown] = useState(true);
+  const [download, setDownload] = useState("");
 
   const inputRef = useRef<any>();
 
@@ -84,6 +85,7 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
     const download = await getDescargarHadoopDirecto(rutaHadoop)
 
     const viewPdf = `data:application/pdf;base64,${download.data.loc}` 
+    setDownload(viewPdf)
     console.log("helloooo",viewPdf);
     const el = document.createElement("a")
     el.href = viewPdf
