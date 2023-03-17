@@ -309,3 +309,20 @@ export interface TipoDocumentoHistoricoResponse {
     usuarioVerificador:     string,
     fechaVerificacion:      string
 }
+
+
+export interface ExtractosServiceDescargarArchivo {
+     usuario:       string;
+     noise:         string;
+     stringResult:  string;
+     path:          string;
+     tipo:          string;
+}
+export interface ExtractosServiceSubirArchivo {
+     usuario:       string;
+     noise:         string;
+     stringResult:  string;
+     path:          string;
+     extension:     string;
+     archivo:       string;
+}

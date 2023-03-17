@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { postAlzarHadoopDirecto, postGuardarDocumento } from '../../../api/apmDesaApi';
 import { base64ToFile } from '../../../helpers/base64ToFile';
-import { EtiquetaVariableResponse, GuardarDocumentoRequest, ClienteDatos } from '../../../interfaces/interfaces';
+import { EtiquetaVariableResponse, GuardarDocumentoRequest, ClienteDatos, Producto, SubProducto } from '../../../interfaces/interfaces';
 import { RootState } from '../../../redux/store';
 import { postEtiquetasVariablesAction } from '../../../redux/thunks/etiqueta.thunk';
 import { etiquetaVariable } from '../../../redux/slices/etiquetaVariable.slice';
@@ -29,12 +29,13 @@ export const useDocumento = () => {
         }
     }, []);
 
+    // const guardarDocumento = async (item: EtiquetaVariableResponse, fechaEmision: any, idx: Producto, idy: SubProducto) => {
     const guardarDocumento = async (item: EtiquetaVariableResponse, fechaEmision: any) => {
         const file = await base64ToFile(item?.base64Modified ?? "", "test");  
         const formData = new FormData();        
         formData.append("file", file);
         const resHadoop = await postAlzarHadoopDirecto(formData, "/datalake/Continental-desa", false, 65356);
-        console.log("holaaaaasdsssssa",resHadoop);     
+        console.log(resHadoop);     
 
         // Number(value) o parseInt(value)
         let newFech = moment(fechaEmision).format('DDMMYYYY');
@@ -50,9 +51,11 @@ export const useDocumento = () => {
             hadoopPath: resHadoop.loc,
             codigoUsuario:"PER",
             // codigoProducto: Number(etiquetaVariableBody?.id_producto.valor ?? "0") , // no reconoce
-            codigoProducto: Number("10") ,
+            // codigoProducto: Number(idx.idProducto),
+            codigoProducto: Number(10),
             // codigoSubproducto: Number(etiquetaVariableBody?.id_subproducto.valor ?? "0"), // no reconoce
-            codigoSubproducto: Number("151"),
+            // codigoSubproducto: Number(idy.idSubProducto),
+            codigoSubproducto: Number(151),
             operacion: Number(saveDoc.operacion)
         }
 

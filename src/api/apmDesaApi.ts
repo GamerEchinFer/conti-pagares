@@ -76,15 +76,15 @@ export const postAlzarHadoopDirecto = async (body: FormData, path_images: string
 
 
 export async function getClienteDatos(codigoCliente: string) {    
-    // const URL = `https://api-sandbox.bancontinental.com.py/interno/clientes/datos/v1/clientes/${codigoCliente}`;    
-    const URL = `https://api-test.bancontinental.com.py/interno/clientes/datos/v1/clientes/${codigoCliente}`;    
+    const URL = `https://api-sandbox.bancontinental.com.py/interno/clientes/datos/v1/clientes/${codigoCliente}`;    
+    // const URL = `https://api-test.bancontinental.com.py/interno/clientes/datos/v1/clientes/${codigoCliente}`;    
     const response = await apmApi.get<ClienteDatos>(URL);
     return response
 }
 
 export async function getClienteDocumento(numeroDocumento: string) {    
-    // const URL = `https://api-sandbox.bancontinental.com.py/interno/clientes/datos/v1/clientes/datos`;            
-    const URL = `https://api-test.bancontinental.com.py/interno/clientes/datos/v1/clientes/datos`;            
+    const URL = `https://api-sandbox.bancontinental.com.py/interno/clientes/datos/v1/clientes/datos`;            
+    // const URL = `https://api-test.bancontinental.com.py/interno/clientes/datos/v1/clientes/datos`;            
     const response = await apmApi.get<ClienteDocumento>(URL, {
         params: {numeroDocumento},        
     });
