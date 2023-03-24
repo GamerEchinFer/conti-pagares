@@ -45,7 +45,7 @@ const PDFComponent = ({base64}: PDFComponentProps) => {
               
         const formData = new FormData();        
         formData.append("file", fileInput.files[0]);
-        // SUBIR PDF POR ALGUNA RAZON FUNCIONA DA ERROR SI PONES SUBSCRIPTION KEY
+        
         const res = await postAlzarHadoopDirecto(formData, "/datalake/Continental-desa", false, 65356);
 
         setHref(res.loc)

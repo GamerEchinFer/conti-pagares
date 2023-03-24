@@ -99,6 +99,10 @@ const meses: {[key: number]: JSX.Element} = {
   11: <span>Diciembre</span>,
 }
 
+  const { PDFDocument } = pdfjsLib;
+
+  let pdfDoc;
+
   const handleClickTieneDocumento = async ({datosAdicionales}: EtiquetaVariableResponse) => {
     if (!datosAdicionales || !Array.isArray(datosAdicionales) || !datosAdicionales.length ) return;
     
@@ -107,18 +111,22 @@ const meses: {[key: number]: JSX.Element} = {
 
     const download = await getDescargarHadoopDirecto(rutaHadoop)
 
-    const viewPdf = `data:application/pdf;base64Modified,${download.data.loc}` 
-
+    const viewPdf = `data:application/pdf;base64,${download.data.loc}` 
     const el = document.createElement("a");
-    el.href = viewPdf;
-    el.click();
+      el.href = viewPdf;
+      el.click();
 
-    dispatch(etiquetaVariableActions.etiquetaVariableUpdateFileModified({
-      idTipoDocumento: item.idTipoDocumento,
-      base64Modified: parsePdfBase64(viewPdf as string),
-      totalPagesModified: 1,
-      sizeModified: 1000
-    }))
+      dispatch(etiquetaVariableActions.etiquetaVariableUpdateFileModified({
+        idTipoDocumento: item.idTipoDocumento,
+        base64Modified: parsePdfBase64(viewPdf as string),
+        totalPagesModified: 1,
+        sizeModified: 1000
+      }))
+
+    const existingPdfBytes = await fetch(viewPdf).then((res) => res.arrayBuffer());
+
+    return PDFDocument.load(existingPdfBytes);
+    
   }
 
   const openViewPdfModal = (item: EtiquetaVariableResponse) => {    

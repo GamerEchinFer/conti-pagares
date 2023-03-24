@@ -26,7 +26,7 @@ const ButtonFiltro = ({onClick, descripcion}: ButtonFiltroProps) => {
 
     if (!documentosUser || !documentosUser.filtroGrupo || !Array.isArray(documentosUser.filtroGrupo)) return null
     
-    console.log(documentosUser);
+      // {JSON.stringify(documentosUser)}
     
   return (
     <>

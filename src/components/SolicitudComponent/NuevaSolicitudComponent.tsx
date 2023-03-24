@@ -140,7 +140,7 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
     setBody(newBody)
 
     setIsChangeSelected(true)
-    dispatch (postEtiquetasVariablesAction(Object.values(newBody)));    
+    dispatch(postEtiquetasVariablesAction(Object.values(newBody)));    
   }
 
   const handleClickNext = () => {

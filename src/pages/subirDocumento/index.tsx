@@ -24,6 +24,7 @@ const SubirDocumentoPage = ()  => {
     const router = useRouter();
 
     const dispatch = useDispatch();
+
     const etiquetasVariables = useSelector((state: RootState) => state.etiquetaVariable.response);
     const page = useSelector((state: RootState) => state.etiquetaVariable.page);
     const [openAddModal, setOpenAddModal] = useState(false);
@@ -38,8 +39,6 @@ const SubirDocumentoPage = ()  => {
     useUnmount(() => {
         // With redux clear in all modals = false
         dispatch(etiquetaVariableActions.etiquetaVariableCloseAllModals());
-        // dispatch(etiquetaVariableActions.etiquetaVariableUpdateFile);
-        
     });
 
     const initialize = () => {
@@ -74,14 +73,12 @@ const SubirDocumentoPage = ()  => {
     };
 
     const onDrop = (event: DragEvent<HTMLDivElement>, {idTipoDocumento, periodicidad, tieneDocumento}: EtiquetaVariableResponse) => {
-        console.log(event);
 
         if (tieneDocumento) return;
         // Comprobar el tipo de dato de una variable
         // console.log(typeof file);       
         // console.log(typeof file === "string")
-        const idx = event.dataTransfer.getData("file")        
-        // console.log(files[Number(idx)]);    
+        const idx = event.dataTransfer.getData("file");         
 
         const reader = new FileReader();
         reader.readAsDataURL(files[Number(idx)]);
@@ -110,8 +107,6 @@ const SubirDocumentoPage = ()  => {
         setOpenAddModal(false)
     }
 
-
-
     return (
         <SubirDocumentoProvider>
             <Box sx={{ width: "75%"}}>
@@ -128,12 +123,11 @@ const SubirDocumentoPage = ()  => {
                             </div>
                             ))
                         }
-                        {/* Añadir listado de documentos */}
                         <div className="flex justify-center">
                             <AddIconComponent  onClick={handleClickAdd} />
                         </div>
                     </div>
-                    <div className="">    
+                    <div className="dragDropComponent">    
                         <DragDropComponent />
                     </div>
                 </div>

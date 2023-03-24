@@ -29,11 +29,14 @@ import DocumentoUserSubGrupoTable from '../ConsultarDocumentos/DocumentoUserSubG
 import { tipoDocumentoHistoricoActions } from '../../redux/slices/documentoHistorico.slice';
 import { documentUserMapper } from '../../helpers/documentUserMapper';
 import { DocumentosUsuarioResponse } from '../../interfaces/interfaces';
-import { documentosUserActions } from '../../redux/slices/documentosUser.slice';
+import { documentosUserActions, documentosUser } from '../../redux/slices/documentosUser.slice';
+import { documentosUserFiltroActions } from '../../redux/slices/documentosUserFiltro';
 
 function ConsultarDocumentosComponent() {
   const [ name, setName ] = useState("");
   const [ query, setQuery ] = useState("");
+  const [grupoDocumento, setGrupoDocumento] = useState("");
+
 
   const dispatch = useDispatch(); 
 
@@ -48,8 +51,9 @@ function ConsultarDocumentosComponent() {
 
   //TODO: Dinamic not Static
   useEffect(() => {
-    dispatch(getDocumentosUserAction("000666", 12))
-    dispatch(tipoDocumentoHistoricoActions.tipoDocumentoHistoricoReset())
+    dispatch(getDocumentosUserAction("000666", 16, ));
+    {JSON.stringify(getDocumentosUserAction)}
+    dispatch(tipoDocumentoHistoricoActions.tipoDocumentoHistoricoReset());
     
   }, [])
 
@@ -65,8 +69,9 @@ function ConsultarDocumentosComponent() {
 
   }  
   const handleClickButtonFiltro = (idGrupo: number) => {
-    const dataMapped = documentUserMapper(documentosUser as DocumentosUsuarioResponse, idGrupo) 
-    dispatch(documentosUserActions.setItemsMapped(dataMapped))
+    const dataMapped = documentUserMapper(documentosUser as DocumentosUsuarioResponse, idGrupo)
+    
+    dispatch(documentosUserActions.setItemsMapped(dataMapped)) 
   }
 
   const handleClickViewDoc = () => {
@@ -83,6 +88,11 @@ function ConsultarDocumentosComponent() {
   const documentosUserFilter = documentosUser && documentosUser.coleccionDocumento ? documentosUser.coleccionDocumento
   .filter((index) =>
     index.datosAdicionales.descripcion.trim().toLowerCase().includes(query.trim().toLowerCase())
+  ) : []
+
+  const grupoDocumentosFilter = documentosUser && documentosUser.coleccionDocumento ? documentosUser.coleccionDocumento
+  .filter((index) =>
+    index.datosAdicionales.descripcion.trim().toLowerCase().includes(grupoDocumento.trim().toLowerCase())
   ) : []
   
   return (
@@ -107,11 +117,15 @@ function ConsultarDocumentosComponent() {
         <ListItem className="right-20 bottom-10">
           {            
             documentosUser && documentosUser.filtroGrupo ? documentosUser?.filtroGrupo?.map(item => 
-              <ButtonFiltro key={item.idGrupo} onClick={() => handleClickButtonFiltro(item.idGrupo)} descripcion={(capitalize(`${item.grupoDescripcion}`))} />
-            ): null
-          }          
+              <ButtonFiltro 
+                key={item.idGrupo}
+                onClick={() => handleClickButtonFiltro(item.idGrupo)}
+                descripcion={(capitalize(`${item.grupoDescripcion}`))} 
+                />
+                ): null
+              } 
         </ListItem>
-      </div>
+      </div>  
 
       <Box sx={{ width: 950, maxWidth: '100%'}} >
         <div className="pb-10">
@@ -142,7 +156,7 @@ function ConsultarDocumentosComponent() {
         <TableBody>
           <DocumentoUserTable 
             documentosUser={documentosUser} 
-            query={query} 
+            query={query}
             handleClickViewDoc={handleClickViewDoc} 
           />
   {/* 
@@ -170,8 +184,9 @@ function ConsultarDocumentosComponent() {
               setToggle={(value) => console.log(value)}
               documentosUser={documentosUserMapped} 
               query={query} 
-              handleClickViewDoc={handleClickViewDoc} 
-            />          
+              handleClickViewDoc={handleClickViewDoc}
+            />
+              {JSON.stringify(documentosUser)}  
         </TableBody>           
       </Table>
     </TableContainer>

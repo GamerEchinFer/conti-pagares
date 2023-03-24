@@ -3,5 +3,5 @@ export const capitalize = (value: string) => {
 };
 
 export const capitalizePorPalabra = (value: string) => {
-    return capitalize(value).replace(/\b\w/g, l => l.toUpperCase())
+    return capitalize(value).replace(/\b\w/g, l => l.toUpperCase());
 }

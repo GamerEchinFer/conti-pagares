@@ -1,7 +1,7 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { postAlzarHadoopDirecto, postGuardarDocumento } from '../../../api/apmDesaApi';
 import { base64ToFile } from '../../../helpers/base64ToFile';
-import { EtiquetaVariableResponse, GuardarDocumentoRequest, ClienteDatos, Producto, SubProducto } from '../../../interfaces/interfaces';
+import { EtiquetaVariableResponse, GuardarDocumentoRequest, ClienteDatos } from '../../../interfaces/interfaces';
 import { RootState } from '../../../redux/store';
 import { postEtiquetasVariablesAction } from '../../../redux/thunks/etiqueta.thunk';
 import { etiquetaVariable } from '../../../redux/slices/etiquetaVariable.slice';
@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 import moment from 'moment';
 
 export const useDocumento = () => {
-
+    const dispatch = useDispatch();
     const etiquetaVariableBody = useSelector((state: RootState) => state.etiquetaVariable.etiquetaVariableBody);
     const clienteDatos = useSelector((state: RootState) => state.clienteDatos.items);
     const numeroDeLegajo = useSelector((state: RootState) => state.numeroLegajo.items);    
@@ -26,10 +26,26 @@ export const useDocumento = () => {
             body.id_actividad.valor,
             body.id_riesgo.valor,
             body.id_destino.valor
+            
+            const agregarNombreValor = (nombre: string, valor: string) => {
+    
+            const item = {nombre, valor}
+            
+            const newBody = {...body, [nombre]: item}
+        
+            setBody(newBody)
+        
+            dispatch(postEtiquetasVariablesAction(Object.values(newBody)));    
+          }
         }
+        
+
     }, []);
 
-    // const guardarDocumento = async (item: EtiquetaVariableResponse, fechaEmision: any, idx: Producto, idy: SubProducto) => {
+    useEffect(() => {
+        dispatch(postEtiquetasVariablesAction(Object.values));   
+    })
+
     const guardarDocumento = async (item: EtiquetaVariableResponse, fechaEmision: any) => {
         const file = await base64ToFile(item?.base64Modified ?? "", "test");  
         const formData = new FormData();        
@@ -37,11 +53,10 @@ export const useDocumento = () => {
         const resHadoop = await postAlzarHadoopDirecto(formData, "/datalake/Continental-desa", false, 65356);
         console.log(resHadoop);     
 
-        // Number(value) o parseInt(value)
         let newFech = moment(fechaEmision).format('DDMMYYYY');
+
         const body: GuardarDocumentoRequest = {
             codigoTipoDocumento: Number(item.idTipoDocumento),
-            // rutaDocumento: resHadoop.LOC,
             rutaDocumento: resHadoop.loc,
             fechaEmision: newFech,
             descripcionDocumento: item.filename,
@@ -50,13 +65,11 @@ export const useDocumento = () => {
             hadoop:resHadoop.loc,           
             hadoopPath: resHadoop.loc,
             codigoUsuario:"PER",
-            // codigoProducto: Number(etiquetaVariableBody?.id_producto.valor ?? "0") , // no reconoce
-            // codigoProducto: Number(idx.idProducto),
+            // codigoProducto: Number(etiquetaVariableBody?.id_producto.valor) , // no reconoce
             codigoProducto: Number(10),
             // codigoSubproducto: Number(etiquetaVariableBody?.id_subproducto.valor ?? "0"), // no reconoce
-            // codigoSubproducto: Number(idy.idSubProducto),
             codigoSubproducto: Number(151),
-            operacion: Number(saveDoc.operacion)
+            operacion: Number(1393939)
         }
 
         const res = await postGuardarDocumento(body)

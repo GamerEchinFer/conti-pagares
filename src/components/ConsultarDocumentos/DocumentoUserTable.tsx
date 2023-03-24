@@ -1,12 +1,14 @@
+import { useState } from 'react';
 import { DocumentosUsuarioResponse } from '../../interfaces/interfaces';
 
 import DocumentoUserTableRow from './DocumentoUserTableRow';
 
 type DocumentoUserTableProps = {
-    documentosUser: DocumentosUsuarioResponse | undefined,
-    query: string
-    handleClickViewDoc: () => void
+  documentosUser: DocumentosUsuarioResponse | undefined,
+  query: string
+  handleClickViewDoc: () => void
 }
+
 
 const DocumentoUserTable = ({documentosUser, query, handleClickViewDoc}: DocumentoUserTableProps) => {
 

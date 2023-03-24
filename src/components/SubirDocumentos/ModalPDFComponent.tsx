@@ -26,6 +26,7 @@ import { useEffect } from 'react';
 import  "dayjs/locale/es";
 import { RootState } from '../../redux/store';
 import { useDocumento } from './hooks/useDocumento';
+import { getProductosAction } from '../../redux/thunks/producto.thunks';
 
 type ModalPDFComponentProps = {
   item: EtiquetaVariableResponse
@@ -106,7 +107,6 @@ export default function ModalPDFComponent({item}: ModalPDFComponentProps) {
       } catch (err: any) {
         console.log(err);        
       }
-      // base64 => cortar => base64Modified
   }
 
   const confirm = async () => {
@@ -120,11 +120,7 @@ export default function ModalPDFComponent({item}: ModalPDFComponentProps) {
     //   path: "digitalizacion_documento\\gdi\\documento"
     // }))
     
-    dispatch(etiquetaVariableActions.etiquetaVariableCloseAllModals());
-        
-    // setHref(res.LOC)
-    // setFileName("test")     
-    
+    dispatch(etiquetaVariableActions.etiquetaVariableCloseAllModals());   
   }
 
 

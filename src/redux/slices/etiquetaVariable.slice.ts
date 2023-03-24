@@ -56,7 +56,6 @@ const etiquetaVariableSlice = createSlice({
 
                 if (Number(item.idTipoDocumento) === Number(action.payload.idTipoDocumento)) {
                     item.file = action.payload.file
-                    // Change for use
                     item.openModal = item.periodicidad === 1
                     item.openModalPeriodo = item.periodicidad === 6
                     item.openModalView = item.tieneDocumento === true
@@ -108,9 +107,7 @@ const etiquetaVariableSlice = createSlice({
         etiquetaVariableResponseReset(state) {
             state.response = []         
         },
-        setOpenModal(state, action: PayloadAction<boolean>) {
-            // state.openModal = action.payload
-        },
+        setOpenModal(state, action: PayloadAction<boolean>) {},
         setEtiquetaVariableBody(state, action: PayloadAction<EtiquetaVariableBody>) {
             state.etiquetaVariableBody = action.payload
         },

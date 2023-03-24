@@ -10,8 +10,8 @@ import { useMount } from 'ahooks';
 const DragDropComponent = () => {
     const dispatch = useDispatch()
     const [files, setFiles] = useState(null);
-    // const files = useSelector((state: RootState) => state.hadoopDirecto.files)
-    const inputRef = useRef<any>(); // HTMLInputElement, HTMLDivElement
+    const inputRef = useRef<any>();
+    
     const handleDragOver = (event:any) => {
         event.preventDefault();
     };
@@ -22,19 +22,13 @@ const DragDropComponent = () => {
 
     const handleDrop = (event:any) => {
         event.preventDefault();
-        // console.log(Array.from(event.dataTransfer.files));
         setFiles(event.dataTransfer.files)                              
         
         dispatch(hadoopDirectoActions.setFiles(event.dataTransfer.files))
         
-        
     };
 
-    const handleUpload = (event: any) => {
-
-    }
-
-    const onDragStart = (event: DragEvent<HTMLLIElement>, id: any) => {
+    const onDragStart = (event: DragEvent<HTMLElement>, id: any) => {
         console.log(event);
         
         event.dataTransfer.setData('file', id)

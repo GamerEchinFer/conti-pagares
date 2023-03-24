@@ -100,7 +100,8 @@ const DocumentoUserSubGrupoTable = ({documentosUser, query, handleClickViewDoc, 
             //   }                 
             // </div>
           ))
-        }      
+        }    
+        {/* {JSON.stringify(documentosUser)} */}
     </>
   )
 }

@@ -1,7 +1,7 @@
 import { Divider, ListItem, ListItemButton, ListItemText, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { capitalize } from '../../helpers/capitalize';
 import { EtiquetaVariableResponse } from '../../interfaces/interfaces';
 import { hadoopDirectoActions } from '../../redux/slices/hadoop.slice';
@@ -15,6 +15,8 @@ import RecargarDocIcon from './RecargarDocIcon';
 import ViewPDFComponent from './ViewPDFComponent';
 import { getDescargarHadoopDirecto } from '../../api/apmDesaApi';
 import { parsePdfBase64 } from '../../helpers/cutPdf';
+import { RootState } from '../../redux/store';
+import { useMount } from 'ahooks';
 
 type DocumentListComponentProps = {
   item: EtiquetaVariableResponse
@@ -27,16 +29,21 @@ const buttonStyle = (item: EtiquetaVariableResponse) =>  ({
 
 const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
   // const etiquetasVariables = useSelector((state: RootState) => state.etiquetaVariable.response);
+  // console.log(etiquetasVariables)
   const dispatch = useDispatch();
+
   const router = useRouter();
-  const [open, setOpen] = useState(false);
   const [archives, setArchives] = useState(null);
-  const [isCheckedIcon, setisCheckedIcon] = useState(true)
-  const [isShown, setIsShown] = useState(true);
   const [download, setDownload] = useState("");
 
   const inputRef = useRef<any>();
 
+  const files = useSelector((state: RootState) => state.hadoopDirecto.files);
+
+  useMount(() => {                
+    hadoopDirectoActions.setFiles(null);
+  })
+  
   const handleDrop = (event:any) => {
     event.preventDefault();
     console.log(Array.from(event.dataTransfer.files));
@@ -48,14 +55,13 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
   }
 
   const handleFile = (files: any) => {
-    // setFiles(files)
-    // Aca tambien subimos los archivos    
+    
     if (!files) return
 
     dispatch(hadoopDirectoActions.setFiles(files))
+    
     const reader = new FileReader();
-    reader.readAsDataURL(files[Number(0)]);
-
+    reader.readAsDataURL(files[Number(0)]) 
     reader.onload = function () {
 
       pdfjsLib.PDFDocument.load( reader.result?.toString() ?? "").then((pdfDoc) => {          
@@ -70,6 +76,10 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
         }));
       })                                         
     }
+    reader.onloadend = function() {
+      console.log("Error de ejecución")
+    };
+
   }
 
   
@@ -164,7 +174,8 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
           />
         <ListItemButton>
           <ModalPDFComponent item={item} />
-          <DialogPeriodoComponent item={item} />            
+          <DialogPeriodoComponent item={item} />
+          <ViewPDFComponent item={item} />            
         </ListItemButton>                     
       </ListItem>
       <Divider />
@@ -185,7 +196,7 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
           </div>
         )
       }
-      <ViewPDFComponent item={item} />
+      {/* <ViewPDFComponent item={item} /> */}
     </>
   );
 }

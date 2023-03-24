@@ -3,7 +3,7 @@ import { documentUserMapper } from "../../helpers/documentUserMapper";
 import { documentosUserActions } from "../slices/documentosUser.slice";
 import { AppDispatch } from "../store";
 
-export const getDocumentosUserAction: any = (codigoCliente: string, idGrupo: number) => async (dispatch: AppDispatch) => {
+export const getDocumentosUserAction: any = (codigoCliente: string, idGrupo: number, descripcion: string) => async (dispatch: AppDispatch) => {
     dispatch(documentosUserActions.documentosUserRequest());
     return getConsultaDocumentosUser(codigoCliente)
     .then((response) => {
