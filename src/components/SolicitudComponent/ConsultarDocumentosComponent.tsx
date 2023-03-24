@@ -186,7 +186,7 @@ function ConsultarDocumentosComponent() {
               query={query} 
               handleClickViewDoc={handleClickViewDoc}
             />
-              {JSON.stringify(documentosUser)}  
+              {/* {JSON.stringify(documentosUser)}   */}
         </TableBody>           
       </Table>
     </TableContainer>
