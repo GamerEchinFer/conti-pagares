@@ -1,5 +1,4 @@
-import { ColeccionDocumento, EtiquetaVariableResponse } from '../../interfaces/interfaces';
-
+import { ColeccionDocumento } from '../../interfaces/interfaces';
 import SearchIcon from '@mui/icons-material/Search';
 import { TableCell, TableRow } from '@mui/material';
 import { capitalize } from '../../helpers/capitalize';
@@ -9,14 +8,13 @@ import RechazadoIcon from '../shared/Rechazado';
 import VencidoIcon from '../shared/VencidoIcon';
 import VerificadoIcon from '../shared/VerificadoIcon'; 
 import { useDispatch, useSelector } from 'react-redux';
-import { etiquetaVariableActions } from '../../redux/slices/etiquetaVariable.slice';
 import ConsultarHistoricoContent from './ConsultarHistoricoContent';
 import { getTipoDocumentoHistoricoAction } from '../../redux/thunks/documentoHistorico.thunks';
 import { RootState } from '../../redux/store';
 
 type DocumentoUserTableRowProps = {
-    row: ColeccionDocumento
-    handleClickViewDoc: () => void    
+  row: ColeccionDocumento
+  handleClickViewDoc: () => void    
 }
 
 

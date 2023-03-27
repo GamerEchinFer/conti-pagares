@@ -5,9 +5,9 @@ import Box from '@mui/material/Box';
 export default function LoadingComponent() {
   return (
     <>
-        <Box sx={{ display: 'flex' }} className="">
+      <Box sx={{ display: 'flex' }} className="">
         <CircularProgress />
-        </Box>
+      </Box>
     </>
   );
 }

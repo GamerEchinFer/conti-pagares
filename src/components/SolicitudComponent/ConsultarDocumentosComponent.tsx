@@ -30,18 +30,17 @@ import { tipoDocumentoHistoricoActions } from '../../redux/slices/documentoHisto
 import { documentUserMapper } from '../../helpers/documentUserMapper';
 import { DocumentosUsuarioResponse } from '../../interfaces/interfaces';
 import { documentosUserActions, documentosUser } from '../../redux/slices/documentosUser.slice';
-import { documentosUserFiltroActions } from '../../redux/slices/documentosUserFiltro';
 
 function ConsultarDocumentosComponent() {
   const [ name, setName ] = useState("");
   const [ query, setQuery ] = useState("");
-  const [grupoDocumento, setGrupoDocumento] = useState("");
 
 
   const dispatch = useDispatch(); 
 
   const documentosUser = useSelector((state: RootState) => state.documentosUser.items);        
-  const documentosUserMapped = useSelector((state: RootState) => state.documentosUser.itemsMapped);    
+  const documentosUserMapped = useSelector((state: RootState) => state.documentosUser.itemsMapped);   
+  const idGroupSelected = useSelector((state: RootState) => state.documentosUser.idGroupSelected);  
   const [subGruposActive, setSubGruposActive] = useState<{[key: string]: boolean}>({});
 
   const handleChangeNewSolicitud = (event : any) =>
@@ -51,10 +50,9 @@ function ConsultarDocumentosComponent() {
 
   //TODO: Dinamic not Static
   useEffect(() => {
-    dispatch(getDocumentosUserAction("000666", 16, ));
-    {JSON.stringify(getDocumentosUserAction)}
-    dispatch(tipoDocumentoHistoricoActions.tipoDocumentoHistoricoReset());
-    
+    dispatch(getDocumentosUserAction("000666", 16 ));
+    // {JSON.stringify(getDocumentosUserAction)}
+    dispatch(tipoDocumentoHistoricoActions.tipoDocumentoHistoricoReset());    
   }, [])
 
   const handleIconBack = () => {
@@ -72,29 +70,13 @@ function ConsultarDocumentosComponent() {
     const dataMapped = documentUserMapper(documentosUser as DocumentosUsuarioResponse, idGrupo)
     
     dispatch(documentosUserActions.setItemsMapped(dataMapped)) 
+    dispatch(documentosUserActions.setIdGroupSelected(idGrupo))
   }
 
   const handleClickViewDoc = () => {
     
   }
 
-
-  // if(!solicitud) return null;
-
-  // <SolicitudItem 
-  //   solicitud={solicitud}
-  //   handleChangeNewSolicitud={handleChangeNewSolicitud}
-
-  const documentosUserFilter = documentosUser && documentosUser.coleccionDocumento ? documentosUser.coleccionDocumento
-  .filter((index) =>
-    index.datosAdicionales.descripcion.trim().toLowerCase().includes(query.trim().toLowerCase())
-  ) : []
-
-  const grupoDocumentosFilter = documentosUser && documentosUser.coleccionDocumento ? documentosUser.coleccionDocumento
-  .filter((index) =>
-    index.datosAdicionales.descripcion.trim().toLowerCase().includes(grupoDocumento.trim().toLowerCase())
-  ) : []
-  
   return (
     <>      
       <div className="grid grid-cols-2 gap-2 pt-4">         
@@ -157,6 +139,7 @@ function ConsultarDocumentosComponent() {
           <DocumentoUserTable 
             documentosUser={documentosUser} 
             query={query}
+            idGroup={idGroupSelected}
             handleClickViewDoc={handleClickViewDoc} 
           />
   {/* 
@@ -166,10 +149,10 @@ function ConsultarDocumentosComponent() {
               documentosUser={documentosUserMapped} 
               query={query} 
               handleClickViewDoc={handleClickViewDoc} /> */}
-            <TableRow>
-              <TableCell
+            {/* <TableRow> */}
+              {/* <TableCell
                 align="left"
-                style={{ fontWeight:"600", fontSize:"16px", color:"#1D428A" }}>
+                style={{ fontWeight:"600", fontSize:"16px", color:"#1D428A" }}> */}
                 {/* <DocumentoUserSubGrupoTable 
                   toggle={subGruposActive}
                   setToggle={(value) => console.log(value)}
@@ -177,8 +160,8 @@ function ConsultarDocumentosComponent() {
                   query={query} 
                   handleClickViewDoc={handleClickViewDoc} 
                 /> */}
-              </TableCell>
-            </TableRow>  
+              {/* </TableCell> */}
+            {/* </TableRow>   */}
             <DocumentoUserSubGrupoTable 
               toggle={subGruposActive}
               setToggle={(value) => console.log(value)}

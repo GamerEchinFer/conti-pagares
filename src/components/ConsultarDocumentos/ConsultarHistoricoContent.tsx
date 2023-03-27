@@ -8,8 +8,7 @@ import BackButton from '../Buttons/BackButton';
 import ButtonIconClose from '../Buttons/ButtonIconClose'
 import DatosClienteComponent from '../DatosClienteComponent'
 import { RootState } from '../../redux/store';
-import { tipoDocumentoHistoricoActions, tipoDocumentoHistorico } from '../../redux/slices/documentoHistorico.slice';
-import { DocumentoUsuarioResult } from '../../helpers/documentUserMapper';
+import { tipoDocumentoHistoricoActions } from '../../redux/slices/documentoHistorico.slice';
 import { capitalize } from '../../helpers/capitalize';
 import SearchIcon from '@mui/icons-material/Search';
 

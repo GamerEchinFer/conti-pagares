@@ -7,6 +7,7 @@ const initialState = () => ({
     itemsMapped: undefined as DocumentoUsuarioResult | undefined,
     loading: false,
     success: false,
+    idGroupSelected: 0,
     error: null as any
 });
 
@@ -36,6 +37,9 @@ const documentosUserSlice = createSlice({
             state.success = false;
             state.error = null as any;
             state.items = undefined
+        },
+        setIdGroupSelected(state, action: PayloadAction<number>) {
+            state.idGroupSelected = action.payload;            
         },
     }
 })

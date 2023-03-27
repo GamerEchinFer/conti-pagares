@@ -74,11 +74,11 @@ const ViewPDFComponent = ({item}: ModalPDFComponentProps) => {
         const download = await getDescargarHadoopDirecto(downFile)
         const viewPdf = `${download.data.loc}` 
         setDownload(viewPdf)           
-        // console.log(viewPdf)
-        // const el = document.createElement("a")
-        // el.href = viewPdf
-        // el.download = fileName
-        // el.click()
+        console.log(viewPdf)
+        const el = document.createElement("a")
+        el.href = viewPdf
+        el.download = fileName
+        el.click()
         
     } catch (err: any) {
         console.log(err);        

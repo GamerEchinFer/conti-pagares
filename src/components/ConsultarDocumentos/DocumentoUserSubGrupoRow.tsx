@@ -1,5 +1,4 @@
-import { ColeccionDocumento, EtiquetaVariableResponse } from '../../interfaces/interfaces';
-
+import { ColeccionDocumento } from '../../interfaces/interfaces';
 import SearchIcon from '@mui/icons-material/Search';
 import { TableCell, TableRow } from '@mui/material';
 import { capitalize } from '../../helpers/capitalize';
@@ -9,7 +8,6 @@ import RechazadoIcon from '../shared/Rechazado';
 import VencidoIcon from '../shared/VencidoIcon';
 import VerificadoIcon from '../shared/VerificadoIcon'; 
 import { useDispatch, useSelector } from 'react-redux';
-import { etiquetaVariableActions } from '../../redux/slices/etiquetaVariable.slice';
 import ConsultarHistoricoContent from './ConsultarHistoricoContent';
 import { getTipoDocumentoHistoricoAction } from '../../redux/thunks/documentoHistorico.thunks';
 import { RootState } from '../../redux/store';
@@ -32,7 +30,6 @@ const DocumentoUserSubGrupoRow = ({row, handleClickViewDoc}: DocumentoUserSubGru
 
   return (
     <>
-      
       <TableCell 
         align="left"
         style={{
@@ -61,27 +58,26 @@ const DocumentoUserSubGrupoRow = ({row, handleClickViewDoc}: DocumentoUserSubGru
         </button>
     </TableCell>
 
-      <TableCell sx={{cursor: 'default'}}>
-        {/* {(capitalize(`${row.datosAdicionales.codigoEstadoDocumento}`))} */}
-        <div className="flex justify-start">
-          {(() => {
-            switch(capitalize(`${row.datosAdicionales.codigoEstadoDocumento}`)) {
-              case 'Pendiente':
-                return <span>Pendiente</span>
-              case 'Certificado':
-                return <span>Certificado</span>
-              case 'Rechazado':
-                return <span>Rechazado</span>
-              case 'Verificado':
-                return <span>Verificado</span>
-              case 'Vencido':
-                return <span>Vencido</span>
-              default:
-                return null
-            }
-          })()}
-        </div>
-      </TableCell>
+    <TableCell sx={{cursor: 'default'}}>
+      <div className="flex justify-start">
+        {(() => {
+          switch(capitalize(`${row.datosAdicionales.codigoEstadoDocumento}`)) {
+            case 'Pendiente':
+              return <span>Pendiente</span>
+            case 'Certificado':
+              return <span>Certificado</span>
+            case 'Rechazado':
+              return <span>Rechazado</span>
+            case 'Verificado':
+              return <span>Verificado</span>
+            case 'Vencido':
+              return <span>Vencido</span>
+            default:
+              return null
+          }
+        })()}
+      </div>
+    </TableCell>
 
       <TableCell
         align="left"

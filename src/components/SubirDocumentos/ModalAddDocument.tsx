@@ -1,4 +1,5 @@
 import { 
+    capitalize,
     Checkbox,
     Dialog,
     DialogContent,
@@ -17,12 +18,11 @@ import BackButton from '../Buttons/BackButton';
 import ButtonIconClose from '../Buttons/ButtonIconClose'
 import DatosClienteComponent from '../DatosClienteComponent'
 import { RootState } from '../../redux/store';
-import { capitalize } from '../../helpers/capitalize';
 import { useMount } from 'ahooks';
 import { getTipoDocumentoAction } from '../../redux/thunks/tipoDocumento.thunks';
+import AgregarButton from '../Buttons/AgregarButton';
 import { TipoDocumento, EtiquetaVariableResponse } from '../../interfaces/interfaces';
 import { etiquetaVariableActions } from '../../redux/slices/etiquetaVariable.slice';
-import AgregarButton from '../Buttons/AgregarButton';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;

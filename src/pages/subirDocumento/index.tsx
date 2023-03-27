@@ -17,7 +17,7 @@ import * as pdfjsLib from 'pdf-lib'
 import { Box } from "@mui/material";
 import { parametroActions } from "../../redux/slices/parametro.slice";
 import { getSolicitudClienteAction } from "../../redux/thunks/solicitud.thunks";
-import ModalAddDocument from '../../components/ConsultarDocumentos/ModalAddDocument';
+import ModalAddDocument from "../../components/SubirDocumentos/ModalAddDocument";
 
 const SubirDocumentoPage = ()  => {
 

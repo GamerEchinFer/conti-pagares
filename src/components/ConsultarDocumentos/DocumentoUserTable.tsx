@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import { DocumentosUsuarioResponse } from '../../interfaces/interfaces';
+import { filterByGroup, querySearch } from './documentosHelpers';
 
 import DocumentoUserTableRow from './DocumentoUserTableRow';
 
@@ -7,19 +7,20 @@ type DocumentoUserTableProps = {
   documentosUser: DocumentosUsuarioResponse | undefined,
   query: string
   handleClickViewDoc: () => void
+  idGroup: number
 }
 
 
-const DocumentoUserTable = ({documentosUser, query, handleClickViewDoc}: DocumentoUserTableProps) => {
+const DocumentoUserTable = ({documentosUser, query, handleClickViewDoc, idGroup}: DocumentoUserTableProps) => {
 
   if (!documentosUser) {
     return null
   }
 
   const documentosUserFilter = documentosUser && documentosUser.coleccionDocumento ? documentosUser.coleccionDocumento
-  .filter((index) =>
-    index.datosAdicionales.descripcion.trim().toLowerCase().includes(query.trim().toLowerCase())
-  ) : []
+  .filter(querySearch(query)) 
+  .filter(filterByGroup(idGroup))
+  : []
 
   if (documentosUserFilter.length === 0) return null
 
