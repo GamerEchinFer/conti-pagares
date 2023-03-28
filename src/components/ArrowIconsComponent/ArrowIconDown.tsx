@@ -6,14 +6,8 @@ type ArrowIconDownProps = {
   }
 
 const ArrowIconDown = ({onClick} : ArrowIconDownProps) => (
-  // <ListItemIcon className="" sx={{}}>          
-    // <button className="" style={{
-    //   right: 0,
-    //   top: 5,
-    //   bottom: 0,
-    //   left: 10,
-    // }}>
-    <div className="">
+  <div className="pl-80">
+    <div className="pl-80 ">
       <ExpandMoreOutlinedIcon
         sx={{ 
           background: "#1D428A",
@@ -21,9 +15,8 @@ const ArrowIconDown = ({onClick} : ArrowIconDownProps) => (
           borderRadius: "80px"
         }} 
         onClick={() => onClick()}
-      />
+      />  
     </div>
-        // </button> 
-  // </ListItemIcon>
+  </div>
 )
 export default ArrowIconDown

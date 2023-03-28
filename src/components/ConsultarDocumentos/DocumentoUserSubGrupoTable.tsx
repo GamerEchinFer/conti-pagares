@@ -24,7 +24,15 @@ function DocumentoUserCollapsible({documentosUser, handleClickViewDoc, labelSubg
 
   return (
     <>    
-      {(capitalize(`${labelSubgrupo}`))}
+      <div style={{
+        color: "#1D428A",
+        fontSize: "16px",
+        fontWeight:"bold"
+      }}
+      className="pt-2 pl-6"
+      >
+        {(capitalize(`${labelSubgrupo}`))}
+      </div>
       <span {...getToggleProps()}>
         {isExpanded ? <ArrowIconUp onClick={() => console.log(labelSubgrupo)} /> : <ArrowIconDown onClick={handleClickDown} />}
       </span>

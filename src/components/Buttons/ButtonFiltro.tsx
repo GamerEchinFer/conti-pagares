@@ -6,11 +6,13 @@ import { useEffect, useState } from 'react';
 
 type ButtonFiltroProps = {
   onClick: () => void,
-  descripcion: string
+  descripcion: string,
+  active?: boolean
 }
 
-const ButtonFiltro = ({onClick, descripcion}: ButtonFiltroProps) => {
+const ButtonFiltro = ({onClick, descripcion, active=false}: ButtonFiltroProps) => {
     const [alignment, setAlignment] = useState('');
+    const [isClicked, setIsClicked] = useState(false);
 
     const handleChange = (
       event: React.MouseEvent<HTMLElement>,
@@ -40,17 +42,15 @@ const ButtonFiltro = ({onClick, descripcion}: ButtonFiltroProps) => {
           > */}
           {/* <ToggleButton value={descripcion}> */}
           <Button
-            style={{
-              // color: "#ffffff",
-              fontWeight: "200",
-              fontSize: "16px"
-              }}
+            onClick={() => onClick ? onClick() : null}
             variant="outlined"
+            
             size="small"
-            sx={{
-              ":hover":{background:"#1D428A", color:"#ffffff", fontWeight:"200" }}}
+            sx={{ background: active ? "#1D428A" : "#ffffff" ,
+                  color: active ? "#ffffff": "#1D428A",
+                  ":hover":{background:"#1D428A", color:"#ffffff", fontWeight:"200" }}}
+            style={{ fontWeight: "200",fontSize: "16px"}}
             className="btnFiltro"
-            onClick={() => onClick()}
           >
           {
             descripcion

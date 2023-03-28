@@ -21,7 +21,7 @@ const SearchbarButton = ({active = false, onClick}: SearchbarButtonProps) => {
                 ":hover": {
                   "background": "#1D428A"
                 } 
-            }}
+              }}
               style={{color: active ? "white" : "white"} }
               className="btnSearch"
               >

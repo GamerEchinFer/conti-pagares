@@ -94,7 +94,13 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
 
     const download = await getDescargarHadoopDirecto(rutaHadoop)
 
-    const viewPdf = `data:application/pdf;base64,${download.data.loc}` 
+    if (!download || !download.data || !download.data.loc) {
+      // Alerta
+      console.log("El download.data.loc no existe: ", download);      
+      return;
+    }
+
+    const viewPdf = `data:application/pdf;base64,${download?.data?.loc ?? ""}` 
     setDownload(viewPdf)
     console.log("helloooo",viewPdf);
     const el = document.createElement("a")

@@ -111,7 +111,7 @@ const meses: {[key: number]: JSX.Element} = {
 
     const download = await getDescargarHadoopDirecto(rutaHadoop)
 
-    const viewPdf = `data:application/pdf;base64,${download.data.loc}` 
+    const viewPdf = `data:application/pdf;base64,${download?.data?.loc ?? ""}` 
     const el = document.createElement("a");
       el.href = viewPdf;
       el.click();

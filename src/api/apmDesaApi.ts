@@ -21,7 +21,7 @@ import {
     TipoDocumento, 
     TipoDocumentoHistoricoResponse, 
     } from '../interfaces/interfaces';
-import { apmApi, apmHadoopApi, apmHadoopGDI, tokenUserDocumento } from './index';
+import { apmApi, tokenUserDocumento } from './index';
 import { CreateTokenInternoResponse } from '../interfaces/interfaces';
 
 export async function getProductos() {    
@@ -59,7 +59,7 @@ export const postEtiquetaVariable = async (body: EtiquetaVariable[]) => {
 export async function getDescargarHadoopDirecto(downloadpath: string) {
     const URL = `https://desa-docker01.bancontinental.com.py:8200/download`;
     const response = await axios.get<HadoopDirectoRequest>(URL, {
-    params: {downloadpath},
+        params: {downloadpath},
     });
     return response;
 }
@@ -67,12 +67,15 @@ export async function getDescargarHadoopDirecto(downloadpath: string) {
 export const postAlzarHadoopDirecto = async (body: FormData, path_images: string, overwrite: boolean, chunksize: number) => {
     // const URL = `/upload?path_images`;
     const URL = `https://desa-docker01.bancontinental.com.py:8200/upload`;
-    const {data} = await axios.post<FormData, AxiosResponse<HadoopDirectoResponse>>(
-        URL,body, {headers: {'Content-Type':'multipart/form-data'},
-                    params:{path_images, overwrite, chunk_size: chunksize},
-});
+    const response = await axios.post<FormData, AxiosResponse<HadoopDirectoResponse>>(URL, body, {
+            headers: {'Content-Type':'multipart/form-data'},
+            params:{path_images, overwrite, chunk_size: chunksize},
+        });        
+    if (response && response.data) {
+        return response.data;
+    }
 
-    return data;
+    return undefined;
 }
 
 

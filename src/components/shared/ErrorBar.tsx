@@ -42,8 +42,10 @@ const ErrorBar = () => {
             const url: string = window.location.pathname;
             const redirect: boolean = redirectsDisabled.find(e => e.path === url) ? false : true;            
             if(redirect){
-                router.push('/tipoBusqueda');
+                // router.push('/tipoBusqueda');
+                return;
             }
+
         };
     };
 

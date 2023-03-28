@@ -6,25 +6,18 @@ type ArrowIconUpProps = {
   }
 
 const ArrowIconUp = ({onClick} : ArrowIconUpProps) => (
-  <ListItemIcon className="flex items-end justify-end" sx={{position: "relative" ,height: "40px", width:"500px"}}>          
-    <button className="">
+  <div className="pl-80">
+    <div className="pl-80 ">
       <ExpandLessOutlinedIcon 
         sx={{ 
-          position: "absolute",
-          display: "flex",
-          right: 0,
-          top: 25,
-          bottom: 0, 
-          left: 10,
-          // color: "#1D428A",
-          // ":hover": {background: "#1D428A", color: "#ffffff", borderRadius: "80px"}
           background: "#1D428A",
           color: "#ffffff",
           borderRadius: "80px"
         }} 
         onClick={() => onClick()}
       />
-    </button> 
-  </ListItemIcon>
+    </div>
+  </div>
+
 )
 export default ArrowIconUp

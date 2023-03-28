@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSolicitud } from '../../hooks/useSolicitud';
 import { solicitudActions } from '../../redux/slices/solicitud.slice';
@@ -48,15 +48,12 @@ function ConsultarDocumentosComponent() {
 
   const solicitud = useSolicitud(4)
 
-  //TODO: Dinamic not Static
   useEffect(() => {
     dispatch(getDocumentosUserAction("000666", 16 ));
-    // {JSON.stringify(getDocumentosUserAction)}
     dispatch(tipoDocumentoHistoricoActions.tipoDocumentoHistoricoReset());    
   }, [])
 
   const handleIconBack = () => {
-    // router.push('/solicitud');
     dispatch(solicitudActions.setPage(-1))
   }
 
@@ -67,6 +64,7 @@ function ConsultarDocumentosComponent() {
 
   }  
   const handleClickButtonFiltro = (idGrupo: number) => {
+
     const dataMapped = documentUserMapper(documentosUser as DocumentosUsuarioResponse, idGrupo)
     
     dispatch(documentosUserActions.setItemsMapped(dataMapped)) 
@@ -102,78 +100,59 @@ function ConsultarDocumentosComponent() {
               <ButtonFiltro 
                 key={item.idGrupo}
                 onClick={() => handleClickButtonFiltro(item.idGrupo)}
-                descripcion={(capitalize(`${item.grupoDescripcion}`))} 
-                />
-                ): null
-              } 
+                descripcion={(capitalize(`${item.grupoDescripcion}`))}
+                active={idGroupSelected === item.idGrupo}
+              />
+            ): null
+          } 
         </ListItem>
       </div>  
 
       <Box sx={{ width: 950, maxWidth: '100%'}} >
         <div className="pb-10">
           <div className="flex flex-row justify-content-center items-center">
-              <FormControl fullWidth>
-                <InputLabel htmlFor="outlined-adornment-amount">
-                  Buscar Documento
-                </InputLabel>
-                <OutlinedInput
-                  id="outlined-adornment-amount"
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <button> <SearchIcon /> </button>
-                    </InputAdornment>}
-                  label="Buscar Documento"
-                  onChange={(e:any) => setQuery(e.target.value)}
-                />                             
-              </FormControl>
-              <ButtonIconRefresh onClick={handleClickExpand} />
-              <ButtonExpand onClick={handleClickExpand} />
-              <ButtonCollapse onClick={handleClickCollapse} />
+            <FormControl fullWidth>
+              <InputLabel htmlFor="outlined-adornment-amount">
+                Buscar Documento
+              </InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-amount"
+                endAdornment={
+                  <InputAdornment position="end">
+                    <button> <SearchIcon /> </button>
+                  </InputAdornment>}
+                label="Buscar Documento"
+                onChange={(e:any) => setQuery(e.target.value)}
+              />                             
+            </FormControl>
+            <ButtonIconRefresh onClick={handleClickExpand} />
+            <ButtonExpand onClick={handleClickExpand} />
+            <ButtonCollapse onClick={handleClickCollapse} />
           </div>
         </div>
       </Box>
       <div className="overflow-auto h-96">
-    <TableContainer>
-      <Table sx={{ minWidth: 850 }} aria-label="simple table">
-        <TableBody>
-          <DocumentoUserTable 
-            documentosUser={documentosUser} 
-            query={query}
-            idGroup={idGroupSelected}
-            handleClickViewDoc={handleClickViewDoc} 
-          />
-  {/* 
+        <TableContainer>
+          <Table sx={{ minWidth: 850 }} aria-label="simple table">
+            <TableBody>
+              <DocumentoUserTable 
+                documentosUser={documentosUser} 
+                query={query}
+                idGroup={idGroupSelected}
+                handleClickViewDoc={handleClickViewDoc} 
+              />
               <DocumentoUserSubGrupoTable 
-              toggle={subGruposActive}
-              setToggle={(value) => console.log(value)}
-              documentosUser={documentosUserMapped} 
-              query={query} 
-              handleClickViewDoc={handleClickViewDoc} /> */}
-            {/* <TableRow> */}
-              {/* <TableCell
-                align="left"
-                style={{ fontWeight:"600", fontSize:"16px", color:"#1D428A" }}> */}
-                {/* <DocumentoUserSubGrupoTable 
-                  toggle={subGruposActive}
-                  setToggle={(value) => console.log(value)}
-                  documentosUser={documentosUserMapped} 
-                  query={query} 
-                  handleClickViewDoc={handleClickViewDoc} 
-                /> */}
-              {/* </TableCell> */}
-            {/* </TableRow>   */}
-            <DocumentoUserSubGrupoTable 
-              toggle={subGruposActive}
-              setToggle={(value) => console.log(value)}
-              documentosUser={documentosUserMapped} 
-              query={query} 
-              handleClickViewDoc={handleClickViewDoc}
-            />
+                toggle={subGruposActive}
+                setToggle={(value) => console.log(value)}
+                documentosUser={documentosUserMapped} 
+                query={query} 
+                handleClickViewDoc={handleClickViewDoc}
+              />
               {/* {JSON.stringify(documentosUser)}   */}
-        </TableBody>           
-      </Table>
-    </TableContainer>
-    </div>
+            </TableBody>           
+          </Table>
+        </TableContainer>
+      </div>
     </>
   ) 
 }

@@ -24,9 +24,9 @@ const PDFComponent = ({base64}: PDFComponentProps) => {
     const handleClickOpen = async () => {
         // DESCARGAR PDF
         const download = await getDescargarHadoopDirecto(href)
-        console.log("El PDF: " + download.data.loc);
+        console.log("El PDF: " + download?.data?.loc ?? "");
 
-        const hrefPdf = `data:application/pdf;base64,${download.data.loc}` 
+        const hrefPdf = `data:application/pdf;base64,${download?.data?.loc ?? ""}` 
         setUrlPdf(hrefPdf)           
 
         // Te permite crear una etiqueta de manera programada o dinamica
@@ -48,7 +48,13 @@ const PDFComponent = ({base64}: PDFComponentProps) => {
         
         const res = await postAlzarHadoopDirecto(formData, "/datalake/Continental-desa", false, 65356);
 
-        setHref(res.loc)
+        if (!res || !res.loc) {
+            // Alerta
+            console.log("El res.loc no existe: ", res);      
+            return;
+        }
+
+        setHref(res?.loc ?? "")
         setFileName(fileInput.files[0].name)
     }
 
