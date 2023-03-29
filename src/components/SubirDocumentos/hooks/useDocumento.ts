@@ -30,13 +30,11 @@ export const useDocumento = () => {
         formData.append("file", file);
         const resHadoop = await postAlzarHadoopDirecto(formData, "/datalake/Continental-desa", false, 65356);        
         
-
-        let newFech = moment(fechaEmision).format('DDMMYYYY');
-
-        const LOC = resHadoop?.loc ?? ""
-
         
-
+        let newFech = moment(fechaEmision).format('DDMMYYYY');
+        
+        const LOC = resHadoop?.loc ?? ""
+        
         const dataForPost: GuardarDocumentoRequest = {
             codigoTipoDocumento: Number(item.idTipoDocumento),
             rutaDocumento: LOC,
@@ -49,14 +47,14 @@ export const useDocumento = () => {
             codigoUsuario:"PER",
             // codigoProducto: Number(etiquetaVariableBody?.id_producto.valor ?? "0") , // no reconoce
             codigoProducto: Number(body?.id_producto.valor ?? "0") , // no reconoce
-            // codigoProducto: Number(10),
+            // // codigoProducto: Number(10),
             // codigoSubproducto: Number(etiquetaVariableBody?.id_subproducto.valor ?? "0"), // no reconoce
             codigoSubproducto: Number(body?.id_subproducto.valor ?? "0"),
-            operacion: Number(1393939)
+            operacion: "1393939"
         }    
         
         
-
+        
         const res = await postGuardarDocumento(dataForPost)
         return res
     }

@@ -183,7 +183,7 @@ export interface GuardarDocumentoRequest {
     codigoUsuario:          string;
     codigoProducto:         number;
     codigoSubproducto:      number;
-    operacion:              number;
+    operacion:              string;
 }
 export interface NumeroLegajo {
     nextSequence: number;
