@@ -140,7 +140,10 @@ export default function ModalPDFComponent({item}: ModalPDFComponentProps) {
       PaperProps={{ sx: { top: 10, m: 0 , maxWidth: "90%", height: "80%" }}}
     >       
         <DialogActions>
-          <ButtonIconClose autoFocus={true} onClick={handleClose} />
+          <ButtonIconClose 
+            autoFocus={true}  
+            onClick={handleClose} 
+        />
         </DialogActions>
         <DialogTitle
           id="responsive-dialog-title"

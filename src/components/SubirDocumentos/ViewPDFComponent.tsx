@@ -135,6 +135,7 @@ async function embedPdfPages() {
             open={item?.openModalView ?? false}
             onClose={handleClose}
             aria-labelledby="responsive-dialog-title"
+            PaperProps={{ sx: { top: 10, m: 0 , maxWidth: "80%", height: "90%" }}}
         >             
             <DialogActions>
                 <ButtonIconClose 
@@ -175,16 +176,15 @@ async function embedPdfPages() {
                     <object
                         data='https://pdfjs-express.s3-us-west-2.amazonaws.com/docs/choosing-a-pdf-viewer.pdf'
                         type="application/pdf"
-                        width="500"
-                        height="678"
+                        width="600"
+                        height="550"
                     >
 
                         <iframe
                         src='https://pdfjs-express.s3-us-west-2.amazonaws.com/docs/choosing-a-pdf-viewer.pdf'
-                        width="500"
-                        height="678"
+                        width="600"
+                        height="550"
                         >
-                        <p>This browser does not support PDF!</p>
                         </iframe>
                     </object>
                     </div>
