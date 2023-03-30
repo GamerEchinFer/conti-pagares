@@ -139,7 +139,7 @@ function ConsultarDocumentosComponent() {
                 documentosUser={documentosUser} 
                 query={query}
                 idGroup={idGroupSelected}
-                handleClickViewDoc={handleClickViewDoc} 
+                handleClickViewDoc={handleClickViewDoc}
               />
               <DocumentoUserSubGrupoTable 
                 toggle={subGruposActive}

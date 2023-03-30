@@ -130,48 +130,49 @@ async function embedPdfPages() {
 }
 
   return (
-        <Dialog
-            fullScreen={fullScreen}
-            open={item?.openModalView ?? false}
-            onClose={handleClose}
-            aria-labelledby="responsive-dialog-title"
-            PaperProps={{ sx: { top: 10, m: 0 , maxWidth: "80%", height: "90%" }}}
-        >             
-            <DialogActions>
-                <ButtonIconClose 
-                    autoFocus={true}
-                    onClick={handleClose}
-                />
-            </DialogActions>
-            <div className="max-w-6xl grid grid-cols-2 gap-10">
-                <DialogContent>
-                    <DialogContentText
-                        className="pb-4">
-                       <div className="pr-10" style={{ color: "#373A3C", fontSize:"16px"}}>Código de Cliente 
-                            <span style={{color:"#818A91", fontSize:"16px"}}> 2344577</span></div>
-                       <div className="pr-10">Mendoza Beloto Luis Alberto</div>
-                       <div className="pr-10  pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Clasificación</div>
-                       <span className="pr-10">Documento General</span>
-                       <div className="pr-10 pt-2 pb-2" style={{ color: "#373A3C", fontSize:"16px"}}>Fecha Documento</div>
-                       <span className="pr-10 pb-2">28/03/2023</span>
-                       <div className="pr-10 pb-2 pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Vence 30/03/2023</div>
-                       <div className="pr-10 pb-2 pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Nro. Cuentas 0</div>
-                       <div className="pr-10 pb-4 pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Nro. Operación </div>
-                       <div className="pr-10 pb-4">3453563677 </div>
-                       <div className="pr-10 pb-2 pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Carga </div>
-                       <span className="pr-10">Juan Perez   28/03/2023 </span>
-                       <div className="pr-10 pb-2 pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Verifica </div>
-                       <span className="pr-10">Juan Perez   28/03/2023 </span>
-                       <div className="pr-10 pb-2 pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Certifica</div>
-                       <span className="pr-10">Juan Perez   28/03/2023 </span>
+    <Dialog
+        fullScreen={fullScreen}
+        open={item?.openModalView ?? false}
+        onClose={handleClose}
+        aria-labelledby="responsive-dialog-title"
+        PaperProps={{ sx: { top: 10, m: 0 , maxWidth: "80%", height: "90%" }}}
+    >             
+        <DialogActions>
+            <ButtonIconClose 
+                autoFocus={true}
+                onClick={handleClose}
+            />
+        </DialogActions>
+        <div className="max-w-6xl grid grid-cols-2 gap-10">
+            <DialogContent>
+                <DialogContentText
+                    className="pb-4">
+                    <div className="pr-10" style={{ color: "#373A3C", fontSize:"16px"}}>Código de Cliente 
+                        <span style={{color:"#818A91", fontSize:"16px"}}> 2344577</span></div>
+                    <div className="pr-10">Mendoza Beloto Luis Alberto</div>
+                    <div className="pr-10  pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Clasificación</div>
+                    <span className="pr-10">Documento General</span>
+                    <div className="pr-10 pt-2 pb-2" style={{ color: "#373A3C", fontSize:"16px"}}>Fecha Documento</div>
+                    <span className="pr-10 pb-2">28/03/2023</span>
+                    <div className="pr-10 pb-2 pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Vence 30/03/2023</div>
+                    <div className="pr-10 pb-2 pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Nro. Cuentas 0</div>
+                    <div className="pr-10 pb-4 pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Nro. Operación </div>
+                    <div className="pr-10 pb-4">3453563677 </div>
+                    <div className="pr-10 pb-2 pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Carga </div>
+                    <span className="pr-10">Juan Perez   28/03/2023 </span>
+                    <div className="pr-10 pb-2 pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Verifica </div>
+                    <span className="pr-10">Juan Perez   28/03/2023 </span>
+                    <div className="pr-10 pb-2 pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Certifica</div>
+                    <span className="pr-10">Juan Perez   28/03/2023 </span>
 
-                    </DialogContentText>
-                    <div className="flex flex-row justify-center pb-4">
-                        <BackButton onClick={embedPdfPages}/>
-                    </div>
-                </DialogContent>
-                <div className="max-w-10xl grid grid-cols" style={{width:"160%"}} >
-                <DialogContent>
+                </DialogContentText>
+                <div className="flex flex-row justify-center pb-4">
+                    {/* <BackButton onClick={embedPdfPages}/> */}
+                    <BackButton onClick={handleClose}/>
+                </div>
+            </DialogContent>
+            <div className="max-w-10xl grid grid-cols" style={{width:"160%"}} >
+            <DialogContent>
                 <div>
                     <object
                         data='https://pdfjs-express.s3-us-west-2.amazonaws.com/docs/choosing-a-pdf-viewer.pdf'
@@ -184,14 +185,13 @@ async function embedPdfPages() {
                         src='https://pdfjs-express.s3-us-west-2.amazonaws.com/docs/choosing-a-pdf-viewer.pdf'
                         width="600"
                         height="550"
-                        >
-                        </iframe>
+                        />
                     </object>
-                    </div>
-                </DialogContent>   
                 </div>
+            </DialogContent>   
             </div>
-        </Dialog>
+        </div>
+    </Dialog>
   )
 }
 

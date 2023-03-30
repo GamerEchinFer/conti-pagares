@@ -92,7 +92,7 @@ const PDFComponent = ({base64}: PDFComponentProps) => {
             ? (<embed
                 src={base64}
                 // src={urlPdf}
-                type="application/pdf" width="80%" height="550px"/>)
+                type="data:application/pdf" width="80%" height="550px"/>)
             : null
         }        
     </> 

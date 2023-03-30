@@ -5,13 +5,13 @@ import DocumentoUserTableRow from './DocumentoUserTableRow';
 
 type DocumentoUserTableProps = {
   documentosUser: DocumentosUsuarioResponse | undefined,
-  query: string
-  handleClickViewDoc: () => void
+  query: string,
+  handleClickViewDoc: () => void,
   idGroup: number
 }
 
 
-const DocumentoUserTable = ({documentosUser, query, handleClickViewDoc, idGroup}: DocumentoUserTableProps) => {
+const DocumentoUserTable = ({documentosUser, query, handleClickViewDoc, idGroup }: DocumentoUserTableProps) => {
 
   if (!documentosUser) {
     return null
@@ -27,10 +27,12 @@ const DocumentoUserTable = ({documentosUser, query, handleClickViewDoc, idGroup}
   return (
     <>
       {
-        documentosUserFilter.map(row => ( 
-          <DocumentoUserTableRow key={row.datosAdicionales.idDocumento} row={row} handleClickViewDoc={handleClickViewDoc} />
-        ))
-      }
+        documentosUserFilter.map(row => (
+          <> 
+            <DocumentoUserTableRow key={row.datosAdicionales.idDocumento} row={row} handleClickViewDoc={handleClickViewDoc} />
+          </>
+          ))
+        }
     </>
   )
 }
