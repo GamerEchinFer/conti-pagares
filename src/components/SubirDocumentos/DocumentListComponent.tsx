@@ -152,8 +152,7 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
               ? (
                 <>
                   <LightTooltip disableTouchListener title="Visualizar archivo cargado" arrow>
-                    <button style={buttonStyle(item)} onClick={() => openViewPdfModal(item)}>                  
-                    {/* <button style={buttonStyle(item)}>                   */}
+                    <button style={buttonStyle(item)} onClick={() => openViewPdfModal(item)}>
                       {(capitalize(`${item.tipoDocumento}`))}                      
                     </button>
                   </LightTooltip>
@@ -181,7 +180,6 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
         <ListItemButton>
           <ModalPDFComponent item={item} />
           <DialogPeriodoComponent item={item} />
-          <ViewPDFComponent item={item} />            
         </ListItemButton>                     
       </ListItem>
       <Divider />
@@ -202,7 +200,7 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
           </div>
         )
       }
-      {/* <ViewPDFComponent item={item} /> */}
+      <ViewPDFComponent item={item} />
     </>
   );
 }

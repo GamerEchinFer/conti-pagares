@@ -1,4 +1,4 @@
-import { Button, Checkbox, TextField, Tooltip } from '@mui/material';
+import { Checkbox, TextField } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -159,16 +159,15 @@ export default function ModalPDFComponent({item}: ModalPDFComponentProps) {
                 <span className="pr-10">Tamaño: {item.size?.toFixed(3) ?? 0} MB</span><span>Cantidad de Paginas: {item.totalPagesModified}</span>
               </DialogContentText>
                 <div className="pb-4">
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DesktopDatePicker
-                    label="Fecha de Expedición"
-                    inputFormat="DD-MM-YYYY"
-                    value={fechaEmision}
-                    onChange={(value) => setFechaEmision(value as string)}
-                    renderInput={(params) => <TextField {...params}  sx={{ width: 508 }}/>}
-                    />
-                </LocalizationProvider>
-                  
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DesktopDatePicker
+                      label="Fecha de Expedición"
+                      inputFormat="DD-MM-YYYY"
+                      value={fechaEmision}
+                      onChange={(value) => setFechaEmision(value as string)}
+                      renderInput={(params) => <TextField {...params}  sx={{ width: 508 }}/>}
+                      />
+                  </LocalizationProvider>
                 </div>
                 <form id="form">
                   <div className="flex justify-start gap-2" style={{ border:"1px solid #B7B7B7",borderRadius:"4px", padding:"10px"}}>

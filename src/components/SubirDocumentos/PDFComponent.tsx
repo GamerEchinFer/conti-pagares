@@ -23,11 +23,11 @@ const PDFComponent = ({base64}: PDFComponentProps) => {
 
     const handleClickOpen = async () => {
         // DESCARGAR PDF
-        const download = await getDescargarHadoopDirecto(href)
-        console.log("El PDF: " + download?.data?.loc ?? "");
+        const download = await getDescargarHadoopDirecto(href);
+        // console.log("El PDF: " + download?.data?.loc ?? "");
 
-        const hrefPdf = `data:application/pdf;base64,${download?.data?.loc ?? ""}` 
-        setUrlPdf(hrefPdf)           
+        const hrefPdf = `data:application/pdf;base64,${download?.data?.loc ?? ""}`; 
+        setUrlPdf(hrefPdf);           
 
         // Te permite crear una etiqueta de manera programada o dinamica
         const el = document.createElement("a")
@@ -77,22 +77,41 @@ const PDFComponent = ({base64}: PDFComponentProps) => {
 
         {/* <pre>{JSON.stringify(hadoopDownload, null, 2)}</pre> */}
 
-        {/* <div className="flex justify-start">
+         {/* <div className="flex justify-start">
             <h1 className="pt-4 pl-4">Download Document</h1>
             <div className="flex  justify-center p-10" >
                 <Button onClick={handleClickOpen}>
                     Download
                 </Button>
             </div>
-        </div>   */}
-        {/*{base64}*/}  
+        </div>
+        {base64} */}
+        
         {
             // urlPdf.length > 0 
             base64.length > 0 
-            ? (<embed
+            ? (
+            <embed
                 src={base64}
                 // src={urlPdf}
-                type="data:application/pdf" width="80%" height="550px"/>)
+                type="application/pdf" width="80%" height="550px"
+            />
+            // <div>
+            //     <object
+            //         data={base64}
+            //         type="application/pdf"
+            //         width="600"
+            //         height="550"
+            //     >
+            
+            //         <iframe
+            //         src={base64}
+            //         width="600"
+            //         height="550"
+            //         />
+            //     </object>
+            //     </div>
+            )
             : null
         }        
     </> 

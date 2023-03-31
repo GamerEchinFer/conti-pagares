@@ -22,15 +22,16 @@ import { RootState } from '../../redux/store';
 import DatosClienteComponent from '../DatosClienteComponent';
 import BackButton from '../Buttons/BackButton';
 import { PDFDocument } from 'pdf-lib'
+import ButtonConfirmar from '../Buttons/ButtonConfirmar';
 
 type ModalPDFComponentProps = {
     item: EtiquetaVariableResponse
-}
+};
 
 const filterPdf = () => ({
     cut_from: "",
     cut_to: "",
-})
+});
 
 const ViewPDFComponent = ({item}: ModalPDFComponentProps) => {
     const dispatch = useDispatch();
@@ -44,10 +45,9 @@ const ViewPDFComponent = ({item}: ModalPDFComponentProps) => {
     const downFile = useSelector((state: RootState) => state.hadoopDownload.response);
     const [fechaEmision, setFechaEmision] = useState(new Date().toISOString());
 
+    const [pdf, setPdf] = useState(false);
     const [fileName, setFileName] = useState("");
-
-    const containerRef = useRef(null);
-
+    const [operacion, setOperacion] = useState(); 
 
     const handleClose = () => {                        
         dispatch(etiquetaVariableActions.etiquetaVariableCloseAllModals())                
@@ -66,7 +66,7 @@ const ViewPDFComponent = ({item}: ModalPDFComponentProps) => {
 
     
 
-    const open = async () => {
+    const confirm = async () => {
         const base64 = item?.base64 ?? ""
 
       if (!base64) return  
@@ -77,7 +77,7 @@ const ViewPDFComponent = ({item}: ModalPDFComponentProps) => {
         const download = await getDescargarHadoopDirecto(downFile)
         const viewPdf = `data:application/pdf;base64,${download?.data?.loc ?? ""}` 
         setDownload(viewPdf)           
-        console.log(viewPdf)
+        // console.log(viewPdf)
         const el = document.createElement("a")
         el.href = viewPdf
         el.download = fileName
@@ -88,107 +88,66 @@ const ViewPDFComponent = ({item}: ModalPDFComponentProps) => {
     }
 }
 
-
-async function embedPdfPages() {
-  const flagUrl = 'https://pdf-lib.js.org/assets/american_flag.pdf';
-  const constitutionUrl = 'https://pdf-lib.js.org/assets/us_constitution.pdf';
-
-  const flagPdfBytes = await fetch(flagUrl).then((res) => res.arrayBuffer());
-  const constitutionPdfBytes = await fetch(constitutionUrl).then((res) =>
-    res.arrayBuffer(),
-  );
-
-  const pdfDoc = await PDFDocument.create();
-
-  const [americanFlag] = await pdfDoc.embedPdf(flagPdfBytes);
-
-  const usConstitutionPdf = await PDFDocument.load(constitutionPdfBytes);
-  const preamble = await pdfDoc.embedPage(usConstitutionPdf.getPages()[1], {
-    left: 55,
-    bottom: 485,
-    right: 300,
-    top: 575,
-  });
-
-  const americanFlagDims = americanFlag.scale(0.3);
-  const preambleDims = preamble.scale(2.25);
-
-  const page = pdfDoc.addPage();
-
-  page.drawPage(americanFlag, {
-    ...americanFlagDims,
-    x: page.getWidth() / 2 - americanFlagDims.width / 2,
-    y: page.getHeight() - americanFlagDims.height - 150,
-  });
-  page.drawPage(preamble, {
-    ...preambleDims,
-    x: page.getWidth() / 2 - preambleDims.width / 2,
-    y: page.getHeight() / 2 - preambleDims.height / 2 - 50,
-  });
-
-  const pdfBytes = await pdfDoc.save();
-}
-
   return (
     <Dialog
         fullScreen={fullScreen}
         open={item?.openModalView ?? false}
         onClose={handleClose}
         aria-labelledby="responsive-dialog-title"
-        PaperProps={{ sx: { top: 10, m: 0 , maxWidth: "80%", height: "90%" }}}
+        PaperProps={{ sx: { top: 10, m: 0 , maxWidth: "90%", height: "90%" }}}
     >             
         <DialogActions>
-            <ButtonIconClose 
-                autoFocus={true}
-                onClick={handleClose}
-            />
+            <ButtonIconClose autoFocus={true} onClick={handleClose} />
         </DialogActions>
+        <DialogTitle id="responsive-dialog-title" className="right-4">
+          {capitalize(`${item.tipoDocumento}`)}
+        </DialogTitle>  
         <div className="max-w-6xl grid grid-cols-2 gap-10">
             <DialogContent>
-                <DialogContentText
-                    className="pb-4">
-                    <div className="pr-10" style={{ color: "#373A3C", fontSize:"16px"}}>Código de Cliente 
-                        <span style={{color:"#818A91", fontSize:"16px"}}> 2344577</span></div>
-                    <div className="pr-10">Mendoza Beloto Luis Alberto</div>
-                    <div className="pr-10  pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Clasificación</div>
-                    <span className="pr-10">Documento General</span>
-                    <div className="pr-10 pt-2 pb-2" style={{ color: "#373A3C", fontSize:"16px"}}>Fecha Documento</div>
-                    <span className="pr-10 pb-2">28/03/2023</span>
-                    <div className="pr-10 pb-2 pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Vence 30/03/2023</div>
-                    <div className="pr-10 pb-2 pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Nro. Cuentas 0</div>
-                    <div className="pr-10 pb-4 pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Nro. Operación </div>
-                    <div className="pr-10 pb-4">3453563677 </div>
-                    <div className="pr-10 pb-2 pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Carga </div>
-                    <span className="pr-10">Juan Perez   28/03/2023 </span>
-                    <div className="pr-10 pb-2 pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Verifica </div>
-                    <span className="pr-10">Juan Perez   28/03/2023 </span>
-                    <div className="pr-10 pb-2 pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Certifica</div>
-                    <span className="pr-10">Juan Perez   28/03/2023 </span>
-
+                <DialogContentText className="pb-4">
+                    <span className="pr-10">Tamaño: {item.size?.toFixed(3) ?? 0} MB</span><span>Cantidad de Paginas: {item.totalPagesModified}</span>
                 </DialogContentText>
-                <div className="flex flex-row justify-center pb-4">
-                    {/* <BackButton onClick={embedPdfPages}/> */}
-                    <BackButton onClick={handleClose}/>
+
+                <div className="pb-4">
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DesktopDatePicker
+                      label="Fecha de Expedición"
+                      inputFormat="DD-MM-YYYY"
+                      value={fechaEmision}
+                      onChange={(value) => setFechaEmision(value as string)}
+                      renderInput={(params) => <TextField {...params}  sx={{ width: 508 }}/>}
+                      />
+                  </LocalizationProvider>
+                </div>
+                <form id="form">
+                  <div className="flex justify-start gap-2" style={{ border:"1px solid #B7B7B7",borderRadius:"4px", padding:"10px"}}>
+                    <span className="pt-2">Cortar desde</span> <input type="number" name="cut_from" value={filter.cut_from} onChange={handleChangeFilter}  className="inputPDF" /> 
+                    <span className="pt-2">Cortar hasta</span> <input type="number" name="cut_to" value={filter.cut_to} onChange={handleChangeFilter} className="inputPDF" />
+                  </div>
+                </form> 
+                <div>
+                    {href}
+                    Es un documento autenticado
+                    <Checkbox {...label} defaultChecked />
+                </div>
+                <div className="pb-4 pt-4">
+                  <TextField
+                    label="Asociar a Operación"
+                    value={operacion}
+                    placeholder="74783648247234"
+                    fullWidth
+                  />
+                </div>
+                <div className="flex flex-row justify-center gap-8 pb-4">
+                  <CancelButton onClick={handleClose}/>
+                  <ButtonConfirmar onClick={confirm} />
+                  <ButtonModificar onClick={handleClose} />
                 </div>
             </DialogContent>
-            <div className="max-w-10xl grid grid-cols" style={{width:"160%"}} >
-            <DialogContent>
-                <div>
-                    <object
-                        data='https://pdfjs-express.s3-us-west-2.amazonaws.com/docs/choosing-a-pdf-viewer.pdf'
-                        type="application/pdf"
-                        width="600"
-                        height="550"
-                    >
-
-                        <iframe
-                        src='https://pdfjs-express.s3-us-west-2.amazonaws.com/docs/choosing-a-pdf-viewer.pdf'
-                        width="600"
-                        height="550"
-                        />
-                    </object>
-                </div>
-            </DialogContent>   
+            <div className="max-w-10xl grid grid-cols" style={{width:"100%"}} >
+                <DialogContent>
+                    <PDFComponent base64={item?.base64Modified ?? ""}  />
+                </DialogContent>
             </div>
         </div>
     </Dialog>

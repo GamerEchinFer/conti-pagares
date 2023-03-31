@@ -1,7 +1,7 @@
 import { ColeccionDocumento, DocumentosUsuarioResponse } from '../../interfaces/interfaces';
 import SearchIcon from '@mui/icons-material/Search';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TableCell, TableRow, useMediaQuery } from '@mui/material';
-import { capitalize } from '../../helpers/capitalize';
+import { capitalize, capitalizePorPalabra } from '../../helpers/capitalize';
 import CertificadoIcon from '../shared/CertificadoIcon';
 import PendienteIcon from '../shared/PendienteIcon';
 import RechazadoIcon from '../shared/Rechazado';
@@ -85,12 +85,14 @@ const DocumentoUserTableRow = ({row, handleClickViewDoc}: DocumentoUserTableRowP
                 <DialogContentText
                     className="pb-4">
                     <div className="pr-10" style={{ color: "#373A3C", fontSize:"16px"}}>Código de Cliente 
-                        <span style={{color:"#818A91", fontSize:"16px"}}> 2344577</span></div>
-                    <div className="pr-10">Mendoza Beloto Luis Alberto</div>
+                        <span style={{color:"#818A91", fontSize:"16px"}}> {datosCliente.codigoCliente}</span></div>
+                    <div className="pr-10">
+                    {(datosCliente.primerNombre ? `${capitalizePorPalabra(`${datosCliente?.primerNombre ?? ''}`)} ${capitalizePorPalabra(`${datosCliente?.segundoNombre ?? ''}`)} ${datosCliente?.primerApellido ?? ''} ${datosCliente?.segundoApellido ?? ''}` : '')}
+                    </div>
                     <div className="pr-10  pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Clasificación</div>
                     <span className="pr-10">Documento General</span>
                     <div className="pr-10 pt-2 pb-2" style={{ color: "#373A3C", fontSize:"16px"}}>Fecha Documento</div>
-                    <span className="pr-10 pb-2">28/03/2023</span>
+                    <span className="pr-10 pb-2"></span>
                     <div className="pr-10 pb-2 pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Vence 30/03/2023</div>
                     <div className="pr-10 pb-2 pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Nro. Cuentas 0</div>
                     <div className="pr-10 pb-4 pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Nro. Operación </div>
