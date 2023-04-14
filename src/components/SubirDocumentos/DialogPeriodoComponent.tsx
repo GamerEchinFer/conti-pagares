@@ -41,10 +41,7 @@ export default function DialogPeriodoComponent({item}: DialogPeriodoComponentPro
   
   const fullScreen = useMediaQuery(theme.breakpoints.down('xl'));
   
-  
-  const [dense, setDense] = React.useState(false);
-  const [secondary, setSecondary] = React.useState(false);
-  
+  const [ openDialogSecondary, setOpenDialogSecondary] = useState(false);
 
   const handleDrop = (e:any) => {
     e.prevent.default();
@@ -58,6 +55,7 @@ export default function DialogPeriodoComponent({item}: DialogPeriodoComponentPro
 
   const handleClose = () => {
     // setOpen(false);
+    // setOpenDialogSecondary(true);
     dispatch(etiquetaVariableActions.etiquetaVariableCloseAllModals());
   };
 
@@ -267,7 +265,7 @@ const meses: {[key: number]: JSX.Element} = {
                     onDrop={handleDrop}>
                       <input
                         type="file"
-                        multiple            
+                        // multiple solo en casos de selección multiple           
                         onChange={(event) => handleFile(event.target.files)}
                         hidden
                         ref={inputRef}

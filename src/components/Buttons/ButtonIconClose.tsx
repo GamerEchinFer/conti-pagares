@@ -17,7 +17,7 @@ const ButtonIconClose = ({onClick, imagen=Cierre, autoFocus}: ButtonIconClosePro
         onClick={() => onClick()}
       >
         <ListItemButton>
-        <Image src={imagen}  alt='cierre' />
+          <Image src={imagen}  alt='cierre' />
         </ListItemButton>
       </ListItemIcon>
     </>

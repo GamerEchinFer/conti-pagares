@@ -202,13 +202,13 @@ export interface TipoDocumento {
     periodicidad:       number;
 }
 
-export interface GuardarHistorialUsuario {
+export interface GuardarHistorialUsuarioRequest {
     codigoCliente:                string;
     estado:                       number;
     cantidadTotalDocumentos:      number;
     cantidadDocumentosIngresados: number;
     usuario:                      string;
-    condiciones:                  Condiciones[];
+    condiciones:                  Condiciones[]; 
 }
 
 export interface Condiciones {

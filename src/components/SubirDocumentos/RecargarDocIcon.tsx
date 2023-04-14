@@ -11,35 +11,35 @@ type RecargarDocIconProps = {
 }
 
 const RecargarDocIcon = ({imagen = CheckDocumento, onClick}:RecargarDocIconProps)  => {
-
   const [isCheckedIcon, setisCheckedIcon] = useState(true)
 
   return (
     <>
-        <List
-          onMouseOver={() => setisCheckedIcon(false)}
-          onMouseOut={() => setisCheckedIcon(true)}
-          onClick={() => onClick()}
-          sx={{
-            ":hover":
-            {
-              background:"#BEC400",
-              borderRadius: "50%",
-              height: "45px",
-              width: "45px",
-              left: 4,
-            }
-          }}
-        > 
-          <LightTooltip
-            disableFocusListener
-            title="Volver a cargar"
-            arrow>
-            <div className="relative h-8 w-8">
-                <Image src={ isCheckedIcon ? imagen : RecargarDocumento}  alt='imagenDoc' className='w-100'/>
-            </div> 
-          </LightTooltip>
-        </List>
+      <List
+        onMouseOver={() => setisCheckedIcon(false)}
+        onMouseOut={() => setisCheckedIcon(true)}
+        onClick={() => onClick()}
+        sx={{
+          ":hover":
+          {
+            background:"#BEC400",
+            borderRadius: "50%",
+            height: "45px",
+            width: "45px",
+            left: 4,
+          },
+          cursor: "pointer"
+        }}
+      > 
+        <LightTooltip
+          disableFocusListener
+          title="Volver a cargar"
+          arrow>
+          <div className="relative h-8 w-8">
+              <Image src={ isCheckedIcon ? imagen : RecargarDocumento}  alt='imagenDoc' className='w-100'/>
+          </div> 
+        </LightTooltip>
+      </List>
     </>
   )
 }

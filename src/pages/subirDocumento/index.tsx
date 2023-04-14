@@ -10,7 +10,7 @@ import { DragEvent, useState } from 'react';
 import { etiquetaVariableActions } from '../../redux/slices/etiquetaVariable.slice';
 import { useUnmount, useMount } from 'ahooks';
 import ButtonFinalizar from "../../components/Buttons/ButtonFinalizar";
-import { EtiquetaVariableResponse, Parametros } from '../../interfaces/interfaces';
+import { Condiciones, EtiquetaVariableBody, EtiquetaVariableResponse, GuardarHistorialUsuarioRequest, Parametros } from '../../interfaces/interfaces';
 import { hadoopDirectoActions } from '../../redux/slices/hadoop.slice';
 import { SubirDocumentoProvider } from '../../context/subirDocumento/SubirDocumentoProvider';
 import * as pdfjsLib from 'pdf-lib'
@@ -18,6 +18,8 @@ import { Box } from "@mui/material";
 import { parametroActions } from "../../redux/slices/parametro.slice";
 import { getSolicitudClienteAction } from "../../redux/thunks/solicitud.thunks";
 import ModalAddDocument from "../../components/SubirDocumentos/ModalAddDocument";
+import { postGuardarHistorialUsuario } from "../../api/apmDesaApi";
+import { storage } from "../../helpers/storage";
 
 const SubirDocumentoPage = ()  => {
 
@@ -25,12 +27,21 @@ const SubirDocumentoPage = ()  => {
 
     const dispatch = useDispatch();
 
-    const etiquetasVariables = useSelector((state: RootState) => state.etiquetaVariable.response);
+    const etiquetasVariables = useSelector((state: RootState) => state.etiquetaVariable.response);    
+    const clienteDatos = useSelector((state: RootState) => state.clienteDatos.items);
     const page = useSelector((state: RootState) => state.etiquetaVariable.page);
     const [openAddModal, setOpenAddModal] = useState(false);
+    const [etiquetaVariableBody, setEtiquetaVariableBody] = useState<any>({});
+
+
 
     // The Files of redux but cant use in others components
     const files = useSelector((state: RootState) => state.hadoopDirecto.files);
+
+    useMount(() => {
+        const data = storage.getObject("etiquetas-variable-body")
+        setEtiquetaVariableBody(data)                    
+    })  
 
     useMount(() => {                
         hadoopDirectoActions.setFiles(null);
@@ -63,8 +74,52 @@ const SubirDocumentoPage = ()  => {
         }
     }; 
 
-    const handleClickCargar = () => {
-        router.push("/tipoBusqueda");
+    /*
+        {
+            "id_producto": {
+                "nombre": "id_producto",
+                "valor": "10"
+            },
+            "id_subproducto": {
+                "nombre": "id_subproducto",
+                "valor": "10"
+            },
+        }        
+    */           
+    const mapCondiciones = (body: EtiquetaVariableBody): Condiciones[] => Object.values(body).map(
+        item => ({            
+                nombreCondicion: item.nombre,
+                valorCondicion: item.valor
+            }) as Condiciones
+        ).filter(item => item.nombreCondicion !== "codigoCliente" && item.nombreCondicion !== "tipo_persona") 
+    
+
+    const handleClickCargar = async () => {
+
+        if (!etiquetaVariableBody) {
+            return;
+        }
+
+        // Preparar request
+        const body: GuardarHistorialUsuarioRequest = {
+            codigoCliente: clienteDatos.codigoCliente,
+            estado: 0,
+            cantidadTotalDocumentos: etiquetasVariables?.length ?? 0,
+            cantidadDocumentosIngresados: etiquetasVariables?.filter(item => item.tieneDocumento).length ?? 0,        
+            usuario: 'PER',
+            condiciones: mapCondiciones(etiquetaVariableBody as EtiquetaVariableBody)
+        } 
+
+        // Llamar a la api      
+        try {                            
+            await postGuardarHistorialUsuario(body)    
+            // Resolver la respuesta            
+            // router.push("/tipoBusqueda");            
+            
+        } catch (error) {
+            console.log(error)
+        }        
+
     };
 
     /// En caso de necesitar subir más documentos, insertar lista
@@ -110,7 +165,7 @@ const SubirDocumentoPage = ()  => {
     return (
         <SubirDocumentoProvider>
             <Box sx={{ width: "75%"}}>
-                <HeaderDocComponent />
+                <HeaderDocComponent />                
                 <Box sx={{ width: "125%"}}>
                 <div className="grid grid-cols-2 gap-6 md:max-w-5xl m-auto" >
                     <div className="overflow-auto h-96">

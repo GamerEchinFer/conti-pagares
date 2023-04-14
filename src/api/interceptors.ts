@@ -30,6 +30,7 @@ export const apmAuthInterceptor = (config: AxiosRequestConfig) => {
         return config;
     }
 
+
     if (config.headers) {
         config.headers["Authorization"] = `${values.token_type} ${values.access_token}`;
         config.headers["Subscription-Key"] = keycloakHeaders["Subscription-Key"];

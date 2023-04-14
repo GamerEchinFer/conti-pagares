@@ -40,12 +40,12 @@ function SolicitudPage() {
   useMount(() => {
     initialize();
     dispatch(solicitudActions.solicitudRequest())
-    postAutenticarServicio(keycloakHeaders).then((value) => {            
+    /*postAutenticarServicio(keycloakHeaders).then((value) => {            
       localStorage.setItem("gdi-auth", JSON.stringify(value));
       dispatch(getSolicitudClienteAction())
     }).finally(() => {
         
-    })
+    })*/
   })
 
 

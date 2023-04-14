@@ -25,7 +25,8 @@ const handleIconNext = () => {
           primaryTypographyProps={{ style: {
             color: "#1D428A",
             fontWeight: "bold",
-            fontSize: "24px"
+            fontSize: "24px",
+            cursor: "pointer"
           } }}
           primary={solicitud.solicitud?.nameSolicitud ?? ""}
           secondaryTypographyProps={{ style: {

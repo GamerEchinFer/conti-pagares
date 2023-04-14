@@ -16,7 +16,7 @@ const FileUploadIconComponent = ({imagen = CargaDocumento,onClick}:FileUploadIco
         onClick={() => onClick()}
         >
           <div className="relative h-10 w-10">
-            <Image src={imagen}  alt='cargaDocumento' className="absolute top-0 right-0 h-8 w-8" />
+            <Image src={imagen}  alt='cargaDocumento' className="absolute top-0 right-0 h-8 w-8 cursor-pointer" />
           </div>
           {/* <FileUploadIcon 
             sx={{ fontSize: 30,

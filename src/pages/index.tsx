@@ -7,25 +7,24 @@ import { postAutenticarServicio } from '../api/keycloakApi';
 import { keycloakHeaders } from '../constants/constants';
 import { getProductosAction } from '../redux/thunks/producto.thunks';
 import { getBusquedaAction } from '../redux/thunks/busqueda.thunks';
+import { useEffect } from 'react';
 
 interface props {
   resp: string
 }
 
 const HomePage: NextPage<props> = () => {
-    useMount(() => {
-      postAutenticarServicio(keycloakHeaders).then((value) => {            
-          localStorage.setItem("gdi-auth", JSON.stringify(value));
-          console.log(value);      
-          // dispatch(getProductosAction())
-          dispatch(getBusquedaAction)
-      }).finally(() => {
+  const dispatch = useAppDispatch();
 
-        })
-      })
-        
-const dispatch = useAppDispatch();
-
+  useMount(() => {
+    postAutenticarServicio(keycloakHeaders).then((value) => {            
+      localStorage.setItem("gdi-auth", JSON.stringify(value));
+      // console.log("the refresh of token",value.expires_in);      
+      // dispatch(getProductosAction())
+      dispatch(getBusquedaAction)
+    }).finally(() => {}); 
+  })
+  
   return (
     <>
       <TipoBusquedaPage />

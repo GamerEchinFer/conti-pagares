@@ -38,7 +38,7 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
 
   const inputRef = useRef<any>();
 
-  const files = useSelector((state: RootState) => state.hadoopDirecto.files);
+  const files: any = useSelector((state: RootState) => state.hadoopDirecto.files);
 
   useMount(() => {                
     hadoopDirectoActions.setFiles(null);
@@ -56,7 +56,8 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
 
   const handleFile = (files: any) => {
     
-    if (!files) return
+    // Si no existe archivo y si no hay archivos en el array, cancelar subida
+    if (!files && files.length === 0) return
 
     dispatch(hadoopDirectoActions.setFiles(files))
     
@@ -190,7 +191,7 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
             onDrop={handleDrop}>
               <input
                 type="file"
-                multiple            
+                // multiple selección multiple innecesaria para casos donde el bton solo necesita subir un PDF           
                 onChange={(event) => handleFile(event.target.files)}
                 hidden
                 ref={inputRef}

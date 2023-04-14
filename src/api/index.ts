@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { baseUrl } from '../constants/constants';
-import { apmAuthInterceptor, apmAuthInterceptorHadoop, apmAuthInterceptorHadoopGDI } from './interceptors';
+import { apmAuthInterceptor, apmAuthInterceptorHadoopGDI } from './interceptors';
 
 export const api = axios.create(
     {

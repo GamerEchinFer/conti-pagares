@@ -6,10 +6,11 @@ import FolderIconComponent from './FolderIconComponent';
 import { hadoopDirectoActions, hadoopDirecto } from '../../redux/slices/hadoop.slice';
 import { RootState } from '../../redux/store';
 import { useMount } from 'ahooks';
+import ButtonDelete from '../Buttons/ButtonDelete';
 
 const DragDropComponent = () => {
-    const dispatch = useDispatch()
-    const [files, setFiles] = useState(null);
+    const dispatch = useDispatch();
+    const [files, setFiles] = useState<any[] | null>(null);
     const inputRef = useRef<any>();
     
     const handleDragOver = (event:any) => {
@@ -18,14 +19,13 @@ const DragDropComponent = () => {
     
     useMount(() => {                
         hadoopDirectoActions.setFiles(null)
-    })
+    });
 
     const handleDrop = (event:any) => {
         event.preventDefault();
         setFiles(event.dataTransfer.files)                              
         
         dispatch(hadoopDirectoActions.setFiles(event.dataTransfer.files))
-        
     };
 
     const onDragStart = (event: DragEvent<HTMLElement>, id: any) => {
@@ -46,26 +46,22 @@ const DragDropComponent = () => {
     }    
 
     if (files) return (
-        <div className="dropZone">              
-            <ul>
-                {Object.values(files).map((file: any, idx) =>
-                 <li key={idx} className="p-2" draggable onDragStart={(event) => onDragStart(event, idx)} onDragEnd={onDragEnd}>
-                    <DocPDFIcon />
-                    {file.name}
-                </li>)}
-            </ul>
-            {/* <div className="actions">
-                <Button
-                    onClick={() => setFiles(null)}
-                >
-                    Cancel
-                </Button>
-                <Button
-                    onClick={handleUpload}
-                >
-                    Upload
-                </Button>
-            </div> */}
+        <div className="dropZoneSecondary">
+            <div className="grid grid-cols-4 gap-4">
+              {Object.values(files).map((file: any, index) =>
+                 <div className="static" key={index} draggable onDragStart={(event) => onDragStart(event, index)} onDragEnd={onDragEnd}>
+                        <div className="absolute">
+                            <ButtonDelete onClick={() => {                                
+                                // Indicamos el indice a eliminar y el segundo parametro cantidad de elementos a partir del indice
+                                const newFiles = [...files]
+                                newFiles.splice(index, 1)                                                                
+                                setFiles( newFiles.length === 0 ? null : newFiles)                                          
+                            }} />
+                        </div> 
+                        <DocPDFIcon />
+                        <div style={{fontSize:"12px"}}>{file.name}</div> 
+                </div>)}  
+            </div>                 
         </div>
     )
     

@@ -14,7 +14,7 @@ const ArrowIconBack = ({onClick} : ArrowIconBackProps) => (
         left: "10px",
         pl: 1, 
         color: "#1D428A",
-        ":hover": {background: "#1D428A", color: "#ffffff", borderRadius: "80px"}}} 
+        ":hover": {background: "#1D428A", color: "#ffffff", borderRadius: "80px", cursor: "pointer"}}} 
         onClick={() => onClick()}
         /> 
 

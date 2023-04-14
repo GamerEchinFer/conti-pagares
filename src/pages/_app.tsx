@@ -12,10 +12,45 @@ import interceptors from '../api/interceptors'
 import { ReactKeycloakProvider } from '@react-keycloak/web'
 import keycloak from '../config/Keycloak'
 import ErrorBar from '../components/shared/ErrorBar'
+import { useEffect } from 'react';
+import { postAutenticarServicio } from '../api/keycloakApi'
+import { keycloakHeaders } from '../constants/constants'
+
+const expires_in = 300
 
 
 export default function App({ Component, pageProps }: AppProps) {
   interceptors();
+
+  useEffect(() => {
+
+    postAutenticarServicio(keycloakHeaders).then((value) => {  
+      const miliseconds = new Date().getTime()
+      localStorage.setItem("gdi-auth-date", miliseconds.toString())          
+      localStorage.setItem("gdi-auth", JSON.stringify(value));
+    })
+
+    const interval = setInterval(() => {
+      const date = localStorage.getItem("gdi-auth-date")  
+      if (!date) { return; }
+
+      const milisecond = Number(date) + (1000 * expires_in)
+      const actual = new Date().getTime()
+
+      if (actual >= milisecond) {
+        postAutenticarServicio(keycloakHeaders).then((value) => {  
+          const miliseconds = new Date().getTime()
+          localStorage.setItem("gdi-auth-date", miliseconds.toString())          
+          localStorage.setItem("gdi-auth", JSON.stringify(value));
+        })
+      }      
+    }, 1000 * expires_in)
+
+    return () => {
+      clearInterval(interval)
+    }
+  }, [])
+
   return (
     <>
       <Head>

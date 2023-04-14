@@ -44,19 +44,19 @@ const TipoBusquedaPage = () => {
       dispatch(busquedaActions.busquedaRequest());
       dispatch(clienteDatosActions.clienteDatosReset());
       dispatch(clienteDocumentoActions.clienteDocumentoReset()); 
-      postAutenticarServicio(keycloakHeaders).then((value) => {            
-      localStorage.setItem("gdi-auth", JSON.stringify(value));
-      
-    }).finally(() => {
+      /*postAutenticarServicio(keycloakHeaders).then((value) => {    
+        debugger;        
+        localStorage.setItem("gdi-auth", JSON.stringify(value));      
+      }).finally(() => {
 
-    })
+      })*/
   })
 
-  useEffect(() => {
+  /*useEffect(() => {
     getTipoBusquedaById(tipoBusquedaSelected).then((response) => {
       setTipoBusqueda(response.data)
     })
-  }, [tipoBusquedaSelected]);
+  }, [tipoBusquedaSelected]);*/
     
   return (
     <>
@@ -80,7 +80,10 @@ const TipoBusquedaPage = () => {
                     size="small" 
                     id="outlined-basic"
                     value={codigoCliente ?? clienteDocumento}
-                    onChange={(e) => {setCodigoCliente(e.target.value); setClienteDocumento(e.target.value);}}
+                    onChange={(e) => {
+                      setCodigoCliente(e.target.value); 
+                      setClienteDocumento(e.target.value);
+                    }}
                     // value={tipoBusquedaSelected} 
                     // label={tipoBusqueda?.nameTipoBusqueda ?? ""}
                     variant="outlined"
@@ -93,7 +96,7 @@ const TipoBusquedaPage = () => {
                       },
                       minWidth: 300,
                     }}
-
+                      
                   />
                 </div>
                 <div className="flex flex-col pl-28 pt-1">

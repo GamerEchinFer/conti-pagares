@@ -9,6 +9,7 @@ import {
     EtiquetaVariableResponse,
     ExtractosServiceDescargarArchivo,
     GuardarDocumentoRequest,                
+    GuardarHistorialUsuarioRequest,                
     HadoopDirectoRequest,
     HadoopDirectoResponse,
     NumeroLegajo,
@@ -101,7 +102,15 @@ export const postGuardarDocumento = async (body: GuardarDocumentoRequest) => {
     console.log(data);
     
     return data;
-} 
+}
+
+export const postGuardarHistorialUsuario = async (body: GuardarHistorialUsuarioRequest) => {
+    const URL =`/guardar-historial-usuario`;
+    const {data} = await apmApi.post<GuardarHistorialUsuarioRequest, AxiosResponse<undefined>>(URL, body, {headers: { config: 'KeycloakHeaders'}});
+    console.log(data);
+
+    return data;
+}
 
 export async function getNumeroLegajo(nextSequence: number) {
     const URL = `/numero-legajo`;
