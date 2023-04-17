@@ -14,7 +14,7 @@ import React, {useState, ChangeEvent} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { theme } from '../../../theme/Theme';
 import { capitalize } from '../../helpers/capitalize';
-import { EtiquetaVariableResponse } from '../../interfaces/interfaces';
+import { EtiquetaVariableBody, EtiquetaVariableResponse } from '../../interfaces/interfaces';
 import { etiquetaVariableActions } from '../../redux/slices/etiquetaVariable.slice';
 import { hadoopDirectoActions } from '../../redux/slices/hadoop.slice';
 import ButtonConfirmar from '../Buttons/ButtonConfirmar';
@@ -37,6 +37,7 @@ const filterPdf = () => ({
   cut_to: "",
 })
 
+
 export default function ModalPDFComponent({item}: ModalPDFComponentProps) {
   const dispatch = useDispatch();
   const documento = useDocumento();
@@ -54,7 +55,7 @@ export default function ModalPDFComponent({item}: ModalPDFComponentProps) {
   useEffect(() => {
     confirmCutPdf()    
   }, [debouncedValue])
-
+  
   dayjs.locale("es");
   const date = dayjs().format("DD/MMMM/YYYY");
   // const date = dayjs().locale("es").format("DD/MMMM/YYYY");
@@ -119,8 +120,7 @@ export default function ModalPDFComponent({item}: ModalPDFComponentProps) {
     //   convertirPDF: true,
     //   path: "digitalizacion_documento\\gdi\\documento"
     // }))
-    
-    dispatch(etiquetaVariableActions.etiquetaVariableCloseAllModals());   
+    dispatch(etiquetaVariableActions.etiquetaVariableCloseAllModals());
   }
 
 

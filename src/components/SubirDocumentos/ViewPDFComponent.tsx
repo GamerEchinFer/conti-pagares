@@ -66,27 +66,27 @@ const ViewPDFComponent = ({item}: ModalPDFComponentProps) => {
 
     
 
-    const confirm = async () => {
-        const base64 = item?.base64 ?? ""
+//     const confirm = async () => {
+//         const base64 = item?.base64 ?? ""
 
-      if (!base64) return  
-      const pdfConfig = 'data:application/pdf;base64,${base64}'
-      const buffer = Buffer.from(pdfConfig.substring(pdfConfig.indexOf(',') + 1))
+//       if (!base64) return  
+//       const pdfConfig = 'data:application/pdf;base64,${base64}'
+//       const buffer = Buffer.from(pdfConfig.substring(pdfConfig.indexOf(',') + 1))
 
-      try {              
-        const download = await getDescargarHadoopDirecto(downFile)
-        const viewPdf = `data:application/pdf;base64,${download?.data?.loc ?? ""}` 
-        setDownload(viewPdf)           
-        // console.log(viewPdf)
-        const el = document.createElement("a")
-        el.href = viewPdf
-        el.download = fileName
-        el.click()
+//       try {              
+//         const download = await getDescargarHadoopDirecto(downFile)
+//         const viewPdf = `data:application/pdf;base64,${download?.data?.loc ?? ""}` 
+//         setDownload(viewPdf)           
+//         // console.log(viewPdf)
+//         const el = document.createElement("a")
+//         el.href = viewPdf
+//         el.download = fileName
+//         el.click()
         
-    } catch (err: any) {
-        console.log(err);        
-    }
-}
+//     } catch (err: any) {
+//         console.log(err);        
+//     }
+// }
 
   return (
     <Dialog

@@ -15,6 +15,7 @@ import ErrorBar from '../components/shared/ErrorBar'
 import { useEffect } from 'react';
 import { postAutenticarServicio } from '../api/keycloakApi'
 import { keycloakHeaders } from '../constants/constants'
+import { getTipoBusqueda } from '../api/apmDesaApi'
 
 const expires_in = 300
 

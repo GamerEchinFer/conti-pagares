@@ -1,6 +1,6 @@
 import { Box, Grid, TextField, useMediaQuery } from "@mui/material"
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getTipoBusquedaById } from "../../api/gdiApi";
 import SearchbarButton from "../../components/Buttons/SearchbarButton";
 import RadioButtonOption from "../../components/RadioButtonOption";
@@ -40,8 +40,8 @@ const TipoBusquedaPage = () => {
   const router = useRouter();
 
   useMount(() => {
-      dispatch(getProductosAction());
-      dispatch(busquedaActions.busquedaRequest());
+      // dispatch(getProductosAction());
+      // dispatch(busquedaActions.busquedaRequest());
       dispatch(clienteDatosActions.clienteDatosReset());
       dispatch(clienteDocumentoActions.clienteDocumentoReset()); 
       /*postAutenticarServicio(keycloakHeaders).then((value) => {    
@@ -57,6 +57,12 @@ const TipoBusquedaPage = () => {
       setTipoBusqueda(response.data)
     })
   }, [tipoBusquedaSelected]);*/
+
+  const focusUsernameInputField = (input: any )=> {
+    if (input) {
+      setTimeout(() => {input.focus()}, 100);
+    }
+  };
     
   return (
     <>
@@ -79,6 +85,8 @@ const TipoBusquedaPage = () => {
                   <TextField
                     size="small" 
                     id="outlined-basic"
+                    autoFocus={true}
+                    ref={focusUsernameInputField}              
                     value={codigoCliente ?? clienteDocumento}
                     onChange={(e) => {
                       setCodigoCliente(e.target.value); 
@@ -94,7 +102,7 @@ const TipoBusquedaPage = () => {
                         // paddingLeft: (theme) => theme.spacing(2.5),
                         borderRadius: '5px',
                       },
-                      minWidth: 300,
+                      minWidth: 300
                     }}
                       
                   />

@@ -75,6 +75,7 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
           size: files[Number(0)].size / 1000000,
           filename: files[Number(0)].name ?? ""                  
         }));
+        
       })                                         
     }
     reader.onloadend = function() {
@@ -91,7 +92,7 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
     // Descargar el documento
     //TODO: SWITCH PARA HADOOP Y SOAP
     const rutaHadoop = datosAdicionales[0].rutaHadoop
-    const descripcion = datosAdicionales[0].descripcion
+    // const descripcion = datosAdicionales[0].descripcion
 
     const download = await getDescargarHadoopDirecto(rutaHadoop)
 
@@ -101,13 +102,13 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
       return;
     }
 
-    const viewPdf = `data:application/pdf;base64,${download?.data?.loc ?? ""}` 
+    const viewPdf = `${download?.data?.loc ?? ""}` 
     setDownload(viewPdf)
     console.log("helloooo",viewPdf);
-    const el = document.createElement("a")
-    el.href = viewPdf
-    el.download = descripcion
-    el.click()
+    // const el = document.createElement("a")
+    // el.href = viewPdf
+    // el.download = descripcion
+    // el.click()
     
     dispatch(etiquetaVariableActions.etiquetaVariableUpdateFileModified({
       idTipoDocumento: item.idTipoDocumento,
