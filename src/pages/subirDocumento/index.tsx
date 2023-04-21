@@ -159,7 +159,7 @@ const SubirDocumentoPage = ()  => {
     }
 
     const handleCloseAddModal = () => {
-        setOpenAddModal(false)
+        setOpenAddModal(false);
     }
 
     return (

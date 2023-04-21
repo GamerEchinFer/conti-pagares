@@ -73,11 +73,10 @@ const etiquetaVariableSlice = createSlice({
         etiquetaVariableUpdateFileModified(state, action:PayloadAction<EtiquetaVariableUpdateFileModified>) {
             state.response = state.response.map(item => {
                 if (Number(item.idTipoDocumento) === Number(action.payload.idTipoDocumento)) {                                                                                
-                    item.base64Modified = action.payload.base64Modified ?? 0
+                    item.base64Modified = action.payload.base64Modified
                     item.totalPagesModified = action.payload.totalPagesModified ?? 0,
                     item.sizeModified = action.payload.sizeModified ?? 0
                 }
-
                 return item;
             })
         },

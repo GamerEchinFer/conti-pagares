@@ -41,7 +41,7 @@ const TipoBusquedaPage = () => {
 
   useMount(() => {
       // dispatch(getProductosAction());
-      // dispatch(busquedaActions.busquedaRequest());
+      dispatch(busquedaActions.busquedaRequest());
       dispatch(clienteDatosActions.clienteDatosReset());
       dispatch(clienteDocumentoActions.clienteDocumentoReset()); 
       /*postAutenticarServicio(keycloakHeaders).then((value) => {    

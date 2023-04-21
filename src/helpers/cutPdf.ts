@@ -1,11 +1,14 @@
 import * as pdfjsLib from 'pdf-lib'
 
-export const cutPdf = async (base64: string, cut_from: number, cut_to: number, totalPages: number, totalPagesModified: number, sizeModified: number) => {    
-    const pdfDoc = await pdfjsLib.PDFDocument.load(base64)
-
-    // Cortar 
-
-    // TODO - Si el documento solo tiene una pagina
+export const cutPdf = async (
+    base64: string,
+    cut_from: number,
+    cut_to: number,
+    totalPages: number,
+    totalPagesModified: number,
+    sizeModified: number
+    ) => {    
+    const pdfDoc = await pdfjsLib.PDFDocument.load(base64);
 
     // Si el documento tiene mas de una pagina    
     // Recorre al revez porque tiene que eliminarse desde el ultimo, realiza el corte de las paginas seleccionadas       
@@ -19,9 +22,6 @@ export const cutPdf = async (base64: string, cut_from: number, cut_to: number, t
         console.log(pdfDoc)
     }
 
-
-    // Tenemos que volver a convertir de bytes a base64 y guardar en el base64Modfied
-    // Guardar el documento
     const pdfBytes = await pdfDoc.save()
     return Buffer.from(pdfBytes).toString('base64');    
 };

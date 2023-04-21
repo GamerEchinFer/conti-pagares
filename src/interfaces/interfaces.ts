@@ -48,7 +48,6 @@ export interface EtiquetaVariable {
 export type EtiquetaVariableBody = {[key: string]: EtiquetaVariable}
 
 export interface EtiquetaVariableResponse {
-    // idTipoDocumento: number;
     idTipoDocumento:    string;
     tipoDocumento:      string;
     periodicidad:       number;

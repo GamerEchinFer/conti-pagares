@@ -7,8 +7,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import * as pdfjsLib from 'pdf-lib';
 import * as React from 'react';
-import { useRef, useState, ChangeEvent, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useRef, useState, ChangeEvent, useEffect, DragEvent } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { theme } from '../../../theme/Theme';
 import { getDescargarHadoopDirecto } from '../../api/apmDesaApi';
 import { capitalize } from '../../helpers/capitalize';
@@ -23,6 +23,10 @@ import { LightTooltip } from '../shared/LightTooltip';
 import FileUploadIconComponent from './FileUploadIconComponent';
 import ViewPDFComponent from './ViewPDFComponent';
 import dayjs from 'dayjs';
+import { useMount } from 'ahooks';
+import { RootState } from '../../redux/store';
+import RecargarDocIcon from './RecargarDocIcon';
+import ModalPDFComponent from './ModalPDFComponent';
 
 type DialogPeriodoComponentProps = {
   item: EtiquetaVariableResponse
@@ -41,8 +45,44 @@ export default function DialogPeriodoComponent({item}: DialogPeriodoComponentPro
   
   const fullScreen = useMediaQuery(theme.breakpoints.down('xl'));
   
-  const [ openDialogSecondary, setOpenDialogSecondary] = useState(false);
+  const [download, setDownload] = useState("");
 
+  const files = useSelector((state: RootState) => state.hadoopDirecto.files);
+
+  const etiquetasVariables = useSelector((state: RootState) => state.etiquetaVariable.response);    
+
+  useMount(() => {                
+    hadoopDirectoActions.setFiles(null);
+  });
+  
+
+  const onDrop = (event: DragEvent<HTMLDivElement>, {idTipoDocumento, periodicidad, tieneDocumento}: EtiquetaVariableResponse) => {
+
+    if (tieneDocumento) return;
+    const idx = event.dataTransfer.getData("file");         
+
+    const reader = new FileReader();
+    reader.readAsDataURL(files[Number(idx)]);
+
+    reader.onload = function () {
+      pdfjsLib.PDFDocument.load( reader.result?.toString() ?? "").then((pdfDoc) => {
+        console.log(files[Number(idx)].size)
+        dispatch(etiquetaVariableActions.etiquetaVariableUpdateFile({
+          idTipoDocumento, 
+          file: files[Number(idx)], 
+          base64: reader.result?.toString() ?? "",
+          base64Modified: reader.result?.toString() ?? "", 
+          totalPages: pdfDoc.getPageCount(),
+          size: files[Number(idx)].size / 1000000,
+        }));
+      })                                         
+    }
+  }
+
+  const allowDrop = (event: any) => {
+    event.preventDefault();
+  }
+  
   const handleDrop = (e:any) => {
     e.prevent.default();
     console.log(Array.from(e.dataTransfer.files));
@@ -60,7 +100,7 @@ export default function DialogPeriodoComponent({item}: DialogPeriodoComponentPro
   };
 
   const handleFile = (files: any) => {
-    if (!files) return
+    if (!files && files.length === 0) return;
 
     dispatch(hadoopDirectoActions.setFiles(files));
 
@@ -80,6 +120,9 @@ export default function DialogPeriodoComponent({item}: DialogPeriodoComponentPro
         }));
       })
     }
+    reader.onloadend = function() {
+      console.log("Error de ejecución")
+    };
   }
 
 const meses: {[key: number]: JSX.Element} = {
@@ -97,34 +140,28 @@ const meses: {[key: number]: JSX.Element} = {
   11: <span>Diciembre</span>,
 }
 
-  const { PDFDocument } = pdfjsLib;
-
-  let pdfDoc;
-
   const handleClickTieneDocumento = async ({datosAdicionales}: EtiquetaVariableResponse) => {
     if (!datosAdicionales || !Array.isArray(datosAdicionales) || !datosAdicionales.length ) return;
     
-    const rutaHadoop =  datosAdicionales[0].rutaHadoop
-    const descripcion = datosAdicionales[0].descripcion
+    const rutaHadoop =  datosAdicionales[0].rutaHadoop;
 
-    const download = await getDescargarHadoopDirecto(rutaHadoop)
+    const download = await getDescargarHadoopDirecto(rutaHadoop);
 
-    const viewPdf = `data:application/pdf;base64,${download?.data?.loc ?? ""}` 
-    const el = document.createElement("a");
-      el.href = viewPdf;
-      el.click();
+    if (!download || !download.data || !download.data.loc) {
+      // Alerta
+      console.log("El download.data.loc no existe: ", download);      
+      return;
+    }
 
-      dispatch(etiquetaVariableActions.etiquetaVariableUpdateFileModified({
-        idTipoDocumento: item.idTipoDocumento,
-        base64Modified: parsePdfBase64(viewPdf as string),
-        totalPagesModified: 1,
-        sizeModified: 1000
-      }))
+    const viewPdf = `${download?.data?.loc ?? ""}`;
+    setDownload(viewPdf);
 
-    const existingPdfBytes = await fetch(viewPdf).then((res) => res.arrayBuffer());
-
-    return PDFDocument.load(existingPdfBytes);
-    
+    dispatch(etiquetaVariableActions.etiquetaVariableUpdateFileModified({
+      idTipoDocumento: item.idTipoDocumento,
+      base64Modified: parsePdfBase64(viewPdf as string),
+      totalPagesModified: 1,
+      sizeModified: files[Number(0)].size / 1000000
+    }));
   }
 
   const openViewPdfModal = (item: EtiquetaVariableResponse) => {    
@@ -132,158 +169,141 @@ const meses: {[key: number]: JSX.Element} = {
     dispatch(etiquetaVariableActions.setOpenModalView({idTipoDocumento: item.idTipoDocumento, openModalView: true}))
   }
 
-  const [inputPeriodo, setInputPeriodo] = useState("");
+  const [mesPeriodos, setmesPeriodos] = useState<number[]>([]);
+  const [periodo, setPeriodo] = useState("6");
+  const inputRef = useRef<any>();
 
-  // const handlePeriodoInput = ({target}: ChangeEvent<HTMLInputElement>) => {
-  //   if (Number(target.value) >= 6) {
-  //     setInputPeriodo(target.value)
-  //   }
-  // }
+  useEffect(() => {
+    generateMesPeriodos(6);
+  }, []);
 
-  const [mesPeriodos, setmesPeriodos] = useState<number[]>([])
-    const [periodo, setPeriodo] = useState("6")
-    const inputRef = useRef<any>()
+  function generateMesPeriodos(valuePeriodo: number) {
+    const items: number[] = [];
+    const monthActual = dayjs().month();
+    for (let i = monthActual; i > monthActual - valuePeriodo; i--) {
+      const nuevoMonth = dayjs().month(i).month();
+      items.push(nuevoMonth);
+    }
+    setmesPeriodos([...items]);
+  }
 
-    useEffect(() => {
-        generateMesPeriodos(6)
-    }, [])
-
-    function generateMesPeriodos(valuePeriodo: number) {
-        const items: number[] = []
-        const monthActual = dayjs().month()
-        for (let i = monthActual; i > monthActual - valuePeriodo; i--) {
-            const nuevoMonth = dayjs().month(i).month()
-            items.push(nuevoMonth)
-        }
-
-        setmesPeriodos([...items])
+  const handlePeriodoInput = ({target}: ChangeEvent<HTMLInputElement>) => {
+    if (Number(target.value) >= 6  || !Number(target.value)) {
+      setPeriodo(target.value) // Se actualiza despues recien de la funcion
+      // Hasta donde se puede retroceder
     }
 
-    const handlePeriodoInput = ({target}: ChangeEvent<HTMLInputElement>) => {
-        if (Number(target.value) >= 6  || !Number(target.value)) {
-          setPeriodo(target.value) // Se actualiza despues recien de la funcion
-          // Hasta donde se puede retroceder
+    if (Number(target.value) >= 6) {
+      generateMesPeriodos(Number(target.value))
+    }
+  }
 
-        }
+  const handleModalDocument = (item: EtiquetaVariableResponse) => {
+    
+  }
 
-        if (Number(target.value) >= 6) {
-            generateMesPeriodos(Number(target.value))
-        }
-      }
   return (
-    <>        
-      <Dialog
-        fullScreen={fullScreen}
-        open={!!item.openModalPeriodo}
-        onClose={handleClose}
-        aria-labelledby="responsive-dialog-title"
-        PaperProps={{ sx: { top: 10, m: 0 , maxWidth: "40%", height: "80%" }}}
+  <>        
+    <Dialog
+      fullScreen={fullScreen}
+      open={!!item.openModalPeriodo}
+      onClose={handleClose}
+      aria-labelledby="responsive-dialog-title"
+      PaperProps={{ sx: { top: 10, m: 0 , maxWidth: "40%", height: "80%" }}}
+    >
+      <DialogActions>
+        <ButtonIconClose autoFocus={true} onClick={handleClose} />
+      </DialogActions>
+      <DialogTitle 
+        className="flex justify-center"
+        style={{color: "#1D428A", fontWeight:"400px", fontSize:"16px"}}
+        sx={{paddingTop: "15px" }}
       >
-       <DialogActions>
-          <ButtonIconClose autoFocus={true} onClick={handleClose} />
-        </DialogActions>
-       <DialogTitle 
-          className="flex justify-center"
-          style={{color: "#1D428A", fontWeight:"400px", fontSize:"16px"}}
-          sx={{paddingTop: "15px" }}
+        Elegir la cantidad de documentos a adjuntar
+        <Stack
+          component="form"
+          sx={{ width: '7ch' }}
+          noValidate
+          autoComplete="off"
         >
-          Elegir la cantidad de documentos a adjuntar
-          <Stack
-            component="form"
-            sx={{ width: '7ch' }}
-            noValidate
-            autoComplete="off"
-          >
-            <TextField
-              id="outlined-number"
-              className="periodicidad"
-              onFocus={() => inputRef.current.select()} ref={inputRef} value={periodo} onChange={handlePeriodoInput}
-              type={"number"}
-              size="small"
-              InputLabelProps={{
-              shrink: true,
-              }}
-              variant="outlined"
-            />
-          </Stack>
-        </DialogTitle>
+          <TextField
+            id="outlined-number"
+            className="periodicidad"
+            onFocus={() => inputRef.current.select()} ref={inputRef} value={periodo} onChange={handlePeriodoInput}
+            type={"number"}
+            size="small"
+            InputLabelProps={{
+            shrink: true,
+            }}
+            variant="outlined"
+          />
+        </Stack>
+      </DialogTitle>
 
-        <DialogContent>
-          <DialogContentText>
-            <Grid item xs={12} md={6}>
-              {/* <ListItem
-                component="div"
-                disablePadding
-                className="pb-2 pt-2"
-                secondaryAction={
-                  item.tieneDocumento 
+      <DialogContent>
+        <DialogContentText>
+          <Grid item xs={12} md={6}>
+            <ListItemText primary={
+              mesPeriodos.map((idx) => {
+              return (
+              <>
+                <ListItem
+                  component="div"
+                  disablePadding
+                  className="pb-2 pt-2"
+                  secondaryAction={
+                    item.tieneDocumento
                     ? 
-                    <RecargarDocIcon onClick={() => inputRef.current.click()}  />: null                        
-                    // : <FileUploadIconComponent onClick={() => inputRef.current.click()} />
-                }
-                > */}
-                <ListItemText
-                  // className="pr-2"
-                  primary={item.tieneDocumento
-                  ? (
-                    <>
-                      <LightTooltip disableTouchListener title="Visualizar archivo cargado" arrow>
-                        <button style={buttonStyle(item)} onClick={() => openViewPdfModal(item)}>                  
-                          {(capitalize(`${item.tipoDocumento}`))}                      
-                        </button>
-                      </LightTooltip>
-                    </>
-                  ) : capitalize(`${item.filename}`)
-                  // ) : null
-                }
-                  sx={{fontSize:"12px", color:"#1D428A", fontWeight:"400"}}
-                />
-                
-                <ListItemText primary={
-                   mesPeriodos.map((idx) => {
-                    return (
-                    <>
-                      <ListItem key={idx}>
-                        <ListItem>
-                          {idx}
-                        </ListItem>
-                        <ListItem>{meses[idx]}</ListItem>
-                        <FileUploadIconComponent onClick={() => inputRef.current.click()} />
-                      </ListItem>
-                      <Divider />
-                    </>
-                    )
-                  })
-                } />
-                
-              {/* </ListItem> */}
-              
-              {
-                !archives && (
-                  <div
-                    onDragOver={handleDragOver}
-                    onDrop={handleDrop}>
-                      <input
-                        type="file"
-                        // multiple solo en casos de selección multiple           
-                        onChange={(event) => handleFile(event.target.files)}
-                        hidden
-                        ref={inputRef}
-                        // Only PDF
-                        accept=".pdf" 
-                      />
-                  </div>
+                    <RecargarDocIcon onClick={() => inputRef.current.click()} />
+                    :
+                    <FileUploadIconComponent 
+                      onClick={() => inputRef.current.click()} />
+                  }
+                  >
+                  <ListItem>
+                    {idx} 
+                    <LightTooltip disableTouchListener title="Visualizar archivo cargado" arrow>
+                    <button style={buttonStyle(item)} onClick={() => openViewPdfModal(item)}>
+                    {capitalize(`${item.filename}`)}
+                      {/* {(capitalize(`${item.tipoDocumento}`))}                       */}
+                    </button>
+                  </LightTooltip>
+                  </ListItem>
+                  <ListItem>{meses[idx]}</ListItem>
+                </ListItem>
+                <Divider />
+              </>
                 )
-              }
-              <ViewPDFComponent item={item} />
-            </Grid>
-          </DialogContentText>
-        </DialogContent>
-        <div className="flex justify-center gap-4 pb-16">
-          <BackButton onClick={handleClose} />
-          <ButtonCargar onClick={handleClose} />
-        </div>
-      </Dialog>
-    </>
+              })
+            } />            
+            {
+              !archives && (
+                <div
+                  onDragOver={handleDragOver}
+                  onDrop={handleDrop}
+                >
+                    <input
+                      type="file"
+                      // multiple solo en casos de selección multiple           
+                      onChange={(event) => handleFile(event.target.files)}
+                      hidden
+                      ref={inputRef}
+                      // Only PDF
+                      accept=".pdf" 
+                    />
+                </div>
+              )
+            }
+            <ViewPDFComponent item={item} />
+            <ModalPDFComponent item={item} />
+          </Grid>
+        </DialogContentText>
+      </DialogContent>
+      <div className="flex justify-center gap-4 pb-16">
+        <BackButton onClick={handleClose} />
+        <ButtonCargar onClick={handleClose} />
+      </div>
+    </Dialog>
+  </>
   );
 }

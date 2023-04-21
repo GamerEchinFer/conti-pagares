@@ -1,21 +1,16 @@
 import { useMount } from 'ahooks';
-import { Console } from 'console';
 import moment from 'moment';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { postAlzarHadoopDirecto, postGuardarDocumento } from '../../../api/apmDesaApi';
 import { base64ToFile } from '../../../helpers/base64ToFile';
 import { storage } from '../../../helpers/storage';
 import { EtiquetaVariableResponse, GuardarDocumentoRequest } from '../../../interfaces/interfaces';
 import { RootState } from '../../../redux/store';
 
-
 export const useDocumento = () => {
-    const dispatch = useDispatch();
-    const etiquetaVariableBody = useSelector((state: RootState) => state.etiquetaVariable.etiquetaVariableBody);
     const clienteDatos = useSelector((state: RootState) => state.clienteDatos.items);
     const numeroDeLegajo = useSelector((state: RootState) => state.numeroLegajo.items);    
-    const saveDoc = useSelector((state: RootState) => state.guardarDocumento.response);
 
     const [body, setBody] = useState<any>({});
 
@@ -24,12 +19,11 @@ export const useDocumento = () => {
         setBody(data)                    
     })    
 
-    const guardarDocumento = async (item: EtiquetaVariableResponse, fechaEmision: any) => {
+    const guardarDocumento = async (item: EtiquetaVariableResponse, fechaEmision: any, operacion: string) => {
         const file = await base64ToFile(item?.base64Modified ?? "", "test");  
         const formData = new FormData();        
         formData.append("file", file);
         const resHadoop = await postAlzarHadoopDirecto(formData, "/datalake/Continental-desa", false, 65356);        
-        
         
         let newFech = moment(fechaEmision).format('DDMMYYYY');
         
@@ -45,16 +39,10 @@ export const useDocumento = () => {
             hadoop:LOC,           
             hadoopPath: LOC,
             codigoUsuario:"PER",
-            // codigoProducto: Number(etiquetaVariableBody?.id_producto.valor ?? "0") , // no reconoce
-            codigoProducto: Number(body?.id_producto.valor ?? "0") , // no reconoce
-            // // codigoProducto: Number(10),
-            // codigoSubproducto: Number(etiquetaVariableBody?.id_subproducto.valor ?? "0"), // no reconoce
+            codigoProducto: Number(body?.id_producto.valor ?? "0") ,
             codigoSubproducto: Number(body?.id_subproducto.valor ?? "0"),
-            operacion: "1393939"
-        }    
-        
-        
-        
+            operacion: operacion
+        }
         const res = await postGuardarDocumento(dataForPost)
         return res
     }

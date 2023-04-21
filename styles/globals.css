@@ -248,6 +248,15 @@ svg:hover {
   text-align: center;
 }
 
+.inputInter {
+  background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  border: 1px solid #DDDDDD;
+  border-radius: 4px;
+  opacity: 1;
+  width: 100%;
+}
+
 .btnFiltro {
   font-family: 'ContiSans' !important;
   padding: 6px 16px 4px !important;

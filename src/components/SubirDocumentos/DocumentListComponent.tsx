@@ -20,12 +20,11 @@ import { useMount } from 'ahooks';
 
 type DocumentListComponentProps = {
   item: EtiquetaVariableResponse
-}
+};
 
 const buttonStyle = (item: EtiquetaVariableResponse) =>  ({
   fontSize:"20px", color: item.tieneDocumento ? "#BEC400" : "#1D428A", fontWeight:"400"
-})
-
+});
 
 const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
   // const etiquetasVariables = useSelector((state: RootState) => state.etiquetaVariable.response);
@@ -57,14 +56,14 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
   const handleFile = (files: any) => {
     
     // Si no existe archivo y si no hay archivos en el array, cancelar subida
-    if (!files && files.length === 0) return
+    if (!files && files.length === 0) return;
 
-    dispatch(hadoopDirectoActions.setFiles(files))
+    dispatch(hadoopDirectoActions.setFiles(files));
     
     const reader = new FileReader();
-    reader.readAsDataURL(files[Number(0)]) 
+    reader.readAsDataURL(files[Number(0)]); 
+    
     reader.onload = function () {
-
       pdfjsLib.PDFDocument.load( reader.result?.toString() ?? "").then((pdfDoc) => {          
         dispatch(etiquetaVariableActions.etiquetaVariableUpdateFile({
           idTipoDocumento: item.idTipoDocumento, 
@@ -75,7 +74,6 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
           size: files[Number(0)].size / 1000000,
           filename: files[Number(0)].name ?? ""                  
         }));
-        
       })                                         
     }
     reader.onloadend = function() {
@@ -83,7 +81,6 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
     };
 
   }
-
   
   const handleClickTieneDocumento = async ({datosAdicionales}: EtiquetaVariableResponse) => {
     // Cuando tiene documento
@@ -91,10 +88,9 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
 
     // Descargar el documento
     //TODO: SWITCH PARA HADOOP Y SOAP
-    const rutaHadoop = datosAdicionales[0].rutaHadoop
-    // const descripcion = datosAdicionales[0].descripcion
+    const rutaHadoop = datosAdicionales[0].rutaHadoop;
 
-    const download = await getDescargarHadoopDirecto(rutaHadoop)
+    const download = await getDescargarHadoopDirecto(rutaHadoop);
 
     if (!download || !download.data || !download.data.loc) {
       // Alerta
@@ -103,28 +99,16 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
     }
 
     const viewPdf = `${download?.data?.loc ?? ""}` 
-    setDownload(viewPdf)
-    console.log("helloooo",viewPdf);
-    // const el = document.createElement("a")
-    // el.href = viewPdf
-    // el.download = descripcion
-    // el.click()
+    setDownload(viewPdf);
     
     dispatch(etiquetaVariableActions.etiquetaVariableUpdateFileModified({
       idTipoDocumento: item.idTipoDocumento,
       base64Modified: parsePdfBase64(viewPdf as string),
-      totalPagesModified: 1, 
-      sizeModified: 1000
-    })) 
+      totalPagesModified: 1,
+      sizeModified: files[Number(0)].size / 1000000
+    }))
+    
   }
-
-  const handleClickModificarDoc = () => {
-
-  }
-  
-  const handleClickOpen = () => {
-    router.push('/dialog-components');
-  } 
 
   const handleClickViewDoc = (event: React.MouseEvent<HTMLElement>) => {
     console.log(event.target);
