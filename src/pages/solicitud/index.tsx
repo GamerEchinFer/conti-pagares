@@ -1,5 +1,5 @@
 import List from '@mui/material/List';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {useMount} from 'ahooks'
 // import { getAllSolicitudClienteAction } from '../../redux/thunks/solicitud.thunks';
@@ -35,18 +35,21 @@ function SolicitudPage() {
   const solicitudes = useSelector((state: RootState) => state.solicitud.items)
   const solicitud = useSelector((state: RootState) => state.solicitud.solicitudSelected)
   const page = useSelector((state: RootState) => state.solicitud.page)
+  const auth = useSelector((state: RootState) => state.authGDI.gdiAuth);
 
   // refrescar cada página con un request y un  dispatch de definición de esta página.
-  useMount(() => {
+  useEffect(() => {
     initialize();
-    dispatch(solicitudActions.solicitudRequest())
+    if (auth && auth.access_token) {
+      dispatch(solicitudActions.solicitudRequest())
+    }    
     /*postAutenticarServicio(keycloakHeaders).then((value) => {            
       localStorage.setItem("gdi-auth", JSON.stringify(value));
       dispatch(getSolicitudClienteAction())
     }).finally(() => {
         
     })*/
-  })
+  }, [auth])
 
 
   const initialize = () => {

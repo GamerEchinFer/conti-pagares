@@ -1,7 +1,5 @@
-import DescriptionIcon from '@mui/icons-material/Description';
-import { ListItemIcon } from '@mui/material';
-import Documento from '../../assets/svg/Documento.svg' 
 import Image from 'next/image';
+import Documento from '../../assets/svg/Documento.svg';
 
 type props = {
   imagen? : string;

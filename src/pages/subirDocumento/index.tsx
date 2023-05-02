@@ -1,25 +1,25 @@
+import { Box } from "@mui/material";
+import { useMount, useUnmount } from 'ahooks';
 import { useRouter } from "next/router";
-import { useSelector, useDispatch } from 'react-redux';
+import * as pdfjsLib from 'pdf-lib';
+import { DragEvent, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { postGuardarHistorialUsuario } from "../../api/apmDesaApi";
 import BackButton from "../../components/Buttons/BackButton";
+import ButtonFinalizar from "../../components/Buttons/ButtonFinalizar";
 import AddIconComponent from "../../components/SubirDocumentos/AddIconComponent";
 import DocumentListComponent from "../../components/SubirDocumentos/DocumentListComponent";
 import DragDropComponent from "../../components/SubirDocumentos/DragDropComponent";
 import HeaderDocComponent from "../../components/SubirDocumentos/HeaderDocComponent";
-import { RootState } from "../../redux/store";
-import { DragEvent, useState } from 'react';
-import { etiquetaVariableActions } from '../../redux/slices/etiquetaVariable.slice';
-import { useUnmount, useMount } from 'ahooks';
-import ButtonFinalizar from "../../components/Buttons/ButtonFinalizar";
-import { Condiciones, EtiquetaVariableBody, EtiquetaVariableResponse, GuardarHistorialUsuarioRequest, Parametros } from '../../interfaces/interfaces';
-import { hadoopDirectoActions } from '../../redux/slices/hadoop.slice';
-import { SubirDocumentoProvider } from '../../context/subirDocumento/SubirDocumentoProvider';
-import * as pdfjsLib from 'pdf-lib'
-import { Box } from "@mui/material";
-import { parametroActions } from "../../redux/slices/parametro.slice";
-import { getSolicitudClienteAction } from "../../redux/thunks/solicitud.thunks";
 import ModalAddDocument from "../../components/SubirDocumentos/ModalAddDocument";
-import { postGuardarHistorialUsuario } from "../../api/apmDesaApi";
+import { SubirDocumentoProvider } from '../../context/subirDocumento/SubirDocumentoProvider';
 import { storage } from "../../helpers/storage";
+import { Condiciones, EtiquetaVariableBody, EtiquetaVariableResponse, GuardarHistorialUsuarioRequest, Parametros } from '../../interfaces/interfaces';
+import { etiquetaVariableActions } from '../../redux/slices/etiquetaVariable.slice';
+import { hadoopDirectoActions } from '../../redux/slices/hadoop.slice';
+import { parametroActions } from "../../redux/slices/parametro.slice";
+import { RootState } from "../../redux/store";
+import { getSolicitudClienteAction } from "../../redux/thunks/solicitud.thunks";
 
 const SubirDocumentoPage = ()  => {
 
@@ -28,12 +28,13 @@ const SubirDocumentoPage = ()  => {
     const dispatch = useDispatch();
 
     const etiquetasVariables = useSelector((state: RootState) => state.etiquetaVariable.response);    
+    const etiquetasLoading = useSelector((state: RootState) => state.etiquetaVariable.loading);    
     const clienteDatos = useSelector((state: RootState) => state.clienteDatos.items);
     const page = useSelector((state: RootState) => state.etiquetaVariable.page);
     const [openAddModal, setOpenAddModal] = useState(false);
     const [etiquetaVariableBody, setEtiquetaVariableBody] = useState<any>({});
 
-
+    const [loading, setLoading] = useState(false);
 
     // The Files of redux but cant use in others components
     const files = useSelector((state: RootState) => state.hadoopDirecto.files);
@@ -72,7 +73,7 @@ const SubirDocumentoPage = ()  => {
             router.push('/solicitud');
             dispatch(etiquetaVariableActions.etiquetaVariableReset());
         }
-    }; 
+    }
 
     /*
         {
@@ -99,7 +100,8 @@ const SubirDocumentoPage = ()  => {
         if (!etiquetaVariableBody) {
             return;
         }
-
+        // if(cantidadDocumentosIngresados === cantidadTotalDocumentos) { estado = 1 }
+        
         // Preparar request
         const body: GuardarHistorialUsuarioRequest = {
             codigoCliente: clienteDatos.codigoCliente,
@@ -112,10 +114,12 @@ const SubirDocumentoPage = ()  => {
 
         // Llamar a la api      
         try {                            
-            await postGuardarHistorialUsuario(body)    
+            // if(!loading) {
+            //     setLoading(true);
+            // }
+              await postGuardarHistorialUsuario(body);     
+            //   router.push("/tipoBusqueda"); abrir modal y cerrar abrir el siguiente modal de finalización           
             // Resolver la respuesta            
-            // router.push("/tipoBusqueda");            
-            
         } catch (error) {
             console.log(error)
         }        
@@ -124,7 +128,7 @@ const SubirDocumentoPage = ()  => {
 
     /// En caso de necesitar subir más documentos, insertar lista
     const handleClickAdd = () => {
-        setOpenAddModal(true)
+        setOpenAddModal(true);
     };
 
     const onDrop = (event: DragEvent<HTMLDivElement>, {idTipoDocumento, periodicidad, tieneDocumento}: EtiquetaVariableResponse) => {
@@ -188,11 +192,21 @@ const SubirDocumentoPage = ()  => {
                 </div>
                 <div className="flex flex-row justify-center gap-8 pb-4">
                     <BackButton  onClick={handleClickAtras} />
-                    <ButtonFinalizar onClick={handleClickCargar}/>
+                    <ButtonFinalizar onClick={handleClickCargar} />
+                    {/* {
+                        loading 
+                    ? (
+                        <div className='flex justify-center pt-10 pb-10 w-200'>
+                        <LoadingIcon />
+                        </div>
+                    ) 
+                    : null
+                    }  */}
                 </div>
                 </Box>
             </Box>
             <ModalAddDocument open={openAddModal} onClose={handleCloseAddModal} />
+
         </SubirDocumentoProvider>
     )
 }

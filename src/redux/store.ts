@@ -1,6 +1,5 @@
 import { Action, configureStore, combineReducers } from '@reduxjs/toolkit';
 import thunk, { ThunkAction } from 'redux-thunk';
-import reducer from './reducer';
 import storage from 'redux-persist/lib/storage';
 import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
 import { useDispatch } from 'react-redux';
@@ -24,6 +23,7 @@ import { busqueda } from './slices/busqueda.slice';
 import { documentosUser } from './slices/documentosUser.slice';
 import { documentosUserFiltro } from './slices/documentosUserFiltro';
 import { tipoDocumentoHistorico } from './slices/documentoHistorico.slice';
+import authGDI from "./slices/auth/auth-gdi.slice";
 
 const persistConfig = {
   key: 'root',
@@ -50,7 +50,8 @@ const combinedReducers = combineReducers({
   busqueda: busqueda,
   documentosUser: documentosUser,
   documentosUserFiltro,
-  tipoDocumentoHistorico
+  tipoDocumentoHistorico,
+  authGDI
 })
 
 export type OurStore = ReturnType<typeof combineReducers>

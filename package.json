@@ -27,6 +27,7 @@
     "dayjs": "^1.11.7",
     "formik": "^2.2.9",
     "keycloak-js": "^20.0.2",
+    "lottie-react": "^2.4.0",
     "moment": "^2.29.4",
     "next": "13.0.1",
     "next-redux-wrapper": "^7.0.5",

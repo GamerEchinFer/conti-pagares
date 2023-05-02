@@ -2,7 +2,7 @@ import Stack from '@mui/material/Stack';
 import { Card, CardContent, Typography } from '@mui/material';
 import { useState } from 'react'
 import MoreViewButton from '../Buttons/MoreViewButton';
-import CardSolicitudEnCuso from '../SolicitudEnCurso/CardSolicitudEnCuso';
+import CardSolicitudEnCuso from '../SolicitudEnCurso/CardSolicitudEnCurso';
 import ButtonVerSolicitud from '../Buttons/ButtonVerSolicitud';
 import ArrowIconBack from '../ArrowIconsComponent/ArrowIconBack';
 import { useSolicitud } from '../../hooks/useSolicitud';

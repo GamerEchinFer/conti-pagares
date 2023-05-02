@@ -1,26 +1,21 @@
-import { Box, Grid, TextField, useMediaQuery } from "@mui/material"
+import { Box, Grid, TextField, useMediaQuery } from "@mui/material";
 import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
-import { getTipoBusquedaById } from "../../api/gdiApi";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { theme } from "../../../theme/Theme";
 import SearchbarButton from "../../components/Buttons/SearchbarButton";
+import DatosPersonales from '../../components/DatosPersonales/DatosPersonales';
 import RadioButtonOption from "../../components/RadioButtonOption";
 import TBBodyPrincipal from "../../components/TipoBusqueda/TBBodyPrincipal";
 import GDITitulosComponent from "../../components/TituloySubtitulo/GDITitulosComponent";
+import LoadingIcon from "../../components/shared/LoadingIcon";
 import { TipoBusqueda } from '../../interfaces/interfaces';
-import styles from './TipoBusqueda.module.css';
-import { theme } from "../../../theme/Theme";
-import { useDispatch, useSelector } from 'react-redux';
+import { busquedaActions } from "../../redux/slices/busqueda.slice";
 import { clienteDatosActions } from '../../redux/slices/clienteDatos.slice';
-import { getClienteDatosAction } from '../../redux/thunks/clienteDatos.thunks';
-import { useMount } from 'ahooks';
-import { postAutenticarServicio } from "../../api/keycloakApi";
-import { keycloakHeaders } from "../../constants/constants";
 import { clienteDocumentoActions } from "../../redux/slices/clienteDocumento.slice";
 import { RootState } from "../../redux/store";
-import LoadingIcon from "../../components/shared/LoadingIcon";
-import DatosPersonales from '../../components/DatosPersonales/DatosPersonales';
-import { getProductosAction } from "../../redux/thunks/producto.thunks";
-import { busquedaActions } from "../../redux/slices/busqueda.slice";
+import { getClienteDatosAction } from '../../redux/thunks/clienteDatos.thunks';
+import styles from './TipoBusqueda.module.css';
 
 const filtros = ["codigo", "documento"]
 
@@ -28,29 +23,34 @@ const TipoBusquedaPage = () => {
 
   const dispatch = useDispatch()
 
+  
+
   const [tipoBusqueda, setTipoBusqueda] = useState<TipoBusqueda | null>();
   const [tipoBusquedaSelected, setTipoBusquedaSelected] = useState(1);
   const [codigoCliente, setCodigoCliente] = useState("");
   const [clienteDocumento, setClienteDocumento] = useState("");
   const [nextPage, setNextPage] = useState();
   const mediaQueryPadding = useMediaQuery(theme.breakpoints.down(705));
+  const auth = useSelector((state: RootState) => state.authGDI.gdiAuth);
   const clienteDatos = useSelector((state: RootState) => state.clienteDatos.items);
   const loading = useSelector((state: RootState) => state.clienteDatos.loading);
 
   const router = useRouter();
 
-  useMount(() => {
+  useEffect(() => {
       // dispatch(getProductosAction());
-      dispatch(busquedaActions.busquedaRequest());
-      dispatch(clienteDatosActions.clienteDatosReset());
-      dispatch(clienteDocumentoActions.clienteDocumentoReset()); 
+      // if (auth) {
+        dispatch(busquedaActions.busquedaRequest());
+        dispatch(clienteDatosActions.clienteDatosReset());
+        dispatch(clienteDocumentoActions.clienteDocumentoReset()); 
+      //}      
       /*postAutenticarServicio(keycloakHeaders).then((value) => {    
         debugger;        
         localStorage.setItem("gdi-auth", JSON.stringify(value));      
       }).finally(() => {
 
       })*/
-  })
+  }, [auth])
 
   /*useEffect(() => {
     getTipoBusquedaById(tipoBusquedaSelected).then((response) => {
@@ -63,7 +63,7 @@ const TipoBusquedaPage = () => {
       setTimeout(() => {input.focus()}, 100);
     }
   };
-    
+
   return (
     <>
 			<Grid container pt={3} style={{ justifyContent: 'center' }}>
@@ -91,6 +91,11 @@ const TipoBusquedaPage = () => {
                     onChange={(e) => {
                       setCodigoCliente(e.target.value); 
                       setClienteDocumento(e.target.value);
+                    }}
+                    onKeyPress={(event) => {
+                      if (event.key === 'Enter') {
+                        dispatch(getClienteDatosAction(codigoCliente, filtros[tipoBusquedaSelected - 1]))
+                      }
                     }}
                     // value={tipoBusquedaSelected} 
                     // label={tipoBusqueda?.nameTipoBusqueda ?? ""}

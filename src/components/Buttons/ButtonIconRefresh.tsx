@@ -2,12 +2,12 @@ import { List, ListItemIcon } from '@mui/material'
 import Image from "next/image";
 import Refresh from '../../assets/svg/Refresh.svg'
 
-type ButtonIconRefreshrops = {
+type ButtonIconRefreshprops = {
   onClick: () => void,
   imagen?: string;
 }
 
-const ButtonIconRefresh= ({imagen = Refresh,onClick}:ButtonIconRefreshrops)  => {
+const ButtonIconRefresh= ({imagen = Refresh,onClick}:ButtonIconRefreshprops)  => {
   return (
     <>
       <List

@@ -37,8 +37,7 @@ const reducer = {
     documentosUser,
     extractos,
     documentosUserFiltro,
-    tipoDocumentoHistorico
-
+    tipoDocumentoHistorico,    
 }
 
 export default reducer;

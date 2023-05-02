@@ -125,7 +125,7 @@ function ConsultarDocumentosComponent() {
                 onChange={(e:any) => setQuery(e.target.value)}
               />                             
             </FormControl>
-            <ButtonIconRefresh onClick={handleClickExpand} />
+            <ButtonIconRefresh onClick={() => window.location.reload()} />
             <ButtonExpand onClick={handleClickExpand} />
             <ButtonCollapse onClick={handleClickCollapse} />
           </div>

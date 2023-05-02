@@ -28,6 +28,13 @@ import { RootState } from '../../redux/store';
 import RecargarDocIcon from './RecargarDocIcon';
 import ModalPDFComponent from './ModalPDFComponent';
 
+interface MesPeriodo {
+  file?: any,
+  base64?: string
+  name: string  
+  mes: number
+}
+
 type DialogPeriodoComponentProps = {
   item: EtiquetaVariableResponse
 }
@@ -99,29 +106,49 @@ export default function DialogPeriodoComponent({item}: DialogPeriodoComponentPro
     dispatch(etiquetaVariableActions.etiquetaVariableCloseAllModals());
   };
 
-  const handleFile = (files: any) => {
-    if (!files && files.length === 0) return;
+  const handleFile = (filesInput: any) => {
+    if (!filesInput && Array.isArray(filesInput) && filesInput.length === 0) return;
+    
 
-    dispatch(hadoopDirectoActions.setFiles(files));
+    // dispatch(hadoopDirectoActions.setFiles(filesInput));
+
+    const mesPeriodo = {...mesPeriodoSelected} as MesPeriodo
+
+    setmesPeriodoSelected(undefined)
+    
+    
+    
 
     const reader = new FileReader();
-    reader.readAsDataURL(files[Number(0)]);
+    reader.readAsDataURL(filesInput[0]);
     
     reader.onload = function () {
-      pdfjsLib.PDFDocument.load( reader.result?.toString() ?? "").then((pdfDoc) => {          
-        dispatch(etiquetaVariableActions.etiquetaVariableUpdateFile({
-          idTipoDocumento: item.idTipoDocumento, 
-          file: files[Number(0)], 
-          base64: reader.result?.toString() ?? "",
-          base64Modified: reader.result?.toString() ?? "", 
-          totalPages: pdfDoc.getPageCount(),
-          size: files[Number(0)].size / 1000000,
-          filename: files[Number(0)].name ?? ""                  
-        }));
+      pdfjsLib.PDFDocument.load( reader.result?.toString() ?? "").then((pdfDoc) => { 
+                
+        mesPeriodo.file = filesInput[0]
+        mesPeriodo.name = filesInput[0].name ?? ""
+        mesPeriodo.base64 = reader.result?.toString() ?? ""
+        
+        setmesPeriodos((props) => props.map(item => mesPeriodo.mes === item.mes ? {...mesPeriodo} : item))
+        // dispatch(etiquetaVariableActions.etiquetaVariableUpdateFile({
+        //   idTipoDocumento: item.idTipoDocumento, 
+        //   file: files[Number(0)], 
+        //   base64: reader.result?.toString() ?? "",
+        //   base64Modified: reader.result?.toString() ?? "", 
+        //   totalPages: pdfDoc.getPageCount(),
+        //   size: files[Number(0)].size / 1000000,
+        //   filename: files[Number(0)].name ?? ""                  
+        // }));
+        formRef.current?.reset()
       })
+
+      // inputRef.current.value = ''
+      // inputRef.current.type = ''
+      // inputRef.current.type = 'file'
+      
     }
     reader.onloadend = function() {
-      console.log("Error de ejecución")
+       console.log("Error de ejecución")
     };
   }
 
@@ -164,25 +191,32 @@ const meses: {[key: number]: JSX.Element} = {
     }));
   }
 
-  const openViewPdfModal = (item: EtiquetaVariableResponse) => {    
-    handleClickTieneDocumento(item);    
-    dispatch(etiquetaVariableActions.setOpenModalView({idTipoDocumento: item.idTipoDocumento, openModalView: true}))
+  const openViewPdfModal = (item: MesPeriodo) => {    
+    // handleClickTieneDocumento(item);    
+    // dispatch(etiquetaVariableActions.setOpenModalView({idTipoDocumento: item.idTipoDocumento, openModalView: true}))
   }
 
-  const [mesPeriodos, setmesPeriodos] = useState<number[]>([]);
+  const openModal = (item: EtiquetaVariableResponse) => {    
+    handleClickTieneDocumento(item);    
+    dispatch(etiquetaVariableActions.setOpenModal)
+  }
+
+  const [mesPeriodos, setmesPeriodos] = useState<MesPeriodo[]>([]);
+  const [mesPeriodoSelected, setmesPeriodoSelected] = useState<MesPeriodo | undefined>(undefined);
   const [periodo, setPeriodo] = useState("6");
   const inputRef = useRef<any>();
-
+  const formRef = useRef<HTMLFormElement | null>();
+  
   useEffect(() => {
     generateMesPeriodos(6);
   }, []);
 
   function generateMesPeriodos(valuePeriodo: number) {
-    const items: number[] = [];
+    const items: MesPeriodo[] = [];
     const monthActual = dayjs().month();
     for (let i = monthActual; i > monthActual - valuePeriodo; i--) {
       const nuevoMonth = dayjs().month(i).month();
-      items.push(nuevoMonth);
+      items.push({file: undefined, mes: nuevoMonth, name: ''});
     }
     setmesPeriodos([...items]);
   }
@@ -196,6 +230,11 @@ const meses: {[key: number]: JSX.Element} = {
     if (Number(target.value) >= 6) {
       generateMesPeriodos(Number(target.value))
     }
+  }
+
+  const openFile = (item: MesPeriodo) => {
+    setmesPeriodoSelected(item)
+    inputRef.current.click()    
   }
 
   const handleModalDocument = (item: EtiquetaVariableResponse) => {
@@ -214,7 +253,7 @@ const meses: {[key: number]: JSX.Element} = {
       <DialogActions>
         <ButtonIconClose autoFocus={true} onClick={handleClose} />
       </DialogActions>
-      <DialogTitle 
+      <DialogTitle   
         className="flex justify-center"
         style={{color: "#1D428A", fontWeight:"400px", fontSize:"16px"}}
         sx={{paddingTop: "15px" }}
@@ -244,35 +283,51 @@ const meses: {[key: number]: JSX.Element} = {
         <DialogContentText>
           <Grid item xs={12} md={6}>
             <ListItemText primary={
-              mesPeriodos.map((idx) => {
+              mesPeriodos.map((idx, index) => {
               return (
-              <>
-                <ListItem
-                  component="div"
-                  disablePadding
-                  className="pb-2 pt-2"
-                  secondaryAction={
-                    item.tieneDocumento
-                    ? 
-                    <RecargarDocIcon onClick={() => inputRef.current.click()} />
-                    :
-                    <FileUploadIconComponent 
-                      onClick={() => inputRef.current.click()} />
-                  }
-                  >
-                  <ListItem>
-                    {idx} 
-                    <LightTooltip disableTouchListener title="Visualizar archivo cargado" arrow>
-                    <button style={buttonStyle(item)} onClick={() => openViewPdfModal(item)}>
-                    {capitalize(`${item.filename}`)}
-                      {/* {(capitalize(`${item.tipoDocumento}`))}                       */}
-                    </button>
-                  </LightTooltip>
+                <>
+                  <ListItem
+                    component="div"
+                    disablePadding
+                    className="pb-2 pt-2"
+                    secondaryAction={
+                      item.tieneDocumento
+                      ? 
+                      <RecargarDocIcon onClick={() => openFile(idx)} />
+                      :
+                      <>
+                      <button style={buttonStyle(item)} onClick={() => openModal(item)}>
+                        <FileUploadIconComponent onClick={() => openFile(idx)} />
+                      </button>
+                      </>
+                    }
+                    >
+                    <ListItem>                                        
+                      <ListItemText
+                        primaryTypographyProps={{color: !!idx.file ? "#BEC400" : "#1D428A"}}
+                        primary={
+                          !!idx.file 
+                          ?
+                          (
+                            <>
+                              <LightTooltip disableTouchListener title="Visualizar archivo cargado" arrow>
+                                {/* Debe abrir el modal con el PDF que se subio en MESPERIODOS CON EL IDX */}
+                                {/* CREAR UN NUEVO MODAL PDF */}
+                                <button style={buttonStyle(item)} onClick={() => openViewPdfModal(idx)}>
+                                {capitalize(`${idx.name}`)}
+                                {/* {(capitalize(`${item.tipoDocumento}`))}                       */}
+                                </button>
+                            </LightTooltip>
+                            </>
+                          ) : `Nombre.Documento.${index + 1}`
+                        }>
+                      </ListItemText>
+                      
+                    </ListItem>
+                    <ListItem>{meses[idx.mes]}</ListItem>
                   </ListItem>
-                  <ListItem>{meses[idx]}</ListItem>
-                </ListItem>
-                <Divider />
-              </>
+                  <Divider />
+                </>
                 )
               })
             } />            
@@ -282,6 +337,7 @@ const meses: {[key: number]: JSX.Element} = {
                   onDragOver={handleDragOver}
                   onDrop={handleDrop}
                 >
+                  {/* <form ref={formRef}> */}
                     <input
                       type="file"
                       // multiple solo en casos de selección multiple           
@@ -291,6 +347,7 @@ const meses: {[key: number]: JSX.Element} = {
                       // Only PDF
                       accept=".pdf" 
                     />
+                  {/* </form> */}
                 </div>
               )
             }

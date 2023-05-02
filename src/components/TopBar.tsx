@@ -39,7 +39,7 @@ const ResponsiveAppBar = () => {
 				console.log(value);
 				router.push('/tipoBusqueda')      
 				dispatch(getBusquedaAction())      
-				dispatch(getSolicitudClienteAction())
+				// dispatch(getSolicitudClienteAction())
 			}).finally(() => {
 				localStorage.setItem("gdi-auth", JSON.stringify(""));      
 			})

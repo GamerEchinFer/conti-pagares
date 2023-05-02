@@ -1,6 +1,3 @@
-import { useEffect, useState } from "react";
-import { getDatosCliente } from "../api/gdiApi";
-import { DatosCliente } from "../interfaces/interfaces";
 
 export const useDatosCliente = () => {
 // Configuración a ser utilizada  para comunicar los objetos relacionados utilizando un id

@@ -6,13 +6,13 @@ import { modalPara, uiSetError } from '../redux/slices/ui/ui.slice';
 import { RootState, useAppDispatch } from '../redux/store';
 import styles from './genericos/Genericos.module.css';
 interface HeaderProps {
-icono?: string;
-estilosIcono?: React.CSSProperties;
-titulo?: string;
-logo?: string;
-callBack?: ()=>void;
-showClose?: boolean;
-estilos?: React.CSSProperties;
+  icono?: string;
+  estilosIcono?: React.CSSProperties;
+  titulo?: string;
+  logo?: string;
+  callBack?: ()=>void;
+  showClose?: boolean;
+  estilos?: React.CSSProperties;
 }
 
 const Header = ({icono, estilosIcono, titulo, logo, callBack, showClose=true, estilos}: HeaderProps) => {

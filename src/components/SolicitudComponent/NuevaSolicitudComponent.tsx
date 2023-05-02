@@ -62,6 +62,7 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
   const dispatch = useDispatch(); 
 
   const loadingParametrosSelect = useSelector((state: RootState) => state.parametro.loading);
+  const loadingSubProducto = useSelector((state: RootState) => state.subProducto.loading);
   const etiquetaVariableSuccess = useSelector((state: RootState) => state.etiquetaVariable.success);
   const etiquetaVariableBody = useSelector((state: RootState) => state.etiquetaVariable.etiquetaVariableBody);
   // const idProducto = useSelector((state: RootState) => state.solicitud.idProducto);
@@ -188,7 +189,15 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
               setIdProducto(id)
             }}
           />}
-          
+            {
+              loadingSubProducto 
+              ? (
+                <div className='flex justify-center pt-10 pb-10 w-200'>
+                  <LoadingIcon />
+                </div>
+              ) 
+              : null
+            }
           {idProducto !== 0 ? (
             <SubProductosComponent 
               idSubProducto={idSubProducto}

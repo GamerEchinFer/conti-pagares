@@ -18,21 +18,17 @@ import AppConfig from "../config/config";
 
 export const apmAuthInterceptor = (config: AxiosRequestConfig) => {
 
-    const gdiAuth = localStorage.getItem("gdi-auth");
+    // const gdiAuth = localStorage.getItem("gdi-auth");
+    const gdiAuth = store.getState().authGDI.gdiAuth    
+    
 
-    if (!gdiAuth) {
-        return config;
-    }
-
-    const values: AuthenticationResponse = JSON.parse(gdiAuth);
-
-    if (!values || !values.access_token) {
+    if (!gdiAuth || !gdiAuth.access_token) {
         return config;
     }
 
 
     if (config.headers) {
-        config.headers["Authorization"] = `${values.token_type} ${values.access_token}`;
+        config.headers["Authorization"] = `${gdiAuth.token_type} ${gdiAuth.access_token}`;
         config.headers["Subscription-Key"] = keycloakHeaders["Subscription-Key"];
     }
 
