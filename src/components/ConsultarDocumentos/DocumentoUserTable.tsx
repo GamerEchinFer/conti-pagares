@@ -18,7 +18,7 @@ const DocumentoUserTable = ({documentosUser, query, handleClickViewDoc, idGroup 
   }
 
   const documentosUserFilter = documentosUser && documentosUser.coleccionDocumento ? documentosUser.coleccionDocumento
-  .filter(querySearch(query)) 
+  .filter(querySearch(query))
   .filter(filterByGroup(idGroup))
   : []
 

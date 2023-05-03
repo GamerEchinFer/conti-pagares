@@ -145,10 +145,10 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
   }
 
   const handleClickNext = () => {
-      localStorage.setItem("etiquetas-variable-body", JSON.stringify(body));
-      dispatch(getNumeroLegajoAction());
-      dispatch(etiquetaVariableActions.etiquetaVariableResponseReset); 
-      router.push('/subirDocumento');
+    localStorage.setItem("etiquetas-variable-body", JSON.stringify(body));
+    dispatch(getNumeroLegajoAction());
+    dispatch(etiquetaVariableActions.etiquetaVariableResponseReset); 
+    router.push('/subirDocumento');
   }
 
   return (

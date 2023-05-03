@@ -74,7 +74,9 @@ const ConsultarHistoricoContent = () => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {tipoDocumentoHistorico.map((row) => 
+                                {Array.isArray(tipoDocumentoHistorico)
+                                ?
+                                tipoDocumentoHistorico.map((row) => 
                                     <TableRow key={row.descripcion}>
                                         <TableCell component="th" scope="row">
                                             {capitalize(`${row.descripcion}`)}
@@ -93,7 +95,7 @@ const ConsultarHistoricoContent = () => {
                                             <SearchIcon style={{ color:"#B2B2B2"}} className="p-1" />
                                         </TableCell>
                                     </TableRow>
-                                )}
+                                ) : null }
                             </TableBody>
                         </Table>
                     </TableContainer>

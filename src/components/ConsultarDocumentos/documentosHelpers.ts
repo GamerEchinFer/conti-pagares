@@ -1,6 +1,7 @@
 import { ColeccionDocumento } from '../../interfaces/interfaces';
 
 export const querySearch = (query: string) => (index: ColeccionDocumento) => {
+    if(!index.datosAdicionales.descripcion) return null
     return index.datosAdicionales.descripcion.trim().toLowerCase().includes(query.trim().toLowerCase())
 }
 

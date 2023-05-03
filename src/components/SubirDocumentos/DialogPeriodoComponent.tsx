@@ -112,13 +112,10 @@ export default function DialogPeriodoComponent({item}: DialogPeriodoComponentPro
 
     // dispatch(hadoopDirectoActions.setFiles(filesInput));
 
-    const mesPeriodo = {...mesPeriodoSelected} as MesPeriodo
+    const mesPeriodo = {...mesPeriodoSelected} as MesPeriodo;
 
-    setmesPeriodoSelected(undefined)
+    setmesPeriodoSelected(undefined);
     
-    
-    
-
     const reader = new FileReader();
     reader.readAsDataURL(filesInput[0]);
     
