@@ -19,7 +19,7 @@ import { theme } from '../../../theme/Theme';
 
 type DocumentoUserTableRowProps = {
   row: ColeccionDocumento,
-  handleClickViewDoc: () => void,    
+  handleClickViewDoc: () => void
 }
 
 
@@ -84,6 +84,7 @@ const DocumentoUserTableRow = ({row, handleClickViewDoc}: DocumentoUserTableRowP
             <DialogContent>
                 <DialogContentText
                     className="pb-4">
+                      {row.datosAdicionales.rutaHadoop}
                     <div className="pr-10" style={{ color: "#373A3C", fontSize:"16px"}}>Código de Cliente 
                         <span style={{color:"#818A91", fontSize:"16px"}}> {datosCliente.codigoCliente}</span></div>
                     <div className="pr-10">

@@ -217,7 +217,7 @@ const ViewPDFComponent = ({item}: ModalPDFComponentProps) => {
         </DialogContent>
         <div className="max-w-10xl grid grid-cols" style={{width:"140%"}} >
           <DialogContent>
-            <PDFComponent base64={item?.base64Modified ?? ""}  />
+            <PDFComponent base64={item?.base64Modified ?? ""} />
           </DialogContent>
         </div>
       </div>

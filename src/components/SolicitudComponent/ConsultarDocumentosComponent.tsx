@@ -28,12 +28,16 @@ import DocumentoUserTable from '../ConsultarDocumentos/DocumentoUserTable';
 import DocumentoUserSubGrupoTable from '../ConsultarDocumentos/DocumentoUserSubGrupoTable';
 import { tipoDocumentoHistoricoActions } from '../../redux/slices/documentoHistorico.slice';
 import { documentUserMapper } from '../../helpers/documentUserMapper';
-import { DocumentosUsuarioResponse } from '../../interfaces/interfaces';
+import { ColeccionDocumento, DocumentosUsuarioResponse } from '../../interfaces/interfaces';
 import { documentosUserActions, documentosUser } from '../../redux/slices/documentosUser.slice';
+import { parsePdfBase64 } from '../../helpers/cutPdf';
+import { etiquetaVariableActions } from '../../redux/slices/etiquetaVariable.slice';
+import { getDescargarHadoopDirecto } from '../../api/apmDesaApi';
 
 function ConsultarDocumentosComponent() {
   const [ name, setName ] = useState("");
   const [ query, setQuery ] = useState("");
+  const [download, setDownload] = useState("");
 
 
   const dispatch = useDispatch(); 
@@ -44,14 +48,14 @@ function ConsultarDocumentosComponent() {
   const [subGruposActive, setSubGruposActive] = useState<{[key: string]: boolean}>({});
 
   const handleChangeNewSolicitud = (event : any) =>
-  setName("nuevoSolicitud");
+  setName("nuevaSolicitud");
 
-  const solicitud = useSolicitud(4)
+  const solicitud = useSolicitud(4);
 
   useEffect(() => {
     dispatch(getDocumentosUserAction("000666", 16 ));
     dispatch(tipoDocumentoHistoricoActions.tipoDocumentoHistoricoReset());    
-  }, [])
+  }, []);
 
   const handleIconBack = () => {
     dispatch(solicitudActions.setPage(-1))
@@ -71,8 +75,7 @@ function ConsultarDocumentosComponent() {
     dispatch(documentosUserActions.setIdGroupSelected(idGrupo))
   }
 
-  const handleClickViewDoc = () => {
-    
+  const handleClickViewDoc = async () => {
   }
 
   return (

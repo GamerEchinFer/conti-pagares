@@ -1,4 +1,4 @@
-import { DocumentosUsuarioResponse } from '../../interfaces/interfaces';
+import { ColeccionDocumento, DocumentosUsuarioResponse } from '../../interfaces/interfaces';
 import { filterByGroup, querySearch } from './documentosHelpers';
 
 import DocumentoUserTableRow from './DocumentoUserTableRow';
@@ -24,6 +24,7 @@ const DocumentoUserTable = ({documentosUser, query, handleClickViewDoc, idGroup 
 
   if (documentosUserFilter.length === 0) return null
 
+  
   return (
     <>
       {

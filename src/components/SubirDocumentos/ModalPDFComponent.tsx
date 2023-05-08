@@ -29,7 +29,8 @@ import { useDocumento } from './hooks/useDocumento';
 import { intervaloPDF } from '../../helpers/intervaloPDF';
 
 type ModalPDFComponentProps = {
-  item: EtiquetaVariableResponse
+  item: EtiquetaVariableResponse,
+  refresh: () => void
 }
 
 const filterPdf = () => ({
@@ -42,7 +43,7 @@ const interPdf = () => ({
 });
 
 
-export default function ModalPDFComponent({item}: ModalPDFComponentProps) {
+export default function ModalPDFComponent({item, refresh}: ModalPDFComponentProps) {
   const dispatch = useDispatch();
   const documento = useDocumento();
   const fullScreen = useMediaQuery(theme.breakpoints.down('xl'));
@@ -175,7 +176,9 @@ export default function ModalPDFComponent({item}: ModalPDFComponentProps) {
     //   fileName: "test3.pdf",
     //   convertirPDF: true,
     //   path: "digitalizacion_documento\\gdi\\documento"
-    // }))
+    // }))s
+    refresh()
+    
     dispatch(etiquetaVariableActions.etiquetaVariableCloseAllModals());
   }
 

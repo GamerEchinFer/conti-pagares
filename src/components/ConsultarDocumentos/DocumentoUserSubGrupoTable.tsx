@@ -5,12 +5,13 @@ import useCollapse from 'react-collapsed';
 import ArrowIconUp from '../ArrowIconsComponent/ArrowIconUp';
 import { TableRow } from '@mui/material';
 import DocumentoUserSubGrupoRow from './DocumentoUserSubGrupoRow';
+import { ColeccionDocumento } from '../../interfaces/interfaces';
 
 type DocumentoUserTableSubGrupoProps = {
   documentosUser: DocumentoUsuarioResult | undefined,
   toggle: {[key: string]: boolean}
   setToggle: (value: string) => void
-  query: string
+  query: string,
   handleClickViewDoc: () => void
 }
 

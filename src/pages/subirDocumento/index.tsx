@@ -20,6 +20,7 @@ import { hadoopDirectoActions } from '../../redux/slices/hadoop.slice';
 import { parametroActions } from "../../redux/slices/parametro.slice";
 import { RootState } from "../../redux/store";
 import { getSolicitudClienteAction } from "../../redux/thunks/solicitud.thunks";
+import { postEtiquetasVariablesAction } from "../../redux/thunks/etiqueta.thunk";
 
 const SubirDocumentoPage = ()  => {
 
@@ -27,17 +28,25 @@ const SubirDocumentoPage = ()  => {
 
     const dispatch = useDispatch();
 
+    
+    const files = useSelector((state: RootState) => state.hadoopDirecto.files);
     const etiquetasVariables = useSelector((state: RootState) => state.etiquetaVariable.response);    
     const etiquetasLoading = useSelector((state: RootState) => state.etiquetaVariable.loading);    
     const clienteDatos = useSelector((state: RootState) => state.clienteDatos.items);
     const page = useSelector((state: RootState) => state.etiquetaVariable.page);
+
+
     const [openAddModal, setOpenAddModal] = useState(false);
     const [etiquetaVariableBody, setEtiquetaVariableBody] = useState<any>({});
-
     const [loading, setLoading] = useState(false);
+    const [body, setBody] = useState<any>({});
 
     // The Files of redux but cant use in others components
-    const files = useSelector((state: RootState) => state.hadoopDirecto.files);
+
+    useMount(() => {
+        const data = storage.getObject("etiquetas-variable-body")
+        setBody(data)                    
+    })            
 
     useMount(() => {
         const data = storage.getObject("etiquetas-variable-body")
@@ -75,6 +84,10 @@ const SubirDocumentoPage = ()  => {
         }
     }
 
+    const refresshEtiquetasVariables = () => {
+        dispatch(postEtiquetasVariablesAction(Object.values(body)));    
+    }
+
     /*
         {
             "id_producto": {
@@ -100,12 +113,14 @@ const SubirDocumentoPage = ()  => {
         if (!etiquetaVariableBody) {
             return;
         }
-        // if(cantidadDocumentosIngresados === cantidadTotalDocumentos) { estado = 1 }
-        
+        const docTotal = etiquetasVariables?.length ?? 0
+        const docActual = etiquetasVariables?.filter(item => item.tieneDocumento).length ?? 0
+        let estadoActual = 0
+        if(docTotal === docActual) { estadoActual = 1 }
         // Preparar request
         const body: GuardarHistorialUsuarioRequest = {
             codigoCliente: clienteDatos.codigoCliente,
-            estado: 0,
+            estado: estadoActual,
             cantidadTotalDocumentos: etiquetasVariables?.length ?? 0,
             cantidadDocumentosIngresados: etiquetasVariables?.filter(item => item.tieneDocumento).length ?? 0,        
             usuario: 'PER',
@@ -118,7 +133,7 @@ const SubirDocumentoPage = ()  => {
             //     setLoading(true);
             // }
               await postGuardarHistorialUsuario(body);     
-            //   router.push("/tipoBusqueda"); abrir modal y cerrar abrir el siguiente modal de finalización           
+              router.push("/solicitud"); //abrir modal y cerrar abrir el siguiente modal de finalización           
             // Resolver la respuesta            
         } catch (error) {
             console.log(error)
@@ -177,7 +192,7 @@ const SubirDocumentoPage = ()  => {
                             etiquetasVariables.map(item => (
                             <div key={item.idTipoDocumento} className="flex flex-col" onDrop={(event) => onDrop(event, item)} onDragOver={allowDrop}>
                                 <div className="pt-2">
-                                    <DocumentListComponent item={item} /> 
+                                    <DocumentListComponent item={item} refresh={refresshEtiquetasVariables} />
                                 </div>
                             </div>
                             ))

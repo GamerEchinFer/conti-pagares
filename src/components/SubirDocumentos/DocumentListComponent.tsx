@@ -19,14 +19,15 @@ import { RootState } from '../../redux/store';
 import { useMount } from 'ahooks';
 
 type DocumentListComponentProps = {
-  item: EtiquetaVariableResponse
+  item: EtiquetaVariableResponse,
+  refresh: () => void
 };
 
 const buttonStyle = (item: EtiquetaVariableResponse) =>  ({
   fontSize:"20px", color: item.tieneDocumento ? "#BEC400" : "#1D428A", fontWeight:"400"
 });
 
-const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
+const DocumentListComponent  = ({item, refresh}: DocumentListComponentProps) => {
   // const etiquetasVariables = useSelector((state: RootState) => state.etiquetaVariable.response);
   // console.log(etiquetasVariables)
   const dispatch = useDispatch();
@@ -164,7 +165,7 @@ const DocumentListComponent  = ({item}: DocumentListComponentProps) => {
               }
           />
         <ListItemButton>
-          <ModalPDFComponent item={item} />
+          <ModalPDFComponent item={item} refresh={refresh} />
           <DialogPeriodoComponent item={item} />
         </ListItemButton>                     
       </ListItem>

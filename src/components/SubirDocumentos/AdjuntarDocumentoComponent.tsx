@@ -15,6 +15,14 @@ const AdjuntarDocumentoComponent = () => {
       setOpen(false);
     };
 
+    const handleVolver = () => {
+
+    }
+
+    const handleContinuar = () => {
+      
+    }
+
   return (
     <>
       <Dialog
@@ -26,11 +34,11 @@ const AdjuntarDocumentoComponent = () => {
         <DialogTitle
           id="responsive-dialog-title"
           className="justify-start"
-        >
+        > 
           Falta(N) adjuntar N documento(S) 
           ¿ Continuar sin cargar ?
-          <button>Volver</button>
-          <button>Continuar</button>
+          <button onClick={handleVolver}>Volver</button>
+          <button onClick={handleContinuar}>Continuar</button>
         </DialogTitle>
       </Dialog>
     </>

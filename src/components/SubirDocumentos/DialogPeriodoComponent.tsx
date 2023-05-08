@@ -47,16 +47,21 @@ const buttonStyle = (item: EtiquetaVariableResponse) =>  ({
 export default function DialogPeriodoComponent({item}: DialogPeriodoComponentProps) {
   const dispatch = useDispatch();
 
-
-  const [archives, setArchives] = useState(null);
-  
+  const inputRef = useRef<any>();
+  const formRef = useRef<HTMLFormElement | null>();
+      
   const fullScreen = useMediaQuery(theme.breakpoints.down('xl'));
-  
-  const [download, setDownload] = useState("");
-
+    
   const files = useSelector((state: RootState) => state.hadoopDirecto.files);
-
-  const etiquetasVariables = useSelector((state: RootState) => state.etiquetaVariable.response);    
+  const etiquetasVariables = useSelector((state: RootState) => state.etiquetaVariable.response); 
+  
+  const [mesPeriodos, setmesPeriodos] = useState<MesPeriodo[]>([]);
+  const [download, setDownload] = useState("");
+  const [archives, setArchives] = useState(null);
+  const [openModalCarga, setOpenModalCarga] = useState(false);
+  const [mesPeriodoSelected, setmesPeriodoSelected] = useState<MesPeriodo | undefined>(undefined);
+  const [periodo, setPeriodo] = useState("6");  
+  const [base64Selected, setBase64Selected] = useState("");
 
   useMount(() => {                
     hadoopDirectoActions.setFiles(null);
@@ -101,9 +106,11 @@ export default function DialogPeriodoComponent({item}: DialogPeriodoComponentPro
   };
 
   const handleClose = () => {
-    // setOpen(false);
+    setOpenModalCarga(false);
+    // setBase64Selected("");
+    
     // setOpenDialogSecondary(true);
-    dispatch(etiquetaVariableActions.etiquetaVariableCloseAllModals());
+    // dispatch(etiquetaVariableActions.etiquetaVariableCloseAllModals());
   };
 
   const handleFile = (filesInput: any) => {
@@ -125,6 +132,7 @@ export default function DialogPeriodoComponent({item}: DialogPeriodoComponentPro
         mesPeriodo.file = filesInput[0]
         mesPeriodo.name = filesInput[0].name ?? ""
         mesPeriodo.base64 = reader.result?.toString() ?? ""
+        setBase64Selected(reader.result?.toString() ?? "")
         
         setmesPeriodos((props) => props.map(item => mesPeriodo.mes === item.mes ? {...mesPeriodo} : item))
         // dispatch(etiquetaVariableActions.etiquetaVariableUpdateFile({
@@ -194,15 +202,10 @@ const meses: {[key: number]: JSX.Element} = {
   }
 
   const openModal = (item: EtiquetaVariableResponse) => {    
-    handleClickTieneDocumento(item);    
-    dispatch(etiquetaVariableActions.setOpenModal)
-  }
-
-  const [mesPeriodos, setmesPeriodos] = useState<MesPeriodo[]>([]);
-  const [mesPeriodoSelected, setmesPeriodoSelected] = useState<MesPeriodo | undefined>(undefined);
-  const [periodo, setPeriodo] = useState("6");
-  const inputRef = useRef<any>();
-  const formRef = useRef<HTMLFormElement | null>();
+    // handleClickTieneDocumento(item);    
+    // dispatch(etiquetaVariableActions.setOpenModal)
+    setOpenModalCarga(true);
+  }  
   
   useEffect(() => {
     generateMesPeriodos(6);
@@ -236,6 +239,10 @@ const meses: {[key: number]: JSX.Element} = {
 
   const handleModalDocument = (item: EtiquetaVariableResponse) => {
     
+  }
+
+  const cargarDocumentos = () => {
+    // Evaluar las condiciones de los documentos que han sido cargados o no
   }
 
   return (
@@ -296,7 +303,55 @@ const meses: {[key: number]: JSX.Element} = {
                       <button style={buttonStyle(item)} onClick={() => openModal(item)}>
                         <FileUploadIconComponent onClick={() => openFile(idx)} />
                       </button>
-                      </>
+
+                      <Dialog
+                        fullScreen={fullScreen}
+                        open={!!base64Selected}
+                        onClose={handleClose}
+                        aria-labelledby="draggable-dialog-title"
+                        PaperProps={{ sx: { top: 10, m: 0 , maxWidth: "80%", height: "90%" }}}
+                      >
+                        <DialogActions>
+                          <ButtonIconClose 
+                            autoFocus={true}
+                            onClick={handleClose}
+                          />
+                        </DialogActions>
+                        <div className="max-w-6xl grid grid-cols-2 gap-10">
+                          <DialogContent>
+                              <DialogContentText
+                                  className="pb-4">
+                                  
+
+                              </DialogContentText>
+                              <div className="flex flex-row justify-center pb-4">
+                                  {/* <BackButton onClick={embedPdfPages}/> */}
+                                  <BackButton onClick={handleClose}/>
+                              </div>
+                          </DialogContent>
+                          <div className="max-w-10xl grid grid-cols" style={{width:"160%"}} >
+                          <DialogContent>
+                              <div>
+                                  <object
+                                      data='https://pdfjs-express.s3-us-west-2.amazonaws.com/docs/choosing-a-pdf-viewer.pdf'
+                                      type="application/pdf"
+                                      width="600"
+                                      height="550"
+                                  >
+
+                                      <iframe
+                                      src='https://pdfjs-express.s3-us-west-2.amazonaws.com/docs/choosing-a-pdf-viewer.pdf'
+                                      width="600"
+                                      height="550"
+                                      />
+                                  </object>
+                                {/* <PDFComponent base64={item?.base64Modified ?? ""}  /> */}
+                              </div>
+                          </DialogContent>   
+                          </div>
+                      </div>  
+                    </Dialog>
+                  </>
                     }
                     >
                     <ListItem>                                        
@@ -355,7 +410,7 @@ const meses: {[key: number]: JSX.Element} = {
       </DialogContent>
       <div className="flex justify-center gap-4 pb-16">
         <BackButton onClick={handleClose} />
-        <ButtonCargar onClick={handleClose} />
+        <ButtonCargar onClick={cargarDocumentos} />
       </div>
     </Dialog>
   </>
