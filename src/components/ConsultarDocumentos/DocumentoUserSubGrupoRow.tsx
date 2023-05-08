@@ -14,11 +14,12 @@ import { RootState } from '../../redux/store';
 
 type DocumentoUserSubGrupoRowProps = {
     row: ColeccionDocumento
-    handleClickViewDoc: () => void    
+    handleClickViewDoc: () => void  
+    onClickRow: () => void  
 }
 
 
-const DocumentoUserSubGrupoRow = ({row, handleClickViewDoc}: DocumentoUserSubGrupoRowProps) => {
+const DocumentoUserSubGrupoRow = ({row, handleClickViewDoc, onClickRow}: DocumentoUserSubGrupoRowProps) => {
 
   const datosCliente = useSelector((state: RootState) => state.clienteDatos.items);
   
@@ -38,7 +39,7 @@ const DocumentoUserSubGrupoRow = ({row, handleClickViewDoc}: DocumentoUserSubGru
           paddingLeft: 0
         }}
       >
-        <button onClick={handleClickViewDoc} >
+        <button onClick={onClickRow} >
           <div className="flex justify-start">
             <SearchIcon style={{ color:"#B2B2B2"}} className="p-1" />
             {(capitalize(`${row.datosAdicionales.descripcion}`))}                    

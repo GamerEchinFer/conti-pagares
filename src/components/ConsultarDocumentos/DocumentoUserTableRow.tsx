@@ -19,11 +19,12 @@ import { theme } from '../../../theme/Theme';
 
 type DocumentoUserTableRowProps = {
   row: ColeccionDocumento,
-  handleClickViewDoc: () => void
+  handleClickViewDoc?: () => void,
+  onClickRow: () => void
 }
 
 
-const DocumentoUserTableRow = ({row, handleClickViewDoc}: DocumentoUserTableRowProps) => {
+const DocumentoUserTableRow = ({row, handleClickViewDoc, onClickRow}: DocumentoUserTableRowProps) => {
 
   const datosCliente = useSelector((state: RootState) => state.clienteDatos.items);
 
@@ -61,7 +62,7 @@ const DocumentoUserTableRow = ({row, handleClickViewDoc}: DocumentoUserTableRowP
           paddingLeft: 0
         }}
       >
-        <button onClick={openConsultaDocPDF}>
+        <button onClick={onClickRow}>
           <div className="flex justify-start">
             <SearchIcon style={{ color:"#B2B2B2"}} className="p-1" />
             {(capitalize(`${row.datosAdicionales.descripcion}`))}                    
