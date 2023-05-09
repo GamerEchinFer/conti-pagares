@@ -36,7 +36,8 @@ interface MesPeriodo {
 }
 
 type DialogPeriodoComponentProps = {
-  item: EtiquetaVariableResponse
+  item: EtiquetaVariableResponse,
+  refresh: () => void
 }
 
 
@@ -44,7 +45,7 @@ const buttonStyle = (item: EtiquetaVariableResponse) =>  ({
   fontSize:"20px", color: item.tieneDocumento ? "#BEC400" : "#1D428A", fontWeight:"400"
 })
 
-export default function DialogPeriodoComponent({item}: DialogPeriodoComponentProps) {
+export default function DialogPeriodoComponent({item, refresh}: DialogPeriodoComponentProps) {
   const dispatch = useDispatch();
 
   const inputRef = useRef<any>();
@@ -106,18 +107,12 @@ export default function DialogPeriodoComponent({item}: DialogPeriodoComponentPro
   };
 
   const handleClose = () => {
-    setOpenModalCarga(false);
-    // setBase64Selected("");
-    
-    // setOpenDialogSecondary(true);
-    // dispatch(etiquetaVariableActions.etiquetaVariableCloseAllModals());
+    // setOpenModalCarga(false);
+    setBase64Selected("");
   };
 
   const handleFile = (filesInput: any) => {
     if (!filesInput && Array.isArray(filesInput) && filesInput.length === 0) return;
-    
-
-    // dispatch(hadoopDirectoActions.setFiles(filesInput));
 
     const mesPeriodo = {...mesPeriodoSelected} as MesPeriodo;
 
@@ -135,15 +130,6 @@ export default function DialogPeriodoComponent({item}: DialogPeriodoComponentPro
         setBase64Selected(reader.result?.toString() ?? "")
         
         setmesPeriodos((props) => props.map(item => mesPeriodo.mes === item.mes ? {...mesPeriodo} : item))
-        // dispatch(etiquetaVariableActions.etiquetaVariableUpdateFile({
-        //   idTipoDocumento: item.idTipoDocumento, 
-        //   file: files[Number(0)], 
-        //   base64: reader.result?.toString() ?? "",
-        //   base64Modified: reader.result?.toString() ?? "", 
-        //   totalPages: pdfDoc.getPageCount(),
-        //   size: files[Number(0)].size / 1000000,
-        //   filename: files[Number(0)].name ?? ""                  
-        // }));
         formRef.current?.reset()
       })
 
@@ -172,33 +158,8 @@ const meses: {[key: number]: JSX.Element} = {
   11: <span>Diciembre</span>,
 }
 
-  const handleClickTieneDocumento = async ({datosAdicionales}: EtiquetaVariableResponse) => {
-    if (!datosAdicionales || !Array.isArray(datosAdicionales) || !datosAdicionales.length ) return;
-    
-    const rutaHadoop =  datosAdicionales[0].rutaHadoop;
-
-    const download = await getDescargarHadoopDirecto(rutaHadoop);
-
-    if (!download || !download.data || !download.data.loc) {
-      // Alerta
-      console.log("El download.data.loc no existe: ", download);      
-      return;
-    }
-
-    const viewPdf = `${download?.data?.loc ?? ""}`;
-    setDownload(viewPdf);
-
-    dispatch(etiquetaVariableActions.etiquetaVariableUpdateFileModified({
-      idTipoDocumento: item.idTipoDocumento,
-      base64Modified: parsePdfBase64(viewPdf as string),
-      totalPagesModified: 1,
-      sizeModified: files[Number(0)].size / 1000000
-    }));
-  }
-
   const openViewPdfModal = (item: MesPeriodo) => {    
     // handleClickTieneDocumento(item);    
-    // dispatch(etiquetaVariableActions.setOpenModalView({idTipoDocumento: item.idTipoDocumento, openModalView: true}))
   }
 
   const openModal = (item: EtiquetaVariableResponse) => {    
@@ -239,6 +200,10 @@ const meses: {[key: number]: JSX.Element} = {
 
   const handleModalDocument = (item: EtiquetaVariableResponse) => {
     
+  }
+
+  const handleCloseDialogPeriodo = () => {
+
   }
 
   const cargarDocumentos = () => {
@@ -300,60 +265,12 @@ const meses: {[key: number]: JSX.Element} = {
                       <RecargarDocIcon onClick={() => openFile(idx)} />
                       :
                       <>
-                      <button style={buttonStyle(item)} onClick={() => openModal(item)}>
-                        <FileUploadIconComponent onClick={() => openFile(idx)} />
-                      </button>
-
-                      <Dialog
-                        fullScreen={fullScreen}
-                        open={!!base64Selected}
-                        onClose={handleClose}
-                        aria-labelledby="draggable-dialog-title"
-                        PaperProps={{ sx: { top: 10, m: 0 , maxWidth: "80%", height: "90%" }}}
-                      >
-                        <DialogActions>
-                          <ButtonIconClose 
-                            autoFocus={true}
-                            onClick={handleClose}
-                          />
-                        </DialogActions>
-                        <div className="max-w-6xl grid grid-cols-2 gap-10">
-                          <DialogContent>
-                              <DialogContentText
-                                  className="pb-4">
-                                  
-
-                              </DialogContentText>
-                              <div className="flex flex-row justify-center pb-4">
-                                  {/* <BackButton onClick={embedPdfPages}/> */}
-                                  <BackButton onClick={handleClose}/>
-                              </div>
-                          </DialogContent>
-                          <div className="max-w-10xl grid grid-cols" style={{width:"160%"}} >
-                          <DialogContent>
-                              <div>
-                                  <object
-                                      data='https://pdfjs-express.s3-us-west-2.amazonaws.com/docs/choosing-a-pdf-viewer.pdf'
-                                      type="application/pdf"
-                                      width="600"
-                                      height="550"
-                                  >
-
-                                      <iframe
-                                      src='https://pdfjs-express.s3-us-west-2.amazonaws.com/docs/choosing-a-pdf-viewer.pdf'
-                                      width="600"
-                                      height="550"
-                                      />
-                                  </object>
-                                {/* <PDFComponent base64={item?.base64Modified ?? ""}  /> */}
-                              </div>
-                          </DialogContent>   
-                          </div>
-                      </div>  
-                    </Dialog>
-                  </>
+                        <button style={buttonStyle(item)} onClick={() => openModal(item)}>
+                          <FileUploadIconComponent onClick={() => openFile(idx)} />
+                        </button>
+                      </>
                     }
-                    >
+                  >
                     <ListItem>                                        
                       <ListItemText
                         primaryTypographyProps={{color: !!idx.file ? "#BEC400" : "#1D428A"}}
@@ -366,15 +283,14 @@ const meses: {[key: number]: JSX.Element} = {
                                 {/* Debe abrir el modal con el PDF que se subio en MESPERIODOS CON EL IDX */}
                                 {/* CREAR UN NUEVO MODAL PDF */}
                                 <button style={buttonStyle(item)} onClick={() => openViewPdfModal(idx)}>
-                                {capitalize(`${idx.name}`)}
+                                  {capitalize(`${idx.name}`)}
                                 {/* {(capitalize(`${item.tipoDocumento}`))}                       */}
                                 </button>
-                            </LightTooltip>
+                              </LightTooltip>
                             </>
                           ) : `Nombre.Documento.${index + 1}`
                         }>
                       </ListItemText>
-                      
                     </ListItem>
                     <ListItem>{meses[idx.mes]}</ListItem>
                   </ListItem>
@@ -383,28 +299,7 @@ const meses: {[key: number]: JSX.Element} = {
                 )
               })
             } />            
-            {
-              !archives && (
-                <div
-                  onDragOver={handleDragOver}
-                  onDrop={handleDrop}
-                >
-                  {/* <form ref={formRef}> */}
-                    <input
-                      type="file"
-                      // multiple solo en casos de selección multiple           
-                      onChange={(event) => handleFile(event.target.files)}
-                      hidden
-                      ref={inputRef}
-                      // Only PDF
-                      accept=".pdf" 
-                    />
-                  {/* </form> */}
-                </div>
-              )
-            }
-            <ViewPDFComponent item={item} />
-            <ModalPDFComponent item={item} />
+            <ModalPDFComponent item={item} refresh={refresh}/>
           </Grid>
         </DialogContentText>
       </DialogContent>
@@ -413,6 +308,26 @@ const meses: {[key: number]: JSX.Element} = {
         <ButtonCargar onClick={cargarDocumentos} />
       </div>
     </Dialog>
+    {
+      !archives && (
+        <div
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+        >
+          {/* <form ref={formRef}> */}
+            <input
+              type="file"
+              // multiple solo en casos de selección multiple           
+              onChange={(event) => handleFile(event.target.files)}
+              hidden
+              ref={inputRef}
+              // Only PDF
+              accept=".pdf" 
+            />
+          {/* </form> */}
+        </div>
+      )
+    }
   </>
   );
 }

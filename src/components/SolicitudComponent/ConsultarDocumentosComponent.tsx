@@ -39,9 +39,9 @@ function ConsultarDocumentosComponent() {
   const [ query, setQuery ] = useState("");
   const [download, setDownload] = useState("");
 
-
   const dispatch = useDispatch(); 
 
+  const datosCliente = useSelector((state: RootState) => state.clienteDatos.items);
   const documentosUser = useSelector((state: RootState) => state.documentosUser.items);        
   const documentosUserMapped = useSelector((state: RootState) => state.documentosUser.itemsMapped);   
   const idGroupSelected = useSelector((state: RootState) => state.documentosUser.idGroupSelected);  
@@ -53,8 +53,15 @@ function ConsultarDocumentosComponent() {
   const solicitud = useSolicitud(4);
 
   useEffect(() => {
-    dispatch(getDocumentosUserAction("000666", 16 ));
-    dispatch(tipoDocumentoHistoricoActions.tipoDocumentoHistoricoReset());    
+    dispatch(getDocumentosUserAction(datosCliente.codigoCliente, idGroupSelected));
+
+    dispatch(documentosUserActions.documentosUserReset());
+
+    dispatch(tipoDocumentoHistoricoActions.tipoDocumentoHistoricoReset());
+  }, []);
+  
+  useEffect(() => {
+    dispatch(documentosUserActions.setIdGroupSelectedReset());
   }, []);
 
   const handleIconBack = () => {
@@ -73,10 +80,15 @@ function ConsultarDocumentosComponent() {
     
     dispatch(documentosUserActions.setItemsMapped(dataMapped)) 
     dispatch(documentosUserActions.setIdGroupSelected(idGrupo))
+
+    if(!idGrupo) {return null}
+
   }
 
   const handleClickViewDoc = async () => {
   }
+
+  const onClickRow = () => {}
 
   return (
     <>      
@@ -134,7 +146,7 @@ function ConsultarDocumentosComponent() {
           </div>
         </div>
       </Box>
-      <div className="overflow-auto h-96">
+      <div className="overflow-auto h-56">
         <TableContainer>
           <Table sx={{ minWidth: 850 }} aria-label="simple table">
             <TableBody>
@@ -150,6 +162,7 @@ function ConsultarDocumentosComponent() {
                 documentosUser={documentosUserMapped} 
                 query={query} 
                 handleClickViewDoc={handleClickViewDoc}
+                onClickRow={onClickRow}
               />
               {/* {JSON.stringify(documentosUser)}   */}
             </TableBody>           

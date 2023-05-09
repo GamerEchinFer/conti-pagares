@@ -114,7 +114,7 @@ const DocumentoUserTableRow = ({row, handleClickViewDoc, onClickRow}: DocumentoU
             </DialogContent>
             <div className="max-w-10xl grid grid-cols" style={{width:"160%"}} >
             <DialogContent>
-                <div>
+                {/* <div>
                     <object
                         data='https://pdfjs-express.s3-us-west-2.amazonaws.com/docs/choosing-a-pdf-viewer.pdf'
                         type="application/pdf"
@@ -128,7 +128,7 @@ const DocumentoUserTableRow = ({row, handleClickViewDoc, onClickRow}: DocumentoU
                         height="550"
                         />
                     </object>
-                </div>
+                </div> */}
             </DialogContent>   
             </div>
         </div>  

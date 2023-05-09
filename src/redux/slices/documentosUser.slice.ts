@@ -36,17 +36,14 @@ const documentosUserSlice = createSlice({
             state.loading = false;
             state.success = false;
             state.error = null as any;
-            state.items = undefined;
+            state.items = null as any; //undefined
         },
         setIdGroupSelected(state, action: PayloadAction<number>) {
             state.idGroupSelected = action.payload;            
         },
         setIdGroupSelectedReset(state) {
-            state.loading = false;
-            state.success = false;
-            state.error = null as any;
-            state.items = undefined;
-        },
+            state.idGroupSelected = null as any;            
+        }
     }
 })
 

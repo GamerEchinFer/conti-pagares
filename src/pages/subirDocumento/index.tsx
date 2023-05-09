@@ -21,6 +21,7 @@ import { parametroActions } from "../../redux/slices/parametro.slice";
 import { RootState } from "../../redux/store";
 import { getSolicitudClienteAction } from "../../redux/thunks/solicitud.thunks";
 import { postEtiquetasVariablesAction } from "../../redux/thunks/etiqueta.thunk";
+import CargaExitosaComponent from "../../components/SubirDocumentos/CargaExitosaComponent";
 
 const SubirDocumentoPage = ()  => {
 
@@ -37,9 +38,12 @@ const SubirDocumentoPage = ()  => {
 
 
     const [openAddModal, setOpenAddModal] = useState(false);
+    const [openModalFinalizacion, setOpenModalFinalizacion] = useState(false);
     const [etiquetaVariableBody, setEtiquetaVariableBody] = useState<any>({});
     const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false)
     const [body, setBody] = useState<any>({});
+    const [onclose, setOnclose] = useState("");
 
     // The Files of redux but cant use in others components
 
@@ -127,16 +131,24 @@ const SubirDocumentoPage = ()  => {
             condiciones: mapCondiciones(etiquetaVariableBody as EtiquetaVariableBody)
         } 
 
+        setLoading(true)
         // Llamar a la api      
         try {                            
             // if(!loading) {
             //     setLoading(true);
             // }
-              await postGuardarHistorialUsuario(body);     
-              router.push("/solicitud"); //abrir modal y cerrar abrir el siguiente modal de finalización           
+            // dispatch
+            
+              await postGuardarHistorialUsuario(body);
+                setOpenModalFinalizacion(true);
+                setLoading(false);
+                setSuccess(true);
+            //   router.push("/solicitud"); //abrir modal y cerrar abrir el siguiente modal de finalización           
             // Resolver la respuesta            
         } catch (error) {
             console.log(error)
+            setLoading(false)
+            setSuccess(false)
         }        
 
     };
@@ -145,6 +157,14 @@ const SubirDocumentoPage = ()  => {
     const handleClickAdd = () => {
         setOpenAddModal(true);
     };
+
+    // const openModal = () => {
+    //     setOpenModalFinalizacion(true);
+    // }
+
+    const closeModal= () => {
+        setOpenModalFinalizacion(false);
+    }
 
     const onDrop = (event: DragEvent<HTMLDivElement>, {idTipoDocumento, periodicidad, tieneDocumento}: EtiquetaVariableResponse) => {
 
@@ -221,6 +241,7 @@ const SubirDocumentoPage = ()  => {
                 </Box>
             </Box>
             <ModalAddDocument open={openAddModal} onClose={handleCloseAddModal} />
+            <CargaExitosaComponent open={openModalFinalizacion} onClose={closeModal} />
 
         </SubirDocumentoProvider>
     )

@@ -24,8 +24,8 @@ import { useDocumentUser } from './useDocumentoUser';
 
 type DocumentoUserTableSubGrupoProps = {
   documentosUser: DocumentoUsuarioResult | undefined,
-  toggle: {[key: string]: boolean}
-  setToggle: (value: string) => void
+  toggle: {[key: string]: boolean},
+  setToggle: (value: string) => void,
   query: string,
   handleClickViewDoc: () => void,
   onClickRow: (row: ColeccionDocumento) => void
@@ -69,8 +69,6 @@ function DocumentoUserCollapsible({documentosUser, handleClickViewDoc, labelSubg
           </TableRow>
         ))
       }
-
-      
     </>
   )
 }
@@ -87,17 +85,17 @@ const DocumentoUserSubGrupoTable = ({documentosUser, query, handleClickViewDoc, 
   return (
     <>         
       {
-          Object.keys(documentosUser).map(labelSubgrupo => (
-            <>
-              <DocumentoUserCollapsible 
-                documentosUser={documentosUser} 
-                handleClickViewDoc={handleClickViewDoc} 
-                labelSubgrupo={labelSubgrupo}
-                key={labelSubgrupo} //ware
-                onClickRow={handleClickRow}
-              />
-            </>
-          ))
+        Object.keys(documentosUser).map(labelSubgrupo => (
+          <>
+            <DocumentoUserCollapsible 
+              documentosUser={documentosUser} 
+              handleClickViewDoc={handleClickViewDoc} 
+              labelSubgrupo={labelSubgrupo}
+              key={labelSubgrupo} //ware
+              onClickRow={handleClickRow}
+            />
+          </>
+        ))
         }    
         {/* {JSON.stringify(documentosUser)} */}
         <Dialog
@@ -105,7 +103,7 @@ const DocumentoUserSubGrupoTable = ({documentosUser, query, handleClickViewDoc, 
               open={open}
               onClose={handleClose}
               aria-labelledby="draggable-dialog-title"
-              PaperProps={{ sx: { top: 10, m: 0 , maxWidth: "80%", height: "90%" }}}
+              PaperProps={{ sx: { top: 10, m: 0 , maxWidth: "90%", height: "90%" }}}
             >
               <DialogActions>
                 <ButtonIconClose 
@@ -140,29 +138,14 @@ const DocumentoUserSubGrupoTable = ({documentosUser, query, handleClickViewDoc, 
 
                     </DialogContentText>
                     <div className="flex flex-row justify-center pb-4">
-                        {/* <BackButton onClick={embedPdfPages}/> */}
-                        <BackButton onClick={handleClose}/>
+                      {/* <BackButton onClick={embedPdfPages}/> */}
+                      <BackButton onClick={handleClose}/>
                     </div>
                 </DialogContent>
                 <div className="max-w-10xl grid grid-cols" style={{width:"160%"}} >
                 <DialogContent>
-                    <div>
-                        <object
-                            data='https://pdfjs-express.s3-us-west-2.amazonaws.com/docs/choosing-a-pdf-viewer.pdf'
-                            type="application/pdf"
-                            width="600"
-                            height="550"
-                        >
-
-                            <iframe
-                            src='https://pdfjs-express.s3-us-west-2.amazonaws.com/docs/choosing-a-pdf-viewer.pdf'
-                            width="600"
-                            height="550"
-                            />
-                        </object>
-                    </div>
+                  <PDFComponent base64={base64 ?? ""} />
                 </DialogContent>  
-                <PDFComponent base64={base64 ?? ""} />
                 </div>
             </div>  
             </Dialog>
