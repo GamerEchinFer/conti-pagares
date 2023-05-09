@@ -198,14 +198,6 @@ const meses: {[key: number]: JSX.Element} = {
     inputRef.current.click()    
   }
 
-  const handleModalDocument = (item: EtiquetaVariableResponse) => {
-    
-  }
-
-  const handleCloseDialogPeriodo = () => {
-
-  }
-
   const cargarDocumentos = () => {
     // Evaluar las condiciones de los documentos que han sido cargados o no
   }

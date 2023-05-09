@@ -166,7 +166,7 @@ const DocumentListComponent  = ({item, refresh}: DocumentListComponentProps) => 
           />
         <ListItemButton>
           <ModalPDFComponent item={item} refresh={refresh} />
-          <DialogPeriodoComponent item={item} />
+          <DialogPeriodoComponent item={item} refresh={refresh}/>
         </ListItemButton>                     
       </ListItem>
       <Divider />

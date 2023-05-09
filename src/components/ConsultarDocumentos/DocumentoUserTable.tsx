@@ -19,14 +19,13 @@ type DocumentoUserTableProps = {
   documentosUser: DocumentosUsuarioResponse | undefined,
   query: string,
   handleClickViewDoc: () => void,
-  idGroup: number,
-  
+  idGroup: number
 }
 
 
 const DocumentoUserTable = ({documentosUser, query, handleClickViewDoc, idGroup }: DocumentoUserTableProps) => {
 
-  const {datosCliente, fullScreen, open, handleClickRow, handleClose, rowSelected, base64} = useDocumentUser()
+  const {datosCliente, fullScreen, open, handleClickRow, handleClose, rowSelected, base64} = useDocumentUser();
 
   if (!documentosUser) {
     return null
@@ -46,11 +45,9 @@ const DocumentoUserTable = ({documentosUser, query, handleClickViewDoc, idGroup 
         documentosUserFilter.map(row => (
           <> 
             <DocumentoUserTableRow key={row.datosAdicionales.idDocumento} row={row} onClickRow={() => handleClickRow(row)} />
-
-           
           </>
-          ))
-        }
+        ))
+      }
         <Dialog
           fullScreen={fullScreen}
           open={open}
@@ -68,7 +65,7 @@ const DocumentoUserTable = ({documentosUser, query, handleClickViewDoc, idGroup 
             <DialogContent>
               <DialogContentText
                   className="pb-4">
-                    {rowSelected?.datosAdicionales?.rutaHadoop ?? ""}
+                    {/* {rowSelected?.datosAdicionales?.rutaHadoop ?? ""} */}
                   <div className="pr-10" style={{ color: "#373A3C", fontSize:"16px"}}>Código de Cliente 
                       <span style={{color:"#818A91", fontSize:"16px"}}> {datosCliente.codigoCliente}</span></div>
                   <div className="pr-10">

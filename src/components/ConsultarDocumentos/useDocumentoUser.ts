@@ -8,13 +8,13 @@ import { ColeccionDocumento } from "../../interfaces/interfaces";
 import { RootState } from "../../redux/store";
 
 export const useDocumentUser = () => {
-    const datosCliente = useSelector((state: RootState) => state.clienteDatos.items);
+  const datosCliente = useSelector((state: RootState) => state.clienteDatos.items);
 
   const fullScreen = useMediaQuery(theme.breakpoints.down('xl'));
 
   const [open, setOpen] = useState(false);
   const [rowSelected, setRowSelected] = useState<ColeccionDocumento | undefined>(undefined)  
-  const [base64, setBase64] = useState("")
+  const [base64, setBase64] = useState("");
 
   const handleClose = () => {        
     setOpen(false);
