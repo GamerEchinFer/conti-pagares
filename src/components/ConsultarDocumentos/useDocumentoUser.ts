@@ -29,14 +29,16 @@ export const useDocumentUser = () => {
     const download = await getDescargarHadoopDirecto(rutaHadoop);
 
     if (!download || !download.data || !download.data.loc) {
+        
       // Alerta
       console.log("El download.data.loc no existe: ", download);      
-      return;
+      return download;
     }
 
     const viewPdf = `${download?.data?.loc ?? ""}` 
 
-    setBase64(parsePdfBase64(viewPdf as string))
+    setBase64(parsePdfBase64(viewPdf as string));
+    
   }
 
   return {datosCliente, fullScreen, open, handleClickRow, handleClose, rowSelected, base64}

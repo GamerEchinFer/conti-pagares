@@ -51,18 +51,23 @@ function ConsultarDocumentosComponent() {
   setName("nuevaSolicitud");
 
   const solicitud = useSolicitud(4);
+  
 
   useEffect(() => {
+    dispatch(documentosUserActions.setItemsMappedReset()); 
+  });
+  
+  useEffect(() => {
+    
     dispatch(getDocumentosUserAction(datosCliente.codigoCliente, idGroupSelected));
+    
+    dispatch(documentosUserActions.setIdGroupSelectedReset());
 
     dispatch(documentosUserActions.documentosUserReset());
 
     dispatch(tipoDocumentoHistoricoActions.tipoDocumentoHistoricoReset());
   }, []);
   
-  useEffect(() => {
-    dispatch(documentosUserActions.setIdGroupSelectedReset());
-  }, []);
 
   const handleIconBack = () => {
     dispatch(solicitudActions.setPage(-1))

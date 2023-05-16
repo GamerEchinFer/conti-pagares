@@ -9,22 +9,23 @@ import RadioButtonOption from "../../components/RadioButtonOption";
 import TBBodyPrincipal from "../../components/TipoBusqueda/TBBodyPrincipal";
 import GDITitulosComponent from "../../components/TituloySubtitulo/GDITitulosComponent";
 import LoadingIcon from "../../components/shared/LoadingIcon";
-import { TipoBusqueda } from '../../interfaces/interfaces';
+import { ExtractosServiceDescargarArchivo, TipoBusqueda } from '../../interfaces/interfaces';
 import { busquedaActions } from "../../redux/slices/busqueda.slice";
 import { clienteDatosActions } from '../../redux/slices/clienteDatos.slice';
 import { clienteDocumentoActions } from "../../redux/slices/clienteDocumento.slice";
 import { RootState } from "../../redux/store";
 import { getClienteDatosAction } from '../../redux/thunks/clienteDatos.thunks';
 import styles from './TipoBusqueda.module.css';
+import { useKeycloak } from "@react-keycloak/web";
+import { login } from "../../actions/Auth.actions";
+import { getUsuarioKeyCloack } from "../../redux/slices/auth/auth.slice";
 
 const filtros = ["codigo", "documento"]
 
 const TipoBusquedaPage = () => {
-
-  const dispatch = useDispatch()
-
   
-
+  const dispatch = useDispatch()
+  
   const [tipoBusqueda, setTipoBusqueda] = useState<TipoBusqueda | null>();
   const [tipoBusquedaSelected, setTipoBusquedaSelected] = useState(1);
   const [codigoCliente, setCodigoCliente] = useState("");
@@ -34,8 +35,31 @@ const TipoBusquedaPage = () => {
   const auth = useSelector((state: RootState) => state.authGDI.gdiAuth);
   const clienteDatos = useSelector((state: RootState) => state.clienteDatos.items);
   const loading = useSelector((state: RootState) => state.clienteDatos.loading);
-
+  const { keycloak, initialized } = useKeycloak();
   const router = useRouter();
+
+
+  const autenticar = () => {
+    if (keycloak.authenticated === false && !keycloak?.tokenParsed?.preferred_username) {
+      keycloak.login();
+    }
+  };
+  
+  useEffect(() => {
+    if (initialized) {
+      autenticar();
+    }
+  }, []);
+  
+  useEffect(() => {
+    if (keycloak?.tokenParsed?.preferred_username) {
+      login();
+      dispatch(getUsuarioKeyCloack(keycloak?.tokenParsed?.preferred_username))
+    }
+  }, [keycloak?.tokenParsed?.preferred_username]);
+  
+  console.log(getUsuarioKeyCloack);
+  
 
   useEffect(() => {
       // dispatch(getProductosAction());
@@ -64,13 +88,54 @@ const TipoBusquedaPage = () => {
     }
   };
 
+
+  const handleDocument = () => {
+    // debugger
+    const axios = require('axios');
+    let data = '<?xml version="1.0" encoding="UTF-8"?><Documentos><usuario>AVI</usuario><path>digitalizacion_documentos\\000666\\2022\\12\\14\\172944\\correo raquel.pdf</path></Documentos>';
+    
+    let config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: 'https://srvfuente-evo.bancontinental.com.py:5005/api/nintex/postBajarArchivoPAS',
+      headers: { 
+        'Content-Type': 'text/xml'
+      },
+      data : data
+    };
+    
+    axios.request(config)
+    .then((response: any) => {
+      console.log(JSON.stringify(response.data));
+      var xhr = new XMLHttpRequest();
+      const parser = new DOMParser();
+      const xml = response.data
+      const doc = parser.parseFromString(xml, "text/xml");
+      console.log("first", doc)
+      const contenido = doc.getElementsByTagName('contenido')[0]
+      
+      if(contenido){
+        const base64Binary = contenido.getElementsByTagName('base64Binary')[0];
+        if(base64Binary){ console.log(base64Binary.outerHTML)} else {console.log('error de xml')}
+      } else { console.log("no existe contenido")}
+      
+      // console.log(doc)
+    })
+    .catch((error: any) => {
+      console.log(error);
+    });
+    
+  }
+
   return (
     <>
 			<Grid container pt={3} style={{ justifyContent: 'center' }}>
 				<Box className={styles['box-user']} style={{padding: mediaQueryPadding ? '0px 0px' : '0px'}}>
         <div>
+          {/* {JSON.stringify()} */}
           <GDITitulosComponent />
           <TBBodyPrincipal />
+          {/* <button onClick={handleDocument}>Extractos</button> */}
           <div>
             <div>
               <RadioButtonOption

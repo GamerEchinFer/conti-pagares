@@ -1,7 +1,7 @@
 import axios from "axios";
 import AppConfig from "../config/config";
 import { bearer, defaultheaders } from "../helpers/headers";
-import { ClienteDatos, Producto } from "../interfaces/interfaces";
+import { ClienteDatos } from "../interfaces/interfaces";
 import AsignarMarcaPLA from "../models/dtos/actualizacion/AsignarMarcaDto.model";
 import DatosAgenteResponse from "../models/responses/DatosAgente.response";
 import IpGeolocationResponse from "../models/responses/ipGeolocation.response";
@@ -11,21 +11,21 @@ import PermisosUsuarioResponse from "../models/responses/PermisosUsuario.respons
 import { payloadCliente } from "../pages/api/datos/cliente";
 
 export const loginApiGDI = async () => {
+    const loginResp = await axios.post<LoginResponse>(
+        AppConfig.auth.loginGDI,
+        null,
+        { headers: { 
+            'Client-Id': process.env.NEXT_PUBLIC_CLIENTE_ID as string, 
+            'Client-Secret': process.env.NEXT_PUBLIC_CLIENT_SECRET as string,
+            'Subscription-Key': process.env.NEXT_PUBLIC_SUSCRIPTION_KEY as string,
+            }
+        }
+    );
 
-    const loginResp = await axios.post<LoginResponse>(AppConfig.auth.loginGDI
-                                                    , null
-                                                    , { headers: { 
-                                                        'Client-Id': process.env.NEXT_PUBLIC_CLIENTE_ID as string, 
-                                                        'Client-Secret': process.env.NEXT_PUBLIC_CLIENT_SECRET as string,
-                                                        'Subscription-Key': process.env.NEXT_PUBLIC_SUSCRIPTION_KEY as string,
-                                                        }
-                                                    });
-
-    if (loginResp)  return loginResp
+    if (loginResp) return loginResp;
     else
-        return null
+    return null;
 }
-
 
 export const getClientId = async (payload:payloadCliente, deviceInfo: string, userInfo: string) => {
     const _headers =  defaultheaders;

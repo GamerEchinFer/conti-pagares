@@ -32,6 +32,9 @@ const documentosUserSlice = createSlice({
             state.success = false;
             state.error = action.payload
         },
+        setItemsMappedReset(state) {            
+            state.itemsMapped = null as any;            
+        },
         documentosUserReset(state) {
             state.loading = false;
             state.success = false;

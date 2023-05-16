@@ -25,7 +25,7 @@ export const encriptarString = (message: string) => {
         keySize: keySize / 32,
         iterations: 10
     });
-
+    
     const iv = CryptoJS.lib.WordArray.random(128 / 8);
     const encrypted = CryptoJS.AES.encrypt(message, key, {
         iv: iv,

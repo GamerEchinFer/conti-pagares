@@ -8,6 +8,7 @@ import {
     EtiquetaVariable,
     EtiquetaVariableResponse,
     ExtractosServiceDescargarArchivo,
+    ExtractosServiceSubirArchivo,
     GuardarDocumentoRequest,                
     GuardarHistorialUsuarioRequest,                
     HadoopDirectoRequest,
@@ -78,7 +79,6 @@ export const postAlzarHadoopDirecto = async (body: FormData, path_images: string
 
     return undefined;
 }
-
 
 export async function getClienteDatos(codigoCliente: string) {    
     // const URL = `https://api-sandbox.bancontinental.com.py/interno/clientes/datos/v1/clientes/${codigoCliente}`;    
@@ -187,9 +187,33 @@ export const postDescargarArchivo = async (body: DescargarArchivo, token: string
 
     return data;
 }
-export const postEstractosServiceDescargar = async (body: ExtractosServiceDescargarArchivo) => {    
-    const {data} = await axios.post<ExtractosServiceDescargarArchivo, AxiosResponse<string>>( ``, {
-        headers: { "Content-Type": "application/xml"}});
 
+export const postExtractosServiceDescargar = async (body: ExtractosServiceDescargarArchivo) => {   
+    const URL = `http://10.6.2.134:10100/extractos.asmx`;
+    const {data} = await axios.post<ExtractosServiceDescargarArchivo, AxiosResponse<string>>( URL, body, {
+        headers: { "Content-Type": "text/xml"}});
+    return data;
+}
+
+export const postExtractosServiceSubir = async (
+    body: ExtractosServiceSubirArchivo,
+    usuario: string, noise: string, stringResult: string, path: string, tipo: string
+    ) => {   
+    const URL = `http://10.6.2.134:10100/extractos.asmx`;
+    const xml = ``;
+    const {data} = await axios.post<ExtractosServiceDescargarArchivo, AxiosResponse<string>>( URL, body, {
+        headers: { "Content-Type": "text/xml"},
+        params: {'<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ext="http://10.1.1.191/extractosService.asmx">' :+ "\n" +
+        '  <soapenv:Header/>' + "\n" +
+        '  <soapenv:Body>' + "\n" +
+        '     <ext:bajarArchivo>' + "\n" +
+        '        <ext:usuario>' + usuario + '</ext:usuario>' + "\n" +
+        '        <ext:noise>' + noise + '</ext:noise>' + "\n" +
+        '        <ext:stringResult>' + stringResult + '</ext:stringResult>' + "\n" +
+        '        <ext:path>' + path + '</ext:path>' + "\n" +
+        '        <ext:tipo>' + tipo + '</ext:tipo>' + "\n" +
+        '     </ext:bajarArchivo>' + "\n" +
+        '  </soapenv:Body>' + "\n" +
+        '</soapenv:Envelope>'}});
     return data;
 }
