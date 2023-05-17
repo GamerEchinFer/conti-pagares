@@ -9,7 +9,7 @@ import RadioButtonOption from "../../components/RadioButtonOption";
 import TBBodyPrincipal from "../../components/TipoBusqueda/TBBodyPrincipal";
 import GDITitulosComponent from "../../components/TituloySubtitulo/GDITitulosComponent";
 import LoadingIcon from "../../components/shared/LoadingIcon";
-import { ExtractosServiceDescargarArchivo, TipoBusqueda } from '../../interfaces/interfaces';
+import { TipoBusqueda } from '../../interfaces/interfaces';
 import { busquedaActions } from "../../redux/slices/busqueda.slice";
 import { clienteDatosActions } from '../../redux/slices/clienteDatos.slice';
 import { clienteDocumentoActions } from "../../redux/slices/clienteDocumento.slice";
@@ -24,7 +24,7 @@ const filtros = ["codigo", "documento"]
 
 const TipoBusquedaPage = () => {
   
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   
   const [tipoBusqueda, setTipoBusqueda] = useState<TipoBusqueda | null>();
   const [tipoBusquedaSelected, setTipoBusquedaSelected] = useState(1);
@@ -37,7 +37,6 @@ const TipoBusquedaPage = () => {
   const loading = useSelector((state: RootState) => state.clienteDatos.loading);
   const { keycloak, initialized } = useKeycloak();
   const router = useRouter();
-
 
   const autenticar = () => {
     if (keycloak.authenticated === false && !keycloak?.tokenParsed?.preferred_username) {
@@ -59,8 +58,8 @@ const TipoBusquedaPage = () => {
   }, [keycloak?.tokenParsed?.preferred_username]);
   
   console.log(getUsuarioKeyCloack);
-  
 
+  
   useEffect(() => {
       // dispatch(getProductosAction());
       // if (auth) {
@@ -91,40 +90,39 @@ const TipoBusquedaPage = () => {
 
   const handleDocument = () => {
     // debugger
-    const axios = require('axios');
-    let data = '<?xml version="1.0" encoding="UTF-8"?><Documentos><usuario>AVI</usuario><path>digitalizacion_documentos\\000666\\2022\\12\\14\\172944\\correo raquel.pdf</path></Documentos>';
+    // const axios = require('axios');
+    // let data = '<?xml version="1.0" encoding="UTF-8"?><Documentos><usuario>AVI</usuario><path>digitalizacion_documentos\\780304\\2018\\2\\14\\135420\\MANIFESTACION DE BIENES.pdf</path></Documentos>';
     
-    let config = {
-      method: 'post',
-      maxBodyLength: Infinity,
-      url: 'https://srvfuente-evo.bancontinental.com.py:5005/api/nintex/postBajarArchivoPAS',
-      headers: { 
-        'Content-Type': 'text/xml'
-      },
-      data : data
-    };
+    // let config = {
+    //   method: 'post',
+    //   maxBodyLength: Infinity,
+    //   url: 'https://srvfuente-evo.bancontinental.com.py:5005/api/nintex/postBajarArchivoPAS',
+    //   headers: { 
+    //     'Content-Type': 'text/xml'
+    //   },
+    //   data : data
+    // };
     
-    axios.request(config)
-    .then((response: any) => {
-      console.log(JSON.stringify(response.data));
-      var xhr = new XMLHttpRequest();
-      const parser = new DOMParser();
-      const xml = response.data
-      const doc = parser.parseFromString(xml, "text/xml");
-      console.log("first", doc)
-      const contenido = doc.getElementsByTagName('contenido')[0]
+    // axios.request(config)
+    // .then((response: any) => {
+    //   console.log(JSON.stringify(response.data));
+    //   var xhr = new XMLHttpRequest();
+    //   const parser = new DOMParser();
+    //   const xml = response.data
+    //   const doc = parser.parseFromString(xml, "text/xml");
+    //   console.log("first", doc)
+    //   const contenido = doc.getElementsByTagName('contenido')[0]
       
-      if(contenido){
-        const base64Binary = contenido.getElementsByTagName('base64Binary')[0];
-        if(base64Binary){ console.log(base64Binary.outerHTML)} else {console.log('error de xml')}
-      } else { console.log("no existe contenido")}
+    //   if(contenido){
+    //     const base64Binary = contenido.getElementsByTagName('base64Binary')[0];
+    //     if(base64Binary){ console.log(base64Binary.outerHTML)} else {console.log('error de xml')}
+    //   } else { console.log("no existe contenido")}
       
-      // console.log(doc)
-    })
-    .catch((error: any) => {
-      console.log(error);
-    });
-    
+    //   // console.log(doc)
+    // })
+    // .catch((error: any) => {
+    //   console.log(error);
+    // });
   }
 
   return (
@@ -132,10 +130,10 @@ const TipoBusquedaPage = () => {
 			<Grid container pt={3} style={{ justifyContent: 'center' }}>
 				<Box className={styles['box-user']} style={{padding: mediaQueryPadding ? '0px 0px' : '0px'}}>
         <div>
-          {/* {JSON.stringify()} */}
+          {/* {JSON.stringify(getProductos())} */}
           <GDITitulosComponent />
           <TBBodyPrincipal />
-          {/* <button onClick={handleDocument}>Extractos</button> */}
+          {/* <button onClick={handleDocument} color="primary">Extractos</button> */}
           <div>
             <div>
               <RadioButtonOption

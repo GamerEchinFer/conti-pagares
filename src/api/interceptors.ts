@@ -1,6 +1,5 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
-import { keycloakHeaders, keyCloakHeadersHadoop, keyCloakHeadersHadoopGDI } from "../constants/constants";
-import { AuthenticationResponse } from "../interfaces/interfaces";
+import { keycloakHeaders } from "../constants/constants";
 import Cookies from "universal-cookie";
 import store from "../redux/store";
 import { encriptar } from "../helpers/encriptar";
