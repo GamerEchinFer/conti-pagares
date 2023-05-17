@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
 import { useMount, useUnmount } from 'ahooks';
-import { useRouter } from "next/router";
 import * as pdfjsLib from 'pdf-lib';
 import { DragEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,6 +21,7 @@ import { RootState } from "../../redux/store";
 import { getSolicitudClienteAction } from "../../redux/thunks/solicitud.thunks";
 import { postEtiquetasVariablesAction } from "../../redux/thunks/etiqueta.thunk";
 import CargaExitosaComponent from "../../components/SubirDocumentos/CargaExitosaComponent";
+import {useRouter} from 'next/router';
 
 const SubirDocumentoPage = ()  => {
 
