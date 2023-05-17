@@ -1,5 +1,5 @@
 import { Box, Grid, TextField, useMediaQuery } from "@mui/material";
-import { useRouter } from "next/router";
+import useRouter from "next/router";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { theme } from "../../../theme/Theme";
@@ -36,7 +36,7 @@ const TipoBusquedaPage = () => {
   const clienteDatos = useSelector((state: RootState) => state.clienteDatos.items);
   const loading = useSelector((state: RootState) => state.clienteDatos.loading);
   const { keycloak, initialized } = useKeycloak();
-  const router = useRouter();
+  // const router = useRouter();
 
   const autenticar = () => {
     if (keycloak.authenticated === false && !keycloak?.tokenParsed?.preferred_username) {
