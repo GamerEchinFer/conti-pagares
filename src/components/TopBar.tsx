@@ -20,13 +20,38 @@ import { getProductosAction } from '../redux/thunks/producto.thunks';
 import { getClienteDatosAction } from '../redux/thunks/clienteDatos.thunks';
 import { getBusquedaAction } from '../redux/thunks/busqueda.thunks';
 import { getSolicitudClienteAction } from '../redux/thunks/solicitud.thunks';
+import { getUsuarioKeyCloack } from '../redux/slices/auth/auth.slice';
+import { useEffect } from "react";
+import { useDispatch } from 'react-redux';
+import { login } from '../actions/Auth.actions';
 
 const ResponsiveAppBar = () => {
 
 	const { usuarioKeycloack } = useSelector((state:RootState)=>state.auth);
 	const router = useRouter();
-    const { keycloak } = useKeycloak();
+    const { keycloak ,initialized} = useKeycloak();
 
+	const autenticar = () => {
+		if (keycloak.authenticated === false && !keycloak?.tokenParsed?.preferred_username) {
+		  keycloak.login();
+		}
+	  };
+	  
+	  useEffect(() => {
+		if (initialized) {
+		  autenticar();
+		}
+	  }, []);
+	  
+	  useEffect(() => {
+		if (keycloak?.tokenParsed?.preferred_username) {
+		  login()
+		  dispatch(getUsuarioKeyCloack(keycloak?.tokenParsed?.preferred_username))
+		}
+	  }, [keycloak?.tokenParsed?.preferred_username]);
+	  
+	  console.log(getUsuarioKeyCloack);
+	  
 	const handleOpenUserMenu = () => {
 		 keycloak.logout({redirectUri: process.env.NEXT_PUBLIC_HOST_VALIDO})
 		 

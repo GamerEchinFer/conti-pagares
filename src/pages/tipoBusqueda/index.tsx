@@ -1,5 +1,5 @@
 import { Box, Grid, TextField, useMediaQuery } from "@mui/material";
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { theme } from "../../../theme/Theme";
@@ -38,42 +38,27 @@ const TipoBusquedaPage = () => {
   const { keycloak, initialized } = useKeycloak();
   const router = useRouter();
 
-  // const autenticar = () => {
-  //   if (keycloak.authenticated === false && !keycloak?.tokenParsed?.preferred_username) {
-  //     keycloak.login();
-  //   }
-  // };
-  
-  // useEffect(() => {
-  //   if (initialized) {
-  //     autenticar();
-  //   }
-  // }, []);
-  
-  // useEffect(() => {
-  //   if (keycloak?.tokenParsed?.preferred_username) {
-  //     login();
-  //     dispatch(getUsuarioKeyCloack(keycloak?.tokenParsed?.preferred_username))
-  //   }
-  // }, [keycloak?.tokenParsed?.preferred_username]);
-  
-  // console.log(getUsuarioKeyCloack);
-
-  
   useEffect(() => {
-      // dispatch(getProductosAction());
-      // if (auth) {
-        dispatch(busquedaActions.busquedaRequest());
-        dispatch(clienteDatosActions.clienteDatosReset());
-        dispatch(clienteDocumentoActions.clienteDocumentoReset()); 
-      //}      
-      /*postAutenticarServicio(keycloakHeaders).then((value) => {    
-        debugger;        
-        localStorage.setItem("gdi-auth", JSON.stringify(value));      
-      }).finally(() => {
+      dispatch(busquedaActions.busquedaRequest());
+      dispatch(clienteDatosActions.clienteDatosReset());
+      dispatch(clienteDocumentoActions.clienteDocumentoReset());
+}, [auth])
 
-      })*/
-  }, [auth])
+  
+  // useEffect(() => {
+  //     // dispatch(getProductosAction());
+  //     // if (auth) {
+  //       dispatch(busquedaActions.busquedaRequest());
+  //       dispatch(clienteDatosActions.clienteDatosReset());
+  //       dispatch(clienteDocumentoActions.clienteDocumentoReset()); 
+  //     //}      
+  //     /*postAutenticarServicio(keycloakHeaders).then((value) => {    
+  //       debugger;        
+  //       localStorage.setItem("gdi-auth", JSON.stringify(value));      
+  //     }).finally(() => {
+
+  //     })*/
+  // }, [auth])
 
   /*useEffect(() => {
     getTipoBusquedaById(tipoBusquedaSelected).then((response) => {
