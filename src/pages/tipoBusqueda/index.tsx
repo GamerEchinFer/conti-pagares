@@ -38,26 +38,26 @@ const TipoBusquedaPage = () => {
   const { keycloak, initialized } = useKeycloak();
   const router = useRouter();
 
-  const autenticar = () => {
-    if (keycloak.authenticated === false && !keycloak?.tokenParsed?.preferred_username) {
-      keycloak.login();
-    }
-  };
+  // const autenticar = () => {
+  //   if (keycloak.authenticated === false && !keycloak?.tokenParsed?.preferred_username) {
+  //     keycloak.login();
+  //   }
+  // };
   
-  useEffect(() => {
-    if (initialized) {
-      autenticar();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (initialized) {
+  //     autenticar();
+  //   }
+  // }, []);
   
-  useEffect(() => {
-    if (keycloak?.tokenParsed?.preferred_username) {
-      login();
-      dispatch(getUsuarioKeyCloack(keycloak?.tokenParsed?.preferred_username))
-    }
-  }, [keycloak?.tokenParsed?.preferred_username]);
+  // useEffect(() => {
+  //   if (keycloak?.tokenParsed?.preferred_username) {
+  //     login();
+  //     dispatch(getUsuarioKeyCloack(keycloak?.tokenParsed?.preferred_username))
+  //   }
+  // }, [keycloak?.tokenParsed?.preferred_username]);
   
-  console.log(getUsuarioKeyCloack);
+  // console.log(getUsuarioKeyCloack);
 
   
   useEffect(() => {
