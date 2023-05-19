@@ -5,27 +5,9 @@ import { ClienteDatos } from "../interfaces/interfaces";
 import AsignarMarcaPLA from "../models/dtos/actualizacion/AsignarMarcaDto.model";
 import DatosAgenteResponse from "../models/responses/DatosAgente.response";
 import IpGeolocationResponse from "../models/responses/ipGeolocation.response";
-import LoginResponse from "../models/responses/Login.response";
 import MarcasPlaResponse from "../models/responses/MarcasPLA.response";
 import PermisosUsuarioResponse from "../models/responses/PermisosUsuario.response";
 import { payloadCliente } from "../pages/api/datos/cliente";
-
-export const loginApiGDI = async () => {
-    const loginResp = await axios.post<LoginResponse>(
-        AppConfig.auth.loginGDI,
-        null,
-        { headers: { 
-            'Client-Id': process.env.NEXT_PUBLIC_CLIENTE_ID as string, 
-            'Client-Secret': process.env.NEXT_PUBLIC_CLIENT_SECRET as string,
-            'Subscription-Key': process.env.NEXT_PUBLIC_SUSCRIPTION_KEY as string,
-            }
-        }
-    );
-
-    if (loginResp) return loginResp;
-    else
-    return null;
-}
 
 export const getClientId = async (payload:payloadCliente, deviceInfo: string, userInfo: string) => {
     const _headers =  defaultheaders;

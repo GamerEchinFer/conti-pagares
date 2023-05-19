@@ -2,18 +2,13 @@
 releaseName: front-finansysweb-modulo-gestion-documental
 
 config: 
-  NEXT_PUBLIC_API_BASE_URL='https://api-sandbox-gw.bancontinental.com.py/'
-  NEXT_PUBLIC_API_TIME_OUT=60000
-  NEXT_PUBLIC_SUSCRIPTION_KEY='578a3e189d3a4da791ad1aa2a00bae3c'
-  NEXT_PUBLIC_CLIENT_SECRET=93160740-269a-47c6-83e8-1e8eb0e39ee0
-  NEXT_PUBLIC_CLIENTE_ID='gestion-documental'
-  NEXT_PUBLIC_HOST_VALIDO='https://gdi-qa.bancontinental.com.py/'
-  NEXT_PUBLIC_URL_REDIRECT='https://www.bancontinental.com.py/'
-  NEXT_PUBLIC_URL_KEYCLOAK='https://keycloak-qa.bancontinental.com.py/auth/'
-  NEXT_PUBLIC_CLIENTE_ID_KEYCLOAK='gdiAuth'
-  NEXT_PUBLIC_CANAL='gdi'
-  NEXT_PUBLIC_KEY_AES='bf9f7a94d694aa5915b590a57ea516e7'
-  NEXT_PUBLIC_GRANT_TYPE='client_credentials'
+  NEXT_PUBLIC_API_BASE_URL: 'https://api-sandbox.bancontinental.com.py/'
+  NEXT_PUBLIC_API_TIME_OUT: 60000
+  NEXT_PUBLIC_SUSCRIPTION_KEY: '578a3e189d3a4da791ad1aa2a00bae3c'
+  NEXT_PUBLIC_CLIENT_SECRET: 93160740-269a-47c6-83e8-1e8eb0e39ee0
+  NEXT_PUBLIC_CLIENTE_ID: 'gestion-documental'
+  NEXT_PUBLIC_HOST_VALIDO: 'http: //localhost:9000/'
+  NEXT_PUBLIC_URL_REDIRECT: 'https://www.bancontinental.com.py/'
 
 deployment:  
   replicas: 1

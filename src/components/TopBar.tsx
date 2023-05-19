@@ -30,27 +30,6 @@ const ResponsiveAppBar = () => {
 	const { usuarioKeycloack } = useSelector((state:RootState)=>state.auth);
 	const router = useRouter();
     const { keycloak ,initialized} = useKeycloak();
-
-	const autenticar = () => {
-		if (keycloak.authenticated === false && !keycloak?.tokenParsed?.preferred_username) {
-		  keycloak.login();
-		}
-	  };
-	  
-	  useEffect(() => {
-		if (initialized) {
-		  autenticar();
-		}
-	  }, []);
-	  
-	  useEffect(() => {
-		if (keycloak?.tokenParsed?.preferred_username) {
-		  login()
-		  dispatch(getUsuarioKeyCloack(keycloak?.tokenParsed?.preferred_username))
-		}
-	  }, [keycloak?.tokenParsed?.preferred_username]);
-	  
-	  console.log(getUsuarioKeyCloack);
 	  
 	const handleOpenUserMenu = () => {
 		 keycloak.logout({redirectUri: process.env.NEXT_PUBLIC_HOST_VALIDO})

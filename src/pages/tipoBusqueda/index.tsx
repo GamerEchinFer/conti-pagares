@@ -16,9 +16,6 @@ import { clienteDocumentoActions } from "../../redux/slices/clienteDocumento.sli
 import { RootState } from "../../redux/store";
 import { getClienteDatosAction } from '../../redux/thunks/clienteDatos.thunks';
 import styles from './TipoBusqueda.module.css';
-import { useKeycloak } from "@react-keycloak/web";
-import { login } from "../../actions/Auth.actions";
-import { getUsuarioKeyCloack } from "../../redux/slices/auth/auth.slice";
 
 const filtros = ["codigo", "documento"]
 
@@ -35,80 +32,18 @@ const TipoBusquedaPage = () => {
   const auth = useSelector((state: RootState) => state.authGDI.gdiAuth);
   const clienteDatos = useSelector((state: RootState) => state.clienteDatos.items);
   const loading = useSelector((state: RootState) => state.clienteDatos.loading);
-  const { keycloak, initialized } = useKeycloak();
-  const router = useRouter();
 
   useEffect(() => {
-      dispatch(busquedaActions.busquedaRequest());
-      dispatch(clienteDatosActions.clienteDatosReset());
-      dispatch(clienteDocumentoActions.clienteDocumentoReset());
+    dispatch(busquedaActions.busquedaRequest());
+    dispatch(clienteDatosActions.clienteDatosReset());
+    dispatch(clienteDocumentoActions.clienteDocumentoReset());
 }, [auth])
-
-  
-  // useEffect(() => {
-  //     // dispatch(getProductosAction());
-  //     // if (auth) {
-  //       dispatch(busquedaActions.busquedaRequest());
-  //       dispatch(clienteDatosActions.clienteDatosReset());
-  //       dispatch(clienteDocumentoActions.clienteDocumentoReset()); 
-  //     //}      
-  //     /*postAutenticarServicio(keycloakHeaders).then((value) => {    
-  //       debugger;        
-  //       localStorage.setItem("gdi-auth", JSON.stringify(value));      
-  //     }).finally(() => {
-
-  //     })*/
-  // }, [auth])
-
-  /*useEffect(() => {
-    getTipoBusquedaById(tipoBusquedaSelected).then((response) => {
-      setTipoBusqueda(response.data)
-    })
-  }, [tipoBusquedaSelected]);*/
 
   const focusUsernameInputField = (input: any )=> {
     if (input) {
       setTimeout(() => {input.focus()}, 100);
     }
   };
-
-
-  const handleDocument = () => {
-    // debugger
-    // const axios = require('axios');
-    // let data = '<?xml version="1.0" encoding="UTF-8"?><Documentos><usuario>AVI</usuario><path>digitalizacion_documentos\\780304\\2018\\2\\14\\135420\\MANIFESTACION DE BIENES.pdf</path></Documentos>';
-    
-    // let config = {
-    //   method: 'post',
-    //   maxBodyLength: Infinity,
-    //   url: 'https://srvfuente-evo.bancontinental.com.py:5005/api/nintex/postBajarArchivoPAS',
-    //   headers: { 
-    //     'Content-Type': 'text/xml'
-    //   },
-    //   data : data
-    // };
-    
-    // axios.request(config)
-    // .then((response: any) => {
-    //   console.log(JSON.stringify(response.data));
-    //   var xhr = new XMLHttpRequest();
-    //   const parser = new DOMParser();
-    //   const xml = response.data
-    //   const doc = parser.parseFromString(xml, "text/xml");
-    //   console.log("first", doc)
-    //   const contenido = doc.getElementsByTagName('contenido')[0]
-      
-    //   if(contenido){
-    //     const base64Binary = contenido.getElementsByTagName('base64Binary')[0];
-    //     if(base64Binary){ console.log(base64Binary.outerHTML)} else {console.log('error de xml')}
-    //   } else { console.log("no existe contenido")}
-      
-    //   // console.log(doc)
-    // })
-    // .catch((error: any) => {
-    //   console.log(error);
-    // });
-  }
 
   return (
     <>
@@ -118,7 +53,6 @@ const TipoBusquedaPage = () => {
           {/* {JSON.stringify(getProductos())} */}
           <GDITitulosComponent />
           <TBBodyPrincipal />
-          {/* <button onClick={handleDocument} color="primary">Extractos</button> */}
           <div>
             <div>
               <RadioButtonOption
@@ -183,10 +117,7 @@ const TipoBusquedaPage = () => {
           </div>
           <DatosPersonales />
           
-        </div>
-        {/* <div className="flex flex-row justify-center gap-8 pb-8">
-            <NextButtonTB disabled={!clienteDatos || !clienteDatos.codigoCliente} onClick={handleClickNext} />
-        </div> */}
+          </div>
         </Box>
       </Grid>
     </>
