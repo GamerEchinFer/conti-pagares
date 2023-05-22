@@ -1,7 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { keycloakHeaders } from "../constants/constants";
 import Cookies from "universal-cookie";
-import store from "../redux/store";
 import { encriptar } from "../helpers/encriptar";
 import ErrorResponse from "../models/responses/ErrorResponse";
 import abiError400 from '../assets/img/errorBar/abi-001.svg';
@@ -13,7 +12,8 @@ import { v4 as uuidv4 } from 'uuid';
 import DeviceDto from "../models/dtos/Device.model";
 import { browserName, browserVersion, fullBrowserVersion, osName, osVersion } from "react-device-detect";
 import { dataError, uiSetError } from "../redux/slices/ui/ui.slice";
-import AppConfig from "../config/config";
+import { store } from "../redux/store";
+import { ConfigApiInterna } from "../config/config";
 
 export const apmAuthInterceptor = (config: AxiosRequestConfig) => {
 
@@ -64,23 +64,24 @@ const interceptors = () => {
     }
 
     const cookies = new Cookies();
-    let Device: string = '';
     let UserInfo: string = '';
+    let Device: string = '';
+    let req: AxiosRequestConfig = {};
 
     axios.interceptors.request.use((config: AxiosRequestConfig) => {
         if(typeof window !== 'undefined'){
-            if(store.getState().auth.cliente !== null){
-                UserInfo = encriptar(`${JSON.stringify(store.getState().auth.cliente)}`)
+            if(store.getState().auth.codigoCliente !== null){
+                UserInfo = encriptar(`${JSON.stringify(store.getState().auth.codigoCliente)}`)
             };
 
-            if(cookies.get('Cookie') === undefined || cookies.get('Cookie').length === 0){
-                const DeviceInfo: DeviceDto = {
-                    acceso:                     'WEB',
+            if(cookies.get('DeviceInfo') === undefined || cookies.get('DeviceInfo').length === 0){
+                const DeviceInfo = {
+                    acceso:                     process.env.NEXT_PUBLIC_CANAL as string,
                     sistemaOperativo:           `${osName} ${osVersion}`,
                     navegador:                  `${browserName} ${browserVersion}`,
                     versionSistemaOperativo:    osVersion,
                     versionNavegador:           fullBrowserVersion,
-                    idDispositivo:              `${uuidv4()}`,
+                    idDispositivo:              store.getState().auth.idDispositivo,
                     ipDispositivo:              store.getState().auth.ipGeolocation !== null ? store.getState().auth.ipGeolocation?.ip : '',
                     dispositivo:                window.navigator.userAgent,
                     pais:                       store.getState().auth.ipGeolocation !== null ? store.getState().auth.ipGeolocation?.country_name : '',
@@ -88,81 +89,90 @@ const interceptors = () => {
                     latitud:                    store.getState().auth.ipGeolocation !== null ? store.getState().auth.ipGeolocation?.latitude : '',
                     longitud:                   store.getState().auth.ipGeolocation !== null ? store.getState().auth.ipGeolocation?.longitude : '',
                 };
-                cookies.set('Cookie', encriptar(`${JSON.stringify(DeviceInfo)}`), { path: '/' });
-                Device = cookies.get('Cookie');
+                cookies.set('DeviceInfo', encriptar(`${JSON.stringify(DeviceInfo)}`), { path: '/' });
+                Device = cookies.get('DeviceInfo');
             }else{
-                Device = cookies.get('Cookie');
-            };
+                Device = cookies.get('DeviceInfo');
+            }
         }
 
         config.headers!['DeviceInfo'] = Device;
         config.headers!['UserInfo'] = UserInfo;
+        req = config;
         return config;
     });
 
-    axios.interceptors.response.use(
-        (response: AxiosResponse<any>) => {
-            return response;
+    axios.interceptors.response.use((response: AxiosResponse<any>) => {
+        if(response?.config?.url !== ConfigApiInterna.auth.logs){
+            //insertLogs(response, null, req);
+        }
+        return response;
     },
+
     async (error: AxiosError<ErrorResponse>) => {
-    const alertDescription = error.response?.data?.errorDescription || error.response?.data?.errorMessage || error.response?.data?.message || defaultErrorDescription;
-       if (typeof window !== 'undefined') {
-        store.dispatch(uiSetError(alertDescription));
-        if (error.response?.status !== 401 && (error.config.url?.includes(AppConfig.interna.auth.cliente))){
-            return error.response;
+        if(error?.config?.url !== ConfigApiInterna.auth.logs){
+            //insertLogs(null, error, req);
         }
-        switch (error.response?.status) {
-            case 400:
-                store.dispatch(dataError({
-                    codigo: error.response?.status,
-                    imagen: abiError400
-                }));
-                return error.response.data
-            case 401:
-                store.dispatch(dataError({
-                    codigo: error.response?.status,
-                    imagen: abiError401
-                }));
-                return error.response.data
-            case 403:
-                store.dispatch(dataError({
-                    codigo: error.response?.status,
-                    imagen: abiError400
-                }));
-                return error.response.data
-            case 404:
-                store.dispatch(dataError({
-                    codigo: error.response?.status,
-                    imagen: abiError404
-                }));
-                return error.response.data
-            case 500:
-                store.dispatch(dataError({
-                    codigo: error.response?.status,
-                    imagen: abiError500
-                }));
-                return error.response.data
-            case 503:
-                store.dispatch(dataError({
-                    codigo: error.response?.status,
-                    imagen: abiError503
-                }));
-                return error.response.data
-            case 506:
-                store.dispatch(dataError({
-                    codigo: error.response?.status,
-                    imagen: abiError503
-                }));
-                return error.response?.data
-        }
-        return error?.response?.data
-       }else{
+
+        const alertDescription = error.response?.data?.errorDescription || error.response?.data?.errorMessage || error.response?.data?.message || defaultErrorDescription;
+
+        if (typeof window !== 'undefined') {
+            store.dispatch(uiSetError(alertDescription));
+            if (error.response?.status !== 401 && (error.config?.url?.includes(ConfigApiInterna.auth.permisosUsuario) || error.config?.url?.includes(ConfigApiInterna.auth.permisosUsuario) || error.config?.url?.includes((ConfigApiInterna.auth.permisosUsuario)))){
+                return error.response;
+            }
+            switch (error.response?.status) {
+                case 400:
+                    store.dispatch(dataError({
+                        codigo: error.response?.status,
+                        imagen: abiError400
+                    }));
+                    return error.response.data
+                case 401:
+                    store.dispatch(dataError({
+                        codigo: error.response?.status,
+                        imagen: abiError401
+                    }));
+                    return error.response.data
+                case 403:
+                    store.dispatch(dataError({
+                        codigo: error.response?.status,
+                        imagen: abiError400
+                    }));
+                    return error.response.data
+                case 404:
+                    store.dispatch(dataError({
+                        codigo: error.response?.status,
+                        imagen: abiError404
+                    }));
+                    return error.response.data
+                case 500:
+                    store.dispatch(dataError({
+                        codigo: error.response?.status,
+                        imagen: abiError500
+                    }));
+                    return error.response.data
+                case 503:
+                    store.dispatch(dataError({
+                        codigo: error.response?.status,
+                        imagen: abiError503
+                    }));
+                    return error.response.data
+                case 506:
+                    store.dispatch(dataError({
+                        codigo: error.response?.status,
+                        imagen: abiError503
+                    }));
+                    return error.response?.data
+            }
+            return error?.response?.data
+        }else if(error.response?.status){
+            if((error.response.data as any).error_description === 'Invalid client secret' || (error.response.data as any).error_description === 'Client not enabled to retrieve service account' ) return {status: error.response.status ,descripcion:(error.response.data as any).error_description};
             return error.response
-       }
-
-    }
-);
-
+        }else{
+            return error
+        }
+    });
 }
 
-export default interceptors
+export default interceptors;

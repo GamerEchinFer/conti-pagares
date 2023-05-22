@@ -1,28 +1,44 @@
-let AppConfig = {
-    interna: {
-        auth:{
-            token: '/api/datos/token',
-            cliente: '/api/datos/cliente',
-        }
-    },
+import { logsEvents, modulos } from "../helpers/enums";
+
+export const ConfigApiExterna = {
     auth: {
-        datosAgente: '/api-usuarios/v1/usuarios/${usuario}',
+        token: '/autenticarServicio/v1/realms/interno',
         permisosUsuario: '/finansys-admin/v1/usuarios/${usuario}/permisos/urls?aplicacion=FSYS-WEB',
-        getProducto: '/gestion-documental-interno/v1/productos',
-        getSubproducto:'/gestion-documental-interno/v1/subproductos',
-        getTipoDocumentos: '/gestion-documental-interno/v1/tipos-documentos',
-        getParametros: '/gestion-documental-interno/v1/parametros',
-        getParametrosVisibles: '/gestion-documental-interno/v1/parametros-visibles',
-        getNumeroLegajo: '/gestion-documental-interno/v1/numero-legajo',
-        postGuardarHistorialUsuario: '/gestion-documental-interno/v1/guardar-historial-usuario',
-        postGuardarDocumento: '/gestion-documental-interno/v1/guardar-documento',
-        postChecklist: '/gestion-documental-interno/v1/checklist',
-        getClienteCodigo: '/interno/clientes/datos/v1/clientes',
-        getClienteNroDocumento: '/interno/clientes/datos/v1/clientes/datos?numeroDocumento',
-        listarMarcasPLA: '/api-pla/v1/alertas/marcaspla/${codCliente}',
-        asignarMarcaPLA: '/api-pla/v1/alertas/asignarMarca',
         ipGeolocation: 'https://api.ipgeolocation.io/ipgeo?apiKey=5edeb9b31aae4818af7f4003f1d72b4f',
     }
 }
 
-export default AppConfig;
+export const ConfigApiInterna = {
+    auth: {
+        token: '/api/datos/token',
+        permisosUsuario: '/api/datos/permisos',
+        ipGeolocation: '/api/datos/geolocalizacion',
+        logs: '/api/utilitarios/logs',
+    },
+}
+
+export const Logs = {
+    auth:[
+        {
+            tipoEvento: logsEvents.Transaccional,
+            evento: 'Token',
+            modulo: modulos.Auth,
+            urlInterna: ConfigApiInterna.auth.token,
+            urlExterna: ConfigApiExterna.auth.token
+        },
+        {
+            tipoEvento: logsEvents.Transaccional,
+            evento: 'Permisos de Usuario',
+            modulo: modulos.Auth,
+            urlInterna: ConfigApiInterna.auth.permisosUsuario,
+            urlExterna: ConfigApiExterna.auth.permisosUsuario
+        },
+        {
+            tipoEvento: logsEvents.Transaccional,
+            evento: 'Geolocalización',
+            modulo: modulos.Auth,
+            urlInterna: ConfigApiInterna.auth.ipGeolocation,
+            urlExterna: ConfigApiExterna.auth.ipGeolocation
+        },
+    ],
+}

@@ -5,13 +5,13 @@ import Head from 'next/head';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Persistor } from 'redux-persist';
-import store, { persistor } from '../redux/store';
 import { theme } from '../../theme/Theme';
 import ResponsiveAppBar from '../components/TopBar';
 import interceptors from '../api/interceptors';
 import { ReactKeycloakProvider } from '@react-keycloak/web';
 import keycloak from '../config/Keycloak';
 import ErrorBar from '../components/shared/ErrorBar';
+import { persistor, store } from '../redux/store';
 import AuthGDI from '../components/shared/AuthGDI';
 
 export default function App({ Component, pageProps }: AppProps) {

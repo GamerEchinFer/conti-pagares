@@ -58,25 +58,25 @@ export type OurStore = ReturnType<typeof combineReducers>
 
 const persistedReducer = persistReducer(persistConfig, combinedReducers)
 
-export const store = configureStore ({
+export let store = configureStore ({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware( 
       {
-        thunk:false, 
+        // thunk:false, 
         serializableCheck: {
           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         },
       })
-      .concat(thunk)
+      // .concat(thunk)
 });
 
 
 export let persistor = typeof window !== 'undefined' && persistStore(store)
 
+export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch: () => AppDispatch = useDispatch
 export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch;
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
   RootState,
@@ -84,5 +84,5 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   Action<string>
 >;
 
-export default store;
+// export default store;
 

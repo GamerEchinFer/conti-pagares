@@ -1,7 +1,8 @@
+import { Console } from 'console'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { encriptar } from '../../../helpers/encriptar'
 import { loginApiGDI } from '../../../api/ApiAuth'
 import interceptors from '../../../api/interceptors'
-import { encriptar } from '../../../helpers/encriptar'
 
 type payload = {
   v1: string, 
@@ -21,12 +22,11 @@ export default async function handler(
   res: NextApiResponse
 ) {
     const tokenData = await requestToken()
-    let tokenEncr = encriptar(tokenData?.data.access_token as string)
-    
+    let tokenEncr = tokenData?.data ? encriptar(tokenData?.data.access_token as string) : '';
     if (tokenData){
-      res.status(tokenData.status).json(tokenData?.data.access_token ? tokenEncr : tokenData.data)
+      res.status(tokenData.status ? tokenData.status : ((tokenData as any)?.response?.status) ? (tokenData as any)?.response?.status : 500).json((tokenData?.data && tokenData?.data.access_token) ? tokenEncr : tokenData)
     }else{
-      res.status(500).json('' as string)
+      res.status(500).json(tokenData ? tokenData : '' as string)
     }
   
 }

@@ -16,6 +16,7 @@ import { clienteDocumentoActions } from "../../redux/slices/clienteDocumento.sli
 import { RootState } from "../../redux/store";
 import { getClienteDatosAction } from '../../redux/thunks/clienteDatos.thunks';
 import styles from './TipoBusqueda.module.css';
+import { useGDIAuth } from "../../hooks/useGDIAuth";
 
 const filtros = ["codigo", "documento"]
 
@@ -33,6 +34,7 @@ const TipoBusquedaPage = () => {
   const clienteDatos = useSelector((state: RootState) => state.clienteDatos.items);
   const loading = useSelector((state: RootState) => state.clienteDatos.loading);
 
+  
   useEffect(() => {
     dispatch(busquedaActions.busquedaRequest());
     dispatch(clienteDatosActions.clienteDatosReset());

@@ -11,25 +11,14 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import logo from '../assets/img/generales/logo-continental-blanco.svg';
 import { useSelector } from 'react-redux';
-import { useKeycloak } from '@react-keycloak/web';
 import { RootState, useAppDispatch } from '../redux/store';
-import { useMount } from 'ahooks';
-import { postAutenticarServicio } from '../api/keycloakApi';
-import { keycloakHeaders } from '../constants/constants';
-import { getProductosAction } from '../redux/thunks/producto.thunks';
-import { getClienteDatosAction } from '../redux/thunks/clienteDatos.thunks';
-import { getBusquedaAction } from '../redux/thunks/busqueda.thunks';
-import { getSolicitudClienteAction } from '../redux/thunks/solicitud.thunks';
-import { getUsuarioKeyCloack } from '../redux/slices/auth/auth.slice';
-import { useEffect } from "react";
-import { useDispatch } from 'react-redux';
-import { login } from '../actions/Auth.actions';
+import { useKeycloak } from '@react-keycloak/web';
 
 const ResponsiveAppBar = () => {
 
 	const { usuarioKeycloack } = useSelector((state:RootState)=>state.auth);
 	const router = useRouter();
-    const { keycloak ,initialized} = useKeycloak();
+    const { keycloak } = useKeycloak();
 	  
 	const handleOpenUserMenu = () => {
 		 keycloak.logout({redirectUri: process.env.NEXT_PUBLIC_HOST_VALIDO})
@@ -38,16 +27,7 @@ const ResponsiveAppBar = () => {
 
 	const imageRedirect = () => {
 		if (router.pathname !== '/' && router.pathname !== '/tipoBusqueda'){
-				postAutenticarServicio(keycloakHeaders).then((value) => {            
-				localStorage.setItem("gdi-auth", JSON.stringify(value));
-				console.log(value);
-				router.push('/tipoBusqueda')      
-				dispatch(getBusquedaAction())      
-				// dispatch(getSolicitudClienteAction())
-			}).finally(() => {
-				localStorage.setItem("gdi-auth", JSON.stringify(""));      
-			})
-
+			router.push('/tipoBusqueda')
 		}
 	}
 

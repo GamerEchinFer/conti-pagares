@@ -1,15 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import AuthStateModel from "./auth.state";
+import PermisosUsuarioResponse from "../../../models/responses/PermisosUsuario.response";
 import { IpGeolocationResponse } from "../../../models/responses/ipGeolocation.response";
 
 type authState = AuthStateModel;
 
 const initialState: AuthStateModel = {
-    cliente: null,
+    idDispositivo: '',
     access_token : null,
+    codigoCliente: '',
+    permisosUsuario: [],
     usuarioKeycloack: '',
-    ipGeolocation: null  
-};
+    ipGeolocation: null,
+}
+
 
 const authSlice = createSlice({
     name: 'auth',
@@ -28,7 +32,12 @@ const authSlice = createSlice({
                 access_token: action.payload
             } as authState;
         },
-        
+        getPermisosUsuario : (state,action:PayloadAction<PermisosUsuarioResponse[]>) => {
+            return {
+                ...state,
+                permisosUsuario: action.payload
+            } as authState;
+        },
         getUsuarioKeyCloack : (state,action:PayloadAction<string>) => {
             return {
                 ...state,
@@ -41,16 +50,16 @@ const authSlice = createSlice({
                 ipGeolocation: action.payload
             } as authState;
         },
+       
     },
-});
+})
 
 export const {
-    reset,
     datosLogin,
     login,
+    getPermisosUsuario,
     getUsuarioKeyCloack,
     getIpGeolocation,
-
-  } = authSlice.actions;
+  } = authSlice.actions
 
 export default authSlice.reducer;

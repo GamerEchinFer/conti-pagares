@@ -11,7 +11,7 @@ export const useTipoBusqueda = () => {
 
     useEffect(() => {
         if (auth && auth.access_token) {
-          console.log("prueba auth", auth);
+          console.log("authentication GDI", auth);
           getTipoBusqueda()
           .then((response) => {
             setTipoBusqueda(response.data);

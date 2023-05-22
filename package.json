@@ -6,7 +6,8 @@
     "dev": "next dev -p 9000",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prod": "next export"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -26,7 +27,7 @@
     "crypto-js": "^4.1.1",
     "dayjs": "^1.11.7",
     "formik": "^2.2.9",
-    "keycloak-js": "^20.0.2",
+    "keycloak-js": "^19.0.3",
     "lottie-react": "^2.4.0",
     "moment": "^2.29.4",
     "next": "^13.0.1",
