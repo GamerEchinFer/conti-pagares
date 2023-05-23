@@ -102,17 +102,8 @@ const interceptors = () => {
         return config;
     });
 
-    axios.interceptors.response.use((response: AxiosResponse<any>) => {
-        if(response?.config?.url !== ConfigApiInterna.auth.logs){
-            //insertLogs(response, null, req);
-        }
-        return response;
-    },
 
     async (error: AxiosError<ErrorResponse>) => {
-        if(error?.config?.url !== ConfigApiInterna.auth.logs){
-            //insertLogs(null, error, req);
-        }
 
         const alertDescription = error.response?.data?.errorDescription || error.response?.data?.errorMessage || error.response?.data?.message || defaultErrorDescription;
 
@@ -172,7 +163,7 @@ const interceptors = () => {
         }else{
             return error
         }
-    });
+    };
 }
 
 export default interceptors;

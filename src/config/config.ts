@@ -13,7 +13,6 @@ export const ConfigApiInterna = {
         token: '/api/datos/token',
         permisosUsuario: '/api/datos/permisos',
         ipGeolocation: '/api/datos/geolocalizacion',
-        logs: '/api/utilitarios/logs',
     },
 }
 
