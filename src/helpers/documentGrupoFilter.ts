@@ -1,7 +1,4 @@
 import { ColeccionDocumento, DocumentosUsuarioResponse } from '../interfaces/interfaces';
-import { listarCodigoCliente } from '../api/ApiAuth';
-import { datosCliente } from '../redux/slices/datosCliente.slice';
-import { allowedNodeEnvironmentFlags } from 'process';
 
 /**
  * Example:
