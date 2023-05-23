@@ -2,9 +2,10 @@ import { Box } from '@mui/material'
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { modalPara, uiSetError } from '../redux/slices/ui/ui.slice';
+import { modalPara, uiSetError, dataError as dataErrorReducer} from '../redux/slices/ui/ui.slice';
 import { RootState, useAppDispatch } from '../redux/store';
 import styles from './genericos/Genericos.module.css';
+
 interface HeaderProps {
   icono?: string;
   estilosIcono?: React.CSSProperties;
@@ -61,7 +62,3 @@ const Header = ({icono, estilosIcono, titulo, logo, callBack, showClose=true, es
 }
 
 export default Header
-
-function dataErrorReducer(arg0: null): any {
-  throw new Error('Function not implemented.');
-}

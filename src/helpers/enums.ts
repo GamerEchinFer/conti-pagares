@@ -20,13 +20,6 @@ export const statusSolicitudes = {
     Recibido:             1,
 };
 
-export const monedas = {
-    PYG: 'PYG',
-    USD: 'USD',
-    EUR: 'EUR',
-    BRL: 'BRL'
-};
-
 export const modulos = {
 	Auth:				'Autenticación',
 	Producto:			'Productos',
