@@ -17,6 +17,11 @@ import { RootState } from "../../redux/store";
 import { getClienteDatosAction } from '../../redux/thunks/clienteDatos.thunks';
 import styles from './TipoBusqueda.module.css';
 import { useGDIAuth } from "../../hooks/useGDIAuth";
+import { v4 as uuidv4 } from 'uuid';
+import { useKeycloak } from '@react-keycloak/web';
+import { reset as resetUi } from '../../redux/slices/ui/ui.slice';
+import { getUsuarioKeyCloack, reset as resetAuth } from '../../redux/slices/auth/auth.slice';
+import { login } from "../../actions/Auth.actions";
 
 const filtros = ["codigo", "documento"]
 
@@ -33,6 +38,9 @@ const TipoBusquedaPage = () => {
   const auth = useSelector((state: RootState) => state.authGDI.gdiAuth);
   const clienteDatos = useSelector((state: RootState) => state.clienteDatos.items);
   const loading = useSelector((state: RootState) => state.clienteDatos.loading);
+  const { keycloak, initialized } = useKeycloak();
+	const { idDispositivo } = useSelector((state:RootState)=>state.auth);
+	const { access_token, permisosUsuario } = useSelector((state:RootState)=>state.auth)
 
   
   useEffect(() => {
@@ -40,6 +48,37 @@ const TipoBusquedaPage = () => {
     dispatch(clienteDatosActions.clienteDatosReset());
     dispatch(clienteDocumentoActions.clienteDocumentoReset());
 }, [auth])
+
+const limpiarDatos = () => {
+  dispatch(resetAuth());
+  dispatch(resetUi());
+}
+
+const autenticar = () => {
+  if(keycloak.authenticated === false && !keycloak?.tokenParsed?.preferred_username){
+    keycloak.login()
+  }
+}
+
+useEffect(() => {
+  limpiarDatos();
+  if (initialized) {
+    autenticar()
+  }
+}, [])
+
+useEffect(() => {
+  if (keycloak?.tokenParsed?.preferred_username){
+    login()
+    dispatch(getUsuarioKeyCloack(keycloak?.tokenParsed?.preferred_username))
+  }
+}, [keycloak?.tokenParsed?.preferred_username])
+
+useEffect(() => {
+  if (access_token && keycloak?.tokenParsed?.preferred_username){
+    console.log("procedimientos ejecutandose")
+  }
+}, [access_token])
 
   const focusUsernameInputField = (input: any )=> {
     if (input) {

@@ -19,7 +19,12 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        reset: () => initialState,
+        reset: (state) => {
+            return {
+                ...initialState,
+                idDispositivo:state.idDispositivo,
+            }
+        },
         datosLogin : (state:authState,action:PayloadAction<string | null>) => {
             return {
                 ...state,
@@ -55,6 +60,7 @@ const authSlice = createSlice({
 })
 
 export const {
+    reset,
     datosLogin,
     login,
     getPermisosUsuario,
