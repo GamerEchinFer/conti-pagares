@@ -11,8 +11,6 @@ export const STORAGE_GDI_AUTH = "gdi-auth";
 export const useGDIAuth = () => {
 
   const dispatch = useDispatch();
-
-  // const [auth, setAuth] = useLocalStorageState<AuthenticationResponse | undefined>(STORAGE_GDI_AUTH, {defaultValue: undefined})  
   
   const requestAuth = () => {
     dispatch(authGDIActions.requestAuth());

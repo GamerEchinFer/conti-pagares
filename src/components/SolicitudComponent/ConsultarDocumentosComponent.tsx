@@ -1,4 +1,4 @@
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSolicitud } from '../../hooks/useSolicitud';
 import { solicitudActions } from '../../redux/slices/solicitud.slice';
@@ -28,11 +28,8 @@ import DocumentoUserTable from '../ConsultarDocumentos/DocumentoUserTable';
 import DocumentoUserSubGrupoTable from '../ConsultarDocumentos/DocumentoUserSubGrupoTable';
 import { tipoDocumentoHistoricoActions } from '../../redux/slices/documentoHistorico.slice';
 import { documentUserMapper } from '../../helpers/documentUserMapper';
-import { ColeccionDocumento, DocumentosUsuarioResponse } from '../../interfaces/interfaces';
-import { documentosUserActions, documentosUser } from '../../redux/slices/documentosUser.slice';
-import { parsePdfBase64 } from '../../helpers/cutPdf';
-import { etiquetaVariableActions } from '../../redux/slices/etiquetaVariable.slice';
-import { getDescargarHadoopDirecto } from '../../api/apmDesaApi';
+import { DocumentosUsuarioResponse } from '../../interfaces/interfaces';
+import { documentosUserActions } from '../../redux/slices/documentosUser.slice';
 
 function ConsultarDocumentosComponent() {
   const [ name, setName ] = useState("");
@@ -169,7 +166,6 @@ function ConsultarDocumentosComponent() {
                 handleClickViewDoc={handleClickViewDoc}
                 onClickRow={onClickRow}
               />
-              {/* {JSON.stringify(documentosUser)}   */}
             </TableBody>           
           </Table>
         </TableContainer>

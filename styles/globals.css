@@ -6,13 +6,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  /* font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif; */
-    /* height: 100% !important;
-    width: 100% !important;
-    display: flex; */
   font-family: 'ContiSans';
-
 }
 
 a {
@@ -24,19 +18,15 @@ a {
   box-sizing: border-box;
 }
 
-  /* width */
   ::-webkit-scrollbar {
     width: 8px !important;
   }
   
-  
-  /* Track */
   ::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px rgb(166, 166, 166) !important; 
     border-radius: 8px !important;
   }
    
-  /* Handle */
   ::-webkit-scrollbar-thumb {
     background: #1D428A !important; 
     border-radius: 8px !important;
@@ -44,7 +34,6 @@ a {
   
 .homeTitle {
   font-family: 'ContiSans' !important;
-  /* font-weight: 400 ;  */
   color: #1D428A ;
   font-size: 30px ;
   text-align: left ;
@@ -92,25 +81,6 @@ a {
   font-size: 16px !important;
   text-transform:capitalize !important;  
 }
-
-/* .tipoBusquedaComponent {
-  width: 206px !important;
-  height: 35px !important;
-  border-radius: 4px !important;
-  box-shadow: none !important;
-  font-size: 16px !important;
-  text-transform:capitalize !important;
-  background-color: #ffffff !important;
-} */
-/* 
-.tipobusqueda {
-  padding:10px !important;
-  padding-top: 0px !important;
-  padding-Bottom: 0px !important;
-  padding-right: 10px !important;
-  border-radius: 0px !important;
-} */
-
 
 .labelRadio {
   font-family: 'ContiSans' !important;
@@ -192,14 +162,6 @@ a {
   background-color: #ffffff !important;
 }
 
-/* svg {
-  width: 70px;
-  height: 70px;
-}
-svg:hover {
-  fill: red;
-} */
-
 .dropZoneSecondary {
   display: flex;
   flex-direction: column ;
@@ -216,9 +178,6 @@ svg:hover {
 .dropZone {
   display: flex;
   flex-direction: column ;
-  /* justify-content: start ;
-  align-items: start; */
-  /* height: 360px !important; */
   border: 3px dashed #5375B3 !important; 
   padding: 40px !important;
   border-radius: 6px;
@@ -227,7 +186,6 @@ svg:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* border-radius: 9999px #ffffff; */
 }
 
 .periodicidad {
@@ -262,7 +220,6 @@ svg:hover {
   padding: 6px 16px 4px !important;
   border-radius: 5px !important;
   text-transform:capitalize !important;
-  /* color: #ffffff; */
 }
 
 .tablaHistorico {
@@ -287,28 +244,6 @@ svg:hover {
   src: url('../src/assets/fonts/ContiSans-Light.otf') format('opentype');
 }
 
-
-
-/* @media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-    height: 100% !important;
-  }
-  body {
-    height: 100% !important;
-    color: white;
-    background: black;
-  }
-} */
-/* html {
-  width: 100% !important;
-  height: 100% !important;
-}
-body {
-  height: 100% !important;
-  width: 100% !important;
-} */
-
 html,body {
   height: 100% !important;
   width: 100% !important;
@@ -319,7 +254,6 @@ html,body {
   height: 100% !important;
   width: 100% !important;
 }
-
 
 .loader {
   margin-top: 5px;

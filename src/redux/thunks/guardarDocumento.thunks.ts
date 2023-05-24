@@ -1,4 +1,3 @@
-
 import { AppDispatch } from "../store";
 import { guardarDocumentoActions } from "../slices/guardarDocumento.slice";
 import { postGuardarDocumento } from "../../api/apmDesaApi";
@@ -10,10 +9,7 @@ export const postGuardarDocumentoAction: any = (body: GuardarDocumentoRequest) =
     try {
         
       const data = await postGuardarDocumento(body);
-
-        // if (data && data.idDocumentos) {
         if (data) {
-          // dispatch(guardarDocumentoActions.guardarDocumentoSuccess(data))
           dispatch(guardarDocumentoActions.guardarDocumentoSuccess);
         }
 

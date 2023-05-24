@@ -90,7 +90,6 @@ const [tipoDocumentoSelected, setTipoDocumentoSelected] = useState<TipoDocumento
     const mapDocumentos = (item: EtiquetaVariableResponse) => {
         return (
             <div>
-                {/* <p>{item?.datosAdicionales[0]?.descripcion ?? ""}</p> */}
             </div>
         )
     }
@@ -120,12 +119,6 @@ const [tipoDocumentoSelected, setTipoDocumentoSelected] = useState<TipoDocumento
                 <DatosClienteComponent />
             </DialogTitle>
             <DialogContent>                  
-            {/* <DialogContentText
-                style={{ fontWeight:"600", fontSize:"28px", color:"#1D428A" }}
-                className="pl-28 pt-2"
-            >
-                Tipos de Documentos a añadir
-            </DialogContentText> */}
                 <div className="flex justify-start pl-28 pt-6">
                 {documentos.map(mapDocumentos)}
                 <FormControl size="small" sx={{ m: 1, width: 550 }}>

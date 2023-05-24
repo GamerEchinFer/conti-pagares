@@ -4,8 +4,6 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { modalPara, uiSetError, dataError as dataErrorReducer} from '../redux/slices/ui/ui.slice';
 import { RootState, useAppDispatch } from '../redux/store';
-import styles from './genericos/Genericos.module.css';
-
 interface HeaderProps {
   icono?: string;
   estilosIcono?: React.CSSProperties;

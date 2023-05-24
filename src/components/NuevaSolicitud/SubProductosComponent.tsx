@@ -2,11 +2,10 @@ import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { useSelector } from "react-redux";
 import { capitalize } from "../../helpers/capitalize";
 import { RootState } from "../../redux/store";
-import ArrowSelect from "../shared/ArrowSelect";
 
 type SubProductosComponentProps = {
-    idSubProducto: number,
-    setIdSubProducto: any
+  idSubProducto: number,
+  setIdSubProducto: any
 }
 
 const SubProductosComponent = ({idSubProducto, setIdSubProducto}: SubProductosComponentProps) => {
@@ -26,7 +25,6 @@ const SubProductosComponent = ({idSubProducto, setIdSubProducto}: SubProductosCo
               }}
               value={idSubProducto}
               label="subproductos"
-              // IconComponent={ArrowSelect}
               onChange={(item) => {
                   setIdSubProducto(Number(item.target?.value ?? 1));
                 }}
@@ -38,8 +36,7 @@ const SubProductosComponent = ({idSubProducto, setIdSubProducto}: SubProductosCo
                 }) : null
               }  
             </Select>
-            
-            </FormControl>
+          </FormControl>
       </div>
     </>
   )                    

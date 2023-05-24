@@ -14,7 +14,7 @@ import React, {useState, ChangeEvent} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { theme } from '../../../theme/Theme';
 import { capitalize } from '../../helpers/capitalize';
-import { EtiquetaVariableBody, EtiquetaVariableResponse } from '../../interfaces/interfaces';
+import { EtiquetaVariableResponse } from '../../interfaces/interfaces';
 import { etiquetaVariableActions } from '../../redux/slices/etiquetaVariable.slice';
 import { hadoopDirectoActions } from '../../redux/slices/hadoop.slice';
 import ButtonConfirmar from '../Buttons/ButtonConfirmar';
@@ -88,7 +88,6 @@ export default function ModalPDFComponent({item, refresh}: ModalPDFComponentProp
   
   dayjs.locale("es");
   const date = dayjs().format("DD/MMMM/YYYY");
-  // const date = dayjs().locale("es").format("DD/MMMM/YYYY");
   const [value, setValue] = useState<Dayjs | null>(
     dayjs(),
   );                                                                                             
@@ -102,7 +101,6 @@ export default function ModalPDFComponent({item, refresh}: ModalPDFComponentProp
   });
 
   const handleClose = () => {
-    // setOpen(false);
     dispatch(etiquetaVariableActions.etiquetaVariableCloseAllModals());
   };    
 
@@ -165,20 +163,11 @@ export default function ModalPDFComponent({item, refresh}: ModalPDFComponentProp
     } catch (err: any) {
       console.log(err);
     }
-    // base64 => cortar => base64Modified
   }
   const confirm = async () => {
     
     const res = await documento.guardarDocumento(item, fechaEmision, operacion);
-    // dispatch(postAlzarArchivoAction({
-    //   descripcion: "test3",
-    //   fileStringBase64: item.base64Modified,
-    //   fileName: "test3.pdf",
-    //   convertirPDF: true,
-    //   path: "digitalizacion_documento\\gdi\\documento"
-    // }))s
     refresh()
-    
     dispatch(etiquetaVariableActions.etiquetaVariableCloseAllModals());
   }
 
@@ -301,7 +290,6 @@ export default function ModalPDFComponent({item, refresh}: ModalPDFComponentProp
             <div className="flex flex-row justify-center gap-8 pb-4">
               <CancelButton onClick={handleClose}/>
               <ButtonConfirmar onClick={confirm} />
-              {/* <ButtonModificar onClick={handleClose}/> */}
             </div>
         </DialogContent>
         <div className="max-w-10xl grid grid-cols" style={{width:"160%"}}>

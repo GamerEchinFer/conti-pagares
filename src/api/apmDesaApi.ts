@@ -23,7 +23,7 @@ import {
     TipoDocumento, 
     TipoDocumentoHistoricoResponse, 
     } from '../interfaces/interfaces';
-import { apmApi, tokenUserDocumento } from './index';
+import { apmApi, apmApiCliente, tokenUserDocumento } from './index';
 import { CreateTokenInternoResponse } from '../interfaces/interfaces';
 
 export async function getProductos() {    
@@ -67,7 +67,6 @@ export async function getDescargarHadoopDirecto(downloadpath: string) {
 }
 
 export const postAlzarHadoopDirecto = async (body: FormData, path_images: string, overwrite: boolean, chunksize: number) => {
-    // const URL = `/upload?path_images`;
     const URL = `https://desa-docker01.bancontinental.com.py:8200/upload`;
     const response = await axios.post<FormData, AxiosResponse<HadoopDirectoResponse>>(URL, body, {
             headers: {'Content-Type':'multipart/form-data'},
@@ -81,18 +80,16 @@ export const postAlzarHadoopDirecto = async (body: FormData, path_images: string
 }
 
 export async function getClienteDatos(codigoCliente: string) {    
-    const URL = `https://api-sandbox.bancontinental.com.py/interno/clientes/datos/v1/clientes/${codigoCliente}`;    
-    // const URL = `https://api-test.bancontinental.com.py/interno/clientes/datos/v1/clientes/${codigoCliente}`;    
-    const response = await apmApi.get<ClienteDatos>(URL, {
+    const URL = `/clientes/${codigoCliente}`;    
+    const response = await apmApiCliente.get<ClienteDatos>(URL, {
         params: {codigoCliente}
     });
     return response
 }
 
 export async function getClienteDocumento(numeroDocumento: string) {    
-    const URL = `https://api-sandbox.bancontinental.com.py/interno/clientes/datos/v1/clientes/datos`;            
-    // const URL = `https://api-test.bancontinental.com.py/interno/clientes/datos/v1/clientes/datos`;            
-    const response = await apmApi.get<ClienteDocumento>(URL, {
+    const URL = `/clientes/datos`;            
+    const response = await apmApiCliente.get<ClienteDocumento>(URL, {
         params: {numeroDocumento},        
     });
     return response

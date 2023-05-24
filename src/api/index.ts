@@ -8,45 +8,31 @@ export const api = axios.create(
     }
 );
 
-
-// export const continentalApi = axios.create(
-//     {
-//         baseURL: baseUrl2  
-//     }
-// );
-
-// ES PARA CONECTARSR CON KEYCLOAK Y GENERA EL ACCESS TOKEN. PERO ESTE TIENE QUE ESTAR EN NEXTJS
 export const authApi = axios.create(
     {
-        // baseURL: "https://api-test-gw.bancontinental.com.py/autenticarServicio/v1/realms/interno"  
-        // baseURL: "https://api-sandbox-gw.bancontinental.com.py/autenticarServicio/v1/realms/interno"  
-        // baseURL: "https://api-test.bancontinental.com.py/autenticarServicio/v1/realms/interno"  
-        baseURL: "https://api-sandbox.bancontinental.com.py/autenticarServicio/v1/realms/interno"
+        baseURL: "https://apibanking-gw.bancontinental.com.py/autenticarServicio/v1/realms/interno"
     }
-);
+    );
+    
+    export const apmApi = axios.create(
+        {
+            baseURL: "https://apibanking-gw.bancontinental.com.py/gestion-documental-interno/v1"
+        }
+    );
 
-// SON LAS APIS QUE TRABAJAN CON SUBSCRIPTION KEY Y CON AUTHORIZATION EN DONDE SE LE PASA EL ACCESS TOKEN
-export const apmApi = axios.create(
-    {
-        // baseURL: "https://api-test.bancontinental.com.py/gestion-documental-interno/v1"
-        baseURL: "https://api-sandbox.bancontinental.com.py/gestion-documental-interno/v1"    
-    }
-);
+    export const apmApiCliente = axios.create(
+        {
+            baseURL: "https://apibanking-gw.bancontinental.com.py/interno/clientes/datos/v1"
+        }
+    );
 
 apmApi.interceptors.request.use(apmAuthInterceptor);
 
 export const apmHadoopApi = axios.create(
     {
-        // baseURL: "http://10.6.3.84:5051"
-        // baseURL: "http://10.6.3.84:5055"
         baseURL: "http://10.6.3.84:8200",
-        // baseURL: "https://apihadoop-desa.bancontinental.com.py"
     }
 );
-
-// comment the subscription key for use unique without problems
-// apmHadoopApi.interceptors.request.use(apmAuthInterceptorHadoop);
-
 
 export const apmHadoopGDI = axios.create(
     {

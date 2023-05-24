@@ -1,21 +1,13 @@
 import { FormControl, Grid, InputLabel, MenuItem, Select } from '@mui/material';
-import { useState } from 'react'
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import BackButton from '../Buttons/BackButton';
 
 const FormularioNuevaSolicitud = () => {
-
-  const [idProducto, setProducto] = useState()
-  const [idSubProducto, setIdSubProducto] = useState()
-  const [parametroVisible, setParametroVisible] = useState()
-
   const productos = useSelector((state: RootState) => state.producto.items);
   const actividad = useSelector((state: RootState) => state.producto.items);
   const subProductos = useSelector((state: RootState) => state.subProducto.items);
   const tipoRiesgo = useSelector((state: RootState) => state.producto.items);
   const destino = useSelector((state: RootState) => state.producto.items);
-  
 
   return (
     <>
@@ -96,7 +88,7 @@ const FormularioNuevaSolicitud = () => {
               >
                 {
                   tipoRiesgo.map((item) => {
-                                        return <MenuItem key={item.idProducto} value={item.idProducto}>{item.descripcion}</MenuItem>
+                    return <MenuItem key={item.idProducto} value={item.idProducto}>{item.descripcion}</MenuItem>
 
                   })
                 } 
@@ -117,8 +109,7 @@ const FormularioNuevaSolicitud = () => {
             >
               {
                 actividad.map((item) => {
-                                      return <MenuItem key={item.idProducto} value={item.idProducto}>{item.descripcion}</MenuItem>
-
+                  return <MenuItem key={item.idProducto} value={item.idProducto}>{item.descripcion}</MenuItem>
                 })
               } 
             </Select>
@@ -140,14 +131,12 @@ const FormularioNuevaSolicitud = () => {
               {
                 destino.map((item) => {
                   return <MenuItem key={item.idProducto} value={item.idProducto}>{item.descripcion}</MenuItem>
-
                 })
               } 
             </Select>
           </FormControl>
         </Grid>
       </Grid>
-      {/* <BackButton /> */}
     </>
   )
 }

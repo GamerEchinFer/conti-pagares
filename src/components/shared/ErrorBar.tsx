@@ -14,9 +14,7 @@ import Image from 'next/image';
 const ErrorBar = () => {
     const dispatch = useAppDispatch();
 	const router = useRouter();
-
     const { dataError, msgError, modalPara } = useSelector((state: RootState) => state.ui);
-
     const [mostrarModal, setMostrarModal] = useState<boolean>(true);
     const [caducoSession, setCaducoSession] = useState<boolean>(false);
 
@@ -42,7 +40,6 @@ const ErrorBar = () => {
             const url: string = window.location.pathname;
             const redirect: boolean = redirectsDisabled.find(e => e.path === url) ? false : true;            
             if(redirect){
-                // router.push('/tipoBusqueda');
                 return;
             }
 
@@ -132,14 +129,6 @@ const ErrorBar = () => {
                                                 </Typography>
                                             </Box>
                                         }
-        
-                                        {/* <GroupButton
-                                            funcionBtnIzq={()=>{}}
-                                            mostrarDosBotones={false}
-                                            buttonType="button"
-                                            funcionBtnDer={()=>{handleClose()}}
-                                            textoDer={caducoSession && window.location.pathname !== '/' ? 'Ir a la página de Inicio' : 'Aceptar' }
-                                        /> */}
                                     </Box>
                                 </div>
                             </div>

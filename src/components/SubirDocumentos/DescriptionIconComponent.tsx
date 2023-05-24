@@ -4,14 +4,13 @@ import Documento from '../../assets/svg/Documento.svg';
 type props = {
   imagen? : string;
 }
+
 const DescriptionIconComponent = ({imagen = Documento}: props) => {
   return (
     <>
-    <div className="flex justify-start">
-      {/* <ListItemIcon> */}
+      <div className="flex justify-start">
         <Image src={imagen}  alt='documento' />
-      {/* </ListItemIcon> */}
-    </div>
+      </div>
     </>
   )
 }

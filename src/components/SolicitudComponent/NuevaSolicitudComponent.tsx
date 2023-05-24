@@ -19,35 +19,6 @@ import { getNumeroLegajoAction } from '../../redux/thunks/numeroLegajo.thunks';
 import LoadingIcon from '../shared/LoadingIcon';
 
 const initialBody = (body?: EtiquetaVariableBody) => ({
-  // codigoCliente: {
-  //    "nombre": "codigoCliente",
-  //    "valor": "000666"
-  // },
-  // tipo_persona: {
-  //    "nombre": "tipo_persona",
-  //    "valor": "F"
-  // },
-  // id_producto: {
-  //   "nombre": "id_producto",
-  //   "valor": "7"
-  // },
-  // id_subproducto: {
-  //   "nombre": "id_subproducto",
-  //   "valor": "146"
-  // },
-  // id_actividad: {
-  //   "nombre": "id_actividad",
-  //   "valor": "1"
-  // },
-  // id_riesgo: {
-  //   "nombre": "id_riesgo",
-  //   "valor": "4"
-  // },
-  // id_destino: {
-  //   "nombre": "id_destino",
-  //   "valor": "1"        
-  // }
-  
   ...body
 })
 
@@ -65,9 +36,6 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
   const loadingSubProducto = useSelector((state: RootState) => state.subProducto.loading);
   const etiquetaVariableSuccess = useSelector((state: RootState) => state.etiquetaVariable.success);
   const etiquetaVariableBody = useSelector((state: RootState) => state.etiquetaVariable.etiquetaVariableBody);
-  // const idProducto = useSelector((state: RootState) => state.solicitud.idProducto);
-  // const idSubProducto = useSelector((state: RootState) => state.solicitud.idSubProducto);
-
   const [nuevaSolicitud, setNuevaSolicitud] = useState(0);
   const [idProducto, setIdProducto] = useState(0);
   const [idSubProducto, setIdSubProducto] = useState(0);
@@ -101,18 +69,6 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
   useEffect(() => {
     dispatch(parametroActions.parametroSuccess({})) 
   }, [])
-
-
-  // CUANDO TRAE LAS ETIQUETAS VARIABLES CORRECTAMENTE SE VA A LA SIGUIENTE PANTALLA
-  // useEffect(() => {
-  //   if (etiquetaVariableSuccess) {
-  //     router.push('/subirDocumento');
-  //   }
-
-  //   return () => {
-  //     dispatch(etiquetaVariableActions.etiquetaVariableReset())
-  //   }
-  // }, [etiquetaVariableSuccess])
 
   useEffect(() => {
     if (idProducto) {
@@ -154,7 +110,6 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
   return (
     <>
       <div className="grid grid-cols-2 gap-2 pt-4">
-        {/* {JSON.stringify(body)}       */}
         <div 
           className="text-left pl-5"
           style={{

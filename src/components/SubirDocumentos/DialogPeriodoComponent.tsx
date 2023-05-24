@@ -272,11 +272,8 @@ const meses: {[key: number]: JSX.Element} = {
                           (
                             <>
                               <LightTooltip disableTouchListener title="Visualizar archivo cargado" arrow>
-                                {/* Debe abrir el modal con el PDF que se subio en MESPERIODOS CON EL IDX */}
-                                {/* CREAR UN NUEVO MODAL PDF */}
                                 <button style={buttonStyle(item)} onClick={() => openViewPdfModal(idx)}>
                                   {capitalize(`${idx.name}`)}
-                                {/* {(capitalize(`${item.tipoDocumento}`))}                       */}
                                 </button>
                               </LightTooltip>
                             </>
@@ -306,17 +303,13 @@ const meses: {[key: number]: JSX.Element} = {
           onDragOver={handleDragOver}
           onDrop={handleDrop}
         >
-          {/* <form ref={formRef}> */}
-            <input
-              type="file"
-              // multiple solo en casos de selección multiple           
-              onChange={(event) => handleFile(event.target.files)}
-              hidden
-              ref={inputRef}
-              // Only PDF
-              accept=".pdf" 
-            />
-          {/* </form> */}
+          <input
+            type="file"
+            onChange={(event) => handleFile(event.target.files)}
+            hidden
+            ref={inputRef}
+            accept=".pdf" 
+          />
         </div>
       )
     }

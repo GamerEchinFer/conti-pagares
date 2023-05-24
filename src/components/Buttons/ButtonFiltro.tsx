@@ -1,8 +1,7 @@
-import { Button, ListItem, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { Button, ListItem } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { documentosUser, documentosUserActions } from '../../redux/slices/documentosUser.slice';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 type ButtonFiltroProps = {
   onClick: () => void,
@@ -12,7 +11,6 @@ type ButtonFiltroProps = {
 
 const ButtonFiltro = ({onClick, descripcion, active=false}: ButtonFiltroProps) => {
     const [alignment, setAlignment] = useState('');
-    const [isClicked, setIsClicked] = useState(false);
 
     const handleChange = (
       event: React.MouseEvent<HTMLElement>,
@@ -28,19 +26,11 @@ const ButtonFiltro = ({onClick, descripcion, active=false}: ButtonFiltroProps) =
 
     if (!documentosUser || !documentosUser.filtroGrupo || !Array.isArray(documentosUser.filtroGrupo)) return null
     
-      // {JSON.stringify(documentosUser)}
     
   return (
     <>
       <div className="pt-8">
         <ListItem>
-          {/* <ToggleButtonGroup
-           value={alignment}
-           exclusive
-           onChange={handleChange}
-           aria-label="Platform"
-          > */}
-          {/* <ToggleButton value={descripcion}> */}
           <Button
             onClick={() => onClick ? onClick() : null}
             variant="outlined"
@@ -56,8 +46,6 @@ const ButtonFiltro = ({onClick, descripcion, active=false}: ButtonFiltroProps) =
             descripcion
           }
           </Button>
-          {/* </ToggleButton>
-          </ToggleButtonGroup> */}
         </ListItem>
       </div>
     </>

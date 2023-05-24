@@ -17,11 +17,6 @@ function SelectOption() {
             label="Codigo de Cliente"
             onChange={handleChangeCodCliente}
           >
-              {/* {
-                busqueda.map((item) => {
-                  return <MenuItem key={item.id} value={item.name}>{item.name}</MenuItem>
-                })
-              }  */}
           </Select>
       </FormControl>
     

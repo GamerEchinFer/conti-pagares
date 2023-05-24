@@ -8,8 +8,6 @@ import abiError401 from '../assets/img/errorBar/abi-007.svg';
 import abiError404 from '../assets/img/errorBar/abi-002.svg';
 import abiError500 from '../assets/img/errorBar/abi-003.svg';
 import abiError503 from '../assets/img/errorBar/abi-004.svg';
-import { v4 as uuidv4 } from 'uuid';
-import DeviceDto from "../models/dtos/Device.model";
 import { browserName, browserVersion, fullBrowserVersion, osName, osVersion } from "react-device-detect";
 import { dataError, uiSetError } from "../redux/slices/ui/ui.slice";
 import { store } from "../redux/store";
@@ -17,14 +15,12 @@ import { ConfigApiInterna } from "../config/config";
 
 export const apmAuthInterceptor = (config: AxiosRequestConfig) => {
 
-    // const gdiAuth = localStorage.getItem("gdi-auth");
     const gdiAuth = store.getState().authGDI.gdiAuth    
     
 
     if (!gdiAuth || !gdiAuth.access_token) {
         return config;
     }
-
 
     if (config.headers) {
         config.headers["Authorization"] = `${gdiAuth.token_type} ${gdiAuth.access_token}`;

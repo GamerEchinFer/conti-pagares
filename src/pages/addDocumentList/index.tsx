@@ -6,38 +6,10 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { fontWeight } from '@mui/system';
 import { Stack, ListItem, ListItemText, Divider } from '@mui/material';
-import { useMount } from 'ahooks';
-import { postGuardarDocumento } from '../../api/apmDesaApi';
-import { GuardarDocumentoRequest } from '../../interfaces/interfaces';
-
-
 
 export default function AddDocumentList() {
   const [open, setOpen] = React.useState(true);
-
-
-  useMount(() => {
-    // ctrl + alt + abajo
-    /*const body: GuardarDocumentoRequest = {
-        codigoTipoDocumento:202,
-        rutaDocumento:"C:\\Users\\gonzalo.villalba\\Documents\\GDI",
-        fechaRegistro:"2022-10-05T12:56:10.559Z",
-        fechaEmision:"01012020",
-        descripcionDocumento:"Test",
-        codigoCliente:"000666",
-        codigoLegajo:99999,
-        hadoop:"555",
-        hadoopPath:"C:\\Users\\gonzalo.villalba\\Documents\\GDI",
-        codigoUsuario:"PER",
-        codigoProducto:7,
-        codigoSubproducto:151
-    }
-
-    postGuardarDocumento(body).then((response) => {console.log(response);
-    })*/ 
-  })
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -69,7 +41,6 @@ export default function AddDocumentList() {
             >
                 <TextField
                     id="outlined-number"
-                    // label="Number"
                     className="periodicidad"
                     type="number"
                     size="small"

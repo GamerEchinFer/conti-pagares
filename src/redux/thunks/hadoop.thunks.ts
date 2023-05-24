@@ -1,6 +1,5 @@
 import { AppDispatch } from '../store';
 import { hadoopDirectoActions } from '../slices/hadoop.slice';
-import { HadoopDirecto } from '../../interfaces/interfaces';
 import { postAlzarHadoopDirecto } from '../../api/apmDesaApi';
 
 

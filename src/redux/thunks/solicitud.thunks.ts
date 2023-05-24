@@ -1,4 +1,3 @@
-// import { getAllSolicitudCliente } from "../../api/gdiApi";
 import { getSolicitudCliente } from "../../api/apmDesaApi";
 import { solicitudActions } from "../slices/solicitud.slice";
 import { AppDispatch } from "../store"

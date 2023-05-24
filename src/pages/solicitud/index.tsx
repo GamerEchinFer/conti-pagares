@@ -1,8 +1,6 @@
 import List from '@mui/material/List';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {useMount} from 'ahooks'
-// import { getAllSolicitudClienteAction } from '../../redux/thunks/solicitud.thunks';
 import { SolicitudCliente } from '../../interfaces/interfaces';
 import { RootState } from '../../redux/store';
 import SolicitudItem from '../../components/SolicitudItem';
@@ -18,8 +16,6 @@ import styles from "../solicitud/Solicitud.module.css";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { theme } from '../../../theme/Theme';
 import { solicitudActions } from '../../redux/slices/solicitud.slice';
-import { postAutenticarServicio } from '../../api/keycloakApi';
-import { keycloakHeaders } from '../../constants/constants';
 import { getSolicitudClienteAction } from '../../redux/thunks/solicitud.thunks';
 
 function SolicitudPage() {
@@ -28,10 +24,6 @@ function SolicitudPage() {
 
   const mediaQueryPadding = useMediaQuery(theme.breakpoints.down(705));  
 
-  // const [solicitud, setSolicitud] = useState<SolicitudCliente | null>(null)
-  // const [page, setPage] = useState(-1)
-
-  //const solicitudes = useSolicitudes()
   const solicitudes = useSelector((state: RootState) => state.solicitud.items)
   const solicitud = useSelector((state: RootState) => state.solicitud.solicitudSelected)
   const page = useSelector((state: RootState) => state.solicitud.page)
@@ -43,12 +35,7 @@ function SolicitudPage() {
     if (auth && auth.access_token) {
       dispatch(solicitudActions.solicitudRequest())
     }    
-    /*postAutenticarServicio(keycloakHeaders).then((value) => {            
-      localStorage.setItem("gdi-auth", JSON.stringify(value));
-      dispatch(getSolicitudClienteAction())
-    }).finally(() => {
-        
-    })*/
+    
   }, [auth])
 
 

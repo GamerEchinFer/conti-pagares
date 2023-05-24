@@ -1,10 +1,6 @@
-import { Button, List} from '@mui/material'
-import { url } from 'inspector';
+import {List} from '@mui/material'
 import Image from "next/image";
 import CheckDocumento from '../../assets/svg/CheckDocumento.svg' 
-import RecargarDocumento from '../../assets/svg/RecargarDocumento.svg' 
-import { LightTooltip } from '../shared/LightTooltip';
-import RecargarDocIcon from './RecargarDocIcon';
 
 type CheckUploadIconComponentProps = {
   onClick: () => void,

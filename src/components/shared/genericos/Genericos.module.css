@@ -1,4 +1,3 @@
-/* PaperDropDownItem */
 .box-container {
     display:flex !important;
     justify-content:center !important;
@@ -11,7 +10,6 @@
     display:flex !important;
 }
 
-/* Lista */
 .lista {
     width: 100% !important;
     padding-top: 0 !important;
@@ -37,8 +35,6 @@
     font-size: 1rem !important;
 }
 
-/* Loading Procesando */
-
 .nextButton {
     border-radius: 100% !important;
     width: fit-content !important;
@@ -47,8 +43,6 @@
 .nextButton:hover + .textNextButton{
     visibility: visible !important;
 }
-
-/* Resumen Solicitud */
 
 .itemKeys {
     text-align: start !important;
@@ -60,14 +54,10 @@
     padding: 6px 6px !important;
 }
 
-/* ButtonsItems */
-
 .gridItems {
     justify-content: center !important;
     display: flex !important;
 }
-
-/* ErrorBar */
 
 .imageAbi {
     width: 140px !important;
@@ -99,9 +89,6 @@
     padding: 10px !important;
 }
 
-
-/* ConfirmacionO */
-
 .tituloConfirmacion{
     margin-top: 10px !important;
     margin-bottom: 15px !important;
@@ -113,8 +100,6 @@
 .parrafoConfirmacion{
     font-size: 14px !important;
 }
-
-/*Modal*/
 
 .modalContenido{
     display: flex !important;
@@ -135,7 +120,6 @@
         display: none !important;
     }
 }
-/* BoxItemLg */
 
 .boxItemLg {
     background-color: red !important;
@@ -144,7 +128,6 @@
     width: 100% !important;
 }
 .container-inside-box-item-lg {
-    /* padding-left: 49px !important; */
     margin-top: 18px !important;
     display: flex  !important;
     justify-content: center !important;

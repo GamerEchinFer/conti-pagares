@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-
 import { Dialog, DialogActions, DialogContent, useMediaQuery } from '@mui/material';
 import { theme } from '../../../theme/Theme';
 import ButtonIconClose from '../Buttons/ButtonIconClose';
@@ -9,8 +8,6 @@ import Image from 'next/image';
 import Check from '../../assets/svg/Check.svg';
 
 type CargaExitosaComponentProps = {
-  // success: boolean,
-  // imagen: string
   open: boolean,
   onClose: () => void
 }
@@ -22,16 +19,10 @@ const CargaExitosaComponent = ({open, onClose}: CargaExitosaComponentProps) => {
   const fullScreen = useMediaQuery(theme.breakpoints.down('xl'));
   const [openModal, setOpenModal] = useState(false);
 
-  // Llamar un selector de redux
-
-  // if (loading) {
-  //   return null
-  // }
-
   const handleClose = () => {        
-    // setOpenModal(false);
     onClose();
   }
+
   return (
     <Dialog
       fullScreen={fullScreen}
@@ -47,7 +38,6 @@ const CargaExitosaComponent = ({open, onClose}: CargaExitosaComponentProps) => {
         />
       </DialogActions>
         <DialogContent>
-          {/* <div hidden={!props.success}> */}
           <div className="flex justify-center pt-20">
             <Image src={Check} alt="check" />
           </div>
@@ -61,7 +51,6 @@ const CargaExitosaComponent = ({open, onClose}: CargaExitosaComponentProps) => {
               </>
             ))
           }
-          {/* </div>  */}
         </DialogContent>
     </Dialog>
   )

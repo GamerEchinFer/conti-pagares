@@ -46,7 +46,6 @@ const SubirDocumentoPage = ()  => {
     const [onclose, setOnclose] = useState("");
 
     // The Files of redux but cant use in others components
-
     useMount(() => {
         const data = storage.getObject("etiquetas-variable-body")
         setBody(data)                    
@@ -91,19 +90,7 @@ const SubirDocumentoPage = ()  => {
     const refresshEtiquetasVariables = () => {
         dispatch(postEtiquetasVariablesAction(Object.values(body)));    
     }
-
-    /*
-        {
-            "id_producto": {
-                "nombre": "id_producto",
-                "valor": "10"
-            },
-            "id_subproducto": {
-                "nombre": "id_subproducto",
-                "valor": "10"
-            },
-        }        
-    */           
+         
     const mapCondiciones = (body: EtiquetaVariableBody): Condiciones[] => Object.values(body).map(
         item => ({            
                 nombreCondicion: item.nombre,
@@ -134,16 +121,12 @@ const SubirDocumentoPage = ()  => {
         setLoading(true)
         // Llamar a la api      
         try {                            
-            // if(!loading) {
-            //     setLoading(true);
-            // }
-            // dispatch
-            
+
               await postGuardarHistorialUsuario(body);
                 setOpenModalFinalizacion(true);
                 setLoading(false);
                 setSuccess(true);
-            //   router.push("/solicitud"); //abrir modal y cerrar abrir el siguiente modal de finalización           
+            ///abrir modal y cerrar abrir el siguiente modal de finalización           
             // Resolver la respuesta            
         } catch (error) {
             console.log(error)
@@ -157,10 +140,6 @@ const SubirDocumentoPage = ()  => {
     const handleClickAdd = () => {
         setOpenAddModal(true);
     };
-
-    // const openModal = () => {
-    //     setOpenModalFinalizacion(true);
-    // }
 
     const closeModal= () => {
         setOpenModalFinalizacion(false);
@@ -228,15 +207,6 @@ const SubirDocumentoPage = ()  => {
                 <div className="flex flex-row justify-center gap-8 pb-4">
                     <BackButton  onClick={handleClickAtras} />
                     <ButtonFinalizar onClick={handleClickCargar} />
-                    {/* {
-                        loading 
-                    ? (
-                        <div className='flex justify-center pt-10 pb-10 w-200'>
-                        <LoadingIcon />
-                        </div>
-                    ) 
-                    : null
-                    }  */}
                 </div>
                 </Box>
             </Box>

@@ -52,7 +52,6 @@ const ResponsiveAppBar = () => {
 							</Typography>
 							<Tooltip title="Cerrar sesión">
 							<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-							{/* <IconButton onClick={() => window.location.reload()} sx={{ p: 0 }}> */}
 								<LogoutIcon sx={{ display: { md: 'flex' }, mr: 1, color: 'white' }} />
 							</IconButton>
 						</Tooltip>

@@ -1,5 +1,4 @@
 import { Box, Grid, TextField, useMediaQuery } from "@mui/material";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { theme } from "../../../theme/Theme";
@@ -16,8 +15,6 @@ import { clienteDocumentoActions } from "../../redux/slices/clienteDocumento.sli
 import { RootState } from "../../redux/store";
 import { getClienteDatosAction } from '../../redux/thunks/clienteDatos.thunks';
 import styles from './TipoBusqueda.module.css';
-import { useGDIAuth } from "../../hooks/useGDIAuth";
-import { v4 as uuidv4 } from 'uuid';
 import { useKeycloak } from '@react-keycloak/web';
 import { reset as resetUi } from '../../redux/slices/ui/ui.slice';
 import { getUsuarioKeyCloack, reset as resetAuth } from '../../redux/slices/auth/auth.slice';
@@ -39,10 +36,8 @@ const TipoBusquedaPage = () => {
   const clienteDatos = useSelector((state: RootState) => state.clienteDatos.items);
   const loading = useSelector((state: RootState) => state.clienteDatos.loading);
   const { keycloak, initialized } = useKeycloak();
-	const { idDispositivo } = useSelector((state:RootState)=>state.auth);
 	const { access_token, permisosUsuario } = useSelector((state:RootState)=>state.auth)
 
-  
   useEffect(() => {
     dispatch(busquedaActions.busquedaRequest());
     dispatch(clienteDatosActions.clienteDatosReset());
@@ -91,7 +86,6 @@ useEffect(() => {
 			<Grid container pt={3} style={{ justifyContent: 'center' }}>
 				<Box className={styles['box-user']} style={{padding: mediaQueryPadding ? '0px 0px' : '0px'}}>
         <div>
-          {/* {JSON.stringify(getProductos())} */}
           <GDITitulosComponent />
           <TBBodyPrincipal />
           <div>
@@ -102,7 +96,6 @@ useEffect(() => {
                 />
               <div className="flex flex-row items-center">
                 <div className="labelRadio flex flex-col pl-28">
-                  {/* {tipoBusqueda?.nameTipoBusqueda ?? ""} */}
                 </div>
                 <div className="flex flex-col items-start  gap-7 w-1/8 pt-2">
                   <TextField
@@ -120,14 +113,11 @@ useEffect(() => {
                         dispatch(getClienteDatosAction(codigoCliente, filtros[tipoBusquedaSelected - 1]))
                       }
                     }}
-                    // value={tipoBusquedaSelected} 
-                    // label={tipoBusqueda?.nameTipoBusqueda ?? ""}
                     variant="outlined"
                     sx={{
                       '& label': { paddingLeft: (theme) => theme.spacing(2) },
                       '& input': { paddingLeft: (theme) => theme.spacing(1.5), },
                       '& fieldset': {
-                        // paddingLeft: (theme) => theme.spacing(2.5),
                         borderRadius: '5px',
                       },
                       minWidth: 300
@@ -140,10 +130,8 @@ useEffect(() => {
                     active={codigoCliente.length > 0} 
                     onClick={() => 
                       dispatch(getClienteDatosAction(codigoCliente, filtros[tipoBusquedaSelected - 1]))}  
-                      />
-                    {/* ? <SearchbarButton active={clienteDocumento.length > 0} onClick={() => 
-                      dispatch(getClienteDocumentoAction(clienteDocumento))}  /> : null} */}
-                 </div>
+                  />
+                </div>
               </div>
                 {
                 loading

@@ -53,19 +53,6 @@ export default function mesPage() {
 
     return (
         <Grid item xs={12} md={6}>
-        {/* <ListItem
-          component="div"
-          disablePadding
-          className="pb-2 pt-2"
-          secondaryAction={
-            item.tieneDocumento 
-              ? 
-              <RecargarDocIcon onClick={() => inputRef.current.click()}  />: null                        
-              // : <FileUploadIconComponent onClick={() => inputRef.current.click()} />
-          }
-          > */}
-          
-         
           <input type={"number"} onFocus={() => inputRef.current.select()} ref={inputRef} value={periodo} onChange={handlePeriodoInput} ></input>
           <ListItemText primary={
              mesPeriodos.map((idx) => {
@@ -83,10 +70,6 @@ export default function mesPage() {
               )
             })
           } />
-          
-        {/* </ListItem> */}
-        
-       
       </Grid>
     )
 }

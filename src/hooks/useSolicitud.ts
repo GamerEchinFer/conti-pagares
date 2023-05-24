@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { getSolicitudCliente } from "../api/apmDesaApi";
-// import { getSolicitudClienteById } from "../api/gdiApi";
 import { SolicitudCliente } from "../interfaces/interfaces";
 
 export const useSolicitud = (id: number) => {

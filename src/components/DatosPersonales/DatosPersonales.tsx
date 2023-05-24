@@ -1,12 +1,10 @@
-import { Box, Button, Grid, TextField, useMediaQuery } from '@mui/material';
-import { useState } from 'react'
+import { Box, Grid, TextField, useMediaQuery } from '@mui/material';
 import { theme } from '../../../theme/Theme';
 import DatosPersonalesImage from '../../assets/svg/DatosPersonalesImage.svg' 
 import Image from 'next/image';
 import styles from '../DatosPersonales/DatosPersonales.module.css';
 import { RootState } from '../../redux/store';
 import { useDispatch, useSelector } from 'react-redux';
-import { datosCliente } from '../../redux/slices/datosCliente.slice';
 import { capitalizePorPalabra } from '../../helpers/capitalize';
 import NextButtonTB from '../Buttons/NextButtonTB';
 import { solicitudActions } from '../../redux/slices/solicitud.slice';
@@ -24,9 +22,7 @@ const paises: {[key: string]: string} = {
 const DatosPersonales = ({imagen = DatosPersonalesImage } : ClienteDatosProps) => {
     const mediaQueryXsNumber = useMediaQuery(theme.breakpoints.down(634));
 	const mediaQueryMdNumber = useMediaQuery(theme.breakpoints.down(785));
-	const [estado, setEstado] = useState();
     const clienteDatos = useSelector((state: RootState) => state.clienteDatos.items);    
-    const [clientDate, setClientDate] = useState<any>(null);   
     const dispatch = useDispatch(); 
     
     if (!clienteDatos || !clienteDatos.codigoCliente) return null;
@@ -58,11 +54,8 @@ const DatosPersonales = ({imagen = DatosPersonalesImage } : ClienteDatosProps) =
                                         size='small'
                                         label='Nro Documento'
                                         fullWidth
-                                        value={(clienteDatos?.cedula ?? "")}
-                                        // ?? (clienteDocumento?.cedula ?? "")}                                        
-                                        // disabled
-                                        // value = {capitalize(`${datosBasicos?.primerNombre  || ''} ${datosBasicos?.segundoNombre || ''}`)}                                     
-                                        />                                                                            
+                                        value={(clienteDatos?.cedula ?? "")}                                    
+                                    />                                                                            
                                 </Grid>
                                 
                                 <Grid item xs={12}>
@@ -73,8 +66,6 @@ const DatosPersonales = ({imagen = DatosPersonalesImage } : ClienteDatosProps) =
                                         fullWidth                                                                             
                                         value = 
                                         {(clienteDatos.primerNombre ? `${capitalizePorPalabra(`${clienteDatos?.primerNombre ?? ''}`)} ${capitalizePorPalabra(`${clienteDatos?.segundoNombre ?? ''}`)} ${clienteDatos?.primerApellido ?? ''} ${clienteDatos?.segundoApellido ?? ''}` : '')}
-                                            // ?? 
-                                        // (clienteDocumento.primerNombre ? `${capitalizePorPalabra(`${clienteDocumento?.primerNombre ?? ''}`)} ${capitalizePorPalabra(`${clienteDocumento?.segundoNombre ?? ''}`)} ${clienteDocumento?.primerApellido ?? ''} ${clienteDocumento?.segundoApellido ?? ''}` : '')}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -85,7 +76,6 @@ const DatosPersonales = ({imagen = DatosPersonalesImage } : ClienteDatosProps) =
                                         name="fechaNacimiento"
                                         fullWidth
                                         value={(clienteDatos?.fechaNacimiento?.split("T")[0] ?? "")}
-                                        //  ?? (clienteDocumento.fechaNacimiento ?? "")}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -96,7 +86,6 @@ const DatosPersonales = ({imagen = DatosPersonalesImage } : ClienteDatosProps) =
                                         name="nacionalidad"
                                         fullWidth      
                                         value={(paises[clienteDatos?.pais ?? ""])}
-                                        //  ?? (paises[clienteDocumento?.pais ?? ""])}                                  
                                     />
                                 </Grid>
                             </Grid>
@@ -113,7 +102,6 @@ const DatosPersonales = ({imagen = DatosPersonalesImage } : ClienteDatosProps) =
                                         label='Estado Civil'
                                         fullWidth
                                         value={(capitalizePorPalabra(`${clienteDatos?.estadoCivil ?? ""}`))}
-                                        //  ?? (capitalizePorPalabra(`${clienteDocumento?.estadoCivil ?? ""}`))}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -123,7 +111,6 @@ const DatosPersonales = ({imagen = DatosPersonalesImage } : ClienteDatosProps) =
                                         label='Profesión'
                                         fullWidth
                                         value={(capitalizePorPalabra(`${clienteDatos?.ocupacion ?? ""}`))}
-                                        //  ?? (capitalizePorPalabra(`${clienteDocumento?.ocupacion ?? ""}`))}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -133,7 +120,6 @@ const DatosPersonales = ({imagen = DatosPersonalesImage } : ClienteDatosProps) =
                                         label='Suc. Cliente'
                                         fullWidth
                                         value={(capitalizePorPalabra(`${clienteDatos?.sucursal ?? ""}`))}
-                                        //  ?? (capitalizePorPalabra(`${clienteDocumento?.sucursal ?? ""}`))}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -143,7 +129,6 @@ const DatosPersonales = ({imagen = DatosPersonalesImage } : ClienteDatosProps) =
                                         label='Oficial'
                                         fullWidth
                                         value={(capitalizePorPalabra(`${clienteDatos?.oficial ?? ""}`))} 
-                                        // ?? (capitalizePorPalabra(`${clienteDocumento?.oficial ?? ""}`))}
                                     />
                                 </Grid>
                             </Grid>
