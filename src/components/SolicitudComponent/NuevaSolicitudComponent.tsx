@@ -29,7 +29,6 @@ type NuevaSolicitudComponentProps = {
 function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
   const clienteDatos = useSelector((state: RootState) => state.clienteDatos.items);
   const router = useRouter();
-  // STATES
   const dispatch = useDispatch(); 
 
   const loadingParametrosSelect = useSelector((state: RootState) => state.parametro.loading);
@@ -73,6 +72,7 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
   useEffect(() => {
     if (idProducto) {
       dispatch(getSubProductosAction(idProducto))
+      console.log(idProducto)
     }
   }, [idProducto])
 
@@ -144,6 +144,7 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
               setIdProducto(id)
             }}
           />}
+          
             {
               loadingSubProducto 
               ? (

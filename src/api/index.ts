@@ -27,6 +27,7 @@ export const authApi = axios.create(
     );
 
 apmApi.interceptors.request.use(apmAuthInterceptor);
+apmApiCliente.interceptors.request.use(apmAuthInterceptor);
 
 export const apmHadoopApi = axios.create(
     {

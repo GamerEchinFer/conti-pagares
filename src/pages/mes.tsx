@@ -41,9 +41,7 @@ export default function mesPage() {
 
     const handlePeriodoInput = ({target}: ChangeEvent<HTMLInputElement>) => {
         if (Number(target.value) >= 6  || !Number(target.value)) {
-          setPeriodo(target.value) // Se actualiza despues recien de la funcion
-          // Hasta donde se puede retroceder
-
+          setPeriodo(target.value)
         }
 
         if (Number(target.value) >= 6) {

@@ -3,7 +3,7 @@ import { Producto } from "../../interfaces/interfaces";
 
 const initialState = () => ({
     items: [] as Producto[],    
-    loading: false, //luego de ejecutar is true
+    loading: false,
     success: false,
     error: null as any
 });

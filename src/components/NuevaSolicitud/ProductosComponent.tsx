@@ -32,7 +32,7 @@ const ProductosComponent = ({idProducto, setIdProducto}: ProductosComponentProps
               value={idProducto}
               label="productos"
               onChange={(item) => {
-                  setIdProducto(Number(item.target?.value ?? 1));
+                  setIdProducto(Number(item.target?.value) ?? 1);
               }}
             >
               {
@@ -40,6 +40,7 @@ const ProductosComponent = ({idProducto, setIdProducto}: ProductosComponentProps
                   return <MenuItem key={item.idProducto} value={item.idProducto} >{capitalize(`${item.descripcion}`)}</MenuItem>
                 })
               } 
+              
             </Select>
         </FormControl>
       </div>

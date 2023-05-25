@@ -6,14 +6,12 @@ import AbiError from '../../assets/img/generales/abi3.svg';
 import { Box, Fade, Modal, Typography } from "@mui/material";
 import styles from './genericos/Genericos.module.css';
 import { uiSetError, dataError as dataErrorReducer } from "../../redux/slices/ui/ui.slice";
-import { useRouter } from "next/router";
 import redirectsDisabled from "../../config/redirectsDisabled";
 import dataErrorResponse from "../../models/responses/DataError.response";
 import Image from 'next/image';
 
 const ErrorBar = () => {
     const dispatch = useAppDispatch();
-	const router = useRouter();
     const { dataError, msgError, modalPara } = useSelector((state: RootState) => state.ui);
     const [mostrarModal, setMostrarModal] = useState<boolean>(true);
     const [caducoSession, setCaducoSession] = useState<boolean>(false);
