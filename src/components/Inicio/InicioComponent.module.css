@@ -1,0 +1,14 @@
+.contenedor {
+    justify-content: center !important;
+    text-align: center !important;
+    height: 100% !important;
+    padding-top: 80px !important;
+  }
+
+.texto {
+    font-size:22px !important;
+    line-height:1.0 !important;
+    padding-right:176px !important;
+    white-space:pre-wrap !important;
+}
+  

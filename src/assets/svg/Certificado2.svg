@@ -1,0 +1,11 @@
+<svg id="Certificado" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="36.488" height="20.75" viewBox="0 0 36.488 20.75">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectángulo_4145" data-name="Rectángulo 4145" width="36.489" height="20.75" transform="translate(0 0)" fill="#bbc600"/>
+    </clipPath>
+  </defs>
+  <g id="Grupo_9442" data-name="Grupo 9442" clip-path="url(#clip-path)">
+    <path id="Trazado_11065" data-name="Trazado 11065" d="M6.268,19.877.355,12.225c-1.391-3.617,1.6-4.869,3.826-2.782L8,14.312,19.832,1.1C21.919-1.1,25.4.157,24,3.53l-13.912,16c-1.5,1.739-2.782,1.391-3.826.348Z" fill="#bbc600"/>
+    <path id="Trazado_11066" data-name="Trazado 11066" d="M36.167,3.532l-13.91,16c-1.5,1.74-2.79,1.39-3.83.35v-.01l-2.82-3.64,3.19-3.67,1.37,1.75L32,1.092c2.08-2.19,5.57-.94,4.17,2.44" fill="#bbc600"/>
+  </g>
+</svg>

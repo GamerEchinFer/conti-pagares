@@ -1,0 +1,139 @@
+.box-container {
+    display:flex !important;
+    justify-content:center !important;
+    margin-top:20px !important;
+}
+
+.grid-container {
+    justify-content:center !important;
+    height:100% !important;
+    display:flex !important;
+}
+
+.lista {
+    width: 100% !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    max-width: 360px !important;
+    margin-top: 5px !important;
+    overflow: auto !important;
+    max-height: 360px !important;
+}
+
+.boxGroupButtons {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+}
+
+.btnGroup {
+    text-transform: initial !important;
+    margin: 10px 5px 0 !important;
+    border-radius: 10px !important;
+    padding: 4px 15px !important;
+    line-height: 2 !important;
+    font-size: 1rem !important;
+}
+
+.nextButton {
+    border-radius: 100% !important;
+    width: fit-content !important;
+}
+
+.nextButton:hover + .textNextButton{
+    visibility: visible !important;
+}
+
+.itemKeys {
+    text-align: start !important;
+    padding: 6px 6px !important;
+}
+
+.itemValues {
+    text-align: end !important;
+    padding: 6px 6px !important;
+}
+
+.gridItems {
+    justify-content: center !important;
+    display: flex !important;
+}
+
+.imageAbi {
+    width: 140px !important;
+    padding: 10px !important;
+}
+
+.modalContenido{
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.paperModal{
+    background-color: white !important;
+    border: 5px solid white !important;
+    padding: 10px !important;
+    border-radius: 20px !important;
+    outline: none !important;
+    width: 500px !important;
+    max-width: 95% !important;
+    height: auto !important;
+    max-height: 98% !important;
+    overflow-y: auto !important;
+}
+
+.boxContenedor{
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 10px !important;
+}
+
+.tituloConfirmacion{
+    margin-top: 10px !important;
+    margin-bottom: 15px !important;
+    font-size: 25px !important;
+    font-family: 'ContiSans' !important;
+    font-weight: initial !important
+}
+
+.parrafoConfirmacion{
+    font-size: 14px !important;
+}
+
+.modalContenido{
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important; 
+}
+
+.paperModal div:first-child {
+    align-content: center !important;
+}
+
+.paperModalAuto {
+    width: auto !important;
+}
+
+@media print {
+    .gone{
+        display: none !important;
+    }
+}
+
+.boxItemLg {
+    background-color: red !important;
+    display: flex !important;
+    max-width: 671px !important;
+    width: 100% !important;
+}
+.container-inside-box-item-lg {
+    margin-top: 18px !important;
+    display: flex  !important;
+    justify-content: center !important;
+}
+.container-inside-box-grid-element {
+    margin-top: 40px;
+    display: flex ;
+    justify-content: center;
+}

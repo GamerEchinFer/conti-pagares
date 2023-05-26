@@ -1,0 +1,24 @@
+# el archivo Values sirve para declarar las variables con valores por defecto y que son utilizadas por las plantillas, los datos son solo de referencia
+releaseName: front-finansysweb-modulo-gestion-documental
+
+config: 
+  NEXT_PUBLIC_API_BASE_URL: 'https: //apibanking-gw.bancontinental.com.py/'
+  NEXT_PUBLIC_API_TIME_OUT: 60000
+  NEXT_PUBLIC_SUSCRIPTION_KEY: '65f2a274044b4e29911720cc556fef06'
+  NEXT_PUBLIC_CLIENT_SECRET: '4601c564-ae65-4b24-b1f8-4ff3530c6fa1'
+  NEXT_PUBLIC_CLIENTE_ID: 'gestion-documental'
+  NEXT_PUBLIC_HOST_VALIDO: 'https: // localhost:9000/'
+  NEXT_PUBLIC_URL_REDIRECT: 'https: //www.bancontinental.com.py/'
+
+deployment:  
+  replicas: 1
+
+container: 
+  registry: localhost:5000
+  imagePullPolicy: Always
+  version: 0.1.8
+
+ingress:
+  tlsSecret: gdi-cer
+  host: gdi-desa.bancontinental.com.py
+  create: true
