@@ -45,7 +45,8 @@
     "reduxjs-toolkit-persist": "^7.2.1",
     "sass": "^1.56.0",
     "universal-cookie": "^4.0.4",
-    "uuidv4": "^6.2.13"
+    "uuidv4": "^6.2.13",
+    "xml2js": "^0.6.0"
   },
   "devDependencies": {
     "@types/node": "^18.13.0",

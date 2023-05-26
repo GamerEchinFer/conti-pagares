@@ -1,6 +1,6 @@
 import { ColeccionDocumento } from '../../interfaces/interfaces';
 import SearchIcon from '@mui/icons-material/Search';
-import { TableCell, TableRow } from '@mui/material';
+import { TableCell } from '@mui/material';
 import { capitalize } from '../../helpers/capitalize';
 import CertificadoIcon from '../shared/CertificadoIcon';
 import PendienteIcon from '../shared/PendienteIcon';

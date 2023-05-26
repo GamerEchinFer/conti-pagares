@@ -1,10 +1,9 @@
 import { Button } from '@mui/material';
 import React, { useRef, useState, DragEvent } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import DocPDFIcon from './DocPDFIcon';
 import FolderIconComponent from './FolderIconComponent';
-import { hadoopDirectoActions, hadoopDirecto } from '../../redux/slices/hadoop.slice';
-import { RootState } from '../../redux/store';
+import { hadoopDirectoActions } from '../../redux/slices/hadoop.slice';
 import { useMount } from 'ahooks';
 import ButtonDelete from '../Buttons/ButtonDelete';
 
@@ -32,7 +31,6 @@ const DragDropComponent = () => {
         console.log(event);
         
         event.dataTransfer.setData('file', id)
-        // event.dataTransfer.items.add()
     }
 
     const onDragEnd = (event: any) => {
@@ -41,7 +39,6 @@ const DragDropComponent = () => {
 
     const handleFile = (files: any) => {
         setFiles(files)
-        // Aca tambien subimos los archivos
         dispatch(hadoopDirectoActions.setFiles(files))
     }    
 
@@ -52,7 +49,6 @@ const DragDropComponent = () => {
                  <div className="static" key={index} draggable onDragStart={(event) => onDragStart(event, index)} onDragEnd={onDragEnd}>
                         <div className="absolute">
                             <ButtonDelete onClick={() => {                                
-                                // Indicamos el indice a eliminar y el segundo parametro cantidad de elementos a partir del indice
                                 const newFiles = [...files]
                                 newFiles.splice(index, 1)                                                                
                                 setFiles( newFiles.length === 0 ? null : newFiles)                                          
@@ -77,15 +73,12 @@ const DragDropComponent = () => {
                     onChange={(event) => handleFile(event.target.files)}
                     hidden
                     ref={inputRef}
-                    // only PDF
                     accept=".pdf"
                 >
                 </input>
                 <Button
                     style={{padding:"35px",fontSize:"medium", backgroundColor:"#ffffff"}}
                     className="dragDropButton" 
-                    // variant="outlined"
-                    // size="small"
                     onClick={() => inputRef.current.click()}
                 >
                     <FolderIconComponent />

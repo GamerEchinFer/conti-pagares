@@ -1,14 +1,10 @@
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import {
-    AlzarArchivoRequest, AlzarArchivoResponse, ClienteDatos,
+    ClienteDatos,
     ClienteDocumento,
-    CreateTokenInternoRequest,
-    DescargarArchivo,
     DocumentosUsuarioResponse,
     EtiquetaVariable,
     EtiquetaVariableResponse,
-    ExtractosServiceDescargarArchivo,
-    ExtractosServiceSubirArchivo,
     GuardarDocumentoRequest,                
     GuardarHistorialUsuarioRequest,                
     HadoopDirectoRequest,
@@ -23,8 +19,7 @@ import {
     TipoDocumento, 
     TipoDocumentoHistoricoResponse, 
     } from '../interfaces/interfaces';
-import { apmApi, apmApiCliente, tokenUserDocumento } from './index';
-import { CreateTokenInternoResponse } from '../interfaces/interfaces';
+import { apmApi, apmApiCliente, apmApiHadoop } from './index';
 
 export async function getProductos() {    
     const URL = `/productos`;    
@@ -59,16 +54,16 @@ export const postEtiquetaVariable = async (body: EtiquetaVariable[]) => {
 }
 
 export async function getDescargarHadoopDirecto(downloadpath: string) {
-    const URL = `https://desa-docker01.bancontinental.com.py:8200/download`;
-    const response = await axios.get<HadoopDirectoRequest>(URL, {
+    const URL = `/download`;
+    const response = await apmApiHadoop.get<HadoopDirectoRequest>(URL, {
         params: {downloadpath},
     });
     return response;
 }
 
 export const postAlzarHadoopDirecto = async (body: FormData, path_images: string, overwrite: boolean, chunksize: number) => {
-    const URL = `https://desa-docker01.bancontinental.com.py:8200/upload`;
-    const response = await axios.post<FormData, AxiosResponse<HadoopDirectoResponse>>(URL, body, {
+    const URL = `/upload`;
+    const response = await apmApiHadoop.post<FormData, AxiosResponse<HadoopDirectoResponse>>(URL, body, {
             headers: {'Content-Type':'multipart/form-data'},
             params:{path_images, overwrite, chunk_size: chunksize},
         });        
@@ -158,61 +153,3 @@ export async function getTipoDocumentoHistorico(codigoCliente: string, codigoTip
 }
 
 
-// EXTRACT SERVICE
-export const postCreateTokenInterno = async (body: CreateTokenInternoRequest) => {    
-    const URL = `http://10.6.2.40:81/v1/api/Token/CreateTokenInterno`
-    const {data} = await axios.post<AlzarArchivoRequest, AxiosResponse<CreateTokenInternoResponse>>(URL, body,
-        {headers: {
-            "x-api-canal": `FSYS-WEB`,
-            "Content-Type": "application/json"
-        }
-    });
-     
-    return data;
-}
-
-export const postAlzarArchivo = async (body: AlzarArchivoRequest, token: string) => {    
-    const {data} = await tokenUserDocumento.post<AlzarArchivoRequest, AxiosResponse<AlzarArchivoResponse>>(`/AlzarArchivo`, body,
-        {headers: {
-            "Content-Type": "application/json",            
-            Authorization: `Bearer ${token}`}});
-     
-    return data;
-}
-
-export const postDescargarArchivo = async (body: DescargarArchivo, token: string) => {    
-    const {data} = await tokenUserDocumento.post<DescargarArchivo, AxiosResponse<string>>(`/DescargarArchivo`, body, {
-        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json"}});
-
-    return data;
-}
-
-export const postExtractosServiceDescargar = async (body: ExtractosServiceDescargarArchivo) => {   
-    const URL = `http://10.6.2.134:10100/extractos.asmx`;
-    const {data} = await axios.post<ExtractosServiceDescargarArchivo, AxiosResponse<string>>( URL, body, {
-        headers: { "Content-Type": "text/xml"}});
-    return data;
-}
-
-export const postExtractosServiceSubir = async (
-    body: ExtractosServiceSubirArchivo,
-    usuario: string, noise: string, stringResult: string, path: string, tipo: string
-    ) => {   
-    const URL = `http://10.6.2.134:10100/extractos.asmx`;
-    const xml = ``;
-    const {data} = await axios.post<ExtractosServiceDescargarArchivo, AxiosResponse<string>>( URL, body, {
-        headers: { "Content-Type": "text/xml"},
-        params: {'<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ext="http://10.1.1.191/extractosService.asmx">' :+ "\n" +
-        '  <soapenv:Header/>' + "\n" +
-        '  <soapenv:Body>' + "\n" +
-        '     <ext:bajarArchivo>' + "\n" +
-        '        <ext:usuario>' + usuario + '</ext:usuario>' + "\n" +
-        '        <ext:noise>' + noise + '</ext:noise>' + "\n" +
-        '        <ext:stringResult>' + stringResult + '</ext:stringResult>' + "\n" +
-        '        <ext:path>' + path + '</ext:path>' + "\n" +
-        '        <ext:tipo>' + tipo + '</ext:tipo>' + "\n" +
-        '     </ext:bajarArchivo>' + "\n" +
-        '  </soapenv:Body>' + "\n" +
-        '</soapenv:Envelope>'}});
-    return data;
-}

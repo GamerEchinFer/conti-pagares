@@ -13,9 +13,7 @@ import {
   OutlinedInput,
   Table,
   TableBody,
-  TableCell,
   TableContainer,
-  TableRow
  } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { getDocumentosUserAction } from '../../redux/thunks/documentosUser.thunks';

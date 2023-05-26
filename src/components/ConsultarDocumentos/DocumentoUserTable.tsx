@@ -62,17 +62,17 @@ const DocumentoUserTable = ({documentosUser, query, handleClickViewDoc, idGroup 
               </div>
               <div className="pr-10  pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Clasificación</div>
               <span className="pr-10">Documento General</span>
-              <div className="pr-10 pt-2 pb-2" style={{ color: "#373A3C", fontSize:"16px"}}>Fecha Documento</div>
+              <div className="consultaDocumento">Fecha Documento</div>
               <span className="pr-10 pb-2"></span>
-              <div className="pr-10 pb-2 pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Vence 30/03/2023</div>
-              <div className="pr-10 pb-2 pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Nro. Cuentas 0</div>
+              <div className="consultaDocumento">Vence 30/03/2023</div>
+              <div className="consultaDocumento">Nro. Cuentas 0</div>
               <div className="pr-10 pb-4 pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Nro. Operación </div>
               <div className="pr-10 pb-4">3453563677 </div>
-              <div className="pr-10 pb-2 pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Carga </div>
+              <div className="consultaDocumento" style={{ color: "#373A3C", fontSize:"16px"}}>Carga </div>
               <span className="pr-10">Juan Perez   28/03/2023 </span>
-              <div className="pr-10 pb-2 pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Verifica </div>
+              <div className="consultaDocumento" style={{ color: "#373A3C", fontSize:"16px"}}>Verifica </div>
               <span className="pr-10">Juan Perez   28/03/2023 </span>
-              <div className="pr-10 pb-2 pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Certifica</div>
+              <div className="consultaDocumento" style={{ color: "#373A3C", fontSize:"16px"}}>Certifica</div>
               <span className="pr-10">Juan Perez   28/03/2023 </span>
             </DialogContentText>
               <div className="flex flex-row justify-center pb-4">

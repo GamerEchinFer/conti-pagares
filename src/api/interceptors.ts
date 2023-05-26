@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosRequestConfig } from "axios";
 import { keycloakHeaders } from "../constants/constants";
 import Cookies from "universal-cookie";
 import { encriptar } from "../helpers/encriptar";
@@ -30,19 +30,6 @@ export const apmAuthInterceptor = (config: AxiosRequestConfig) => {
     return config;
 }
 
-export const apmAuthInterceptorHadoop = (config: AxiosRequestConfig) => {
-    if(config.headers) {
-        config.headers["Subscription-Key"] = keycloakHeaders["Subscription-Key"];
-    }
-    return config;
-}
-
-export const apmAuthInterceptorHadoopGDI = (config: AxiosRequestConfig) => {
-    if(config.headers) {
-        config.headers["Subscription-Key"] = keycloakHeaders["Subscription-Key"];
-    }
-    return config;
-}
 
 const interceptors = () => {
     const defaultErrorDescription = 'Por algún motivo, ocurrió un error durante el proceso. Por favor, vuelve a intentarlo';
