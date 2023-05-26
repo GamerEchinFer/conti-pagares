@@ -1,7 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { Condiciones, GuardarHistorialUsuarioRequest } from "../../interfaces/interfaces";
 
-
 const initialState = () => ({
     response: {} as GuardarHistorialUsuarioRequest[],
     loading: false,

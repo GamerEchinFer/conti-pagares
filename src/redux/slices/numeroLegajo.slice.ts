@@ -3,7 +3,7 @@ import { NumeroLegajo } from "../../interfaces/interfaces";
 
 const initialState = () => ({
     items: [] as NumeroLegajo[],
-    loading: false, //luego de ejecutar is true
+    loading: false,
     success: false,
     error: null as any
 });

@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { HadoopDirectoRequest } from '../../interfaces/interfaces';
-// import { HadoopDirectoResponse } from '../../interfaces/interfaces';
 
 const initialState = () => ({
     items: {} as HadoopDirectoRequest,

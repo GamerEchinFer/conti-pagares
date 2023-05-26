@@ -3,7 +3,7 @@ import { TipoBusqueda } from "../../interfaces/interfaces";
 
 const initialState = () => ({
     items: [] as TipoBusqueda[],    
-    loading: false, //luego de ejecutar is true
+    loading: false,
     success: false,
     error: null as any
 });

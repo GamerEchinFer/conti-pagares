@@ -3,7 +3,7 @@ import { DatosCliente } from "../../interfaces/interfaces";
 
 const initialState = () => ({
     items: [] as DatosCliente[],
-    loading: false, //luego de ejecutar is true
+    loading: false,
     success: false,
     error: null as any
 });
@@ -16,7 +16,7 @@ const datosClienteSlice = createSlice({
             state.loading = true;
         },
         datosClienteSuccess(state, action :PayloadAction<DatosCliente[]>) {
-            state.items = action.payload; //JSON or APIRest response.data
+            state.items = action.payload; 
             state.loading = false;
             state.success = true;
         },

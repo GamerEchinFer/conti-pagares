@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { GuardarDocumentoRequest } from '../../interfaces/interfaces';
 
-// MUTABLE
 const initialState = () => ({
     response: {} as GuardarDocumentoRequest,
     loading: false,    
