@@ -1,5 +1,5 @@
 import { Action, configureStore, combineReducers } from '@reduxjs/toolkit';
-import thunk, { ThunkAction } from 'redux-thunk';
+import { ThunkAction } from 'redux-thunk';
 import storage from 'redux-persist/lib/storage';
 import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
 import { useDispatch } from 'react-redux';
@@ -63,12 +63,10 @@ export let store = configureStore ({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware( 
       {
-        // thunk:false, 
         serializableCheck: {
           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         },
       })
-      // .concat(thunk)
 });
 
 
@@ -84,5 +82,4 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   Action<string>
 >;
 
-// export default store;
 

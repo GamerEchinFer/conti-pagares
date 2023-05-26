@@ -3,7 +3,7 @@ import { TipoDocumento } from "../../interfaces/interfaces";
 
 const initialState = () => ({
     items: {} as TipoDocumento[],
-    loading: false, //luego de ejecutar is true
+    loading: false,
     success: false,
     error: null as any
 });

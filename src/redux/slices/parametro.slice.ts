@@ -5,7 +5,7 @@ export type ParametrosSelect = {[key: string]: Parametros[]}
 
 const initialState = () => ({
     items: [] as Parametros[],
-    loading: false, //luego de ejecutar is true
+    loading: false,
     success: false,
     error: null as any,
     parametrosSelect : {} as ParametrosSelect,

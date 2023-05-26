@@ -14,7 +14,6 @@ import { numeroLegajo } from "./slices/numeroLegajo.slice";
 import { tipoDocumento } from "./slices/tipoDocumento.slice";
 import { busqueda } from "./slices/busqueda.slice";
 import { documentosUser } from './slices/documentosUser.slice';
-import { extractos } from './slices/extractos.slice';
 import { documentosUserFiltro } from './slices/documentosUserFiltro';
 import { tipoDocumentoHistorico } from "./slices/documentoHistorico.slice";
 
@@ -35,7 +34,6 @@ const reducer = {
     tipoDocumento,
     busqueda,
     documentosUser,
-    extractos,
     documentosUserFiltro,
     tipoDocumentoHistorico,    
 }
