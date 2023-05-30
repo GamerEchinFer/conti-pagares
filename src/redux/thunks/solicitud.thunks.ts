@@ -6,7 +6,6 @@ export const getSolicitudClienteAction: any = () => async (dispatch: AppDispatch
     dispatch(solicitudActions.solicitudRequest());
     return getSolicitudCliente()
         .then((response) => {
-            console.log("solicitud response", response)
             dispatch(solicitudActions.solicitudSuccess(response.data))  
         }).catch((ex: any) => {
             dispatch(solicitudActions.solicitudError(ex))

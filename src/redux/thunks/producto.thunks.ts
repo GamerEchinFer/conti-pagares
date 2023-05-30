@@ -7,10 +7,8 @@ export const getProductosAction: any = () => async (dispatch: AppDispatch) => {
     dispatch(productoActions.productoRequest());
     return getProductos()
     .then((response) => {
-        console.log("producto response", response)
         dispatch(productoActions.productoSuccess(response.data))
     }).catch((ex:any) => {
         dispatch(productoActions.productoError(ex))
-        console.log("producto error", ex);
     })
 }
