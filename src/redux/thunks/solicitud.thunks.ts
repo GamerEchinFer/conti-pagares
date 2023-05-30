@@ -8,6 +8,6 @@ export const getSolicitudClienteAction: any = () => async (dispatch: AppDispatch
         .then((response) => {
             dispatch(solicitudActions.solicitudSuccess(response.data))  
         }).catch((ex: any) => {
-            dispatch(solicitudActions.solicitudError(ex))  
+            dispatch(solicitudActions.solicitudError(ex))
         })
 }

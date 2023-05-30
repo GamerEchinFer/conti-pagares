@@ -12,7 +12,6 @@ type CargaExitosaComponentProps = {
   onClose: () => void
 }
 
-//Solo cuando se guarda el documento
 const CargaExitosaComponent = ({open, onClose}: CargaExitosaComponentProps) => {
   const numeroDeLegajo = useSelector((state: RootState) => state.numeroLegajo.items);
   
@@ -24,6 +23,7 @@ const CargaExitosaComponent = ({open, onClose}: CargaExitosaComponentProps) => {
   }
 
   return (
+    <>
     <Dialog
       fullScreen={fullScreen}
       open={open}
@@ -53,6 +53,7 @@ const CargaExitosaComponent = ({open, onClose}: CargaExitosaComponentProps) => {
           }
         </DialogContent>
     </Dialog>
+    </>
   )
 }
 

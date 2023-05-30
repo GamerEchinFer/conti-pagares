@@ -45,7 +45,6 @@ const SubirDocumentoPage = ()  => {
     const [body, setBody] = useState<any>({});
     const [onclose, setOnclose] = useState("");
 
-    // The Files of redux but cant use in others components
     useMount(() => {
         const data = storage.getObject("etiquetas-variable-body")
         setBody(data)                    
@@ -61,7 +60,6 @@ const SubirDocumentoPage = ()  => {
     })
 
     useUnmount(() => {
-        // With redux clear in all modals = false
         dispatch(etiquetaVariableActions.etiquetaVariableCloseAllModals());
     });
 
@@ -108,7 +106,6 @@ const SubirDocumentoPage = ()  => {
         const docActual = etiquetasVariables?.filter(item => item.tieneDocumento).length ?? 0
         let estadoActual = 0
         if(docTotal === docActual) { estadoActual = 1 }
-        // Preparar request
         const body: GuardarHistorialUsuarioRequest = {
             codigoCliente: clienteDatos.codigoCliente,
             estado: estadoActual,
@@ -119,15 +116,12 @@ const SubirDocumentoPage = ()  => {
         } 
 
         setLoading(true)
-        // Llamar a la api      
         try {                            
 
               await postGuardarHistorialUsuario(body);
                 setOpenModalFinalizacion(true);
                 setLoading(false);
                 setSuccess(true);
-            ///abrir modal y cerrar abrir el siguiente modal de finalización           
-            // Resolver la respuesta            
         } catch (error) {
             console.log(error)
             setLoading(false)
@@ -136,7 +130,6 @@ const SubirDocumentoPage = ()  => {
 
     };
 
-    /// En caso de necesitar subir más documentos, insertar lista
     const handleClickAdd = () => {
         setOpenAddModal(true);
     };
@@ -148,9 +141,6 @@ const SubirDocumentoPage = ()  => {
     const onDrop = (event: DragEvent<HTMLDivElement>, {idTipoDocumento, periodicidad, tieneDocumento}: EtiquetaVariableResponse) => {
 
         if (tieneDocumento) return;
-        // Comprobar el tipo de dato de una variable
-        // console.log(typeof file);       
-        // console.log(typeof file === "string")
         const idx = event.dataTransfer.getData("file");         
 
         const reader = new FileReader();

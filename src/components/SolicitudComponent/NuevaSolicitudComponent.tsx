@@ -17,6 +17,7 @@ import { useRouter } from 'next/router';
 import { solicitudActions } from '../../redux/slices/solicitud.slice';
 import { getNumeroLegajoAction } from '../../redux/thunks/numeroLegajo.thunks';
 import LoadingIcon from '../shared/LoadingIcon';
+import { getProductosAction } from '../../redux/thunks/producto.thunks';
 
 const initialBody = (body?: EtiquetaVariableBody) => ({
   ...body
@@ -66,6 +67,7 @@ function  NuevaSolicitudComponent({solicitud}: NuevaSolicitudComponentProps) {
   }, [])  
 
   useEffect(() => {
+    dispatch(getProductosAction(idProducto)) 
     dispatch(parametroActions.parametroSuccess({})) 
   }, [])
 
