@@ -72,10 +72,10 @@ export default function ModalPDFComponent({item, refresh}: ModalPDFComponentProp
   const seleccionIntervalo = (e: any) => {
     setSeleccion(e.target.value)
   }
+  
   const files = useSelector((state: RootState) => state.hadoopDirecto.files);
   const [fechaEmision, setFechaEmision] = useState(new Date().toISOString());
   const [operacion, setOperacion] = useState(""); 
-  
   
   useEffect(() => {
     confirmCutPdf()    
@@ -165,7 +165,6 @@ export default function ModalPDFComponent({item, refresh}: ModalPDFComponentProp
     }
   }
   const confirm = async () => {
-    
     const res = await documento.guardarDocumento(item, fechaEmision, operacion);
     refresh()
     dispatch(etiquetaVariableActions.etiquetaVariableCloseAllModals());
