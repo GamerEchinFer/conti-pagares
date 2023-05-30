@@ -29,7 +29,6 @@ function SolicitudPage() {
   const page = useSelector((state: RootState) => state.solicitud.page)
   const auth = useSelector((state: RootState) => state.authGDI.gdiAuth);
 
-  // refrescar cada página con un request y un  dispatch de definición de esta página.
   useEffect(() => {
     initialize();
     if (auth && auth.access_token) {
@@ -40,10 +39,8 @@ function SolicitudPage() {
 
 
   const initialize = () => {
-    // Cuando esta en la pagina inicial donde muestran la lista de solicitudes se hara las siguientes acciones
     if (page === -1) {
       setSolicitud(null)
-      // Inicializar con los valores por defecto
       dispatch(solicitudActions.setIdProducto(0))
       dispatch(solicitudActions.setIdSubProducto(0))
     }    
@@ -72,7 +69,6 @@ function SolicitudPage() {
       dispatch(solicitudActions.setIdSubProducto(0))
     }    
   };
-
 
   // Dictionary 
   const items: any = {
