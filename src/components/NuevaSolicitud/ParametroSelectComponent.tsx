@@ -11,41 +11,42 @@ const ParametroSelectComponent = ({onChange}: any) => {
         }
 
     return (
-    <div className="pl-10 pt-4">
-        <Grid container spacing={2}>
-        {
-            Object.keys(parametrosSelect).map((item) => {
-                return (
-                    <>
-                        <Grid item sm={4} spacing={2}>
-                            <FormControl key={item} size="small" style={{textTransform:"capitalize"}} sx={{ minWidth: 300 }}>
-                                <InputLabel id="demo-simple-select-label">{item}</InputLabel>
-                                <Select
-                                    className="text-left"
-                                    style={{
-                                        color: "#151515",
-                                        fontWeight: "400",
-                                        fontSize:"16px",
-                                    }}
-                                    label={item}
-                                    onChange={(event) => {
-                                    onChange(item, event.target?.value ?? 1)
-                                }}
-                                >
-                                {
-                                    parametrosSelect[item].map((item: any) => {
-                                        return <MenuItem key={item.idParametro} value={item.idParametro}>{capitalize(`${item.descripcion}`)}</MenuItem>
-                                    })
-                                }
-                                </Select>
-                            </FormControl>
-                        </Grid>
-                    </>
-                )
-            })
-        }
-        </Grid>
-    </div>
+        <>
+            <div className="pl-10 pt-4">
+                <Grid container spacing={2}>
+                {
+                    Object.keys(parametrosSelect).map((item) => {
+                        return (
+                            <>
+                                <Grid item sm={4}>
+                                    <FormControl key={item} size="small" style={{textTransform:"capitalize"}} sx={{ minWidth: 300 }}>
+                                        <InputLabel id="demo-simple-select-label">{item}</InputLabel>
+                                        <Select
+                                            className="text-left"
+                                            style={{
+                                                color: "#151515",
+                                                fontWeight: "400",
+                                                fontSize:"16px",
+                                            }}
+                                            label={item}
+                                            onChange={(event) => {onChange(item, event.target?.value ?? 1)}}
+                                        >
+                                        {
+                                            parametrosSelect[item].map((item: any) => {
+                                                return <MenuItem key={item.idParametro} value={item.idParametro}>{capitalize(`${item.descripcion}`)}</MenuItem>
+                                            })
+                                        }
+                                        </Select>
+                                    </FormControl>
+                                </Grid>
+                            </>
+                        )
+                    })
+                }
+                </Grid>
+            </div>
+        </>
+    
   )
 }
 

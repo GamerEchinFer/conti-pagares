@@ -29,6 +29,7 @@ const buttonStyle = (item: EtiquetaVariableResponse) =>  ({
 
 const DocumentListComponent  = ({item, refresh}: DocumentListComponentProps) => {
   const dispatch = useDispatch();
+
   const router = useRouter();
   const [archives, setArchives] = useState(null);
   const [download, setDownload] = useState("");
@@ -52,7 +53,7 @@ const DocumentListComponent  = ({item, refresh}: DocumentListComponentProps) => 
   }
 
   const handleFile = (files: any) => {
-    
+
     if (!files && files.length === 0) return;
 
     dispatch(hadoopDirectoActions.setFiles(files));
@@ -85,20 +86,23 @@ const DocumentListComponent  = ({item, refresh}: DocumentListComponentProps) => 
     const rutaHadoop = datosAdicionales[0].rutaHadoop;
 
     const download = await getDescargarHadoopDirecto(rutaHadoop);
+    console.log(download)
 
+    
     if (!download || !download.data || !download.data.loc) {
       console.log("El download.data.loc no existe: ", download);      
       return;
     }
 
-    const viewPdf = `${download?.data?.loc ?? ""}` 
-    setDownload(viewPdf);
     
+    const viewPdf = `${download?.data?.loc ?? ""}`
+    setDownload(viewPdf);
+
     dispatch(etiquetaVariableActions.etiquetaVariableUpdateFileModified({
       idTipoDocumento: item.idTipoDocumento,
       base64Modified: parsePdfBase64(viewPdf as string),
       totalPagesModified: 1,
-      sizeModified: files[Number(0)].size / 1000000
+      sizeModified: 1
     }))
     
   }
@@ -108,7 +112,7 @@ const DocumentListComponent  = ({item, refresh}: DocumentListComponentProps) => 
   }
 
   const openViewPdfModal = (item: EtiquetaVariableResponse) => {    
-    handleClickTieneDocumento(item);    
+    handleClickTieneDocumento(item);  
     dispatch(etiquetaVariableActions.setOpenModalView({idTipoDocumento: item.idTipoDocumento, openModalView: true}))
   }
 

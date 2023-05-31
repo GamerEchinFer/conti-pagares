@@ -11,7 +11,6 @@ import DocumentListComponent from "../../components/SubirDocumentos/DocumentList
 import DragDropComponent from "../../components/SubirDocumentos/DragDropComponent";
 import HeaderDocComponent from "../../components/SubirDocumentos/HeaderDocComponent";
 import ModalAddDocument from "../../components/SubirDocumentos/ModalAddDocument";
-import { SubirDocumentoProvider } from '../../context/subirDocumento/SubirDocumentoProvider';
 import { storage } from "../../helpers/storage";
 import { Condiciones, EtiquetaVariableBody, EtiquetaVariableResponse, GuardarHistorialUsuarioRequest, Parametros } from '../../interfaces/interfaces';
 import { etiquetaVariableActions } from '../../redux/slices/etiquetaVariable.slice';
@@ -168,7 +167,7 @@ const SubirDocumentoPage = ()  => {
     }
 
     return (
-        <SubirDocumentoProvider>
+        <>
             <Box sx={{ width: "75%"}}>
                 <HeaderDocComponent />                
                 <Box sx={{ width: "125%"}}>
@@ -199,8 +198,7 @@ const SubirDocumentoPage = ()  => {
             </Box>
             <ModalAddDocument open={openAddModal} onClose={handleCloseAddModal} />
             <CargaExitosaComponent open={openModalFinalizacion} onClose={closeModal} />
-
-        </SubirDocumentoProvider>
+        </>
     )
 }
 
