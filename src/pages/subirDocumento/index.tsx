@@ -11,7 +11,6 @@ import DocumentListComponent from "../../components/SubirDocumentos/DocumentList
 import DragDropComponent from "../../components/SubirDocumentos/DragDropComponent";
 import HeaderDocComponent from "../../components/SubirDocumentos/HeaderDocComponent";
 import ModalAddDocument from "../../components/SubirDocumentos/ModalAddDocument";
-import { SubirDocumentoProvider } from '../../context/subirDocumento/SubirDocumentoProvider';
 import { storage } from "../../helpers/storage";
 import { Condiciones, EtiquetaVariableBody, EtiquetaVariableResponse, GuardarHistorialUsuarioRequest, Parametros } from '../../interfaces/interfaces';
 import { etiquetaVariableActions } from '../../redux/slices/etiquetaVariable.slice';
@@ -28,14 +27,12 @@ const SubirDocumentoPage = ()  => {
     const router = useRouter();
 
     const dispatch = useDispatch();
-
     
     const files = useSelector((state: RootState) => state.hadoopDirecto.files);
     const etiquetasVariables = useSelector((state: RootState) => state.etiquetaVariable.response);    
     const etiquetasLoading = useSelector((state: RootState) => state.etiquetaVariable.loading);    
     const clienteDatos = useSelector((state: RootState) => state.clienteDatos.items);
     const page = useSelector((state: RootState) => state.etiquetaVariable.page);
-
 
     const [openAddModal, setOpenAddModal] = useState(false);
     const [openModalFinalizacion, setOpenModalFinalizacion] = useState(false);
@@ -85,8 +82,8 @@ const SubirDocumentoPage = ()  => {
         }
     }
 
-    const refresshEtiquetasVariables = () => {
-        dispatch(postEtiquetasVariablesAction(Object.values(body)));    
+    const refreshEtiquetasVariables = () => {
+        dispatch(postEtiquetasVariablesAction(Object.values(body)));
     }
          
     const mapCondiciones = (body: EtiquetaVariableBody): Condiciones[] => Object.values(body).map(
@@ -117,7 +114,6 @@ const SubirDocumentoPage = ()  => {
 
         setLoading(true)
         try {                            
-
               await postGuardarHistorialUsuario(body);
                 setOpenModalFinalizacion(true);
                 setLoading(false);
@@ -171,7 +167,7 @@ const SubirDocumentoPage = ()  => {
     }
 
     return (
-        <SubirDocumentoProvider>
+        <>
             <Box sx={{ width: "75%"}}>
                 <HeaderDocComponent />                
                 <Box sx={{ width: "125%"}}>
@@ -181,7 +177,7 @@ const SubirDocumentoPage = ()  => {
                             etiquetasVariables.map(item => (
                             <div key={item.idTipoDocumento} className="flex flex-col" onDrop={(event) => onDrop(event, item)} onDragOver={allowDrop}>
                                 <div className="pt-2">
-                                    <DocumentListComponent item={item} refresh={refresshEtiquetasVariables} />
+                                    <DocumentListComponent item={item} refresh={refreshEtiquetasVariables} />
                                 </div>
                             </div>
                             ))
@@ -202,8 +198,7 @@ const SubirDocumentoPage = ()  => {
             </Box>
             <ModalAddDocument open={openAddModal} onClose={handleCloseAddModal} />
             <CargaExitosaComponent open={openModalFinalizacion} onClose={closeModal} />
-
-        </SubirDocumentoProvider>
+        </>
     )
 }
 

@@ -1,7 +1,7 @@
 import { AutenticarServicioHeader } from "../interfaces/interfaces"
 
 export const baseUrl = process.env.NODE_ENV === "development" ? 
-    "https://gdi.bancontinental.com.py/" : "https://gdi.bancontinental.com.py/"
+    "https://gdi-qa.bancontinental.com.py/" : "https://gdi-qa.bancontinental.com.py/"
 
 export const keycloakHeaders: AutenticarServicioHeader = {
     "Client-Id": process.env.NEXT_PUBLIC_CLIENTE_ID as string,
