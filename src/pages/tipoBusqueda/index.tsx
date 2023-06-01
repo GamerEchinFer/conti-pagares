@@ -19,7 +19,6 @@ import { useKeycloak } from '@react-keycloak/web';
 import { reset as resetUi } from '../../redux/slices/ui/ui.slice';
 import { getUsuarioKeyCloack, reset as resetAuth } from '../../redux/slices/auth/auth.slice';
 import { login } from "../../actions/Auth.actions";
-import { parseString, Builder } from "xml2js";
 
 const filtros = ["codigo", "documento"]
 
