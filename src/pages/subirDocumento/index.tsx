@@ -194,9 +194,6 @@ const SubirDocumentoPage = () => {
             cargaActual = (docActual).toString()
             sessionStorage.setItem('cargaActual', cargaActual)
         }
-        if (docActual == Number(cargaActual)) {
-            console.log('tu hermana edgarcitos est');
-        }
     }
     return (
         <SubirDocumentoProvider>
