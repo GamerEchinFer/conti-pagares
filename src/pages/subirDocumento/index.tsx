@@ -185,16 +185,7 @@ const SubirDocumentoPage = () => {
     const handleCloseAddModal = () => {
         setOpenAddModal(false);
     }
-    const validarCargaDoc = (event: any) => {
-        const docTotal = etiquetasVariables?.length ?? 0
-        const docActual = etiquetasVariables?.filter(item => item.tieneDocumento).length ?? 0
-        let estadoActual = 0
-        let cargaActual = sessionStorage.getItem('cargaActual')
-        if (cargaActual === null) {
-            cargaActual = (docActual).toString()
-            sessionStorage.setItem('cargaActual', cargaActual)
-        }
-    }
+ 
     return (
         <SubirDocumentoProvider>
             <Box sx={{ width: "75%" }}>
@@ -226,9 +217,6 @@ const SubirDocumentoPage = () => {
                 </Box>
             </Box>
             <ModalAddDocument open={openAddModal} onClose={handleCloseAddModal} />
-            {/* {
-                estadoDocs ? null : 
-            } */}
             <CargaExitosaComponent open={openModalFinalizacion} onClose={closeModal} />
 
         </SubirDocumentoProvider>
