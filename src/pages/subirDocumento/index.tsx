@@ -95,45 +95,51 @@ const SubirDocumentoPage = () => {
             valorCondicion: item.valor
         }) as Condiciones
     ).filter(item => item.nombreCondicion !== "codigoCliente" && item.nombreCondicion !== "tipo_persona")
-
-
+    
     const handleClickCargar = async () => {
-
+        
         if (!etiquetaVariableBody) {
             return;
         }
         const docTotal = etiquetasVariables?.length ?? 0
         const docActual = etiquetasVariables?.filter(item => item.tieneDocumento).length ?? 0
         let estadoActual = 0
-        if (docTotal === docActual) { estadoActual = 1 }
-        const body: GuardarHistorialUsuarioRequest = {
-            codigoCliente: clienteDatos.codigoCliente,
-            estado: estadoActual,
-            cantidadTotalDocumentos: etiquetasVariables?.length ?? 0,
-            cantidadDocumentosIngresados: etiquetasVariables?.filter(item => item.tieneDocumento).length ?? 0,
-            usuario: 'PER',
-            condiciones: mapCondiciones(etiquetaVariableBody as EtiquetaVariableBody)
+        let cargaActual = sessionStorage.getItem('cargaActual')
+        if (cargaActual === null) {
+            cargaActual = (docActual).toString()
+            sessionStorage.setItem('cargaActual', cargaActual)
         }
-     console.log(docActual, docTotal);
-        setLoading(true)
-        try {
-
-            await postGuardarHistorialUsuario(body);
-            if (estadoActual == 0 ||(docActual == 0 && docTotal==0)) {
-                setOpenModalFinalizacion(false);
-            } else{
-                setOpenModalFinalizacion(true);
+        if (docActual <= Number(cargaActual)) {
+            return
+        } else {
+            if (docTotal === docActual) { estadoActual = 1 }
+            const body: GuardarHistorialUsuarioRequest = {
+                codigoCliente: clienteDatos.codigoCliente,
+                estado: estadoActual,
+                cantidadTotalDocumentos: etiquetasVariables?.length ?? 0,
+                cantidadDocumentosIngresados: etiquetasVariables?.filter(item => item.tieneDocumento).length ?? 0,
+                usuario: 'PER',
+                condiciones: mapCondiciones(etiquetaVariableBody as EtiquetaVariableBody)
             }
-                
-            setLoading(false);
-            setSuccess(true);
-        } catch (error) {
-            console.log(error)
-            setLoading(false)
-            setSuccess(false)
-        }
+            setLoading(true)
+            try {
 
-    };
+                await postGuardarHistorialUsuario(body);
+                if (docActual <= Number(cargaActual)) {
+                    setOpenModalFinalizacion(false);
+                } else {
+                    setOpenModalFinalizacion(true);
+                }
+
+                setLoading(false);
+                setSuccess(true);
+            } catch (error) {
+                console.log(error)
+                setLoading(false)
+                setSuccess(false)
+            }
+        };
+    }
 
     const handleClickAdd = () => {
         setOpenAddModal(true);
@@ -179,7 +185,19 @@ const SubirDocumentoPage = () => {
     const handleCloseAddModal = () => {
         setOpenAddModal(false);
     }
-
+    const validarCargaDoc = (event: any) => {
+        const docTotal = etiquetasVariables?.length ?? 0
+        const docActual = etiquetasVariables?.filter(item => item.tieneDocumento).length ?? 0
+        let estadoActual = 0
+        let cargaActual = sessionStorage.getItem('cargaActual')
+        if (cargaActual === null) {
+            cargaActual = (docActual).toString()
+            sessionStorage.setItem('cargaActual', cargaActual)
+        }
+        if (docActual == Number(cargaActual)) {
+            console.log('tu hermana edgarcitos est');
+        }
+    }
     return (
         <SubirDocumentoProvider>
             <Box sx={{ width: "75%" }}>
