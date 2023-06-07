@@ -11,7 +11,6 @@ import DocumentListComponent from "../../components/SubirDocumentos/DocumentList
 import DragDropComponent from "../../components/SubirDocumentos/DragDropComponent";
 import HeaderDocComponent from "../../components/SubirDocumentos/HeaderDocComponent";
 import ModalAddDocument from "../../components/SubirDocumentos/ModalAddDocument";
-import { SubirDocumentoProvider } from '../../context/subirDocumento/SubirDocumentoProvider';
 import { storage } from "../../helpers/storage";
 import { Condiciones, EtiquetaVariableBody, EtiquetaVariableResponse, GuardarHistorialUsuarioRequest, Parametros } from '../../interfaces/interfaces';
 import { etiquetaVariableActions } from '../../redux/slices/etiquetaVariable.slice';
@@ -22,6 +21,7 @@ import { getSolicitudClienteAction } from "../../redux/thunks/solicitud.thunks";
 import { postEtiquetasVariablesAction } from "../../redux/thunks/etiqueta.thunk";
 import CargaExitosaComponent from "../../components/SubirDocumentos/CargaExitosaComponent";
 import { useRouter } from 'next/router';
+import { SubirDocumentoProvider } from "../../context/subirDocumento/SubirDocumentoProvider";
 
 const SubirDocumentoPage = () => {
 
@@ -35,7 +35,6 @@ const SubirDocumentoPage = () => {
     const etiquetasLoading = useSelector((state: RootState) => state.etiquetaVariable.loading);
     const clienteDatos = useSelector((state: RootState) => state.clienteDatos.items);
     const page = useSelector((state: RootState) => state.etiquetaVariable.page);
-
 
     const [openAddModal, setOpenAddModal] = useState(false);
     const [openModalFinalizacion, setOpenModalFinalizacion] = useState(false);
@@ -218,7 +217,6 @@ const SubirDocumentoPage = () => {
             </Box>
             <ModalAddDocument open={openAddModal} onClose={handleCloseAddModal} />
             <CargaExitosaComponent open={openModalFinalizacion} onClose={closeModal} />
-
         </SubirDocumentoProvider>
     )
 }
