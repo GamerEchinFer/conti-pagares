@@ -112,14 +112,12 @@ function ConsultarDocumentosComponent() {
         <ListItem className="right-20 bottom-10">
           {            
             documentosUser && documentosUser.filtroGrupo ? documentosUser?.filtroGrupo?.map(item => 
-              <>
               <ButtonFiltro 
                 key={item.idGrupo}
                 onClick={() => handleClickButtonFiltro(item.idGrupo)}
                 descripcion={(capitalize(`${item.grupoDescripcion}`))}
                 active={idGroupSelected === item.idGrupo}
               />
-              </>
             ): null
           } 
         </ListItem>

@@ -28,7 +28,7 @@ function SolicitudPage() {
   const solicitud = useSelector((state: RootState) => state.solicitud.solicitudSelected)
   const page = useSelector((state: RootState) => state.solicitud.page)
   const auth = useSelector((state: RootState) => state.authGDI.gdiAuth);
-
+  sessionStorage.removeItem('cargaActual')
   useEffect(() => {
     initialize();
     if (auth && auth.access_token) {

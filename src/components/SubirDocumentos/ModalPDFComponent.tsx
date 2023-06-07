@@ -63,8 +63,6 @@ export default function ModalPDFComponent({item, refresh}: ModalPDFComponentProp
 
   const [seleccion, setSeleccion] = useState('Todo');
 
-  const [isChecked, setIsChecked] = useState(false);
-  
   const seleccionTodo = (e: any) => {
     setSeleccion(e.target.value)
   }
@@ -74,10 +72,10 @@ export default function ModalPDFComponent({item, refresh}: ModalPDFComponentProp
   const seleccionIntervalo = (e: any) => {
     setSeleccion(e.target.value)
   }
-  
   const files = useSelector((state: RootState) => state.hadoopDirecto.files);
   const [fechaEmision, setFechaEmision] = useState(new Date().toISOString());
   const [operacion, setOperacion] = useState(""); 
+  
   
   useEffect(() => {
     confirmCutPdf()    
@@ -167,6 +165,7 @@ export default function ModalPDFComponent({item, refresh}: ModalPDFComponentProp
     }
   }
   const confirm = async () => {
+    
     const res = await documento.guardarDocumento(item, fechaEmision, operacion);
     refresh()
     dispatch(etiquetaVariableActions.etiquetaVariableCloseAllModals());
@@ -192,115 +191,113 @@ export default function ModalPDFComponent({item, refresh}: ModalPDFComponentProp
     }
   }
 
-  return (       
-    <>   
-      <Dialog
-        fullScreen={fullScreen}
-        open={!!item.openModal}
-        onClose={handleClose}
-        aria-labelledby="responsive-dialog-title"
-        PaperProps={{ sx: { top: 10, m: 0 , maxWidth: "90%", height: "80%" }}}
-      >       
-        <DialogActions>
-          <ButtonIconClose 
-            autoFocus={true}  
-            onClick={handleClose} 
-          />
-        </DialogActions>
-        <DialogTitle
-          id="responsive-dialog-title"
-          className="right-4"
-        >
-          {capitalize(`${item.tipoDocumento}`)}
-        </DialogTitle>      
-        <div className="max-w-6xl grid grid-cols-2 gap-10">
-          <DialogContent>
-            <DialogContentText
-              className="pb-4 "
-            >
-              <span className="pr-10">Tamaño: {item.size?.toFixed(3) ?? 0} MB</span><span>Cantidad de Paginas: {item.totalPagesModified}</span>
-            </DialogContentText>
-              <div className="pb-4">
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DesktopDatePicker
-                    label="Fecha de Expedición"
-                    inputFormat="DD-MM-YYYY"
-                    value={fechaEmision}
-                    onChange={(value) => setFechaEmision(value as string)}
-                    renderInput={(params) => <TextField {...params}  sx={{ width: 508 }}/>}
-                  />
-                </LocalizationProvider>
-              </div>
-              <form id="form">
-              <div className="grid justify-start gap-2 w-full " style={{ border: "1px solid #B7B7B7", borderRadius: "4px", padding: "10px" }}>
-                <div className='grid grid-cols-3 gap-1 w-full  '>
-                  <div className='gap-1 self-center'>
-                    <input type="radio" name='seleccion' value='Todo' id='Todo' checked={seleccion === 'Todo'} onClick={seleccionTodo} />
-                    <span className='p-2'>Todo</span>
-
-                  </div>
-                  <div className='gap-1 col-span-2 text-center'>
-                    <input type="radio" name='seleccion' value='DesHas' id='DesHas' checked={seleccion === 'DesHas'} onClick={seleccionTodo} />
-                    <span className=" p-2">Desde</span>
-                    <input type="number" name="cut_from" value={filter.cut_from} onChange={handleChangeFilter} className="inputPDF" disabled={seleccion !== 'DesHas'} min='1'  max={item.totalPages} />
-                    <span className="p-2">Hasta</span>
-                    <input type="number" name="cut_to" value={filter.cut_to} onChange={handleChangeFilter} className="inputPDF" disabled={seleccion !== 'DesHas'} min='1' max={item.totalPages} />
-                  </div>
-
-                </div>
-                <div className='flex'>
-                  <input type="radio"
-                    className='mr-2'
-                    name='seleccion'
-                    value='Intervalo'
-                    id='Intervalo'
-                    checked={seleccion === 'Intervalo'}
-                    onClick={seleccionTodo}
-
-                  />
-                  <div className='flex w-full'>
-                    <span className='gap-2 pr-2'>Intervalos: </span>
-                    <input type="text"
-                      placeholder='Ej.: 1-2, 9-10'
-                      name='intervalo'
-                      id='Intervalo' className='inputInter pl-3'
-                      value={valorInput}
-                      disabled={seleccion !== 'Intervalo'}
-                      onChange={handleChangeIntervalo}
-                      
-                    />
-                  </div>
-                </div>
-                <span className='textHelper'>Escribe rangos de números y/o páginas separados por comas (ej. 2,5-8)</span>
-              </div>
-            </form>                                                           
-              <div>
-                {href}
-                Es un documento autenticado
-                <Checkbox checked={isChecked} />
-              </div>
-              <div className="pb-4 pt-4">
-                <TextField
-                  label="Asociar a Operación"
-                  value={operacion}
-                  onChange={(e) => { setOperacion(e.target.value) }}
-                  placeholder="74783648247234"
-                  fullWidth
+  return (          
+    <Dialog
+      fullScreen={fullScreen}
+      open={!!item.openModal}
+      onClose={handleClose}
+      aria-labelledby="responsive-dialog-title"
+      PaperProps={{ sx: { top: 10, m: 0 , maxWidth: "90%", height: "80%" }}}
+    >       
+      <DialogActions>
+        <ButtonIconClose 
+          autoFocus={true}  
+          onClick={handleClose} 
+        />
+      </DialogActions>
+      <DialogTitle
+        id="responsive-dialog-title"
+        className="right-4"
+      >
+        {capitalize(`${item.tipoDocumento}`)}
+      </DialogTitle>      
+      <div className="max-w-6xl grid grid-cols-2 gap-10">
+        <DialogContent>
+          <DialogContentText
+            className="pb-4 "
+          >
+            <span className="pr-10">Tamaño: {item.size?.toFixed(3) ?? 0} MB</span><span>Cantidad de Paginas: {item.totalPagesModified}</span>
+          </DialogContentText>
+            <div className="pb-4">
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DesktopDatePicker
+                  label="Fecha de Expedición"
+                  inputFormat="DD-MM-YYYY"
+                  value={fechaEmision}
+                  onChange={(value) => setFechaEmision(value as string)}
+                  renderInput={(params) => <TextField {...params}  sx={{ width: 508 }}/>}
                 />
+              </LocalizationProvider>
+            </div>
+            <form id="form">
+            <div className="grid justify-start gap-2 w-full " style={{ border: "1px solid #B7B7B7", borderRadius: "4px", padding: "10px" }}>
+              <div className='grid grid-cols-3 gap-1 w-full  '>
+                <div className='gap-1 self-center'>
+                  <input type="radio" name='seleccion' value='Todo' id='Todo' checked={seleccion === 'Todo'} onClick={seleccionTodo} />
+                  <span className='p-2'>Todo</span>
+
+                </div>
+                <div className='gap-1 col-span-2 text-center'>
+                  <input type="radio" name='seleccion' value='DesHas' id='DesHas' checked={seleccion === 'DesHas'} onClick={seleccionTodo} />
+                  <span className=" p-2">Desde</span>
+                  <input type="number" name="cut_from" value={filter.cut_from} onChange={handleChangeFilter} className="inputPDF" disabled={seleccion !== 'DesHas'} min='1'  max={item.totalPages} />
+                  <span className="p-2">Hasta</span>
+                  <input type="number" name="cut_to" value={filter.cut_to} onChange={handleChangeFilter} className="inputPDF" disabled={seleccion !== 'DesHas'} min='1' max={item.totalPages} />
+                </div>
+
               </div>
-              
-              <div className="flex flex-row justify-center gap-8 pb-4">
-                <CancelButton onClick={handleClose}/>
-                <ButtonConfirmar onClick={confirm} />
+              <div className='flex'>
+                <input type="radio"
+                  className='mr-2'
+                  name='seleccion'
+                  value='Intervalo'
+                  id='Intervalo'
+                  checked={seleccion === 'Intervalo'}
+                  onClick={seleccionTodo}
+
+                />
+                <div className='flex w-full'>
+                  <span className='gap-2 pr-2'>Intervalos: </span>
+                  <input type="text"
+                    placeholder='Ej.: 1-2, 9-10'
+                    name='intervalo'
+                    id='Intervalo' className='inputInter pl-3'
+                    value={valorInput}
+                    disabled={seleccion !== 'Intervalo'}
+                    onChange={handleChangeIntervalo}
+                    
+                  />
+                </div>
               </div>
-          </DialogContent>
-          <div className="max-w-10xl grid grid-cols" style={{width:"160%"}}>
-            <DialogContent>
-              <PDFComponent base64={item?.base64Modified ?? ""}  />
-            </DialogContent>   
-          </div>
+              <span className='textHelper'>Escribe rangos de números y/o páginas separados por comas (ej. 2,5-8)</span>
+            </div>
+          </form>                                                           
+            <div>
+              {href}
+              Es un documento autenticado
+              <Checkbox {...label} defaultChecked />
+            </div>
+            <div className="pb-4 pt-4">
+              <TextField
+                label="Asociar a Operación"
+                value={operacion}
+                onChange={(e) => { setOperacion(e.target.value) }}
+                placeholder="74783648247234"
+                fullWidth
+              />
+            </div>
+            
+            <div className="flex flex-row justify-center gap-8 pb-4">
+              <CancelButton onClick={handleClose}/>
+              <ButtonConfirmar onClick={confirm} />
+            </div>
+        </DialogContent>
+        <div className="max-w-10xl grid grid-cols" style={{width:"160%"}}>
+          <DialogContent>
+            <PDFComponent base64={item?.base64Modified ?? ""}  />
+          </DialogContent>   
         </div>
-      </Dialog> 
-    </>   
+      </div>
+    </Dialog>    
   );
 }

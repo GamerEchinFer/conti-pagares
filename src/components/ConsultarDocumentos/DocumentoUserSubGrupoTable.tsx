@@ -87,11 +87,11 @@ const DocumentoUserSubGrupoTable = ({documentosUser, query, handleClickViewDoc, 
         ))
         }    
         <Dialog
-          fullScreen={fullScreen}
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="draggable-dialog-title"
-          PaperProps={{ sx: { top: 10, m: 0 , maxWidth: "90%", height: "90%" }}}
+              fullScreen={fullScreen}
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="draggable-dialog-title"
+              PaperProps={{ sx: { top: 10, m: 0 , maxWidth: "90%", height: "90%" }}}
             >
               <DialogActions>
                 <ButtonIconClose 

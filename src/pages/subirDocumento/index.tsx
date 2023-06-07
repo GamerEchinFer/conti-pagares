@@ -20,17 +20,19 @@ import { RootState } from "../../redux/store";
 import { getSolicitudClienteAction } from "../../redux/thunks/solicitud.thunks";
 import { postEtiquetasVariablesAction } from "../../redux/thunks/etiqueta.thunk";
 import CargaExitosaComponent from "../../components/SubirDocumentos/CargaExitosaComponent";
-import {useRouter} from 'next/router';
+import { useRouter } from 'next/router';
+import { SubirDocumentoProvider } from "../../context/subirDocumento/SubirDocumentoProvider";
 
-const SubirDocumentoPage = ()  => {
+const SubirDocumentoPage = () => {
 
     const router = useRouter();
 
     const dispatch = useDispatch();
-    
+
+
     const files = useSelector((state: RootState) => state.hadoopDirecto.files);
-    const etiquetasVariables = useSelector((state: RootState) => state.etiquetaVariable.response);    
-    const etiquetasLoading = useSelector((state: RootState) => state.etiquetaVariable.loading);    
+    const etiquetasVariables = useSelector((state: RootState) => state.etiquetaVariable.response);
+    const etiquetasLoading = useSelector((state: RootState) => state.etiquetaVariable.loading);
     const clienteDatos = useSelector((state: RootState) => state.clienteDatos.items);
     const page = useSelector((state: RootState) => state.etiquetaVariable.page);
 
@@ -44,15 +46,15 @@ const SubirDocumentoPage = ()  => {
 
     useMount(() => {
         const data = storage.getObject("etiquetas-variable-body")
-        setBody(data)                    
-    })            
+        setBody(data)
+    })
 
     useMount(() => {
         const data = storage.getObject("etiquetas-variable-body")
-        setEtiquetaVariableBody(data)                    
-    })  
+        setEtiquetaVariableBody(data)
+    })
 
-    useMount(() => {                
+    useMount(() => {
         hadoopDirectoActions.setFiles(null);
     })
 
@@ -61,20 +63,20 @@ const SubirDocumentoPage = ()  => {
     });
 
     const initialize = () => {
-        if(page === -1){
+        if (page === -1) {
             setSolicitud(null);
-        }    
+        }
         dispatch(getSolicitudClienteAction());
     }
 
     const setPage = (value: number) => {
         dispatch(etiquetaVariableActions.setPage(value));
     }
-    
+
     const setSolicitud = (value: Parametros | null) => {
         dispatch(parametroActions.parametroRequest());
     }
-    
+
     const handleClickAtras = () => {
         if (page === -1) {
             router.push('/solicitud');
@@ -82,123 +84,140 @@ const SubirDocumentoPage = ()  => {
         }
     }
 
-    const refreshEtiquetasVariables = () => {
+    const refresshEtiquetasVariables = () => {
         dispatch(postEtiquetasVariablesAction(Object.values(body)));
     }
-         
+
     const mapCondiciones = (body: EtiquetaVariableBody): Condiciones[] => Object.values(body).map(
-        item => ({            
-                nombreCondicion: item.nombre,
-                valorCondicion: item.valor
-            }) as Condiciones
-        ).filter(item => item.nombreCondicion !== "codigoCliente" && item.nombreCondicion !== "tipo_persona") 
+        item => ({
+            nombreCondicion: item.nombre,
+            valorCondicion: item.valor
+        }) as Condiciones
+    ).filter(item => item.nombreCondicion !== "codigoCliente" && item.nombreCondicion !== "tipo_persona")
     
-
     const handleClickCargar = async () => {
-
+        
         if (!etiquetaVariableBody) {
             return;
         }
         const docTotal = etiquetasVariables?.length ?? 0
         const docActual = etiquetasVariables?.filter(item => item.tieneDocumento).length ?? 0
         let estadoActual = 0
-        if(docTotal === docActual) { estadoActual = 1 }
-        const body: GuardarHistorialUsuarioRequest = {
-            codigoCliente: clienteDatos.codigoCliente,
-            estado: estadoActual,
-            cantidadTotalDocumentos: etiquetasVariables?.length ?? 0,
-            cantidadDocumentosIngresados: etiquetasVariables?.filter(item => item.tieneDocumento).length ?? 0,        
-            usuario: 'PER',
-            condiciones: mapCondiciones(etiquetaVariableBody as EtiquetaVariableBody)
-        } 
+        let cargaActual = sessionStorage.getItem('cargaActual')
+        if (cargaActual === null) {
+            cargaActual = (docActual).toString()
+            sessionStorage.setItem('cargaActual', cargaActual)
+        }
+        if (docActual <= Number(cargaActual)) {
+            return
+        } else {
+            if (docTotal === docActual) { estadoActual = 1 }
+            const body: GuardarHistorialUsuarioRequest = {
+                codigoCliente: clienteDatos.codigoCliente,
+                estado: estadoActual,
+                cantidadTotalDocumentos: etiquetasVariables?.length ?? 0,
+                cantidadDocumentosIngresados: etiquetasVariables?.filter(item => item.tieneDocumento).length ?? 0,
+                usuario: 'PER',
+                condiciones: mapCondiciones(etiquetaVariableBody as EtiquetaVariableBody)
+            }
+            setLoading(true)
+            try {
 
-        setLoading(true)
-        try {                            
-              await postGuardarHistorialUsuario(body);
-                setOpenModalFinalizacion(true);
+                await postGuardarHistorialUsuario(body);
+                if (docActual <= Number(cargaActual)) {
+                    setOpenModalFinalizacion(false);
+                } else {
+                    setOpenModalFinalizacion(true);
+                }
+
                 setLoading(false);
                 setSuccess(true);
-        } catch (error) {
-            console.log(error)
-            setLoading(false)
-            setSuccess(false)
-        }        
-
-    };
+            } catch (error) {
+                console.log(error)
+                setLoading(false)
+                setSuccess(false)
+            }
+        };
+    }
 
     const handleClickAdd = () => {
         setOpenAddModal(true);
     };
 
-    const closeModal= () => {
+    const closeModal = () => {
         setOpenModalFinalizacion(false);
     }
 
-    const onDrop = (event: DragEvent<HTMLDivElement>, {idTipoDocumento, periodicidad, tieneDocumento}: EtiquetaVariableResponse) => {
+    const onDrop = (event: DragEvent<HTMLDivElement>, { idTipoDocumento, periodicidad, tieneDocumento }: EtiquetaVariableResponse) => {
 
         if (tieneDocumento) return;
-        const idx = event.dataTransfer.getData("file");         
+        const idx = event.dataTransfer.getData("file");
 
         const reader = new FileReader();
         reader.readAsDataURL(files[Number(idx)]);
 
         reader.onload = function () {
 
-            pdfjsLib.PDFDocument.load( reader.result?.toString() ?? "").then((pdfDoc) => {
+            pdfjsLib.PDFDocument.load(reader.result?.toString() ?? "").then((pdfDoc) => {
                 console.log(files[Number(idx)].size)
                 dispatch(etiquetaVariableActions.etiquetaVariableUpdateFile({
-                    idTipoDocumento, 
-                    file: files[Number(idx)], 
+                    idTipoDocumento,
+                    file: files[Number(idx)],
                     base64: reader.result?.toString() ?? "",
-                    base64Modified: reader.result?.toString() ?? "", 
+                    base64Modified: reader.result?.toString() ?? "",
                     totalPages: pdfDoc.getPageCount(),
                     size: files[Number(idx)].size / 1000000,
                 }));
-            })                                         
+            })
         }
     }
 
     const allowDrop = (event: any) => {
         event.preventDefault();
     }
-
+    const estadoDocs = (event: any) => {
+        const docTotal = etiquetasVariables?.length ?? 0
+        const docActual = etiquetasVariables?.filter(item => item.tieneDocumento).length ?? 0
+        let estadoActual = 1
+        return estadoActual
+    }
     const handleCloseAddModal = () => {
         setOpenAddModal(false);
     }
-
+ 
     return (
-        <>
-            <Box sx={{ width: "75%"}}>
-                <HeaderDocComponent />                
-                <Box sx={{ width: "125%"}}>
-                <div className="grid grid-cols-2 gap-6 md:max-w-5xl m-auto" >
-                    <div className="overflow-auto h-96">
-                        {
-                            etiquetasVariables.map(item => (
-                            <div key={item.idTipoDocumento} className="flex flex-col" onDrop={(event) => onDrop(event, item)} onDragOver={allowDrop}>
-                                <div className="pt-2">
-                                    <DocumentListComponent item={item} refresh={refreshEtiquetasVariables} />
-                                </div>
+        <SubirDocumentoProvider>
+            <Box sx={{ width: "75%" }}>
+                <HeaderDocComponent />
+                <Box sx={{ width: "125%" }}>
+                    <div className="grid grid-cols-2 gap-6 md:max-w-5xl m-auto" >
+                        <div className="overflow-auto h-96">
+                            {
+                                etiquetasVariables.map(item => (
+                                    <div key={item.idTipoDocumento} className="flex flex-col" onDrop={(event) => onDrop(event, item)} onDragOver={allowDrop}>
+                                        <div className="pt-2">
+                                            <DocumentListComponent item={item} refresh={refresshEtiquetasVariables} />
+                                        </div>
+                                    </div>
+                                ))
+                            }
+                            <div className="flex justify-center">
+                                <AddIconComponent onClick={handleClickAdd} />
                             </div>
-                            ))
-                        }
-                        <div className="flex justify-center">
-                            <AddIconComponent  onClick={handleClickAdd} />
+                        </div>
+                        <div className="dragDropComponent">
+                            <DragDropComponent />
                         </div>
                     </div>
-                    <div className="dragDropComponent">    
-                        <DragDropComponent />
+                    <div className="flex flex-row justify-center gap-8 pb-4">
+                        <BackButton onClick={handleClickAtras} />
+                        <ButtonFinalizar onClick={handleClickCargar} />
                     </div>
-                </div>
-                <div className="flex flex-row justify-center gap-8 pb-4">
-                    <BackButton  onClick={handleClickAtras} />
-                    <ButtonFinalizar onClick={handleClickCargar} />
-                </div>
                 </Box>
             </Box>
             <ModalAddDocument open={openAddModal} onClose={handleCloseAddModal} />
             <CargaExitosaComponent open={openModalFinalizacion} onClose={closeModal} />
-        </>
+        </SubirDocumentoProvider>
     )
 }
 
