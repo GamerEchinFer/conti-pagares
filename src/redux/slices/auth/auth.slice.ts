@@ -13,6 +13,7 @@ const initialState: AuthStateModel = {
     permisosUsuario: [],
     usuarioKeycloack: '',
     ipGeolocation: null,
+    datosAgente: null
 }
 
 
