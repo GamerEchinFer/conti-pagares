@@ -1,8 +1,9 @@
 import axios from "axios";
 import { ConfigApiExterna } from "../config/config";
 import { bearer, defaultheaders } from "../helpers/headers";
-import { LoginResponse, PermisosUsuarioResponse } from "../models/responses";
+import { DatosAgenteResponse, LoginResponse, PermisosUsuarioResponse } from "../models/responses";
 import { IpGeolocationResponse } from "../models/responses/ipGeolocation.response";
+import DatosAdicionalesResponse from "../models/responses/DatosAdicionales.response";
 
 export const loginApiGDI = async () => {
 
@@ -37,4 +38,26 @@ export const Geolocalizacion = async () => {
     }else{
         return null;
     }
+}
+
+export const listarDatosAdicionales = async (token:string, codCliente:string, deviceInfo: string, userInfo: string) => {
+    const _headers =  defaultheaders;
+    _headers.headers.Authorization = bearer + token;
+    _headers.headers.DeviceInfo = deviceInfo;
+    _headers.headers.UserInfo = userInfo;
+
+    const respUsuario = await axios.get<DatosAdicionalesResponse>(ConfigApiExterna.auth.listarDatosAdicionalesUsuario.replace('${codCliente}',codCliente),_headers);
+    if (respUsuario) return respUsuario;
+     else return null
+}
+
+export const listarDatosAgente = async (token:string, usuario:string, deviceInfo: string, userInfo: string) => {
+    const _headers =  defaultheaders;
+    _headers.headers.Authorization = bearer + token;
+    _headers.headers.DeviceInfo = deviceInfo;
+    _headers.headers.UserInfo = userInfo;
+
+    const datosAgente = await axios.get<DatosAgenteResponse>(ConfigApiExterna.auth.datosAgente.replace('${usuario}',usuario),_headers);
+    if (datosAgente) return datosAgente;
+     else return null
 }

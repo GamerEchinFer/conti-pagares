@@ -1,6 +1,6 @@
 import { Box, Grid, TextField, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { theme } from "../../../theme/Theme";
 import SearchbarButton from "../../components/Buttons/SearchbarButton";
 import DatosPersonales from '../../components/DatosPersonales/DatosPersonales';
@@ -12,19 +12,19 @@ import { TipoBusqueda } from '../../interfaces/interfaces';
 import { busquedaActions } from "../../redux/slices/busqueda.slice";
 import { clienteDatosActions } from '../../redux/slices/clienteDatos.slice';
 import { clienteDocumentoActions } from "../../redux/slices/clienteDocumento.slice";
-import { RootState } from "../../redux/store";
+import { RootState, useAppDispatch } from "../../redux/store";
 import { getClienteDatosAction } from '../../redux/thunks/clienteDatos.thunks';
 import styles from './TipoBusqueda.module.css';
 import { useKeycloak } from '@react-keycloak/web';
 import { reset as resetUi } from '../../redux/slices/ui/ui.slice';
 import { getUsuarioKeyCloack, reset as resetAuth } from '../../redux/slices/auth/auth.slice';
-import { login } from "../../actions/Auth.actions";
+import { getDatosAgente, login } from "../../actions/Auth.actions";
 
 const filtros = ["codigo", "documento"]
 
 const TipoBusquedaPage = () => {
   
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   
   const [tipoBusqueda, setTipoBusqueda] = useState<TipoBusqueda | null>();
   const [tipoBusquedaSelected, setTipoBusquedaSelected] = useState(1);
@@ -36,13 +36,16 @@ const TipoBusquedaPage = () => {
   const clienteDatos = useSelector((state: RootState) => state.clienteDatos.items);
   const loading = useSelector((state: RootState) => state.clienteDatos.loading);
   const { keycloak, initialized } = useKeycloak();
-	const { access_token, permisosUsuario } = useSelector((state:RootState)=>state.auth)
+	const { access_token, permisosUsuario, datosAgente } = useSelector((state:RootState)=>state.auth);
+	const { loadingAgente, loadingPermisos, loadingToken } = useSelector((state:RootState)=>state.ui);
+
 
   useEffect(() => {
     dispatch(busquedaActions.busquedaRequest());
     dispatch(clienteDatosActions.clienteDatosReset());
     dispatch(clienteDocumentoActions.clienteDocumentoReset());
 }, [auth])
+
 
 const limpiarDatos = () => {
   dispatch(resetAuth());
@@ -71,7 +74,7 @@ useEffect(() => {
 
 useEffect(() => {
   if (access_token && keycloak?.tokenParsed?.preferred_username){
-    console.log("procedimientos ejecutandose")
+    dispatch(getDatosAgente(access_token as string,keycloak?.tokenParsed?.preferred_username.split('@')[0]));
   }
 }, [access_token])
 
@@ -81,6 +84,14 @@ useEffect(() => {
     }
   };
 
+  const activeModal = () => {
+		return loadingAgente || 
+			   loadingPermisos || 
+			   loadingToken || 
+			   !keycloak.authenticated || 
+			   permisosUsuario.filter((permisos)=>permisos.url === process.env.NEXT_PUBLIC_HOST_VALIDO).length === 0 || 
+			   access_token === null
+	}
   return (
     <>
 			<Grid container pt={3} style={{ justifyContent: 'center' }}>
@@ -145,7 +156,6 @@ useEffect(() => {
             </div>
           </div>
           <DatosPersonales />
-          
           </div>
         </Box>
       </Grid>

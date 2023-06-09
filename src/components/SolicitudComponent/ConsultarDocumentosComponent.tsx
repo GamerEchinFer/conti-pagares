@@ -26,7 +26,7 @@ import DocumentoUserTable from '../ConsultarDocumentos/DocumentoUserTable';
 import DocumentoUserSubGrupoTable from '../ConsultarDocumentos/DocumentoUserSubGrupoTable';
 import { tipoDocumentoHistoricoActions } from '../../redux/slices/documentoHistorico.slice';
 import { documentUserMapper } from '../../helpers/documentUserMapper';
-import { DocumentosUsuarioResponse } from '../../interfaces/interfaces';
+import { DocumentosUsuarioResponse, ColeccionDocumento } from '../../interfaces/interfaces';
 import { documentosUserActions } from '../../redux/slices/documentosUser.slice';
 
 function ConsultarDocumentosComponent() {
@@ -47,11 +47,6 @@ function ConsultarDocumentosComponent() {
 
   const solicitud = useSolicitud(4);
   
-
-  useEffect(() => {
-    dispatch(documentosUserActions.setItemsMappedReset()); 
-  });
-  
   useEffect(() => {
     
     dispatch(getDocumentosUserAction(datosCliente.codigoCliente, idGroupSelected));
@@ -62,6 +57,11 @@ function ConsultarDocumentosComponent() {
 
     dispatch(tipoDocumentoHistoricoActions.tipoDocumentoHistoricoReset());
   }, []);
+
+  useEffect(() => {
+    dispatch(documentosUserActions.setItemsMappedReset()); 
+  });
+  
   
 
   const handleIconBack = () => {
