@@ -93,7 +93,6 @@ export async function getClienteDocumento(numeroDocumento: string) {
 export const postGuardarDocumento = async (body: GuardarDocumentoRequest) => {
     const URL =  `/guardar-documento`;
     const {data} = await apmApi.post<GuardarDocumentoRequest, AxiosResponse<number>>(URL, body,{headers: {config:'keycloakHeaders'}});
-    console.log(data);
     
     return data;
 }
@@ -101,7 +100,6 @@ export const postGuardarDocumento = async (body: GuardarDocumentoRequest) => {
 export const postGuardarHistorialUsuario = async (body: GuardarHistorialUsuarioRequest) => {
     const URL =`/guardar-historial-usuario`;
     const {data} = await apmApi.post<GuardarHistorialUsuarioRequest, AxiosResponse<undefined>>(URL, body, {headers: { config: 'KeycloakHeaders'}});
-    console.log(data);
 
     return data;
 }
