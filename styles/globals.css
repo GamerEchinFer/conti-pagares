@@ -118,7 +118,17 @@ a {
   text-transform:capitalize !important;
   background-color: #00438A !important;
 }
+.btnModal {
+  font-family: 'ContiSans' !important;
+  padding: 6px 36px 4px !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+  font-size: 16px !important;
+  text-transform:capitalize !important;
+  background-color: #00438A !important;
+  color: #FFFFFF !important;
 
+}
 .btnNextTB {
   font-family: 'ContiSans' !important;
   padding: 6px 36px 4px !important;
