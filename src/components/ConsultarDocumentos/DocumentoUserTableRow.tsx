@@ -78,7 +78,7 @@ const DocumentoUserTableRow = ({row, handleClickViewDoc, onClickRow}: DocumentoU
             {(() => {
               switch(capitalize(`${row.datosAdicionales.codigoEstadoDocumento}`)) {
                 case 'Pendiente':
-                  return <span className='text-[#FFC000]  border-gray-300 p-2 bg-gray-200'>Pendiente</span>
+                  return <span className='text-[#FFC000]'>Pendiente</span>
                 case 'Certificado':
                   return <span className='text-[#70AD47]'>Certificado</span>
                 case 'Rechazado':
