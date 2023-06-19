@@ -29,24 +29,23 @@ const ButtonFiltro = ({onClick, descripcion, active=false}: ButtonFiltroProps) =
     
   return (
     <>
-      <div className="pt-8">
-        <ListItem>
+      <div className="">
+        <div className='w-50 p-1'>
           <Button
             onClick={() => onClick ? onClick() : null}
             variant="outlined"
-            
+
             size="small"
             sx={{ background: active ? "#1D428A" : "#ffffff" ,
                   color: active ? "#ffffff": "#1D428A",
                   ":hover":{background:"#1D428A", color:"#ffffff", fontWeight:"200" }}}
-            style={{ fontWeight: "200",fontSize: "16px"}}
             className="btnFiltro"
           >
           {
             descripcion
           }
           </Button>
-        </ListItem>
+        </div>
       </div>
     </>
   )

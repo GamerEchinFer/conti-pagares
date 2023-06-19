@@ -78,37 +78,15 @@ const DocumentoUserTableRow = ({row, handleClickViewDoc, onClickRow}: DocumentoU
             {(() => {
               switch(capitalize(`${row.datosAdicionales.codigoEstadoDocumento}`)) {
                 case 'Pendiente':
-                  return <span>Pendiente</span>
+                  return <span className='text-[#FFC000]'>Pendiente</span>
                 case 'Certificado':
-                  return <span>Certificado</span>
+                  return <span className='text-[#70AD47]'>Certificado</span>
                 case 'Rechazado':
-                  return <span>Rechazado</span>
+                  return <span className='text-[#FF4747]'>Rechazado</span>
                 case 'Verificado':
-                  return <span>Verificado</span>
+                  return <span className='text-[#5b9bd5]'>Verificado</span>
                 case 'Vencido':
-                  return <span>Vencido</span>
-                default:
-                  return null
-              }
-            })()}
-          </div>
-        </TableCell>
-        <TableCell
-          align="left"
-        >
-          <div className="flex justify-start pr-2">
-            {(() => {
-              switch(capitalize(`${row.datosAdicionales.codigoEstadoDocumento}`)) {
-                case 'Pendiente':
-                  return <PendienteIcon />
-                case 'Certificado':
-                  return <CertificadoIcon />
-                case 'Rechazado':
-                  return <RechazadoIcon />
-                case 'Verificado':
-                  return <VerificadoIcon />
-                case 'Vencido':
-                  return <VencidoIcon />
+                  return <span className='text-[#7f6000]'>Vencido</span>
                 default:
                   return null
               }
