@@ -197,11 +197,6 @@ const ViewPDFComponent = ({item}: ModalPDFComponentProps) => {
               </span>
               </div>
             </form> 
-            <div>
-              {href}
-              Es un documento autenticado
-              <Checkbox {...label} defaultChecked />
-            </div>
             <div className="pb-4 pt-4">
               <TextField
                 label="Asociar a Operación"
@@ -211,8 +206,6 @@ const ViewPDFComponent = ({item}: ModalPDFComponentProps) => {
             </div>
             <div className="flex flex-row justify-center gap-8 pb-4">
               <CancelButton onClick={handleClose}/>
-              <ButtonConfirmar onClick={confirm} />
-              <ButtonModificar onClick={handleClose} />
             </div>
         </DialogContent>
         <div className="max-w-10xl grid grid-cols" style={{width:"140%"}} >
