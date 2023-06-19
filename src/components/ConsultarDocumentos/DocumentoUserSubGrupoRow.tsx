@@ -79,29 +79,6 @@ const DocumentoUserSubGrupoRow = ({row, handleClickViewDoc, onClickRow}: Documen
         })()}
       </div>
     </TableCell>
-
-      <TableCell
-        align="left"
-      >
-        <div className="flex justify-start pr-2">
-          {(() => {
-            switch(capitalize(`${row.datosAdicionales.codigoEstadoDocumento}`)) {
-              case 'Pendiente':
-                return <PendienteIcon />
-              case 'Certificado':
-                return <CertificadoIcon />
-              case 'Rechazado':
-                return <RechazadoIcon />
-              case 'Verificado':
-                return <VerificadoIcon />
-              case 'Vencido':
-                return <VencidoIcon />
-              default:
-                return null
-            }
-          })()}
-        </div>
-      </TableCell>      
       <ConsultarHistoricoContent />
   </>
   )

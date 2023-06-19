@@ -201,11 +201,9 @@ const SubirDocumentoPage = () => {
                                     </div>
                                 ))
                             }
-                            <div className="flex justify-center">
-                                <AddIconComponent onClick={handleClickAdd} />
-                            </div>
+
                         </div>
-                        <div className="dragDropComponent">
+                        <div className="dragDropComponent text-center ">
                             <DragDropComponent />
                         </div>
                     </div>
