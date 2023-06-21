@@ -43,7 +43,7 @@ const PDFComponent = ({base64}: PDFComponentProps) => {
         const formData = new FormData();        
         formData.append("file", fileInput.files[0]);
         
-        const res = await postAlzarHadoopDirecto(formData, "/datalake/Continental-desa", false, 65356);
+        const res = await postAlzarHadoopDirecto(formData,process.env.NEXT_PUBLIC_PATH_IMAGE!, false, 65356);
 
         if (!res || !res.loc) {
             // Alerta
