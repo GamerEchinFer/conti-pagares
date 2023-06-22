@@ -20,8 +20,9 @@ import { RootState } from "../../redux/store";
 import { getSolicitudClienteAction } from "../../redux/thunks/solicitud.thunks";
 import { postEtiquetasVariablesAction } from "../../redux/thunks/etiqueta.thunk";
 import CargaExitosaComponent from "../../components/SubirDocumentos/CargaExitosaComponent";
-import { useRouter } from 'next/router';
+
 import { SubirDocumentoProvider } from "../../context/subirDocumento/SubirDocumentoProvider";
+import { useRouter } from "next/router";
 
 const SubirDocumentoPage = () => {
 
