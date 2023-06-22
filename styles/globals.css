@@ -378,50 +378,6 @@ body {
   }
 }
 
-/* .carousel-container {
-  display: flex;
-  scroll-snap-type: y proximity !important;
-  overflow-x: scroll !important;
-  width: 934px;
-  /* Hide the scroll bar */
-  /* scrollbar-width: none !important; */
-  /* Firefox */
-  /* -ms-overflow-style: none !important; */
-  /* Internet Explorer/Edge */
-/* } */
-
-/* 
-.carousel-container::-webkit-scrollbar-button {
-  display: block;
-  width: 20px;
-  height: 20px;
-
-} */
-
-/* .carousel-container::-webkit-scrollbar-button:start {
-  background-image: url('../src/assets/svg/arrow-left-solid.svg');
-}
-
-.carousel-container::-webkit-scrollbar-button:end {
-  background-image: url('../src/assets/svg/arrow-right-solid.svg');
-} */
-
-/* .carousel-container::-webkit-scrollbar-track-piece {
-  background-color: #f1f1f1;
-} */
-/* .carousel-container::-webkit-scrollbar {
-  display: none !important;
-    /* Chrome/Safari/Opera */
-/* } */
-
-/* .carousel-container > .child {
-  scroll-snap-align: start !important;
-}
-
-.carousel-container {
-  scroll-padding-top: 15vh !important;
-}  */
-
 .carousel-container {
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
