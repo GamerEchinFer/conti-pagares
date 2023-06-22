@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { postGuardarHistorialUsuario } from "../../api/apmDesaApi";
 import BackButton from "../../components/Buttons/BackButton";
 import ButtonFinalizar from "../../components/Buttons/ButtonFinalizar";
-import AddIconComponent from "../../components/SubirDocumentos/AddIconComponent";
 import DocumentListComponent from "../../components/SubirDocumentos/DocumentListComponent";
 import DragDropComponent from "../../components/SubirDocumentos/DragDropComponent";
 import HeaderDocComponent from "../../components/SubirDocumentos/HeaderDocComponent";
