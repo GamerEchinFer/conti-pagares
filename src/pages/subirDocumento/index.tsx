@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { postGuardarHistorialUsuario } from "../../api/apmDesaApi";
 import BackButton from "../../components/Buttons/BackButton";
 import ButtonFinalizar from "../../components/Buttons/ButtonFinalizar";
-import AddIconComponent from "../../components/SubirDocumentos/AddIconComponent";
 import DocumentListComponent from "../../components/SubirDocumentos/DocumentListComponent";
 import DragDropComponent from "../../components/SubirDocumentos/DragDropComponent";
 import HeaderDocComponent from "../../components/SubirDocumentos/HeaderDocComponent";
@@ -95,20 +94,20 @@ const SubirDocumentoPage = () => {
             valorCondicion: item.valor
         }) as Condiciones
     ).filter(item => item.nombreCondicion !== "codigoCliente" && item.nombreCondicion !== "tipo_persona")
-    
+    const docActual = etiquetasVariables?.filter(item => item.tieneDocumento).length ?? 0
+    let cargaActual = sessionStorage.getItem('cargaActual')
+    if (cargaActual === null) {
+        cargaActual = (docActual).toString()
+        sessionStorage.setItem('cargaActual', cargaActual)
+    }
     const handleClickCargar = async () => {
-        
+
         if (!etiquetaVariableBody) {
             return;
         }
         const docTotal = etiquetasVariables?.length ?? 0
         const docActual = etiquetasVariables?.filter(item => item.tieneDocumento).length ?? 0
         let estadoActual = 0
-        let cargaActual = sessionStorage.getItem('cargaActual')
-        if (cargaActual === null) {
-            cargaActual = (docActual).toString()
-            sessionStorage.setItem('cargaActual', cargaActual)
-        }
         if (docActual <= Number(cargaActual)) {
             return
         } else {
@@ -185,7 +184,7 @@ const SubirDocumentoPage = () => {
     const handleCloseAddModal = () => {
         setOpenAddModal(false);
     }
- 
+
     return (
         <SubirDocumentoProvider>
             <Box sx={{ width: "75%" }}>
