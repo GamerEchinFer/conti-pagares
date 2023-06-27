@@ -31,6 +31,16 @@ export const listarPermisosUsuario = async (token:string, deviceInfo: string, us
      else return null
 }
 
+export const listarDatosAgente = async (token:string, usuario:string, deviceInfo: string, userInfo: string) => {
+    const _headers =  defaultheaders;
+    _headers.headers.Authorization = bearer + token;
+    _headers.headers.DeviceInfo = deviceInfo;
+    _headers.headers.UserInfo = userInfo;
+
+    const datosAgente = await axios.get<DatosAgenteResponse>(ConfigApiExterna.auth.datosAgente.replace('${usuario}',usuario),_headers);
+    if (datosAgente) return datosAgente;
+     else return null
+}
 export const Geolocalizacion = async () => {
     const respGeolocalizacion = await axios.get<IpGeolocationResponse>(ConfigApiExterna.auth.ipGeolocation,);
     if (respGeolocalizacion){
@@ -48,16 +58,5 @@ export const listarDatosAdicionales = async (token:string, codCliente:string, de
 
     const respUsuario = await axios.get<DatosAdicionalesResponse>(ConfigApiExterna.auth.listarDatosAdicionalesUsuario.replace('${codCliente}',codCliente),_headers);
     if (respUsuario) return respUsuario;
-     else return null
-}
-
-export const listarDatosAgente = async (token:string, usuario:string, deviceInfo: string, userInfo: string) => {
-    const _headers =  defaultheaders;
-    _headers.headers.Authorization = bearer + token;
-    _headers.headers.DeviceInfo = deviceInfo;
-    _headers.headers.UserInfo = userInfo;
-
-    const datosAgente = await axios.get<DatosAgenteResponse>(ConfigApiExterna.auth.datosAgente.replace('${usuario}',usuario),_headers);
-    if (datosAgente) return datosAgente;
      else return null
 }
