@@ -19,6 +19,20 @@ export const apiTokenInterna = async () => {
     return null 
 }
 
+export const apiDatosAgenteInterna = async (token:string,usuario:string) => {
+    const datosAgente = await axios.post<DatosAgenteResponse>(auth.datosAgente, {data: {token:token, usuario:usuario}});
+    if (datosAgente){
+        if (datosAgente.status === 204) {
+            return null;
+        }
+        if (datosAgente.status >= 400) {
+            return null ;
+        }
+        return datosAgente.data;
+    }
+    return null 
+}
+
 export const apiPermisosUsuarioInterna = async (token:string, userCarga:string) => {
     const permisosUsuario = await axios.post<PermisosUsuarioResponse[]>(auth.permisosUsuario, {data: {token:token, userCarga:userCarga}});
     if (permisosUsuario){
@@ -49,16 +63,3 @@ export const apiIpGeolocation = async () => {
     );
 }
 
-export const apiDatosAgenteInterna = async (token:string,usuario:string) => {
-    const datosAgente = await axios.post<DatosAgenteResponse>(auth.datosAgente, {data: {token:token, usuario:usuario}});
-    if (datosAgente){
-        if (datosAgente.status === 204) {
-            return null;
-        }
-        if (datosAgente.status >= 400) {
-            return null ;
-        }
-        return datosAgente.data;
-    }
-    return null 
-}
