@@ -20,8 +20,6 @@ export const login = ()  => {
     }
 };
 
-
-
 export const getPermisosUsuario = (token:string, userCarga:string) => {
     return async (dispatch:AppDispatch) => {
         dispatch(showLoadingPermisos(true));
