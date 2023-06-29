@@ -49,7 +49,7 @@ export async function getParametrosVisibles(idProducto: number, idSubProducto: n
 
 export const postEtiquetaVariable = async (body: EtiquetaVariable[]) => {
     const URL =  `/checklist`;
-    const data = await apmApi.post<EtiquetaVariable[], AxiosResponse<EtiquetaVariableResponse[]>>(URL, body,{headers: {config:'keycloakHeaders'}});
+    const data = await apmApi.post<EtiquetaVariable[], AxiosResponse<EtiquetaVariableResponse[]>>(URL, body);
     return data;
 }
 
@@ -92,14 +92,14 @@ export async function getClienteDocumento(numeroDocumento: string) {
 
 export const postGuardarDocumento = async (body: GuardarDocumentoRequest) => {
     const URL =  `/guardar-documento`;
-    const {data} = await apmApi.post<GuardarDocumentoRequest, AxiosResponse<number>>(URL, body,{headers: {config:'keycloakHeaders'}});
+    const {data} = await apmApi.post<GuardarDocumentoRequest, AxiosResponse<number>>(URL, body);
     
     return data;
 }
 
 export const postGuardarHistorialUsuario = async (body: GuardarHistorialUsuarioRequest) => {
     const URL =`/guardar-historial-usuario`;
-    const {data} = await apmApi.post<GuardarHistorialUsuarioRequest, AxiosResponse<undefined>>(URL, body, {headers: { config: 'KeycloakHeaders'}});
+    const {data} = await apmApi.post<GuardarHistorialUsuarioRequest, AxiosResponse<undefined>>(URL, body);
 
     return data;
 }
