@@ -17,8 +17,10 @@ import { getClienteDatosAction } from '../../redux/thunks/clienteDatos.thunks';
 import styles from './TipoBusqueda.module.css';
 import { useKeycloak } from '@react-keycloak/web';
 import { reset as resetUi } from '../../redux/slices/ui/ui.slice';
-import { getUsuarioKeyCloack, reset as resetAuth } from '../../redux/slices/auth/auth.slice';
-import { getDatosAgente, login } from "../../actions/Auth.actions";
+import { datosDispositivo, getUsuarioKeyCloack, reset as resetAuth } from '../../redux/slices/auth/auth.slice';
+import { getDatosAgente, login } from '../../actions/Auth.actions';
+import { v4 as uuidv4 } from 'uuid';
+import InicioComponent from "../inicio";
 
 const filtros = ["codigo", "documento"]
 
@@ -38,14 +40,14 @@ const TipoBusquedaPage = () => {
   const { keycloak, initialized } = useKeycloak();
 	const { access_token, permisosUsuario, datosAgente } = useSelector((state:RootState)=>state.auth);
 	const { loadingAgente, loadingPermisos, loadingToken } = useSelector((state:RootState)=>state.ui);
-
+	const [documento, setDocumento] = useState<string>('');
+	const { idDispositivo } = useSelector((state:RootState)=>state.auth);
 
   useEffect(() => {
     dispatch(busquedaActions.busquedaRequest());
     dispatch(clienteDatosActions.clienteDatosReset());
     dispatch(clienteDocumentoActions.clienteDocumentoReset());
 }, [auth])
-
 
 const limpiarDatos = () => {
   dispatch(resetAuth());
@@ -60,6 +62,9 @@ const autenticar = () => {
 
 useEffect(() => {
   limpiarDatos();
+  if(idDispositivo === ''){
+    dispatch(datosDispositivo(uuidv4()));
+  }
   if (initialized) {
     autenticar()
   }
@@ -67,7 +72,7 @@ useEffect(() => {
 
 useEffect(() => {
   if (keycloak?.tokenParsed?.preferred_username){
-    login()
+    dispatch(login())
     dispatch(getUsuarioKeyCloack(keycloak?.tokenParsed?.preferred_username))
   }
 }, [keycloak?.tokenParsed?.preferred_username])
@@ -75,6 +80,7 @@ useEffect(() => {
 useEffect(() => {
   if (access_token && keycloak?.tokenParsed?.preferred_username){
     dispatch(getDatosAgente(access_token as string,keycloak?.tokenParsed?.preferred_username.split('@')[0]));
+    console.log("datosAgente", keycloak?.tokenParsed?.preferred_username.split('@')[0])
   }
 }, [access_token])
 
@@ -84,17 +90,11 @@ useEffect(() => {
     }
   };
 
-  const activeModal = () => {
-		return loadingAgente || 
-			   loadingPermisos || 
-			   loadingToken || 
-			   !keycloak.authenticated || 
-			   permisosUsuario.filter((permisos)=>permisos.url === process.env.NEXT_PUBLIC_HOST_VALIDO).length === 0 || 
-			   access_token === null
-	}
   return (
     <>
-			<Grid container pt={3} style={{ justifyContent: 'center' }}>
+    {
+      access_token ? 
+      <Grid container pt={3} style={{ justifyContent: 'center' }}>
 				<Box className={styles['box-user']} style={{padding: mediaQueryPadding ? '0px 0px' : '0px'}}>
         <div>
           <GDITitulosComponent />
@@ -158,7 +158,9 @@ useEffect(() => {
           <DatosPersonales />
           </div>
         </Box>
-      </Grid>
+      </Grid> : <InicioComponent />
+    }
+			
     </>
   )
 }
