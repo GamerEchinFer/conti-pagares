@@ -50,7 +50,7 @@ const initialState: uiState = {
                 loadingToken: action.payload
             } as uiState
         },
-        showLoadingGDI : (state,action:PayloadAction<boolean>) => {
+        showLoadingAgente : (state,action:PayloadAction<boolean>) => {
             return {
                 ...state,
                 loadingAgente: action.payload
@@ -62,12 +62,6 @@ const initialState: uiState = {
                 loadingPermisos: action.payload
             } as uiState
         },
-        showLoadingAgente : (state,action:PayloadAction<boolean>) => {
-            return {
-                ...state,
-                loadingAgente: action.payload
-            } as uiState
-        },
     }
   })
 
@@ -77,7 +71,6 @@ export const {
     dataError,
     showLoadingIpGeolocation,
     showLoadingToken,
-    showLoadingGDI,
     showLoadingPermisos,
     reset,
     modalPara,

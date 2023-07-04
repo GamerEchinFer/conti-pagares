@@ -1,19 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { encriptar } from '../../../helpers/encriptar'
-import { loginApiGDI } from '../../../api/ApiAuth'
-import interceptors from '../../../api/interceptors'
+import { loginApiGDI } from '../../../api/ApiAuth';
+import interceptor from '../../../config/interceptor';
 
-type payload = {
-  v1: string, 
-  v2: string, 
-  v3: string
-}
-
-interceptors();
+interceptor();
 
 const requestToken = async ()=> {
-    const res = await loginApiGDI();
-    return res
+  const res = await loginApiGDI();
+  return res
 }
 
 export default async function handler(

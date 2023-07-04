@@ -16,7 +16,6 @@ const initialState: AuthStateModel = {
     datosAgente: null
 }
 
-
 const authSlice = createSlice({
     name: 'auth',
     initialState,
@@ -26,6 +25,12 @@ const authSlice = createSlice({
                 ...initialState,
                 idDispositivo:state.idDispositivo,
             }
+        },
+        datosDispositivo : (state,action:PayloadAction<string>) => {
+            return {
+                ...state,
+                idDispositivo: action.payload
+            } as authState;
         },
         datosLogin : (state:authState,action:PayloadAction<string | null>) => {
             return {
@@ -69,6 +74,7 @@ const authSlice = createSlice({
 
 export const {
     reset,
+    datosDispositivo,
     datosLogin,
     login,
     getPermisosUsuario,
