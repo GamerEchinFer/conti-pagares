@@ -32,9 +32,6 @@ export const ConfigApiInterna = {
         token: '/api/datos/token',
         permisosUsuario: '/api/datos/permisos',
         ipGeolocation: '/api/datos/geolocalizacion',
-        listarDatosAdicionalesUsuario: '/api/datos/adicionales',
-        validaCliente: '/interno/clientes/datos/v1/${nroDocumento}/codigo/${tipoDocumento}',
-        datosAgente: '/api/datos/agente',
     },
 }
 

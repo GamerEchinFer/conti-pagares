@@ -28,6 +28,8 @@ const buttonStyle = (item: EtiquetaVariableResponse) =>  ({
 });
 
 const DocumentListComponent  = ({item, refresh}: DocumentListComponentProps) => {
+  // const etiquetasVariables = useSelector((state: RootState) => state.etiquetaVariable.response);
+  // console.log(etiquetasVariables)
   const dispatch = useDispatch();
 
   const router = useRouter();
@@ -53,7 +55,8 @@ const DocumentListComponent  = ({item, refresh}: DocumentListComponentProps) => 
   }
 
   const handleFile = (files: any) => {
-
+    
+    // Si no existe archivo y si no hay archivos en el array, cancelar subida
     if (!files && files.length === 0) return;
 
     dispatch(hadoopDirectoActions.setFiles(files));
@@ -81,28 +84,29 @@ const DocumentListComponent  = ({item, refresh}: DocumentListComponentProps) => 
   }
   
   const handleClickTieneDocumento = async ({datosAdicionales}: EtiquetaVariableResponse) => {
+    // Cuando tiene documento
     if (!datosAdicionales || !Array.isArray(datosAdicionales) || !datosAdicionales.length ) return;
 
+    // Descargar el documento
+    //TODO: SWITCH PARA HADOOP Y SOAP
     const rutaHadoop = datosAdicionales[0].rutaHadoop;
 
     const download = await getDescargarHadoopDirecto(rutaHadoop);
-    console.log(download)
 
-    
     if (!download || !download.data || !download.data.loc) {
+      // Alerta
       console.log("El download.data.loc no existe: ", download);      
       return;
     }
 
-    
-    const viewPdf = `${download?.data?.loc ?? ""}`
+    const viewPdf = `${download?.data?.loc ?? ""}` 
     setDownload(viewPdf);
-
+    
     dispatch(etiquetaVariableActions.etiquetaVariableUpdateFileModified({
       idTipoDocumento: item.idTipoDocumento,
       base64Modified: parsePdfBase64(viewPdf as string),
       totalPagesModified: 1,
-      sizeModified: 1
+      sizeModified: files[Number(0)].size / 1000000
     }))
     
   }
@@ -112,7 +116,7 @@ const DocumentListComponent  = ({item, refresh}: DocumentListComponentProps) => 
   }
 
   const openViewPdfModal = (item: EtiquetaVariableResponse) => {    
-    handleClickTieneDocumento(item);  
+    handleClickTieneDocumento(item) // Aca hay que generar el pdf     
     dispatch(etiquetaVariableActions.setOpenModalView({idTipoDocumento: item.idTipoDocumento, openModalView: true}))
   }
 
@@ -173,9 +177,11 @@ const DocumentListComponent  = ({item, refresh}: DocumentListComponentProps) => 
             onDrop={handleDrop}>
               <input
                 type="file"
+                // multiple selección multiple innecesaria para casos donde el bton solo necesita subir un PDF           
                 onChange={(event) => handleFile(event.target.files)}
                 hidden
                 ref={inputRef}
+                // Only PDF
                 accept=".pdf" 
               />
           </div>

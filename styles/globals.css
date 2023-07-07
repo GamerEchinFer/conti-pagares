@@ -18,38 +18,38 @@ a {
   box-sizing: border-box;
 }
 
-  ::-webkit-scrollbar {
-    width: 8px !important;
-  }
-  
-  ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px rgb(166, 166, 166) !important; 
-    border-radius: 8px !important;
-  }
-   
-  ::-webkit-scrollbar-thumb {
-    background: #1D428A !important; 
-    border-radius: 8px !important;
-  }
-  
+::-webkit-scrollbar {
+  width: 8px !important;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgb(166, 166, 166) !important;
+  border-radius: 8px !important;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1D428A !important;
+  border-radius: 8px !important;
+}
+
 .homeTitle {
   font-family: 'ContiSans' !important;
-  color: #1D428A ;
-  font-size: 30px ;
-  text-align: left ;
+  color: #1D428A;
+  font-size: 30px;
+  text-align: left;
 }
 
 .homeSubTitle {
-  font-family: 'ContiSans' ;
-  font-weight: bold ;
-  color: #1D428A ;
-  font-size: 30px ;
-  text-align: left ;
+  font-family: 'ContiSans';
+  font-weight: bold;
+  color: #1D428A;
+  font-size: 30px;
+  text-align: left;
 }
 
 .homeBody {
   font-family: 'ContiSans' !important;
-  font-weight: 400; 
+  font-weight: 400;
   text-align: left;
   color: black;
   font-size: 18px;
@@ -57,19 +57,19 @@ a {
 
 .textBusqueda {
   font-family: 'ContiSans' !important;
-  font-weight: 400 ; 
-  font-size: 16px ;
+  font-weight: 400;
+  font-size: 16px;
 }
 
 .datosPersonales {
   font-family: 'ContiSans' !important;
-  color: #1D428A ;
-  font-weight: 400 ; 
-  font-size: 24px ;
+  color: #1D428A;
+  font-weight: 400;
+  font-size: 24px;
 }
 
 .Mui-focusVisible {
-  background-color:#1D428A !important;
+  background-color: #1D428A !important;
   color: #ffffff !important;
 }
 
@@ -77,14 +77,14 @@ a {
   display: flex !important;
   padding: 8px 70px 1px !important;
   border-radius: 4px !important;
-  box-shadow: none !important; 
+  box-shadow: none !important;
   font-size: 16px !important;
-  text-transform:capitalize !important;  
+  text-transform: capitalize !important;
 }
 
 .labelRadio {
   font-family: 'ContiSans' !important;
-  font-weight: 400; 
+  font-weight: 400;
   font-size: 16px;
 }
 
@@ -94,18 +94,19 @@ a {
   border-radius: 10px !important;
   box-shadow: none !important;
   font-size: 16px !important;
-  text-transform:capitalize !important;
+  text-transform: capitalize !important;
   background-color: #1D428A !important;
 }
-  
-.btnCancel, .btnConfirmar {
+
+.btnCancel,
+.btnConfirmar {
   font-family: 'ContiSans' !important;
   padding: 6px 36px 4px !important;
   border-radius: 5px !important;
   color: #1D428A !important;
   box-shadow: none !important;
   font-size: 16px !important;
-  text-transform:capitalize !important;
+  text-transform: capitalize !important;
   background-color: #ffffff !important;
 }
 
@@ -115,8 +116,20 @@ a {
   border-radius: 10px !important;
   box-shadow: none !important;
   font-size: 16px !important;
-  text-transform:capitalize !important;
+  text-transform: capitalize !important;
   background-color: #00438A !important;
+}
+
+.btnModal {
+  font-family: 'ContiSans' !important;
+  padding: 6px 36px 4px !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+  font-size: 16px !important;
+  text-transform: capitalize !important;
+  background-color: #00438A !important;
+  color: #FFFFFF !important;
+
 }
 
 .btnNextTB {
@@ -125,24 +138,24 @@ a {
   border-radius: 5px !important;
   box-shadow: none;
   font-size: 16px;
-  text-transform:capitalize;
+  text-transform: capitalize;
   background-color: #00438A;
 }
 
 .btnBack {
   font-family: 'ContiSans' !important;
-  font-weight: 400 !important; 
+  font-weight: 400 !important;
   color: #1D428A !important;
   padding: 6px 36px 4px !important;
   border-radius: 10px !important;
   font-size: 16px !important;
-  text-transform:capitalize !important;
+  text-transform: capitalize !important;
 }
 
 
 .btnMoreView {
   font-family: 'ContiSans' !important;
-  font-weight: 400 !important; 
+  font-weight: 400 !important;
   color: #1D428A !important;
   padding: 6px 16px 4px !important;
   border-radius: 10px !important;
@@ -152,7 +165,7 @@ a {
 
 .btnVerSolicitud {
   font-family: 'ContiSans' !important;
-  font-weight: 400 !important; 
+  font-weight: 400 !important;
   color: #00438A !important;
   padding: 4px 16px 2px !important;
   border-radius: 5px !important;
@@ -164,11 +177,11 @@ a {
 
 .dropZoneSecondary {
   display: flex;
-  flex-direction: column ;
-  justify-content: center ;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   height: 385px;
-  border: 3px dashed #5375B3; 
+  border: 3px dashed #5375B3;
   padding-left: 20px;
   padding-top: 5px;
   border-radius: 6px;
@@ -177,11 +190,12 @@ a {
 
 .dropZone {
   display: flex;
-  flex-direction: column ;
-  border: 3px dashed #5375B3 !important; 
+  flex-direction: column;
+  border: 3px dashed #5375B3 !important;
   padding: 40px !important;
   border-radius: 6px;
 }
+
 .dragDropButton {
   display: flex;
   justify-content: center;
@@ -192,7 +206,7 @@ a {
   padding-left: 8px !important;
 }
 
-.box{
+.box {
   padding-left: 600px !important;
   margin-bottom: 100px !important;
 }
@@ -219,13 +233,23 @@ a {
   font-family: 'ContiSans' !important;
   padding: 6px 16px 4px !important;
   border-radius: 5px !important;
-  text-transform:capitalize !important;
+  display: inline-block;
+  height: 85px;
+  width: 125px;
+  overflow: hidden;
+
+}
+
+.slide {
+  flex: 0 0 100% !important;
+  transition: transform 0.5s ease-in-out;
+  /* Add a smooth transition effect */
 }
 
 .tablaHistorico {
-  color:#1D428A !important;
+  color: #1D428A !important;
   font-weight: bold !important;
-  font-size:16px;
+  font-size: 16px;
   background: #D1E4F9;
 }
 
@@ -253,7 +277,8 @@ a {
   src: url('../src/assets/fonts/ContiSans-Light.otf') format('opentype');
 }
 
-html,body {
+html,
+body {
   height: 100% !important;
   width: 100% !important;
   padding-top: 36px;
@@ -282,58 +307,85 @@ html,body {
 }
 
 @-webkit-keyframes load5 {
+
   0%,
   100% {
     box-shadow: 0em -2.6em 0em 0em #1d428a, 1.8em -1.8em 0 0em rgba(29, 66, 138, 0.2), 2.5em 0em 0 0em rgba(29, 66, 138, 0.2), 1.75em 1.75em 0 0em rgba(29, 66, 138, 0.2), 0em 2.5em 0 0em rgba(29, 66, 138, 0.2), -1.8em 1.8em 0 0em rgba(29, 66, 138, 0.2), -2.6em 0em 0 0em rgba(29, 66, 138, 0.5), -1.8em -1.8em 0 0em rgba(29, 66, 138, 0.7);
   }
+
   12.5% {
     box-shadow: 0em -2.6em 0em 0em rgba(29, 66, 138, 0.7), 1.8em -1.8em 0 0em #1d428a, 2.5em 0em 0 0em rgba(29, 66, 138, 0.2), 1.75em 1.75em 0 0em rgba(29, 66, 138, 0.2), 0em 2.5em 0 0em rgba(29, 66, 138, 0.2), -1.8em 1.8em 0 0em rgba(29, 66, 138, 0.2), -2.6em 0em 0 0em rgba(29, 66, 138, 0.2), -1.8em -1.8em 0 0em rgba(29, 66, 138, 0.5);
   }
+
   25% {
     box-shadow: 0em -2.6em 0em 0em rgba(29, 66, 138, 0.5), 1.8em -1.8em 0 0em rgba(29, 66, 138, 0.7), 2.5em 0em 0 0em #1d428a, 1.75em 1.75em 0 0em rgba(29, 66, 138, 0.2), 0em 2.5em 0 0em rgba(29, 66, 138, 0.2), -1.8em 1.8em 0 0em rgba(29, 66, 138, 0.2), -2.6em 0em 0 0em rgba(29, 66, 138, 0.2), -1.8em -1.8em 0 0em rgba(29, 66, 138, 0.2);
   }
+
   37.5% {
     box-shadow: 0em -2.6em 0em 0em rgba(29, 66, 138, 0.2), 1.8em -1.8em 0 0em rgba(29, 66, 138, 0.5), 2.5em 0em 0 0em rgba(29, 66, 138, 0.7), 1.75em 1.75em 0 0em #1d428a, 0em 2.5em 0 0em rgba(29, 66, 138, 0.2), -1.8em 1.8em 0 0em rgba(29, 66, 138, 0.2), -2.6em 0em 0 0em rgba(29, 66, 138, 0.2), -1.8em -1.8em 0 0em rgba(29, 66, 138, 0.2);
   }
+
   50% {
     box-shadow: 0em -2.6em 0em 0em rgba(29, 66, 138, 0.2), 1.8em -1.8em 0 0em rgba(29, 66, 138, 0.2), 2.5em 0em 0 0em rgba(29, 66, 138, 0.5), 1.75em 1.75em 0 0em rgba(29, 66, 138, 0.7), 0em 2.5em 0 0em #1d428a, -1.8em 1.8em 0 0em rgba(29, 66, 138, 0.2), -2.6em 0em 0 0em rgba(29, 66, 138, 0.2), -1.8em -1.8em 0 0em rgba(29, 66, 138, 0.2);
   }
+
   62.5% {
     box-shadow: 0em -2.6em 0em 0em rgba(29, 66, 138, 0.2), 1.8em -1.8em 0 0em rgba(29, 66, 138, 0.2), 2.5em 0em 0 0em rgba(29, 66, 138, 0.2), 1.75em 1.75em 0 0em rgba(29, 66, 138, 0.5), 0em 2.5em 0 0em rgba(29, 66, 138, 0.7), -1.8em 1.8em 0 0em #1d428a, -2.6em 0em 0 0em rgba(29, 66, 138, 0.2), -1.8em -1.8em 0 0em rgba(29, 66, 138, 0.2);
   }
+
   75% {
     box-shadow: 0em -2.6em 0em 0em rgba(29, 66, 138, 0.2), 1.8em -1.8em 0 0em rgba(29, 66, 138, 0.2), 2.5em 0em 0 0em rgba(29, 66, 138, 0.2), 1.75em 1.75em 0 0em rgba(29, 66, 138, 0.2), 0em 2.5em 0 0em rgba(29, 66, 138, 0.5), -1.8em 1.8em 0 0em rgba(29, 66, 138, 0.7), -2.6em 0em 0 0em #1d428a, -1.8em -1.8em 0 0em rgba(29, 66, 138, 0.2);
   }
+
   87.5% {
     box-shadow: 0em -2.6em 0em 0em rgba(29, 66, 138, 0.2), 1.8em -1.8em 0 0em rgba(29, 66, 138, 0.2), 2.5em 0em 0 0em rgba(29, 66, 138, 0.2), 1.75em 1.75em 0 0em rgba(29, 66, 138, 0.2), 0em 2.5em 0 0em rgba(29, 66, 138, 0.2), -1.8em 1.8em 0 0em rgba(29, 66, 138, 0.5), -2.6em 0em 0 0em rgba(29, 66, 138, 0.7), -1.8em -1.8em 0 0em #1d428a;
   }
 }
+
 @keyframes load5 {
+
   0%,
   100% {
     box-shadow: 0em -2.6em 0em 0em #1d428a, 1.8em -1.8em 0 0em rgba(29, 66, 138, 0.2), 2.5em 0em 0 0em rgba(29, 66, 138, 0.2), 1.75em 1.75em 0 0em rgba(29, 66, 138, 0.2), 0em 2.5em 0 0em rgba(29, 66, 138, 0.2), -1.8em 1.8em 0 0em rgba(29, 66, 138, 0.2), -2.6em 0em 0 0em rgba(29, 66, 138, 0.5), -1.8em -1.8em 0 0em rgba(29, 66, 138, 0.7);
   }
+
   12.5% {
     box-shadow: 0em -2.6em 0em 0em rgba(29, 66, 138, 0.7), 1.8em -1.8em 0 0em #1d428a, 2.5em 0em 0 0em rgba(29, 66, 138, 0.2), 1.75em 1.75em 0 0em rgba(29, 66, 138, 0.2), 0em 2.5em 0 0em rgba(29, 66, 138, 0.2), -1.8em 1.8em 0 0em rgba(29, 66, 138, 0.2), -2.6em 0em 0 0em rgba(29, 66, 138, 0.2), -1.8em -1.8em 0 0em rgba(29, 66, 138, 0.5);
   }
+
   25% {
     box-shadow: 0em -2.6em 0em 0em rgba(29, 66, 138, 0.5), 1.8em -1.8em 0 0em rgba(29, 66, 138, 0.7), 2.5em 0em 0 0em #1d428a, 1.75em 1.75em 0 0em rgba(29, 66, 138, 0.2), 0em 2.5em 0 0em rgba(29, 66, 138, 0.2), -1.8em 1.8em 0 0em rgba(29, 66, 138, 0.2), -2.6em 0em 0 0em rgba(29, 66, 138, 0.2), -1.8em -1.8em 0 0em rgba(29, 66, 138, 0.2);
   }
+
   37.5% {
     box-shadow: 0em -2.6em 0em 0em rgba(29, 66, 138, 0.2), 1.8em -1.8em 0 0em rgba(29, 66, 138, 0.5), 2.5em 0em 0 0em rgba(29, 66, 138, 0.7), 1.75em 1.75em 0 0em #1d428a, 0em 2.5em 0 0em rgba(29, 66, 138, 0.2), -1.8em 1.8em 0 0em rgba(29, 66, 138, 0.2), -2.6em 0em 0 0em rgba(29, 66, 138, 0.2), -1.8em -1.8em 0 0em rgba(29, 66, 138, 0.2);
   }
+
   50% {
     box-shadow: 0em -2.6em 0em 0em rgba(29, 66, 138, 0.2), 1.8em -1.8em 0 0em rgba(29, 66, 138, 0.2), 2.5em 0em 0 0em rgba(29, 66, 138, 0.5), 1.75em 1.75em 0 0em rgba(29, 66, 138, 0.7), 0em 2.5em 0 0em #1d428a, -1.8em 1.8em 0 0em rgba(29, 66, 138, 0.2), -2.6em 0em 0 0em rgba(29, 66, 138, 0.2), -1.8em -1.8em 0 0em rgba(29, 66, 138, 0.2);
   }
+
   62.5% {
     box-shadow: 0em -2.6em 0em 0em rgba(29, 66, 138, 0.2), 1.8em -1.8em 0 0em rgba(29, 66, 138, 0.2), 2.5em 0em 0 0em rgba(29, 66, 138, 0.2), 1.75em 1.75em 0 0em rgba(29, 66, 138, 0.5), 0em 2.5em 0 0em rgba(29, 66, 138, 0.7), -1.8em 1.8em 0 0em #1d428a, -2.6em 0em 0 0em rgba(29, 66, 138, 0.2), -1.8em -1.8em 0 0em rgba(29, 66, 138, 0.2);
   }
+
   75% {
     box-shadow: 0em -2.6em 0em 0em rgba(29, 66, 138, 0.2), 1.8em -1.8em 0 0em rgba(29, 66, 138, 0.2), 2.5em 0em 0 0em rgba(29, 66, 138, 0.2), 1.75em 1.75em 0 0em rgba(29, 66, 138, 0.2), 0em 2.5em 0 0em rgba(29, 66, 138, 0.5), -1.8em 1.8em 0 0em rgba(29, 66, 138, 0.7), -2.6em 0em 0 0em #1d428a, -1.8em -1.8em 0 0em rgba(29, 66, 138, 0.2);
   }
+
   87.5% {
     box-shadow: 0em -2.6em 0em 0em rgba(29, 66, 138, 0.2), 1.8em -1.8em 0 0em rgba(29, 66, 138, 0.2), 2.5em 0em 0 0em rgba(29, 66, 138, 0.2), 1.75em 1.75em 0 0em rgba(29, 66, 138, 0.2), 0em 2.5em 0 0em rgba(29, 66, 138, 0.2), -1.8em 1.8em 0 0em rgba(29, 66, 138, 0.5), -2.6em 0em 0 0em rgba(29, 66, 138, 0.7), -1.8em -1.8em 0 0em #1d428a;
   }
 }
 
+.carousel-container {
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  width: 950px !important;
+  display: flex;
+}
 
+.carousel-container::-webkit-scrollbar {
+  height: 5px;
+}

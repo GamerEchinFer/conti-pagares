@@ -20,10 +20,10 @@ export const useDocumento = () => {
     })    
 
     const guardarDocumento = async (item: EtiquetaVariableResponse, fechaEmision: any, operacion: string) => {
-        const file = await base64ToFile(item?.base64Modified ?? "", "test");  
+        const file = await base64ToFile(item?.base64Modified ?? "", item.filename);  
         const formData = new FormData();        
         formData.append("file", file);
-        const resHadoop = await postAlzarHadoopDirecto(formData, "/datalake/Continental/Aprovisionamiento/Datos_no_estruturados/gestion_documental/", false, 65356);        
+        const resHadoop = await postAlzarHadoopDirecto(formData, process.env.NEXT_PUBLIC_PATH_IMAGE!, false, 65356);
         
         let newFech = moment(fechaEmision).format('DDMMYYYY');
         
