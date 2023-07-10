@@ -1,6 +1,6 @@
 import { Box, Grid, TextField, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { theme } from "../../../theme/Theme";
 import SearchbarButton from "../../components/Buttons/SearchbarButton";
 import DatosPersonales from '../../components/DatosPersonales/DatosPersonales';
@@ -12,7 +12,7 @@ import { TipoBusqueda } from '../../interfaces/interfaces';
 import { busquedaActions } from "../../redux/slices/busqueda.slice";
 import { clienteDatosActions } from '../../redux/slices/clienteDatos.slice';
 import { clienteDocumentoActions } from "../../redux/slices/clienteDocumento.slice";
-import { RootState } from "../../redux/store";
+import { RootState, useAppDispatch } from "../../redux/store";
 import { getClienteDatosAction } from '../../redux/thunks/clienteDatos.thunks';
 import styles from './TipoBusqueda.module.css';
 import { useKeycloak } from '@react-keycloak/web';
@@ -26,8 +26,8 @@ const filtros = ["codigo", "documento"]
 
 const TipoBusquedaPage = () => {
   
-  const dispatch = useDispatch();
-  
+  const dispatch = useAppDispatch();
+
   const [tipoBusqueda, setTipoBusqueda] = useState<TipoBusqueda | null>();
   const [tipoBusquedaSelected, setTipoBusquedaSelected] = useState(1);
   const [codigoCliente, setCodigoCliente] = useState("");
@@ -80,7 +80,6 @@ useEffect(() => {
 useEffect(() => {
   if (access_token && keycloak?.tokenParsed?.preferred_username){
     dispatch(getDatosAgente(access_token as string,keycloak?.tokenParsed?.preferred_username.split('@')[0]));
-    console.log("datosAgente", keycloak?.tokenParsed?.preferred_username.split('@')[0])
   }
 }, [access_token])
 

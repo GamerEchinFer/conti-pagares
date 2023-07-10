@@ -1,7 +1,6 @@
 import axios from "axios";
 import { ConfigApiInterna } from "../config/config";
-import { DatosAgenteResponse, LoginResponse, PermisosUsuarioResponse } from "../models/responses";
-import { IpGeolocationResponse } from "../models/responses/ipGeolocation.response";
+import { DatosAgenteResponse, IpGeolocationResponse, LoginResponse, PermisosUsuarioResponse } from "../models/responses";
 
 const { auth } = ConfigApiInterna;
 
@@ -62,4 +61,3 @@ export const apiIpGeolocation = async () => {
         }
     );
 }
-

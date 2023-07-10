@@ -5,6 +5,7 @@ interface UiStateModel {
     msgError:                                   string | null,
     dataError:                                  dataErrorResponse |  null, 
     loadingToken:                               boolean;
+    loadingAgente:                              boolean;
     loadingPermisos:                            boolean;
     loadingIpGeolocation:                       boolean,
     modalPara:                                  ModalParaEntity | null,

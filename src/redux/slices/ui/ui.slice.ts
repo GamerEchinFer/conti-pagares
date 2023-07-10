@@ -12,6 +12,7 @@ const initialState: uiState = {
     msgError: null,
     dataError: null,
     modalPara: null,
+    loadingAgente: false
 }
 
  const uiSlice = createSlice({
@@ -73,6 +74,7 @@ export const {
     showLoadingPermisos,
     reset,
     modalPara,
+    showLoadingAgente
 } = uiSlice.actions
 
 export default uiSlice.reducer;
