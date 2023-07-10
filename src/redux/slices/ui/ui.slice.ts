@@ -72,7 +72,6 @@ export const {
     showLoadingIpGeolocation,
     showLoadingToken,
     showLoadingPermisos,
-    reset,
     modalPara,
     showLoadingAgente
 } = uiSlice.actions
