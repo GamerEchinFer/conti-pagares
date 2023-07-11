@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { DatosAgenteResponse, IpGeolocationResponse, PermisosUsuarioResponse } from "../../../models/responses";
+import { DatosAgenteResponse, PermisosUsuarioResponse } from "../../../models/responses";
 import AuthStateModel from "./auth.state";
+import IpGeolocationResponse from "../../../models/responses/IpGeolocation.response";
 
 type authState = AuthStateModel;
 
