@@ -1,6 +1,4 @@
-import { DatosAgenteResponse } from "../../../models/responses";
-import IpGeolocationResponse from "../../../models/responses/IpGeolocation.response";
-import PermisosUsuarioResponse from "../../../models/responses/PermisosUsuario.response";
+import { DatosAgenteResponse, IpGeolocationResponse, PermisosUsuarioResponse } from "../../../models/responses";
 
 interface AuthStateModel {
     idDispositivo: string;

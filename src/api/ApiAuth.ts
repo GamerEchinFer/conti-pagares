@@ -1,8 +1,7 @@
 import axios from "axios";
 import { ConfigApiExterna } from "../config/config";
 import { bearer, defaultheaders } from "../helpers/headers";
-import { DatosAgenteResponse, LoginResponse, PermisosUsuarioResponse } from "../models/responses";
-import IpGeolocationResponse from "../models/responses/IpGeolocation.response";
+import { DatosAgenteResponse, IpGeolocationResponse, LoginResponse, PermisosUsuarioResponse } from "../models/responses";
 
 export const loginApiGDI = async () => {
 
