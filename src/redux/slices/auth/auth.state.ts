@@ -1,4 +1,5 @@
-import { DatosAgenteResponse, IpGeolocationResponse } from "../../../models/responses";
+import { DatosAgenteResponse } from "../../../models/responses";
+import IpGeolocationResponse from "../../../models/responses/IpGeolocation.response";
 import PermisosUsuarioResponse from "../../../models/responses/PermisosUsuario.response";
 
 interface AuthStateModel {
