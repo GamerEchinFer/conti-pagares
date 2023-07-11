@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { UiStateModel } from './index';
-import dataErrorResponse from '../../../models/responses/DataError.response';
 import ModalParaEntity from '../../../models/entities/ModalPara.Entity';
+import { dataErrorResponse } from '../../../models/responses';
+import { UiStateModel } from './index';
 
 type uiState = UiStateModel;
 
@@ -12,6 +12,7 @@ const initialState: uiState = {
     msgError: null,
     dataError: null,
     modalPara: null,
+    loadingAgente: false
 }
 
  const uiSlice = createSlice({
@@ -71,8 +72,9 @@ export const {
     showLoadingIpGeolocation,
     showLoadingToken,
     showLoadingPermisos,
-    reset,
     modalPara,
+    showLoadingAgente, 
+    reset
 } = uiSlice.actions
 
 export default uiSlice.reducer;

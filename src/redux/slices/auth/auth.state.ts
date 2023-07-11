@@ -1,5 +1,4 @@
-import PermisosUsuarioResponse from "../../../models/responses/PermisosUsuario.response";
-import { IpGeolocationResponse } from "../../../models/responses/ipGeolocation.response";
+import { DatosAgenteResponse, IpGeolocationResponse, PermisosUsuarioResponse } from "../../../models/responses";
 
 interface AuthStateModel {
     idDispositivo: string;
@@ -8,6 +7,7 @@ interface AuthStateModel {
     permisosUsuario: PermisosUsuarioResponse[];
     usuarioKeycloack : string;
     ipGeolocation: IpGeolocationResponse | null;
+    datosAgente: DatosAgenteResponse | null;
 }
 
 export default AuthStateModel;

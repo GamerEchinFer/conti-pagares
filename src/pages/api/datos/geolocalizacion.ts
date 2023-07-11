@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Geolocalizacion } from '../../../api/ApiAuth';
-import IpGeolocationResponse from '../../../models/responses/ipGeolocation.response';
+import { IpGeolocationResponse } from '../../../models/responses';
 
 const getIpGeolocation = async () => {
 	const ipGeolocation = await Geolocalizacion();
