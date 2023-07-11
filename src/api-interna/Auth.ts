@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ConfigApiInterna } from "../config/config";
 import { DatosAgenteResponse, LoginResponse, PermisosUsuarioResponse } from "../models/responses";
-import IpGeolocationResponse from "../models/responses/IpGeolocation.response";
+import IpGeolocationResponse from '../models/responses/IpGeolocation.response';
 
 const { auth } = ConfigApiInterna;
 
