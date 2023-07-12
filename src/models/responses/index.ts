@@ -5,4 +5,4 @@ export type {default as DatosUsuarioResponse} from './DatosUsuario.response';
 export type {default as PermisosUsuarioResponse} from './PermisosUsuario.response';
 export type {default as dataErrorResponse } from './DataError.response';
 export type {default as DatosAgenteResponse } from './DatosAgente.response';
-export type {default as IpGeolocationResponse } from './IpGeolocation.response';
+export type {default as IpGeolocationResponse } from './ipGeolocation.response';
