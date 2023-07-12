@@ -49,7 +49,7 @@ export async function getParametrosVisibles(idProducto: number, idSubProducto: n
 
 export const postEtiquetaVariable = async (body: EtiquetaVariable[]) => {
     const URL =  `/checklist`;
-    const {data} = await apmApi.post<EtiquetaVariable[], AxiosResponse<EtiquetaVariableResponse[]>>(URL, body,{headers: {config:'keycloakHeaders'}});
+    const data = await apmApi.post<EtiquetaVariable[], AxiosResponse<EtiquetaVariableResponse[]>>(URL, body,{headers: {config:'keycloakHeaders'}});
     return data;
 }
 
