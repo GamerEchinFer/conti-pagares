@@ -1,0 +1,33 @@
+interface DatosUsuarioResponse {
+    primerNombre:      string;
+    segundoNombre:     string;
+    primerApellido:    string;
+    segundoApellido:   string;
+    direccion:         string;
+    ciudad:            string;
+    telefono:          string;
+    celular:           string;
+    cedula:            string;
+    fechaNacimiento:   Date;
+    ocupacion:         string;
+    fechaAlta:         Date;
+    pais:              string;
+    localidad:         string;
+    clasificacion:     null;
+    codigoSucursal:    string;
+    codigoOficial:     string;
+    codigoRegion:      null;
+    tipoPersona:       string;
+    tipoDocumento:     string;
+    sexo:              string;
+    codigoEstadoCivil: string;
+    correo:            null;
+    codigoCliente:     string;
+    sucursal:          string;
+    oficial:           string;
+    calificacion:      string;
+    nombreBarrio:      string;
+    estadoCivil:       string;
+};
+
+export default DatosUsuarioResponse;

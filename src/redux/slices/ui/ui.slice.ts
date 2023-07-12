@@ -6,13 +6,15 @@ import { UiStateModel } from './index';
 type uiState = UiStateModel;
 
 const initialState: uiState = {
-    loadingIpGeolocation: false,
-    loadingToken: false,
-    loadingPermisos: false,
     msgError: null,
     dataError: null,
     modalPara: null,
-    loadingAgente: false
+    loadingIpGeolocation: false,
+    loadingToken: false,
+    loadingAgente: false,
+    loadingPermisos: false,
+    loadingCodigoCliente: false,
+    loadingDatosBasicos: false,
 }
 
  const uiSlice = createSlice({
@@ -62,18 +64,25 @@ const initialState: uiState = {
                 loadingPermisos: action.payload
             } as uiState
         },
-    }
+        showLoadingCodigoCliente : (state,action:PayloadAction<boolean>) => {
+            return {
+                ...state,
+                loadingCodigoCliente: action.payload
+            } as uiState
+        },
+    },
   })
 
 
 export const {
     uiSetError,
     dataError,
+    modalPara,
     showLoadingIpGeolocation,
     showLoadingToken,
+    showLoadingAgente,
     showLoadingPermisos,
-    modalPara,
-    showLoadingAgente, 
+    showLoadingCodigoCliente,
     reset
 } = uiSlice.actions
 

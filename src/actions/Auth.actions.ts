@@ -2,9 +2,14 @@ import { apiDatosAgenteInterna, apiPermisosUsuarioInterna, apiTokenInterna } fro
 import { Geolocalizacion } from "../api/ApiAuth";
 import { DatosAgenteResponse, PermisosUsuarioResponse } from "../models/responses";
 import LoginResponse from "../models/responses/Login.response";
-import { showLoadingPermisos, showLoadingToken, showLoadingIpGeolocation, showLoadingAgente } from "../redux/slices/ui/ui.slice";
+import {
+    login as loginReducer,
+    getPermisosUsuario as getPermisosUsuarioReducer,
+    getDatosAgente as getDatosAgenteReducer,
+    getIpGeolocation as getIpGeolocationReducer,
+} from "../redux/slices/auth/auth.slice";
+import { showLoadingAgente, showLoadingPermisos, showLoadingToken, showLoadingIpGeolocation } from "../redux/slices/ui/ui.slice";
 import { AppDispatch } from "../redux/store";
-import { getDatosAgente as getDatosAgenteReducer, login as loginReducer, getPermisosUsuario as getPermisosUsuarioReducer, getIpGeolocation as getIpGeolocationReducer } from "../redux/slices/auth/auth.slice";
 
 export const login = ()  => {
     return async (dispatch:AppDispatch) => {
@@ -18,7 +23,7 @@ export const login = ()  => {
         }
         dispatch(showLoadingToken(false));
     }
-};
+}
 
 export const getPermisosUsuario = (token:string, userCarga:string) => {
     return async (dispatch:AppDispatch) => {
@@ -41,7 +46,7 @@ export const getIpGeolocation = () => {
         }
         dispatch(showLoadingIpGeolocation(false));
     }
-};
+}
 
 export const getDatosAgente = (token:string,usuario:string) => {
     return async (dispatch:AppDispatch) => {
