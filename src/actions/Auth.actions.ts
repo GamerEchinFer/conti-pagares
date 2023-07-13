@@ -1,10 +1,15 @@
-import { apiPermisosUsuarioInterna, apiTokenInterna } from "../api-interna/Auth";
+import { apiDatosAgenteInterna, apiPermisosUsuarioInterna, apiTokenInterna } from "../api-interna/Auth";
 import { Geolocalizacion } from "../api/ApiAuth";
-import { PermisosUsuarioResponse } from "../models/responses";
+import { DatosAgenteResponse, PermisosUsuarioResponse } from "../models/responses";
 import LoginResponse from "../models/responses/Login.response";
-import { showLoadingPermisos, showLoadingToken, showLoadingIpGeolocation } from "../redux/slices/ui/ui.slice";
+import {
+    login as loginReducer,
+    getPermisosUsuario as getPermisosUsuarioReducer,
+    getDatosAgente as getDatosAgenteReducer,
+    getIpGeolocation as getIpGeolocationReducer,
+} from "../redux/slices/auth/auth.slice";
+import { showLoadingAgente, showLoadingPermisos, showLoadingToken, showLoadingIpGeolocation } from "../redux/slices/ui/ui.slice";
 import { AppDispatch } from "../redux/store";
-import { login as loginReducer, getPermisosUsuario as getPermisosUsuarioReducer, getIpGeolocation as getIpGeolocationReducer } from "../redux/slices/auth/auth.slice";
 
 export const login = ()  => {
     return async (dispatch:AppDispatch) => {
@@ -18,9 +23,7 @@ export const login = ()  => {
         }
         dispatch(showLoadingToken(false));
     }
-};
-
-
+}
 
 export const getPermisosUsuario = (token:string, userCarga:string) => {
     return async (dispatch:AppDispatch) => {
@@ -42,5 +45,18 @@ export const getIpGeolocation = () => {
             dispatch(getIpGeolocationReducer(geolocation.data));
         }
         dispatch(showLoadingIpGeolocation(false));
+    }
+}
+
+export const getDatosAgente = (token:string,usuario:string) => {
+    return async (dispatch:AppDispatch) => {
+        dispatch(showLoadingAgente(true));
+        const agenteResp = await apiDatosAgenteInterna(token,usuario);
+        if (agenteResp != null) {
+            dispatch(getPermisosUsuario(token as string, agenteResp.codigo));
+            dispatch(getDatosAgenteReducer(agenteResp as DatosAgenteResponse));
+            dispatch(showLoadingAgente(false));
+        }
+        dispatch(showLoadingAgente(false));
     }
 };

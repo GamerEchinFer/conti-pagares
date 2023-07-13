@@ -14,7 +14,11 @@ const redirectsDisabled = [
     {
         descripcion: 'subirDocumento',
         path: 'subirDocumento'
-    }
+    },
+    {
+        descripcion: 'inicio',
+        path: '/inicio'
+    },
 ]
 
 export default redirectsDisabled;

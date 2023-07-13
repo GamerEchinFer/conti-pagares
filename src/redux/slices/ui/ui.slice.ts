@@ -1,17 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { UiStateModel } from './index';
-import dataErrorResponse from '../../../models/responses/DataError.response';
 import ModalParaEntity from '../../../models/entities/ModalPara.Entity';
+import { dataErrorResponse } from '../../../models/responses';
+import { UiStateModel } from './index';
 
 type uiState = UiStateModel;
 
 const initialState: uiState = {
-    loadingIpGeolocation: false,
-    loadingToken: false,
-    loadingPermisos: false,
     msgError: null,
     dataError: null,
     modalPara: null,
+    loadingIpGeolocation: false,
+    loadingToken: false,
+    loadingAgente: false,
+    loadingPermisos: false,
+    loadingCodigoCliente: false,
+    loadingDatosBasicos: false,
 }
 
  const uiSlice = createSlice({
@@ -49,24 +52,38 @@ const initialState: uiState = {
                 loadingToken: action.payload
             } as uiState
         },
+        showLoadingAgente : (state,action:PayloadAction<boolean>) => {
+            return {
+                ...state,
+                loadingAgente: action.payload
+            } as uiState
+        },
         showLoadingPermisos : (state,action:PayloadAction<boolean>) => {
             return {
                 ...state,
                 loadingPermisos: action.payload
             } as uiState
-        }
-    }
+        },
+        showLoadingCodigoCliente : (state,action:PayloadAction<boolean>) => {
+            return {
+                ...state,
+                loadingCodigoCliente: action.payload
+            } as uiState
+        },
+    },
   })
 
 
 export const {
     uiSetError,
     dataError,
+    modalPara,
     showLoadingIpGeolocation,
     showLoadingToken,
+    showLoadingAgente,
     showLoadingPermisos,
-    reset,
-    modalPara,
+    showLoadingCodigoCliente,
+    reset
 } = uiSlice.actions
 
 export default uiSlice.reducer;

@@ -304,17 +304,18 @@ export interface TipoDocumentoHistoricoResponse {
 
 
 export interface ExtractosServiceDescargarArchivo {
-     usuario:       string;
-     noise:         string;
-     stringResult:  string;
-     path:          string;
-     tipo:          string;
+    usuario:       string;
+    noise:         string;
+    stringResult:  string;
+    path:          string;
+    tipo:          string;
 }
 export interface ExtractosServiceSubirArchivo {
-     usuario:       string;
-     noise:         string;
-     stringResult:  string;
-     path:          string;
-     extension:     string;
-     archivo:       string;
+    usuario:       string;
+    noise:         string;
+    stringResult:  string;
+    path:          string;
+    extension:     string;
+    archivo:       string;
 }
+

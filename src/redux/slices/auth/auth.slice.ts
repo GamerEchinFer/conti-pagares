@@ -1,17 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { DatosAgenteResponse, IpGeolocationResponse, PermisosUsuarioResponse } from "../../../models/responses";
 import AuthStateModel from "./auth.state";
-import PermisosUsuarioResponse from "../../../models/responses/PermisosUsuario.response";
-import { IpGeolocationResponse } from "../../../models/responses/ipGeolocation.response";
 
 type authState = AuthStateModel;
 
 const initialState: AuthStateModel = {
     idDispositivo: '',
+    cliente: null,
     access_token : null,
-    codigoCliente: '',
+    codigoCliente: null,
+    datosBasicos: null,
     permisosUsuario: [],
     usuarioKeycloack: '',
     ipGeolocation: null,
+    datosAgente: null,
 }
 
 
@@ -25,6 +27,12 @@ const authSlice = createSlice({
                 idDispositivo:state.idDispositivo,
             }
         },
+        datosDispositivo : (state,action:PayloadAction<string>) => {
+            return {
+                ...state,
+                idDispositivo: action.payload
+            } as authState;
+        },
         datosLogin : (state:authState,action:PayloadAction<string | null>) => {
             return {
                 ...state,
@@ -36,6 +44,12 @@ const authSlice = createSlice({
                 ...state,
                 access_token: action.payload
             } as authState;
+        },
+        getCodigoCliente : (state,action:PayloadAction<string>) => {
+            return {
+                ...state,
+                codigoCliente: action.payload
+            }
         },
         getPermisosUsuario : (state,action:PayloadAction<PermisosUsuarioResponse[]>) => {
             return {
@@ -55,17 +69,26 @@ const authSlice = createSlice({
                 ipGeolocation: action.payload
             } as authState;
         },
+        getDatosAgente : (state,action:PayloadAction<DatosAgenteResponse>) => {
+            return {
+                ...state,
+                datosAgente: action.payload
+            } as authState;
+        },
        
     },
 })
 
 export const {
     reset,
+    datosDispositivo,
     datosLogin,
     login,
+    getCodigoCliente,
     getPermisosUsuario,
     getUsuarioKeyCloack,
     getIpGeolocation,
+    getDatosAgente,
   } = authSlice.actions
 
 export default authSlice.reducer;

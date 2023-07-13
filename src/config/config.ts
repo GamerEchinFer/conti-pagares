@@ -22,6 +22,8 @@ export const ConfigApiExterna = {
         hadoopSubir: 'https://desa-docker01.bancontinental.com.py:8200/upload/${path_images,overwrite,chunk_size:chunksize}',
         permisosUsuario: '/finansys-admin/v1/usuarios/${usuario}/permisos/urls?aplicacion=FSYS-WEB',
         ipGeolocation: 'https://api.ipgeolocation.io/ipgeo?apiKey=5edeb9b31aae4818af7f4003f1d72b4f',
+        datosAgente: '/api-usuarios/v1/usuarios/${usuario}',
+        listarDatosAdicionalesUsuario: '/interno/clientes/datos/v1/clientes/${codCliente}/datos-adicionales',
     }
 }
 
@@ -30,6 +32,7 @@ export const ConfigApiInterna = {
         token: '/api/datos/token',
         permisosUsuario: '/api/datos/permisos',
         ipGeolocation: '/api/datos/geolocalizacion',
+        datosAgente: '/api/datos/agente',
     },
 }
 
@@ -48,6 +51,13 @@ export const Logs = {
             modulo: modulos.Auth,
             urlInterna: ConfigApiInterna.auth.permisosUsuario,
             urlExterna: ConfigApiExterna.auth.permisosUsuario
+        },
+        {
+            tipoEvento: logsEvents.Transaccional,
+            evento: 'Datos agente',
+            modulo: modulos.Auth,
+            urlInterna: ConfigApiInterna.auth.datosAgente,
+            urlExterna: ConfigApiExterna.auth.datosAgente
         },
         {
             tipoEvento: logsEvents.Transaccional,

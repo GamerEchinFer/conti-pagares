@@ -3,7 +3,6 @@ import { ThunkAction } from 'redux-thunk';
 import storage from 'redux-persist/lib/storage';
 import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
 import { useDispatch } from 'react-redux';
-import authSlice from './slices/auth/auth.slice';
 import { solicitud } from './slices/solicitud.slice';
 import { producto } from './slices/producto.slice';
 import { clienteDatos } from './slices/clienteDatos.slice';
@@ -18,12 +17,13 @@ import { parametro } from './slices/parametro.slice';
 import { parametroVisible } from './slices/parametroVisible.slice';
 import { subProducto } from './slices/subProducto.slice';
 import { tipoDocumento } from './slices/tipoDocumento.slice';
-import uiSlice from './slices/ui/ui.slice';
 import { busqueda } from './slices/busqueda.slice';
 import { documentosUser } from './slices/documentosUser.slice';
 import { documentosUserFiltro } from './slices/documentosUserFiltro';
 import { tipoDocumentoHistorico } from './slices/documentoHistorico.slice';
 import authGDI from "./slices/auth/auth-gdi.slice";
+import { authSlice } from './slices/auth';
+import uiSlice from './slices/ui/ui.slice';
 
 const persistConfig = {
   key: 'root',

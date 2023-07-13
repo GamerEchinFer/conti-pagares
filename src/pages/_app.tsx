@@ -7,16 +7,15 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { Persistor } from 'redux-persist';
 import { theme } from '../../theme/Theme';
 import ResponsiveAppBar from '../components/TopBar';
-import interceptors from '../api/interceptors';
 import { ReactKeycloakProvider } from '@react-keycloak/web';
 import keycloak from '../config/Keycloak';
 import ErrorBar from '../components/shared/ErrorBar';
 import { persistor, store } from '../redux/store';
 import AuthGDI from '../components/shared/AuthGDI';
+import interceptor from '../config/interceptor';
 
 export default function App({ Component, pageProps }: AppProps) {
-  interceptors();  
-
+  interceptor();  
   return (
     <>
       <Head>

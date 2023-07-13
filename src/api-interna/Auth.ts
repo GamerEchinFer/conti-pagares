@@ -1,7 +1,6 @@
 import axios from "axios";
 import { ConfigApiInterna } from "../config/config";
-import { LoginResponse, PermisosUsuarioResponse } from "../models/responses";
-import { IpGeolocationResponse } from "../models/responses/ipGeolocation.response";
+import { DatosAgenteResponse, IpGeolocationResponse, LoginResponse, PermisosUsuarioResponse } from "../models/responses";
 
 const { auth } = ConfigApiInterna;
 
@@ -15,6 +14,20 @@ export const apiTokenInterna = async () => {
             return null ;
         }
         return datosToken.data;
+    }
+    return null 
+}
+
+export const apiDatosAgenteInterna = async (token:string,usuario:string) => {
+    const datosAgente = await axios.post<DatosAgenteResponse>(auth.datosAgente, {data: {token:token, usuario:usuario}});
+    if (datosAgente){
+        if (datosAgente.status === 204) {
+            return null;
+        }
+        if (datosAgente.status >= 400) {
+            return null ;
+        }
+        return datosAgente.data;
     }
     return null 
 }

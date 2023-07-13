@@ -30,8 +30,6 @@ const ResponsiveAppBar = () => {
 			router.push('/tipoBusqueda')
 		}
 	}
-
-	const dispatch = useAppDispatch();
 	
 	return (
 		<AppBar style={{ background: '#1D428A' }}>

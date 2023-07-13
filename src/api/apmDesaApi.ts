@@ -17,7 +17,7 @@ import {
     SubProducto, 
     TipoBusqueda, 
     TipoDocumento, 
-    TipoDocumentoHistoricoResponse, 
+    TipoDocumentoHistoricoResponse
     } from '../interfaces/interfaces';
 import { apmApi, apmApiCliente, apmApiHadoop } from './index';
 
@@ -49,7 +49,7 @@ export async function getParametrosVisibles(idProducto: number, idSubProducto: n
 
 export const postEtiquetaVariable = async (body: EtiquetaVariable[]) => {
     const URL =  `/checklist`;
-    const data = await apmApi.post<EtiquetaVariable[], AxiosResponse<EtiquetaVariableResponse[]>>(URL, body);
+    const data = await apmApi.post<EtiquetaVariable[], AxiosResponse<EtiquetaVariableResponse[]>>(URL, body,{headers: {config:'keycloakHeaders'}});
     return data;
 }
 
@@ -140,6 +140,7 @@ export async function getConsultaDocumentosUser(codigoCliente: string) {
     return response;
 
 }
+
 export async function getTipoDocumentoHistorico(codigoCliente: string, codigoTipoDocumento: number) {
     const URL = `/tipo-documento-historico`;
     const response = await apmApi.get<TipoDocumentoHistoricoResponse[]>(URL, {
@@ -149,5 +150,3 @@ export async function getTipoDocumentoHistorico(codigoCliente: string, codigoTip
     return response;
 
 }
-
-
