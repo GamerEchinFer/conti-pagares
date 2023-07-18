@@ -9,6 +9,8 @@ import {
     GuardarHistorialUsuarioRequest,                
     HadoopDirectoRequest,
     HadoopDirectoResponse,
+    MsFileStreamRequest,
+    MsFileStreamResponse,
     NumeroLegajo,
     Parametros,
     ParametrosVisibles,
@@ -19,7 +21,7 @@ import {
     TipoDocumento, 
     TipoDocumentoHistoricoResponse
     } from '../interfaces/interfaces';
-import { apmApi, apmApiCliente, apmApiHadoop } from './index';
+import { apmApi, apmApiCliente, apmApiHadoop, apmApiMsFileStream } from './index';
 
 export async function getProductos() {    
     const URL = `/productos`;    
@@ -49,7 +51,7 @@ export async function getParametrosVisibles(idProducto: number, idSubProducto: n
 
 export const postEtiquetaVariable = async (body: EtiquetaVariable[]) => {
     const URL =  `/checklist`;
-    const data = await apmApi.post<EtiquetaVariable[], AxiosResponse<EtiquetaVariableResponse[]>>(URL, body,{headers: {config:'keycloakHeaders'}});
+    const data = await apmApi.post<EtiquetaVariable[], AxiosResponse<EtiquetaVariableResponse[]>>(URL, body);
     return data;
 }
 
@@ -61,11 +63,31 @@ export async function getDescargarHadoopDirecto(downloadpath: string) {
     return response;
 }
 
+export async function getDescargarMsFileStream(path: string) {
+    const URL = `/download`;
+    const response = await apmApiMsFileStream.get<MsFileStreamRequest>(URL, {
+        params: {path},
+    });
+    return response;
+}
+
 export const postAlzarHadoopDirecto = async (body: FormData, path_images: string, overwrite: boolean, chunksize: number) => {
     const URL = `/upload`;
     const response = await apmApiHadoop.post<FormData, AxiosResponse<HadoopDirectoResponse>>(URL, body, {
             headers: {'Content-Type':'multipart/form-data'},
             params:{path_images, overwrite, chunk_size: chunksize},
+        });        
+    if (response && response.data) {
+        return response.data;
+    }
+
+    return undefined;
+}
+
+export const postSubirMsFileStream = async (body: FormData) => {
+    const URL = `/upload`;
+    const response = await apmApiMsFileStream.post<FormData, AxiosResponse<MsFileStreamResponse>>(URL, body, {
+            headers: {'Content-Type':'multipart/form-data'}
         });        
     if (response && response.data) {
         return response.data;
