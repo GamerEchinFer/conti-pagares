@@ -24,6 +24,8 @@ import { tipoDocumentoHistorico } from './slices/documentoHistorico.slice';
 import authGDI from "./slices/auth/auth-gdi.slice";
 import { authSlice } from './slices/auth';
 import uiSlice from './slices/ui/ui.slice';
+import { msFileStream } from './slices/msFileStream.slice';
+import { msFileStreamDescargar } from './slices/msFileStreamDescargar.slice';
 
 const persistConfig = {
   key: 'root',
@@ -51,7 +53,9 @@ const combinedReducers = combineReducers({
   documentosUser: documentosUser,
   documentosUserFiltro,
   tipoDocumentoHistorico,
-  authGDI
+  authGDI,
+  msFileStream,
+  msFileStreamDescargar
 })
 
 export type OurStore = ReturnType<typeof combineReducers>
