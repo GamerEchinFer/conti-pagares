@@ -2,7 +2,7 @@ import { useMount } from 'ahooks';
 import moment from 'moment';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { postAlzarHadoopDirecto, postGuardarDocumento } from '../../../api/apmDesaApi';
+import { postAlzarHadoopDirecto, postGuardarDocumento, postSubirMsFileStream } from '../../../api/apmDesaApi';
 import { base64ToFile } from '../../../helpers/base64ToFile';
 import { storage } from '../../../helpers/storage';
 import { EtiquetaVariableResponse, GuardarDocumentoRequest } from '../../../interfaces/interfaces';
@@ -10,8 +10,9 @@ import { RootState } from '../../../redux/store';
 
 export const useDocumento = () => {
     const clienteDatos = useSelector((state: RootState) => state.clienteDatos.items);
+    const usuarios = useSelector((state: RootState) => state.auth.datosAgente);
     const numeroDeLegajo = useSelector((state: RootState) => state.numeroLegajo.items);    
-
+    const msFileStreamData = useSelector((state: RootState) => state.msFileStream.response);
     const [body, setBody] = useState<any>({});
 
     useMount(() => {
@@ -20,25 +21,29 @@ export const useDocumento = () => {
     })    
 
     const guardarDocumento = async (item: EtiquetaVariableResponse, fechaEmision: any, operacion: string) => {
-        const file = await base64ToFile(item?.base64Modified ?? "", item.filename);  
+        const file = await base64ToFile(item?.base64Modified ?? "", item.filename);    
+        const pathName = await postSubirMsFileStream(body)   
         const formData = new FormData();        
         formData.append("file", file);
-        const resHadoop = await postAlzarHadoopDirecto(formData, process.env.NEXT_PUBLIC_PATH_IMAGE!, false, 65356);
+        formData.append("pathName", "/datalake/Continental-desa/Aprovisionamiento/Datos_no_estruturados/gestion_documental");
+        const resMsFileStream = await postSubirMsFileStream(formData);
+        // const resHadoop = await postAlzarHadoopDirecto(formData, process.env.NEXT_PUBLIC_PATH_IMAGE!, false, 65356);
         
         let newFech = moment(fechaEmision).format('DDMMYYYY');
         
-        const LOC = resHadoop?.loc ?? ""
+        // const LOC = resHadoop?.loc ?? ""
+        const msFileStreamPath = resMsFileStream?.pathArchivo ?? ""
         
         const dataForPost: GuardarDocumentoRequest = {
             codigoTipoDocumento: Number(item.idTipoDocumento),
-            rutaDocumento: LOC,
+            rutaDocumento: msFileStreamPath,
             fechaEmision: newFech,
             descripcionDocumento: item.filename,
             codigoCliente: clienteDatos.codigoCliente,
             codigoLegajo: numeroDeLegajo[0].nextSequence,
-            hadoop:LOC,           
-            hadoopPath: LOC,
-            codigoUsuario:"PER",
+            hadoop: msFileStreamPath,           
+            hadoopPath: msFileStreamPath,
+            codigoUsuario: usuarios?.codigo ?? "",
             codigoProducto: Number(body?.id_producto.valor ?? "0") ,
             codigoSubproducto: Number(body?.id_subproducto.valor ?? "0"),
             operacion: operacion
