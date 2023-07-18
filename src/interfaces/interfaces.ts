@@ -130,6 +130,14 @@ export interface HadoopDirectoRequest {
     type:   number;
 }
 
+export interface MsFileStreamRequest {
+    datosArchivo: string;
+}
+
+export interface MsFileStreamResponse {
+    pathArchivo: string;
+}
+
 export interface HadoopDirecto {
     file: string;
 }
