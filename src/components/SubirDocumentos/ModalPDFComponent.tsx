@@ -27,6 +27,7 @@ import  "dayjs/locale/es";
 import { RootState } from '../../redux/store';
 import { useDocumento } from './hooks/useDocumento';
 import { intervaloPDF } from '../../helpers/intervaloPDF';
+import { msFileStreamActions } from '../../redux/slices/msFileStream.slice';
 
 type ModalPDFComponentProps = {
   item: EtiquetaVariableResponse,
@@ -57,6 +58,7 @@ export default function ModalPDFComponent({item, refresh}: ModalPDFComponentProp
 
   const [valorInput, setValorInput] = useState('');
 
+
   const debouncedValue = useDebounce(filter, { wait: 500 });  
 
   const debouncedInter = useDebounce(inter, { wait: 500 });
@@ -72,7 +74,8 @@ export default function ModalPDFComponent({item, refresh}: ModalPDFComponentProp
   const seleccionIntervalo = (e: any) => {
     setSeleccion(e.target.value)
   }
-  const files = useSelector((state: RootState) => state.hadoopDirecto.files);
+  // const files = useSelector((state: RootState) => state.hadoopDirecto.files);
+  const files = useSelector((state: RootState) => state.msFileStream.files);
   const [fechaEmision, setFechaEmision] = useState(new Date().toISOString());
   const [operacion, setOperacion] = useState(""); 
   
@@ -96,8 +99,12 @@ export default function ModalPDFComponent({item, refresh}: ModalPDFComponentProp
     setValue(newValue);
   };
 
+  // useMount(() => {                
+  //   hadoopDirectoActions.setFiles(null)
+  // });
+
   useMount(() => {                
-    hadoopDirectoActions.setFiles(null)
+    msFileStreamActions.setFiles(null)
   });
 
   const handleClose = () => {
