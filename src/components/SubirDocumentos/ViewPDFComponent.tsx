@@ -1,9 +1,8 @@
 import React, { ChangeEvent, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { etiquetaVariableActions } from '../../redux/slices/etiquetaVariable.slice';
-import ButtonModificar from '../Buttons/ButtonModificar';
 import CancelButton from '../Buttons/CancelButton';
-import { Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { theme } from '../../../theme/Theme';
 import ButtonIconClose from '../Buttons/ButtonIconClose';
@@ -16,7 +15,6 @@ import dayjs, { Dayjs } from 'dayjs';
 import PDFComponent from './PDFComponent';
 import { useDocumento } from './hooks/useDocumento';
 import { RootState } from '../../redux/store';
-import ButtonConfirmar from '../Buttons/ButtonConfirmar';
 
 type ModalPDFComponentProps = {
   item: EtiquetaVariableResponse
@@ -44,8 +42,10 @@ const ViewPDFComponent = ({item}: ModalPDFComponentProps) => {
     const [href, setHref] = useState("");
     const documento = useDocumento();
 
-    const getFile = useSelector((state: RootState) => state.hadoopDirecto.files);
-    const downFile = useSelector((state: RootState) => state.hadoopDownload.response);
+    // const getFile = useSelector((state: RootState) => state.hadoopDirecto.files);
+    const getFile = useSelector((state: RootState) => state.msFileStream.files);
+    // const downFile = useSelector((state: RootState) => state.hadoopDownload.response);
+    const downFile = useSelector((state: RootState) => state.msFileStreamDescargar.response);
 
     const [fechaEmision, setFechaEmision] = useState(new Date().toISOString());
 
