@@ -71,7 +71,7 @@ export interface EtiquetaVariableResponse {
         }
     ];
 
-    file?:                          any; // Dentro del frontend
+    file?:                          any;
     openModal?:                     boolean;
     openModalPeriodo?:              boolean;
     openModalView?:                 boolean;
@@ -276,7 +276,7 @@ export interface DatosAdicionales {
     usuarioCarga:          string;
     fechaRegistro:         Date;
     userAprobador:         null;
-    fechaArobacion:        Date;
+    fechaAprobacion:        Date;
     usuarioVerificador:    null;
     fechaVerificacion:     null;
 }
@@ -305,7 +305,7 @@ export interface TipoDocumentoHistoricoResponse {
     usuarioCarga:           string,
     fechaRegistro:          Date,
     userAprobador:          string,
-    fechaArobacion:         Date,
+    fechaAprobacion:         Date,
     usuarioVerificador:     string,
     fechaVerificacion:      string
 }
@@ -327,3 +327,7 @@ export interface ExtractosServiceSubirArchivo {
     archivo:       string;
 }
 
+export interface CertificacionEstados {
+    codigoEstado:  number;
+    descripcion:    string;
+}

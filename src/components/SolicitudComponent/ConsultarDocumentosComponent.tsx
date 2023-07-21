@@ -9,16 +9,11 @@ import {
   FormControl,
   InputAdornment,
   InputLabel,
-  ListItem,
   OutlinedInput,
   Table,
   TableBody,
   TableContainer,
-  Button,
-  Slider,
-  Slide
 } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
 import { getDocumentosUserAction } from '../../redux/thunks/documentosUser.thunks';
 import { RootState } from '../../redux/store';
 import ButtonExpand from '../Buttons/ButtonExpand';
@@ -32,6 +27,7 @@ import { documentUserMapper } from '../../helpers/documentUserMapper';
 import { DocumentosUsuarioResponse } from '../../interfaces/interfaces';
 import { documentosUserActions } from '../../redux/slices/documentosUser.slice';
 import LoadingIcon from '../shared/LoadingIcon';
+import SearchIcon from '@mui/icons-material/Search';
 
 function ConsultarDocumentosComponent() {
   const [name, setName] = useState("");
@@ -144,9 +140,7 @@ function ConsultarDocumentosComponent() {
                 descripcion={(capitalize(`${item.grupoDescripcion.toLowerCase()}`))}
                 active={idGroupSelected === item.idGrupo}
               />
-            ) :
-              null
-
+            ) : null
           }
         </div>
 

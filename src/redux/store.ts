@@ -26,6 +26,7 @@ import { authSlice } from './slices/auth';
 import uiSlice from './slices/ui/ui.slice';
 import { msFileStream } from './slices/msFileStream.slice';
 import { msFileStreamDescargar } from './slices/msFileStreamDescargar.slice';
+import { certificacionEstados } from './slices/certificacionEstados.slice';
 
 const persistConfig = {
   key: 'root',
@@ -55,7 +56,8 @@ const combinedReducers = combineReducers({
   tipoDocumentoHistorico,
   authGDI,
   msFileStream,
-  msFileStreamDescargar
+  msFileStreamDescargar,
+  certificacionEstados
 })
 
 export type OurStore = ReturnType<typeof combineReducers>
@@ -76,7 +78,7 @@ export let store = configureStore ({
 
 export let persistor = typeof window !== 'undefined' && persistStore(store)
 
-export type AppDispatch = typeof store.dispatch;
+export type AppDispatch<> = typeof store.dispatch;
 export const useAppDispatch: () => AppDispatch = useDispatch
 export type RootState = ReturnType<typeof store.getState>
 export type AppThunk<ReturnType = void> = ThunkAction<

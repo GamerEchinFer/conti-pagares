@@ -36,13 +36,12 @@ const DocumentListComponent  = ({item, refresh}: DocumentListComponentProps) => 
 
   const inputRef = useRef<any>();
 
-  // const files: any = useSelector((state: RootState) => state.hadoopDirecto.files);
+  const filesHadoop: any = useSelector((state: RootState) => state.hadoopDirecto.files);
   const files: any = useSelector((state: RootState) => state.msFileStream.files);
 
-  // useMount(() => {                
-  //   hadoopDirectoActions.setFiles(null);
-  // });
-  
+  useMount(() => {                
+    hadoopDirectoActions.setFiles(null);
+  });
 
   useMount(() => {                
     msFileStreamActions.setFiles(null);
@@ -61,7 +60,7 @@ const DocumentListComponent  = ({item, refresh}: DocumentListComponentProps) => 
   const handleFile = (files: any) => {
     if (!files && files.length === 0) return;
 
-    // dispatch(hadoopDirectoActions.setFiles(files));
+    dispatch(hadoopDirectoActions.setFiles(filesHadoop));
     dispatch(msFileStreamActions.setFiles(files));
     
     const reader = new FileReader();
@@ -90,20 +89,20 @@ const DocumentListComponent  = ({item, refresh}: DocumentListComponentProps) => 
     if (!datosAdicionales || !Array.isArray(datosAdicionales) || !datosAdicionales.length ) return;
     const rutaHadoop = datosAdicionales[0].rutaHadoop;
 
-    // const download = await getDescargarHadoopDirecto(rutaHadoop);
+    const downloadHadoop = await getDescargarHadoopDirecto(rutaHadoop);
     const download = await getDescargarMsFileStream(rutaHadoop);
 
-    // if (!download || !download.data || !download.data.loc) {
-    //   console.log("El download.data.loc no existe: ", download);      
-    //   return;
-    // }
+    if (!downloadHadoop || !downloadHadoop.data || !downloadHadoop.data.loc) {
+      console.log("El download.data.loc no existe: ", downloadHadoop);      
+      return;
+    }
 
     if (!download || !download.data || !download.data.datosArchivo) {
       console.log("El download.data.datosArchivo no existe: ", download);      
       return;
     }
 
-    // const viewPdf = `${download?.data?.loc ?? ""}` 
+    const viewPdfHadoop = `${downloadHadoop?.data?.loc ?? ""}` 
     const viewPdf = `${download?.data?.datosArchivo ?? ""}` 
     setDownload(viewPdf);
     
@@ -111,9 +110,8 @@ const DocumentListComponent  = ({item, refresh}: DocumentListComponentProps) => 
       idTipoDocumento: item.idTipoDocumento,
       base64Modified: parsePdfBase64(viewPdf as string),
       totalPagesModified: 1,
-      sizeModified: files[Number(0)].size / 1000000
-    }))
-    
+      sizeModified: 1
+    })) 
   }
 
   const handleClickViewDoc = (event: React.MouseEvent<HTMLElement>) => {

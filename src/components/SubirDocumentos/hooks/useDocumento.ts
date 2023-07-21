@@ -22,16 +22,16 @@ export const useDocumento = () => {
 
     const guardarDocumento = async (item: EtiquetaVariableResponse, fechaEmision: any, operacion: string) => {
         const file = await base64ToFile(item?.base64Modified ?? "", item.filename);    
-        const pathName = await postSubirMsFileStream(body)   
+        const pathName = process.env.NEXT_PUBLIC_PATH_NAME ?? "" 
         const formData = new FormData();        
         formData.append("file", file);
-        formData.append("pathName", "/datalake/Continental-desa/Aprovisionamiento/Datos_no_estruturados/gestion_documental");
+        formData.append("pathName", pathName);
         const resMsFileStream = await postSubirMsFileStream(formData);
-        // const resHadoop = await postAlzarHadoopDirecto(formData, process.env.NEXT_PUBLIC_PATH_IMAGE!, false, 65356);
+        const resHadoop = await postAlzarHadoopDirecto(formData, process.env.NEXT_PUBLIC_PATH_NAME!, false, 65356);
         
         let newFech = moment(fechaEmision).format('DDMMYYYY');
         
-        // const LOC = resHadoop?.loc ?? ""
+        const LOC = resHadoop?.loc ?? ""
         const msFileStreamPath = resMsFileStream?.pathArchivo ?? ""
         
         const dataForPost: GuardarDocumentoRequest = {

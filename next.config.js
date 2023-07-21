@@ -18,7 +18,7 @@ module.exports = {
     NEXT_PUBLIC_CLIENTE_ID_KEYCLOAK: process.env.NEXT_PUBLIC_CLIENTE_ID_KEYCLOAK,
     NEXT_PUBLIC_URL_KEYCLOAK: process.env.NEXT_PUBLIC_URL_KEYCLOAK,
     NEXT_PUBLIC_KEY_AES: process.env.NEXT_PUBLIC_KEY_AES,
-    NEXT_PUBLIC_PATH_IMAGE: process.env.NEXT_PUBLIC_PATH_IMAGE,
+    NEXT_PUBLIC_PATH_NAME: process.env.NEXT_PUBLIC_PATH_NAME,
   },
   output: 'standalone',
   async headers() {

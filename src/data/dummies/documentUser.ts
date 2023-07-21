@@ -34,7 +34,7 @@ export const documentUserDummy: any = {
                 "usuarioCarga": "pool resquin",
                 "fechaRegistro": "2023-02-01T08:42:25",
                 "userAprobador": null,
-                "fechaArobacion": "0001-01-01T00:00:00",
+                "fechaAprobacion": "0001-01-01T00:00:00",
                 "usuarioVerificador": null,
                 "fechaVerificacion": null
             },
@@ -54,7 +54,7 @@ export const documentUserDummy: any = {
                 "usuarioCarga": "pool resquin",
                 "fechaRegistro": "2023-01-31T14:23:42",
                 "userAprobador": null,
-                "fechaArobacion": "0001-01-01T00:00:00",
+                "fechaAprobacion": "0001-01-01T00:00:00",
                 "usuarioVerificador": null,
                 "fechaVerificacion": null
             },
@@ -74,7 +74,7 @@ export const documentUserDummy: any = {
                 "usuarioCarga": "pool resquin",
                 "fechaRegistro": "2023-01-31T11:42:59",
                 "userAprobador": null,
-                "fechaArobacion": "0001-01-01T00:00:00",
+                "fechaAprobacion": "0001-01-01T00:00:00",
                 "usuarioVerificador": null,
                 "fechaVerificacion": null
             },
@@ -94,7 +94,7 @@ export const documentUserDummy: any = {
                 "usuarioCarga": "pool resquin",
                 "fechaRegistro": "2023-01-31T11:28:45",
                 "userAprobador": null,
-                "fechaArobacion": "0001-01-01T00:00:00",
+                "fechaAprobacion": "0001-01-01T00:00:00",
                 "usuarioVerificador": null,
                 "fechaVerificacion": null
             },
@@ -114,7 +114,7 @@ export const documentUserDummy: any = {
                 "usuarioCarga": "shirley baez",
                 "fechaRegistro": "2023-01-30T11:24:40",
                 "userAprobador": null,
-                "fechaArobacion": "0001-01-01T00:00:00",
+                "fechaAprobacion": "0001-01-01T00:00:00",
                 "usuarioVerificador": null,
                 "fechaVerificacion": null
             },
@@ -145,7 +145,7 @@ export const documentUserDummy: any = {
                 "usuarioCarga": "shirley baez",
                 "fechaRegistro": "2023-01-30T11:24:29",
                 "userAprobador": null,
-                "fechaArobacion": "0001-01-01T00:00:00",
+                "fechaAprobacion": "0001-01-01T00:00:00",
                 "usuarioVerificador": null,
                 "fechaVerificacion": null
             },
@@ -176,7 +176,7 @@ export const documentUserDummy: any = {
                 "usuarioCarga": "shirley baez",
                 "fechaRegistro": "2023-01-30T11:22:40",
                 "userAprobador": null,
-                "fechaArobacion": "0001-01-01T00:00:00",
+                "fechaAprobacion": "0001-01-01T00:00:00",
                 "usuarioVerificador": null,
                 "fechaVerificacion": null
             },
@@ -211,7 +211,7 @@ export const documentUserDummy: any = {
                 "usuarioCarga": "shirley baez",
                 "fechaRegistro": "2023-01-30T11:17:19",
                 "userAprobador": null,
-                "fechaArobacion": "0001-01-01T00:00:00",
+                "fechaAprobacion": "0001-01-01T00:00:00",
                 "usuarioVerificador": null,
                 "fechaVerificacion": null
             },
@@ -231,7 +231,7 @@ export const documentUserDummy: any = {
                 "usuarioCarga": "pool resquin",
                 "fechaRegistro": "2023-01-30T09:32:11",
                 "userAprobador": null,
-                "fechaArobacion": "0001-01-01T00:00:00",
+                "fechaAprobacion": "0001-01-01T00:00:00",
                 "usuarioVerificador": null,
                 "fechaVerificacion": null
             },
@@ -262,7 +262,7 @@ export const documentUserDummy: any = {
                 "usuarioCarga": "rogelio cabrera",
                 "fechaRegistro": "2022-12-14T17:29:41",
                 "userAprobador": null,
-                "fechaArobacion": "1900-01-01T00:00:00",
+                "fechaAprobacion": "1900-01-01T00:00:00",
                 "usuarioVerificador": null,
                 "fechaVerificacion": null
             },
@@ -293,7 +293,7 @@ export const documentUserDummy: any = {
                 "usuarioCarga": "sol arevalos",
                 "fechaRegistro": "2022-12-13T12:26:35",
                 "userAprobador": null,
-                "fechaArobacion": "1900-01-01T00:00:00",
+                "fechaAprobacion": "1900-01-01T00:00:00",
                 "usuarioVerificador": null,
                 "fechaVerificacion": null
             },

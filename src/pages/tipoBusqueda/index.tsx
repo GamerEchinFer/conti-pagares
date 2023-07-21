@@ -21,6 +21,9 @@ import { datosDispositivo, getUsuarioKeyCloack, reset as resetAuth } from '../..
 import { getDatosAgente, login } from '../../actions/Auth.actions';
 import { v4 as uuidv4 } from 'uuid';
 import InicioComponent from "../inicio";
+import { certificacionEstadosActions } from "../../redux/slices/certificacionEstados.slice";
+import { getCertificacionEstados, getProductos } from "../../api/apmDesaApi";
+import { getCertificacionEstadosAction } from "../../redux/thunks/certificacionEstados.thunks";
 
 const filtros = ["codigo", "documento"]
 
@@ -31,11 +34,13 @@ const TipoBusquedaPage = () => {
   const [tipoBusqueda, setTipoBusqueda] = useState<TipoBusqueda | null>();
   const [tipoBusquedaSelected, setTipoBusquedaSelected] = useState(1);
   const [codigoCliente, setCodigoCliente] = useState("");
+  const [codigoEstado, setCodigoEstado] = useState();
   const [clienteDocumento, setClienteDocumento] = useState("");
   const [nextPage, setNextPage] = useState();
   const mediaQueryPadding = useMediaQuery(theme.breakpoints.down(705));
   const auth = useSelector((state: RootState) => state.authGDI.gdiAuth);
   const clienteDatos = useSelector((state: RootState) => state.clienteDatos.items);
+  const certificacion = useSelector((state: RootState) => state.certificacionEstados.items);
   const loading = useSelector((state: RootState) => state.clienteDatos.loading);
   const { keycloak, initialized } = useKeycloak();
 	const { access_token, permisosUsuario, datosAgente } = useSelector((state:RootState)=>state.auth);
@@ -48,6 +53,7 @@ const TipoBusquedaPage = () => {
     dispatch(clienteDatosActions.clienteDatosReset());
     dispatch(clienteDocumentoActions.clienteDocumentoReset());
 }, [auth])
+
 
 const limpiarDatos = () => {
   dispatch(resetAuth());
@@ -89,10 +95,18 @@ useEffect(() => {
     }
   };
 
+  const boton = () => {
+    console.log(getCertificacionEstados())
+  }
+
+  useEffect(() => {
+    dispatch(getCertificacionEstadosAction(codigoEstado))
+  }, [])
+
   return (
     <>
     {
-      permisosUsuario.filter((permisos)=>permisos.url === process.env.NEXT_PUBLIC_HOST_VALIDO).length > 0 ? 
+      permisosUsuario.filter((permisos)=>permisos.url === process.env.NEXT_PUBLIC_HOST_VALIDO).length === 0 ? 
       <Grid container pt={3} style={{ justifyContent: 'center' }}>
 				<Box className={styles['box-user']} style={{padding: mediaQueryPadding ? '0px 0px' : '0px'}}>
         <div>
@@ -114,19 +128,19 @@ useEffect(() => {
                     autoFocus={true}
                     ref={focusUsernameInputField}              
                     value={codigoCliente ?? clienteDocumento}
-                    onChange={(e) => {
+                    onChange={(e: any) => {
                       setCodigoCliente(e.target.value); 
                       setClienteDocumento(e.target.value);
                     }}
-                    onKeyPress={(event) => {
+                    onKeyPress={(event: any) => {
                       if (event.key === 'Enter') {
                         dispatch(getClienteDatosAction(codigoCliente, filtros[tipoBusquedaSelected - 1]))
                       }
                     }}
                     variant="outlined"
                     sx={{
-                      '& label': { paddingLeft: (theme) => theme.spacing(2) },
-                      '& input': { paddingLeft: (theme) => theme.spacing(1.5), },
+                      '& label': { paddingLeft: (theme: any) => theme.spacing(2) },
+                      '& input': { paddingLeft: (theme: any) => theme.spacing(1.5), },
                       '& fieldset': {
                         borderRadius: '5px',
                       },
@@ -155,7 +169,6 @@ useEffect(() => {
             </div>
           </div>
           <DatosPersonales />
-          
           </div>
         </Box>
       </Grid> : <InicioComponent />

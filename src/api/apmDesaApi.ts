@@ -1,5 +1,6 @@
 import { AxiosResponse } from 'axios';
 import {
+    CertificacionEstados,
     ClienteDatos,
     ClienteDocumento,
     DocumentosUsuarioResponse,
@@ -171,4 +172,10 @@ export async function getTipoDocumentoHistorico(codigoCliente: string, codigoTip
 
     return response;
 
+}
+
+export async function getCertificacionEstados() {    
+    const URL = `/certificacion/estados`;    
+    const response = await apmApi.get<CertificacionEstados[]>(URL);
+    return response
 }

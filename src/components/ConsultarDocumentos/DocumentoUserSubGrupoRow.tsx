@@ -2,20 +2,15 @@ import { ColeccionDocumento } from '../../interfaces/interfaces';
 import SearchIcon from '@mui/icons-material/Search';
 import { TableCell } from '@mui/material';
 import { capitalize } from '../../helpers/capitalize';
-import CertificadoIcon from '../shared/CertificadoIcon';
-import PendienteIcon from '../shared/PendienteIcon';
-import RechazadoIcon from '../shared/Rechazado';
-import VencidoIcon from '../shared/VencidoIcon';
-import VerificadoIcon from '../shared/VerificadoIcon'; 
 import { useDispatch, useSelector } from 'react-redux';
 import ConsultarHistoricoContent from './ConsultarHistoricoContent';
 import { getTipoDocumentoHistoricoAction } from '../../redux/thunks/documentoHistorico.thunks';
 import { RootState } from '../../redux/store';
 
 type DocumentoUserSubGrupoRowProps = {
-    row: ColeccionDocumento
-    handleClickViewDoc: () => void  
-    onClickRow: () => void  
+  row: ColeccionDocumento
+  handleClickViewDoc: () => void  
+  onClickRow: () => void  
 }
 
 
