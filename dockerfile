@@ -5,8 +5,8 @@ FROM node:18-alpine AS deps
 
 WORKDIR /app
 COPY package.json package-lock.json ./
-#RUN npm install 
-RUN npm install -g npm@9.8.1 --omit=dev
+RUN npm install --omit=dev
+RUN npm install -g npm@9.8.1
 
 # Rebuild the source code only when needed
 FROM node:18-alpine AS builder
