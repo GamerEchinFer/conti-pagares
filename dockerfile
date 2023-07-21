@@ -5,7 +5,8 @@ FROM node:18-alpine AS deps
 
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN npm install --omit=dev
+#RUN npm install 
+RUN npm install -g npm@9.8.1 --omit=dev
 
 # Rebuild the source code only when needed
 FROM node:18-alpine AS builder
@@ -26,6 +27,7 @@ WORKDIR /app
 
 # Install PM2 to manage node processes
 RUN npm install pm2 --location=global
+
 
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nextjs -u 1001
