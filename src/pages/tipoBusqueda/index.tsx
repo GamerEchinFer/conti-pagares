@@ -106,7 +106,7 @@ useEffect(() => {
   return (
     <>
     {
-      permisosUsuario.filter((permisos)=>permisos.url === process.env.NEXT_PUBLIC_HOST_VALIDO).length > 0 ? 
+      permisosUsuario.filter((permisos)=>permisos.url === process.env.NEXT_PUBLIC_HOST_VALIDO).length  == 0 ? 
       <Grid container pt={3} style={{ justifyContent: 'center' }}>
 				<Box className={styles['box-user']} style={{padding: mediaQueryPadding ? '0px 0px' : '0px'}}>
         <div>
