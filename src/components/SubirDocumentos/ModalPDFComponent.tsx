@@ -288,7 +288,7 @@ export default function ModalPDFComponent({item, refresh}: ModalPDFComponentProp
               <TextField
                 label="Asociar a Operación"
                 value={operacion}
-                onChange={(e) => { setOperacion(e.target.value) }}
+                onChange={(e: any) => { setOperacion(e.target.value) }}
                 placeholder="74783648247234"
                 fullWidth
               />
