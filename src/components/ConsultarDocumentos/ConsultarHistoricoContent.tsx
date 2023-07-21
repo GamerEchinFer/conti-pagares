@@ -1,6 +1,5 @@
-import { Dialog, DialogContent, DialogTitle, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, useMediaQuery } from '@mui/material'
+import { Dialog, DialogContent, DialogContentText, DialogTitle, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, useMediaQuery } from '@mui/material'
 import DialogActions from '@mui/material/DialogActions';
-import DialogContentText from '@mui/material/DialogContentText/DialogContentText';
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { theme } from '../../../theme/Theme';
