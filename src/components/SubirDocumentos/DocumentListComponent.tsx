@@ -13,7 +13,7 @@ import * as pdfjsLib from 'pdf-lib';
 import { etiquetaVariableActions } from '../../redux/slices/etiquetaVariable.slice';
 import RecargarDocIcon from './RecargarDocIcon';
 import ViewPDFComponent from './ViewPDFComponent';
-import { getDescargarHadoopDirecto, getDescargarMsFileStream } from '../../api/apmDesaApi';
+import { getDescargarMsFileStream } from '../../api/apmDesaApi';
 import { parsePdfBase64 } from '../../helpers/cutPdf';
 import { RootState } from '../../redux/store';
 import { useMount } from 'ahooks';
@@ -89,21 +89,13 @@ const DocumentListComponent  = ({item, refresh}: DocumentListComponentProps) => 
     if (!datosAdicionales || !Array.isArray(datosAdicionales) || !datosAdicionales.length ) return;
     const rutaHadoop = datosAdicionales[0].rutaHadoop;
 
-    const downloadHadoop = await getDescargarHadoopDirecto(rutaHadoop);
     const download = await getDescargarMsFileStream(rutaHadoop);
-
-    if (!downloadHadoop || !downloadHadoop.data || !downloadHadoop.data.loc) {
-      console.log("El download.data.loc no existe: ", downloadHadoop);      
-      return;
-    }
-
     if (!download || !download.data || !download.data.datosArchivo) {
       console.log("El download.data.datosArchivo no existe: ", download);      
       return;
     }
 
-    const viewPdfHadoop = `${downloadHadoop?.data?.loc ?? ""}` 
-    const viewPdf = `${download?.data?.datosArchivo ?? ""}` 
+    const viewPdf = `${download?.data?.datosArchivo ?? ""}`
     setDownload(viewPdf);
     
     dispatch(etiquetaVariableActions.etiquetaVariableUpdateFileModified({

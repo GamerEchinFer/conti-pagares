@@ -74,7 +74,7 @@ export default function ModalPDFComponent({item, refresh}: ModalPDFComponentProp
   const seleccionIntervalo = (e: any) => {
     setSeleccion(e.target.value)
   }
-  // const files = useSelector((state: RootState) => state.hadoopDirecto.files);
+  const filesHadoop = useSelector((state: RootState) => state.hadoopDirecto.files);
   const files = useSelector((state: RootState) => state.msFileStream.files);
   const [fechaEmision, setFechaEmision] = useState(new Date().toISOString());
   const [operacion, setOperacion] = useState(""); 
@@ -98,10 +98,6 @@ export default function ModalPDFComponent({item, refresh}: ModalPDFComponentProp
   const handleChange = (newValue: Dayjs | null) => {
     setValue(newValue);
   };
-
-  // useMount(() => {                
-  //   hadoopDirectoActions.setFiles(null)
-  // });
 
   useMount(() => {                
     msFileStreamActions.setFiles(null)

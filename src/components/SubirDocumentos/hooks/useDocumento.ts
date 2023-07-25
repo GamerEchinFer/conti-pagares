@@ -2,7 +2,7 @@ import { useMount } from 'ahooks';
 import moment from 'moment';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { postAlzarHadoopDirecto, postGuardarDocumento, postSubirMsFileStream } from '../../../api/apmDesaApi';
+import { postGuardarDocumento, postSubirMsFileStream } from '../../../api/apmDesaApi';
 import { base64ToFile } from '../../../helpers/base64ToFile';
 import { storage } from '../../../helpers/storage';
 import { EtiquetaVariableResponse, GuardarDocumentoRequest } from '../../../interfaces/interfaces';
@@ -27,11 +27,9 @@ export const useDocumento = () => {
         formData.append("file", file);
         formData.append("pathName", pathName);
         const resMsFileStream = await postSubirMsFileStream(formData);
-        const resHadoop = await postAlzarHadoopDirecto(formData, process.env.NEXT_PUBLIC_PATH_NAME!, false, 65356);
         
         let newFech = moment(fechaEmision).format('DDMMYYYY');
         
-        const LOC = resHadoop?.loc ?? ""
         const msFileStreamPath = resMsFileStream?.pathArchivo ?? ""
         
         const dataForPost: GuardarDocumentoRequest = {

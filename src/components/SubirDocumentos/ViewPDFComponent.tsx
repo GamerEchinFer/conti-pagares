@@ -42,9 +42,9 @@ const ViewPDFComponent = ({item}: ModalPDFComponentProps) => {
     const [href, setHref] = useState("");
     const documento = useDocumento();
 
-    // const getFile = useSelector((state: RootState) => state.hadoopDirecto.files);
+    const getFileHadoop = useSelector((state: RootState) => state.hadoopDirecto.files);
     const getFile = useSelector((state: RootState) => state.msFileStream.files);
-    // const downFile = useSelector((state: RootState) => state.hadoopDownload.response);
+    const downFileHadoop = useSelector((state: RootState) => state.hadoopDownload.response);
     const downFile = useSelector((state: RootState) => state.msFileStreamDescargar.response);
 
     const [fechaEmision, setFechaEmision] = useState(new Date().toISOString());
