@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { getDescargarHadoopDirecto, getDescargarMsFileStream, postAlzarHadoopDirecto } from '../../api/apmDesaApi';
+import { getDescargarMsFileStream, postAlzarHadoopDirecto } from '../../api/apmDesaApi';
 
 type PDFComponentProps = {
     base64: string
@@ -22,15 +22,11 @@ const PDFComponent = ({base64}: PDFComponentProps) => {
     
 
     const handleClickOpen = async () => {
-        // DESCARGAR PDF
-        // const download = await getDescargarHadoopDirecto(href);
         const download = await getDescargarMsFileStream(href);
 
-        // const hrefPdf = `data:application/pdf;base64,${download?.data?.loc ?? ""}`; 
         const hrefPdf = `data:application/pdf;base64,${download?.data?.datosArchivo ?? ""}`; 
         setUrlPdf(hrefPdf);           
 
-        // Te permite crear una etiqueta de manera programada o dinamica
         const el = document.createElement("a")
         el.href = hrefPdf
         el.download = fileName
@@ -50,7 +46,6 @@ const PDFComponent = ({base64}: PDFComponentProps) => {
         const res = await postAlzarHadoopDirecto(formData,process.env.NEXT_PUBLIC_PATH_NAME!, false, 65356);
 
         if (!res || !res.loc) {
-            // Alerta
             console.log("El res.loc no existe: ", res);      
             return;
         }
@@ -66,7 +61,6 @@ const PDFComponent = ({base64}: PDFComponentProps) => {
             ? (
             <embed
                 src={base64}
-                // src={urlPdf}
                 type="application/pdf" width="80%" height="550px"
             />
             )
