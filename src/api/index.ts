@@ -32,5 +32,12 @@ export const apmApiHadoop = axios.create(
     }
 );
 
+export const apmApiMsFileStream = axios.create(
+    {
+        baseURL: process.env.NEXT_PUBLIC_API_BASE_URL+"/ms-file-stream-manager/v1"
+    }
+);
+
 apmApi.interceptors.request.use(apmAuthInterceptor);
 apmApiCliente.interceptors.request.use(apmAuthInterceptor);
+apmApiMsFileStream.interceptors.request.use(apmAuthInterceptor);

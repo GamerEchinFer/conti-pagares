@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { getDescargarHadoopDirecto, postAlzarHadoopDirecto } from '../../api/apmDesaApi';
+import { getDescargarMsFileStream, postAlzarHadoopDirecto } from '../../api/apmDesaApi';
 
 type PDFComponentProps = {
     base64: string
@@ -10,6 +10,8 @@ type PDFComponentProps = {
 const PDFComponent = ({base64}: PDFComponentProps) => {
     const hadoopDirecto = useSelector((state: RootState) => state.hadoopDirecto.response);
     const hadoopDownload = useSelector((state:RootState) => state.hadoopDownload.items);    
+    const getFile = useSelector((state: RootState) => state.msFileStream.files);
+    const downFile = useSelector((state: RootState) => state.msFileStreamDescargar.response);
 
     const fileInput = useRef<HTMLInputElement | null>(null);
     const [file, setFile] = useState<File>();
@@ -20,13 +22,11 @@ const PDFComponent = ({base64}: PDFComponentProps) => {
     
 
     const handleClickOpen = async () => {
-        // DESCARGAR PDF
-        const download = await getDescargarHadoopDirecto(href);
+        const download = await getDescargarMsFileStream(href);
 
-        const hrefPdf = `data:application/pdf;base64,${download?.data?.loc ?? ""}`; 
+        const hrefPdf = `data:application/pdf;base64,${download?.data?.datosArchivo ?? ""}`; 
         setUrlPdf(hrefPdf);           
 
-        // Te permite crear una etiqueta de manera programada o dinamica
         const el = document.createElement("a")
         el.href = hrefPdf
         el.download = fileName
@@ -43,10 +43,9 @@ const PDFComponent = ({base64}: PDFComponentProps) => {
         const formData = new FormData();        
         formData.append("file", fileInput.files[0]);
         
-        const res = await postAlzarHadoopDirecto(formData,process.env.NEXT_PUBLIC_PATH_IMAGE!, false, 65356);
+        const res = await postAlzarHadoopDirecto(formData,process.env.NEXT_PUBLIC_PATH_NAME!, false, 65356);
 
         if (!res || !res.loc) {
-            // Alerta
             console.log("El res.loc no existe: ", res);      
             return;
         }
@@ -62,7 +61,6 @@ const PDFComponent = ({base64}: PDFComponentProps) => {
             ? (
             <embed
                 src={base64}
-                // src={urlPdf}
                 type="application/pdf" width="80%" height="550px"
             />
             )

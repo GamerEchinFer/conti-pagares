@@ -12,7 +12,7 @@ const TableContainerComponent = () => {
         )
         .map((index) => (
           <span key={index.datosAdicionales.idDocumento}>
-          {index.datosAdicionales.descripcion.toLowerCase()}
+            {index.datosAdicionales.descripcion.toLowerCase()}
           </span>
         ))
       }                 

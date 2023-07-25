@@ -14,8 +14,8 @@ export const postGuardarDocumentoAction: any = (body: GuardarDocumentoRequest) =
         }
 
     } catch(ex: any) {
-        console.log(ex);
-        dispatch(guardarDocumentoActions.guardarDocumentoError(ex));
+      dispatch(guardarDocumentoActions.guardarDocumentoError(ex));
+      return
     }
 
     

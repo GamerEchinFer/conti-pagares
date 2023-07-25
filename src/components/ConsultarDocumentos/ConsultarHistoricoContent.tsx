@@ -1,6 +1,5 @@
-import { Dialog, DialogContent, DialogTitle, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, useMediaQuery } from '@mui/material'
+import { Dialog, DialogContent, DialogContentText, DialogTitle, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, useMediaQuery } from '@mui/material'
 import DialogActions from '@mui/material/DialogActions';
-import DialogContentText from '@mui/material/DialogContentText/DialogContentText';
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { theme } from '../../../theme/Theme';
@@ -11,10 +10,11 @@ import { RootState } from '../../redux/store';
 import { tipoDocumentoHistoricoActions } from '../../redux/slices/documentoHistorico.slice';
 import { capitalize, capitalizePorPalabra } from '../../helpers/capitalize';
 import { TipoDocumentoHistoricoResponse } from '../../interfaces/interfaces';
-import { getDescargarHadoopDirecto } from '../../api/apmDesaApi';
+import { getDescargarHadoopDirecto, getDescargarMsFileStream } from '../../api/apmDesaApi';
 import { parsePdfBase64 } from '../../helpers/cutPdf';
 import PDFComponent from '../SubirDocumentos/PDFComponent';
 import ModalHistorico from '../SubirDocumentos/ModalHistorico';
+import moment from 'moment';
 
 const ConsultarHistoricoContent = () => {
 
@@ -46,18 +46,25 @@ const ConsultarHistoricoContent = () => {
 
         const rutaHadoop = row.rutaHadoop;
     
-        const download = await getDescargarHadoopDirecto(rutaHadoop);
+        const downloadHadoop = await getDescargarHadoopDirecto(rutaHadoop);
+        const downloadApiMsFileStream = await getDescargarMsFileStream(rutaHadoop);
     
-        if (!download || !download.data || !download.data.loc) {
-          // Alerta
-          console.log("El download.data.loc no existe: ", download);      
+        if (!downloadHadoop || !downloadHadoop.data || !downloadHadoop.data.loc) {
+          console.log("El downloadHadoop.data.loc no existe: ", downloadHadoop);      
+          return;
+        }
+
+        if (!downloadApiMsFileStream || !downloadApiMsFileStream.data || !downloadApiMsFileStream.data.datosArchivo) {
+          console.log("El downloadApiMsFileStream.data.loc no existe: ", downloadApiMsFileStream);      
           return;
         }
     
-        const viewPdf = `${download?.data?.loc ?? ""}` 
+        const viewPdfHadoop = `${downloadHadoop?.data?.loc ?? ""}` 
+        const viewPdfMsFileStream = `${downloadApiMsFileStream?.data?.datosArchivo ?? ""}` 
     
-        return setBase64(parsePdfBase64(viewPdf as string))
+        return setBase64(parsePdfBase64(viewPdfMsFileStream as string))
     }
+
   return (
     <>  
         <Dialog
@@ -110,13 +117,13 @@ const ConsultarHistoricoContent = () => {
                                             {capitalize(`${row.descripcion}`)}
                                         </TableCell>
                                         <TableCell component="th" scope="row">
-                                            {row.fechaVerificacion} Sin Certificacion
+                                            {row.fechaVerificacion ?? "Sin Certificacion"}
                                         </TableCell>
                                         <TableCell component="th" scope="row">
-                                            {row.numeroOperacion}
+                                            {row.numeroOperacion ?? "No posee Número Operación"}
                                         </TableCell>
                                         <TableCell component="th" scope="row">
-                                            {row.usuarioVerificador} Sin elementos
+                                            {row.usuarioVerificador ?? "No posee Usuario Verificador"}
                                         </TableCell>
                                         <TableCell component="th" scope="row">
                                             <ModalHistorico onClick={handleClickModal} />
@@ -146,20 +153,19 @@ const ConsultarHistoricoContent = () => {
                                             {(datosCliente.primerNombre ? `${capitalizePorPalabra(`${datosCliente?.primerNombre ?? ''}`)} ${capitalizePorPalabra(`${datosCliente?.segundoNombre ?? ''}`)} ${datosCliente?.primerApellido ?? ''} ${datosCliente?.segundoApellido ?? ''}` : '')}
                                             </div>
                                             <div className="pr-10  pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Clasificación</div>
-                                                {rowSelected?.rutaHadoop}
-                                            <span className="pr-10">Documento General</span>
+                                            <span className="pr-10">{datosCliente.clasificacion ?? "No posee clasificación"}</span>
                                             <div className="pr-10 pt-2 pb-2" style={{ color: "#373A3C", fontSize:"16px"}}>Fecha Documento</div>
-                                            <span className="pr-10 pb-2"></span>
-                                            <div className="pr-10 pb-2 pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Vence 30/03/2023</div>
+                                            <span className="pr-10 pb-2">{moment(rowSelected?.fechaEmision).format('DD/MM/YYYY')}</span>
+                                            <div className="pr-10 pb-2 pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Vence {moment(rowSelected?.fechaVencimiento).format('DD/MM/YYYY')}</div>
                                             <div className="pr-10 pb-2 pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Nro. Cuentas 0</div>
                                             <div className="pr-10 pb-4 pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Nro. Operación </div>
-                                            <div className="pr-10 pb-4">3453563677 </div>
-                                            <div className="pr-10 pb-2 pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Carga </div>
-                                            <span className="pr-10">Juan Perez   28/03/2023 </span>
+                                            <div className="pr-10 pb-4">{rowSelected?.numeroOperacion ?? "No existe número operación"}</div>
+                                            <div className="pr-10 pb-2 pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Carga</div>
+                                            <span className="pr-10">{rowSelected?.usuarioCarga}  {moment(rowSelected?.fechaEmision).format('DD/MM/YYYY')} </span>
                                             <div className="pr-10 pb-2 pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Verifica </div>
-                                            <span className="pr-10">Juan Perez   28/03/2023 </span>
+                                            <span className="pr-10">{rowSelected?.usuarioVerificador} {moment(rowSelected?.fechaVerificacion).format('DD/MM/YYYY')}</span>
                                             <div className="pr-10 pb-2 pt-2" style={{ color: "#373A3C", fontSize:"16px"}}>Certifica</div>
-                                            <span className="pr-10">Juan Perez   28/03/2023 </span>
+                                            <span className="pr-10">{} {moment(rowSelected?.fechaRegistro).format('DD/MM/YYYY')}</span>
                                         </DialogContentText>
                                         <div className="flex flex-row justify-center pb-4">
                                             <BackButton onClick={closeModal}/>

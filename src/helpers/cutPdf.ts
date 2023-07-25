@@ -21,3 +21,4 @@ export const cutPdf = async (
 };
 
 export const parsePdfBase64 = (base64: string) => `data:application/pdf;base64,${base64}`
+export const parsePdfBase64Image = (base64: string) => `data:image/png;base64,${base64}`
