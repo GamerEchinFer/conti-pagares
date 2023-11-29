@@ -27,6 +27,7 @@ import uiSlice from './slices/ui/ui.slice';
 import { msFileStream } from './slices/msFileStream.slice';
 import { msFileStreamDescargar } from './slices/msFileStreamDescargar.slice';
 import { certificacionEstados } from './slices/certificacionEstados.slice';
+import { promissoryNotesDelivery } from './slices/delivery.slice';
 
 const persistConfig = {
   key: 'root',
@@ -57,7 +58,8 @@ const combinedReducers = combineReducers({
   authGDI,
   msFileStream,
   msFileStreamDescargar,
-  certificacionEstados
+  certificacionEstados,
+  promissoryNotesdelivery: promissoryNotesDelivery
 })
 
 export type OurStore = ReturnType<typeof combineReducers>

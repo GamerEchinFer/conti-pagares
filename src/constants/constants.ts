@@ -11,3 +11,6 @@ export const keycloakHeaders: AutenticarServicioHeader = {
     Scope: "profile", 
 }
 
+export const DATE_FORMAT = "DD/MM/YYYY";
+export const DATE_FORMAT_REQUEST = "MM/DD/YYYY";
+

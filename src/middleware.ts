@@ -11,9 +11,13 @@ const isReferer = (referer: string) => {
 
 export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
-    if (isApiRoute(pathname) && !isReferer(request.headers.get('referer') as string)){
-       return NextResponse.redirect(process.env.NEXT_PUBLIC_URL_REDIRECT as string)
-    }
+    // if (isApiRoute(pathname) && !isReferer(request.headers.get('referer') as string)){
+    //    return NextResponse.redirect(process.env.NEXT_PUBLIC_URL_REDIRECT as string)
+    // }
+    // if (isApiRoute(pathname)){
+    //    return NextResponse.redirect(process.env.NEXT_PUBLIC_URL_REDIRECT as string)
+    // }
+    return NextResponse.next()
 }
 
 export const config = {

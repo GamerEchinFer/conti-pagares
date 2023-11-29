@@ -17,7 +17,7 @@ const DatosClienteItem = ({datosCliente}: DatosClienteItemProps) => { // destruc
         >
         <div className="flex flex-row">
           <div className="1/4 pl-1" >{datosCliente?.codigoCliente ?? ""}</div>
-          <div className="1/4 pl-1" >{datosCliente?.primerNombre ?? ""} {datosCliente?.segundoNombre ?? ""}, {datosCliente?.primerApellido ?? ""} {datosCliente?.segundoApellido ?? ""}</div>
+          <div className="1/4 pl-1" >{datosCliente?.primerNombre ?? ""} {datosCliente?.segundoNombre ?? ""} {datosCliente?.primerApellido ?? ""} {datosCliente?.segundoApellido ?? ""}</div>
         </div>  
       </div>
     </div>

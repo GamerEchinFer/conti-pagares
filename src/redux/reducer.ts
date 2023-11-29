@@ -16,6 +16,7 @@ import { busqueda } from "./slices/busqueda.slice";
 import { documentosUser } from './slices/documentosUser.slice';
 import { documentosUserFiltro } from './slices/documentosUserFiltro';
 import { tipoDocumentoHistorico } from "./slices/documentoHistorico.slice";
+import { promissoryNotesDelivery } from './slices/delivery.slice';
 
 const reducer = {
     solicitud,
@@ -35,7 +36,8 @@ const reducer = {
     busqueda,
     documentosUser,
     documentosUserFiltro,
-    tipoDocumentoHistorico,    
+    tipoDocumentoHistorico,   
+    promissoryNotesdelivery: promissoryNotesDelivery 
 }
 
 export default reducer;

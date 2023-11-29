@@ -4,7 +4,7 @@ import { RootState, useAppDispatch } from "../../redux/store";
 import { useSelector } from "react-redux";
 import AbiError from '../../assets/img/generales/abi3.svg';
 import { Box, Fade, Modal, Typography } from "@mui/material";
-import styles from './genericos/Genericos.module.css';
+import styles from './generics/Genericos.module.css';
 import { uiSetError, dataError as dataErrorReducer } from "../../redux/slices/ui/ui.slice";
 import redirectsDisabled from "../../config/redirectsDisabled";
 import dataErrorResponse from "../../models/responses/DataError.response";
