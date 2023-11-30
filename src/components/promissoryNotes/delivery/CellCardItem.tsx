@@ -3,8 +3,8 @@ import Typography from '@mui/material/Typography'
 import React from 'react'
 
 interface CellCardItemProps {
-    label: string;
-    value: string;
+    label?: string;
+    value?: string;
 }
 const CellCardItem = ({ label, value }: CellCardItemProps) => {
     return (

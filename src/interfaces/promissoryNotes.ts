@@ -18,6 +18,7 @@ export interface PromissoryNotesConsultDelivery extends PromissoryNotesConsult {
 }
 
 export interface PromissoryNotesItemCard {
+    codClient: string;
     nroEnvio: string;
     operacion: string;
     fecha: string;
@@ -45,7 +46,13 @@ export interface PromissoryNotesStatusHistory {
 export interface PromissoryNotesDeliveryState {
     showFormModal: boolean;
     showPdfModal: boolean;
-    promissoryNotesConsultDelivery: PromissoryNotesConsultDelivery[];
+    showAttachModal: boolean;
+    promissoryNotesConsultDelivery: PromissoryNotesConsult[];
+    promissoryNotesForm: PromissoryNotesConsult[];
+    promissoryNoteObservation: string;
+    sending: boolean;
+    clienteRetira: string;
+    digitalizadoCompleto: boolean;
 }
 
 

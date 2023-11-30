@@ -7,6 +7,7 @@ import CellCardItem from './CellCardItem'
 import CellCardItemObs from './CellCardItemObs'
 import { styled } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2';
+import { PromissoryNotesConsult } from '../../../models/responses/promissoryNotes'
 
 const CardStyled = styled(Card)(({ theme }) => ({
     width: "100%",
@@ -18,39 +19,40 @@ const CardStyled = styled(Card)(({ theme }) => ({
 }));
 
 interface CardItemDelivery {
-    item: PromissoryNotesItemCard
+    id: string;
+    item: PromissoryNotesConsult
 }
-const CardItemDelivery = ({ item }: CardItemDelivery) => {
+const CardItemDelivery = ({ id, item }: CardItemDelivery) => {
     return (
         <Card elevation={3}>
             <CardContent>
                 <Grid container>
                     <Grid container xs={12}>
                         <Grid xs={2}>
-                            <CellCardItem label='Nro Envío' value={""} />
+                            <CellCardItem label='Nro Envío' />
                         </Grid>
                         <Grid xs={2}>
-                            <CellCardItem label='Nro Operación' value={""} />
+                            <CellCardItem label='Nro Operación' />
                         </Grid>
                         <Grid xs={2}>
-                            <CellCardItem label='Fecha' value={""} />
+                            <CellCardItem label='Fecha' />
                         </Grid>
                         <Grid xs={6}>
-                            <CellCardItem label='Obs' value={""} />
+                            <CellCardItem label='Obs' />
                         </Grid>
                     </Grid>
                     <Grid container xs={12}>
                         <Grid xs={2}>
-                            <CellCardItem label={""} value={item.nroEnvio} />
+                            <CellCardItem value={item.numeroEnvio} />
                         </Grid>
                         <Grid xs={2}>
-                            <CellCardItem label={""} value={item.operacion} />
+                            <CellCardItem value={item.operacion} />
                         </Grid>
                         <Grid xs={2}>
-                            <CellCardItem label={""} value={item.fecha} />
+                            <CellCardItem value={item.fechaVencimiento} />
                         </Grid>
                         <Grid xs={6}>
-                            <CellCardItemObs label={""} value={item.observacion} />
+                            <CellCardItemObs id={id} />
                         </Grid>
                     </Grid>
                 </Grid>

@@ -17,6 +17,7 @@ import MainDrawer from '../components/MainDrawer/MainDrawer';
 import interceptor from '../config/interceptor';
 import ErrorBar from '../components/shared/ErrorBar';
 import AuthGDI from '../components/shared/AuthGDI';
+import { SnackbarProvider } from 'notistack'
 
 export default function App({ Component, pageProps }: AppProps) {
     interceptor();
@@ -30,25 +31,27 @@ export default function App({ Component, pageProps }: AppProps) {
                     <PersistGate loading={null} persistor={persistor as Persistor}>
                         <AuthGDI>
                             <ThemeProvider theme={theme}>
-                                <ErrorBar />
-                                <div
-                                    style={{
-                                        display: 'flex',
-                                    }}
-                                >
-                                    <ResponsiveAppBar />
-                                    <MainDrawer />
-                                    <Box
-                                        component="main"
-                                        sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
+                                <SnackbarProvider>
+                                    <ErrorBar />
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                        }}
                                     >
-                                        <QueryClientProvider client={queryClient}>
-                                            <Component {...pageProps} />
-                                        </QueryClientProvider>
+                                        <ResponsiveAppBar />
+                                        <MainDrawer />
+                                        <Box
+                                            component="main"
+                                            sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
+                                        >
+                                            <QueryClientProvider client={queryClient}>
+                                                <Component {...pageProps} />
+                                            </QueryClientProvider>
 
-                                    </Box>
+                                        </Box>
 
-                                </div>
+                                    </div>
+                                </SnackbarProvider>
                             </ThemeProvider>
                         </AuthGDI>
                     </PersistGate>

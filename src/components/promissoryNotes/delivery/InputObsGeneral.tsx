@@ -1,14 +1,33 @@
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import React, { useState } from 'react'
+import React, { memo, useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../redux/store';
+import { promissoryNotesDeliveryActions, promissoryNotesSelectors } from '../../../redux/slices/delivery.slice';
 
 interface InputObsGeneralProps {
     label?: string;
-    value: string;
+    value?: string;
 }
-const InputObsGeneral = ({ label, value }: InputObsGeneralProps) => {
-    const [value_, setValue_] = useState(value);
+const InputObsGeneral = memo(({ label, value }: InputObsGeneralProps) => {
+    const dispatch = useDispatch();
+    const obsGeneral = useSelector((state: RootState) => promissoryNotesSelectors.getPromissoryNoteObservation(state));
+    const [value_, setValue_] = useState(value ?? obsGeneral ?? "");
+    const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setValue_(e.target.value);
+    }
+
+    const handleBlur = () => {
+        if (value === undefined) {
+            dispatch(promissoryNotesDeliveryActions.setPromissoryNoteObservation(value_));
+        }
+    }
+
+    useEffect(() => {
+        setValue_(value ?? obsGeneral ?? "");
+    }, [value, obsGeneral]);
+
     return (
         <Box display={"flex"} flexDirection={"column"}>
             <Typography fontWeight={"bold"}>
@@ -17,14 +36,15 @@ const InputObsGeneral = ({ label, value }: InputObsGeneralProps) => {
 
             <TextField
                 multiline
-                maxRows={3}
+                // maxRows={3}
                 rows={3}
                 fullWidth
-                value={value_}
-                onChange={(e) => setValue_(e.target.value)}
+                value={value_ ?? obsGeneral ?? ""}
+                onChange={handleChangeValue}
+                onBlur={handleBlur}
             />
         </Box>
     )
-}
+});
 
 export default InputObsGeneral

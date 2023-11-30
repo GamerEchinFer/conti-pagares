@@ -1,27 +1,48 @@
 import Button from '@mui/material/Button'
-import Box from '@mui/material/Box'
 import Grid from '@mui/material/Unstable_Grid2'
-import React from 'react'
-import { PromissoryNotesConsultDelivery } from '../../../interfaces/promissoryNotes';
-import { promissoryNotesDeliveryActions } from '../../../redux/slices/delivery.slice';
-import { useDispatch } from 'react-redux';
+import React, { memo, useState } from 'react'
+import { promissoryNotesDeliveryActions, promissoryNotesSelectors } from '../../../redux/slices/delivery.slice';
+import { useDispatch, useSelector } from 'react-redux';
+import { promissoryNotesServices } from '../../../services/promissoryNotesService';
+import { RootState } from '../../../redux/store';
+import CircularProgress from '@mui/material/CircularProgress';
+import DeliveryButton from './DeliveryButton';
 
-interface FormActionsProps {
-    promissoryNotesSelected: PromissoryNotesConsultDelivery[];
-}
-const FormActions = ({ promissoryNotesSelected }: FormActionsProps) => {
+
+const FormActions = memo(() => {
     const dispatch = useDispatch();
+    const promissoryNotesForm = useSelector(promissoryNotesSelectors.getPromissoryNotesForm);
+    const clienteRetira = useSelector(promissoryNotesSelectors.getClienteRetira);
+    const usuarios = useSelector((state: RootState) => state.auth.datosAgente);
+    const [isLoading, setIsLoading] = useState(false);
+
     const handlePrint = () => {
         dispatch(promissoryNotesDeliveryActions.setPdfShowModal(true));
         dispatch(promissoryNotesDeliveryActions.setFormShowModal(false));
     }
 
     const handleDigitalizar = () => {
-
+        dispatch(promissoryNotesDeliveryActions.setAttachShowModal(true));
+        dispatch(promissoryNotesDeliveryActions.setFormShowModal(false));
     }
 
     const handleReprint = () => {
+        dispatch(promissoryNotesDeliveryActions.setPdfShowModal(true));
+        dispatch(promissoryNotesDeliveryActions.setFormShowModal(false));
+    }
 
+    const handleEntregar = async () => {
+        setIsLoading(true);
+        for await (const promissoryNote of promissoryNotesForm) {
+            await promissoryNotesServices.deliveryPromissoryNote({
+                operacion: promissoryNote.operacion,
+                cuota: promissoryNote.cuota,
+                clienteretira: clienteRetira,
+                observacion: promissoryNote.observacion,
+                usuario: usuarios?.codigo ?? "",
+            })
+        }
+        setIsLoading(false);
     }
 
     return (
@@ -32,10 +53,12 @@ const FormActions = ({ promissoryNotesSelected }: FormActionsProps) => {
                 <Button variant={"outlined"} onClick={handleReprint}>Reimprimir Acuse</Button>
             </Grid>
             <Grid xs={6} display={"flex"} justifyContent={"flex-end"}>
-                <Button variant={"contained"}>Entregar</Button>
+                <DeliveryButton 
+                    handleEntregar={handleEntregar}
+                    isLoading={isLoading}
+                />
             </Grid>
         </Grid>
     )
-}
-
+})
 export default FormActions

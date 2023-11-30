@@ -7,7 +7,6 @@ interface TableVariantProps {
     children?: React.ReactNode;
 }
 const TablePaperVariant = memo(({ customVariant = "normal", children }: TableVariantProps) => {
-    console.log("se renderiza", customVariant);
     if (customVariant == "normal") {
         return (
             <StyledPaperTable>{children}</StyledPaperTable>
@@ -24,7 +23,6 @@ interface TableCellVariantProps extends TableCellProps {
     children?: React.ReactNode;
 }
 const TableCellVariant = memo(({ customVariant = "normal", children, ...props }: TableCellVariantProps) => {
-    console.log("se renderiza", customVariant);
     if (customVariant == "normal") {
         return (
             <StyledTableCell {...props}>{children}</StyledTableCell>
@@ -41,7 +39,6 @@ interface TableVariantProps extends TableProps {
     children?: React.ReactNode;
 }
 const TableVariant = memo(({ customVariant = "normal", children, ...props }: TableVariantProps) => {
-    console.log("se renderiza", customVariant);
     if (customVariant == "normal") {
         return (
             <StyledTable {...props}>{children}</StyledTable>

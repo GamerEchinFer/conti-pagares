@@ -1,19 +1,17 @@
-import React, { memo, useState } from 'react'
+import React, { memo } from 'react'
 import CustomModal from '../../shared/CustomModal'
 import Form from './Form';
-import FormActions from './FormActions';
-import { PromissoryNotesConsultDelivery } from '../../../interfaces/promissoryNotes';
-import { PDFViewer } from '@react-pdf/renderer';
-import PromissoryNotesDeliveryPdf from './DeliveryPdf';
 import { promissoryNotesDeliveryActions, promissoryNotesSelectors } from '../../../redux/slices/delivery.slice';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../redux/store';
+import DeliveryPdfViewer from './DeliveryPdfViewer';
+import AttachFileDelivery from './AttachFileDelivery';
 
 const ModalPromissoryNotesDelivery = memo(() => {
     const dispatch = useDispatch();
-    const { usuarioKeycloack: currentUser } = useSelector((state: RootState) => state.auth);
+
     const showFormModal = useSelector(promissoryNotesSelectors.getFormShowModal);
     const showPdfModal = useSelector(promissoryNotesSelectors.getPdfShowModal);
+    const showAttachModal = useSelector(promissoryNotesSelectors.getAttachShowModal);
     const promissoryNotesSelected = useSelector(promissoryNotesSelectors.getPromissoryNotesConsultDelivery);
     const handleCloseFormModal = () => {
         dispatch(promissoryNotesDeliveryActions.setFormShowModal(false));
@@ -21,6 +19,11 @@ const ModalPromissoryNotesDelivery = memo(() => {
 
     const handleClosePdfModal = () => {
         dispatch(promissoryNotesDeliveryActions.setPdfShowModal(false));
+        dispatch(promissoryNotesDeliveryActions.setFormShowModal(true));
+    }
+
+    const handleClosAttachModal = () => {
+        dispatch(promissoryNotesDeliveryActions.setAttachShowModal(false));
         dispatch(promissoryNotesDeliveryActions.setFormShowModal(true));
     }
 
@@ -32,25 +35,30 @@ const ModalPromissoryNotesDelivery = memo(() => {
                 title={"Detalles del pagaré"}
                 content={<Form promissoryNotesSelected={promissoryNotesSelected} />}
                 maxWidth="lg"
+                disableBackdropClick
+                disableEscapeKeyDown
             />
             <CustomModal
                 open={showPdfModal}
                 onClose={handleClosePdfModal}
-                content={<>
-                    <PDFViewer
-                        width={"100%"}
-                        height={"100%"}
-                    >
-                        <PromissoryNotesDeliveryPdf 
-                            promissoryNotesSelected={promissoryNotesSelected} 
-                            currentUser={currentUser}
-                        />
-                    </PDFViewer>
-                </>}
+                content={<DeliveryPdfViewer />}
                 dialogTitleSxProps={{
                     paddingTop: 1
                 }}
                 fullScreen
+                disableBackdropClick
+                disableEscapeKeyDown
+            />
+            <CustomModal
+                open={showAttachModal}
+                onClose={handleClosAttachModal}
+                content={<AttachFileDelivery />}
+                dialogTitleSxProps={{
+                    paddingTop: 1
+                }}
+                maxWidth="md"
+                disableBackdropClick
+                disableEscapeKeyDown
             />
         </>
     )

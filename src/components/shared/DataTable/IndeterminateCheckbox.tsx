@@ -10,14 +10,12 @@ const IndeterminateCheckbox = ({
     const ref = useRef<HTMLInputElement>(null!)
 
     useEffect(() => {
-        console.log("Indeterminate changed");
         if (typeof indeterminate === 'boolean') {
             ref.current.indeterminate = !checked && indeterminate
         }
 
     }, [ref, indeterminate])
 
-    console.log("IndeterminateCheckboxxxx:", checked, indeterminate);
     return (
         <>
             <Checkbox

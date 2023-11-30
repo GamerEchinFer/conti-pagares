@@ -25,5 +25,6 @@ export const promissoryNotesAccusationFilters: FilterControlsItem[] = [
     },
 ];
 
+export const ID_PRODUCTO_PROMISSORY_NOTES = 8;
 export const ID_SUB_PRODUCTO_PROMISSORY_NOTES = 8;
 export const ID_TIPO_DOCUMENTO_PROMISSORY_NOTES = 8;

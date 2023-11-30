@@ -4,6 +4,7 @@ import { getDateRequestFormated } from "../helpers/commons";
 import { DateRangeRequestValue } from "../interfaces/_common";
 import { apiDigital, apiDigitalArchivos, apiPromissoryNotes } from "../lib/apiClient"
 import { PromissoryNotesConsult, PromissoryNotesDownloadFile, PromissoryNotesFolderDocument } from "../models/responses/promissoryNotes";
+import { PromissoryNotesDeliveryForm } from "../models/request/promissoryNotes";
 
 const getConsult = (operation: string, client: string, fee: string, { from, to }: DateRangeRequestValue) => {
     const fromFormated = getDateRequestFormated(from);
@@ -43,9 +44,14 @@ const downloadFile = (path: string, token?: string) => {
     );
 }
 
+const deliveryPromissoryNote = (promissoryNotesDeliveryForm: PromissoryNotesDeliveryForm) => {
+    return apiPromissoryNotes.put(`/custodia-documentos/pagares/entregas/estado`, promissoryNotesDeliveryForm);
+}
+
 
 export const promissoryNotesServices = {
     getConsult,
     getFolderDocuments,
-    downloadFile
+    downloadFile,
+    deliveryPromissoryNote
 }

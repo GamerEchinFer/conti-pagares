@@ -85,6 +85,11 @@ export interface EtiquetaVariableResponse {
     filename:                       string;
 }
 
+export interface IGuardarDocumento{
+    base64Modified: string;
+    filename: string;
+}
+
 export interface AutenticarServicioHeader {
     "Grant-Type":       string;
     Scope:              string;
@@ -185,12 +190,16 @@ export interface GuardarDocumentoRequest {
     descripcionDocumento:   string;
     hadoop:                 string;
     codigoCliente:          string;
-    codigoLegajo:           number;
+    codigoLegajo?:           number;
     hadoopPath:             string;
     codigoUsuario:          string;
     codigoProducto:         number;
     codigoSubproducto:      number;
     operacion:              string;
+}
+
+export interface GuardarDocumentoPagaresRequest {
+    
 }
 export interface NumeroLegajo {
     nextSequence: number;

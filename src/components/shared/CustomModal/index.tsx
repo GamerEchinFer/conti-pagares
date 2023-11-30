@@ -20,6 +20,8 @@ interface ModaProps {
     scroll?: "paper" | "body";
     fullScreen?: boolean;
     dialogTitleSxProps?: SxProps<Theme>;
+    disableBackdropClick?: boolean;
+    disableEscapeKeyDown?: boolean;
 }
 const CustomModal = ({
     open,
@@ -32,13 +34,24 @@ const CustomModal = ({
     renderTitle,
     scroll = "paper",
     fullScreen = false,
-    dialogTitleSxProps
+    dialogTitleSxProps,
+    disableBackdropClick = false,
+    disableEscapeKeyDown = false,
 }: ModaProps) => {
     const renderTitle_ = renderTitle !== undefined ? renderTitle : () => <>{title}</>;
     return (
         <Dialog
             open={open}
-            onClose={onClose}
+            onClose={(e, reason) => {
+                if (reason === "backdropClick" && disableBackdropClick === true){
+                    return;
+                }
+                if (reason === "escapeKeyDown" && disableEscapeKeyDown === true){
+                    return;
+                }
+
+                onClose();
+            }}
             maxWidth={maxWidth}
             scroll={scroll}
             fullWidth={fullWidth}

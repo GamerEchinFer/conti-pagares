@@ -19,6 +19,7 @@ const tableStyles = StyleSheet.create({
     tableBody: {
         flexDirection: 'column',
         height: "",
+        gap: 3,
     },
     row: {
         margin: "3px 0px",
@@ -137,9 +138,10 @@ const styles = StyleSheet.create({
 
 interface PromissoryNotesDeliveryPdfProps {
     promissoryNotesSelected: PromissoryNotesConsultDelivery[];
+    obsGeneral: string;
     currentUser: string;
 }
-const PromissoryNotesDeliveryPdf = ({ promissoryNotesSelected, currentUser }: PromissoryNotesDeliveryPdfProps) => {
+const PromissoryNotesDeliveryPdf = ({ promissoryNotesSelected, currentUser, obsGeneral }: PromissoryNotesDeliveryPdfProps) => {
 
     const now = new Date();
     const nowDateFormated = `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()}`;
@@ -201,7 +203,9 @@ const PromissoryNotesDeliveryPdf = ({ promissoryNotesSelected, currentUser }: Pr
                                         <Text>{promissoryNote.estado}</Text>
                                     </View>
                                     <View style={tableStyles.cell7}>
-                                        <Text>{promissoryNote.observacion}</Text>
+                                        <Text>
+                                            {promissoryNote.observacion} {obsGeneral}
+                                        </Text>
                                     </View>
                                 </View>
                             ))

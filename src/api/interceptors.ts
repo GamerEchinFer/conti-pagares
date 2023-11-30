@@ -5,7 +5,6 @@ import { store } from "../redux/store";
 export const apmAuthInterceptor = (config: AxiosRequestConfig) => {
 
     const gdiAuth = store.getState().authGDI.gdiAuth    
-    
 
     if (!gdiAuth || !gdiAuth.access_token) {
         return config;

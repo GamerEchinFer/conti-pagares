@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { HadoopDirectoResponse} from '../../interfaces/interfaces';
+import { RootState } from '../store';
 
 const initialState = () => ({
     response: {} as HadoopDirectoResponse,
@@ -40,3 +41,11 @@ const hadoopDirectoSlice = createSlice({
 export const hadoopDirectoActions = hadoopDirectoSlice.actions;
 
 export const hadoopDirecto = hadoopDirectoSlice.reducer;
+
+export const hadoopDirectoSelectors = {
+  selectResponse: (state: RootState) => state.hadoopDirecto.response,
+  selectLoading: (state: RootState) => state.hadoopDirecto.loading,
+  selectSuccess: (state: RootState) => state.hadoopDirecto.success,
+  selectError: (state: RootState) => state.hadoopDirecto.error,
+  selectFiles: (state: RootState) => state.hadoopDirecto.files,
+}
