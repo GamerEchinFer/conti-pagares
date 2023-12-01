@@ -8,7 +8,7 @@ import { hadoopDirectoSelectors } from '../../../redux/slices/hadoop.slice';
 import { useDocumento } from '../../../hooks/useDocumento';
 import { promissoryNotesDeliveryActions, promissoryNotesSelectors } from '../../../redux/slices/delivery.slice';
 import { CircularProgress } from '@mui/material';
-import { errorNotify } from '../../../helpers/notify';
+import { errorNotify, successNotify } from '../../../helpers/notify';
 
 const AttachFileDelivery = memo(() => {
     const dispatch = useDispatch();
@@ -31,6 +31,8 @@ const AttachFileDelivery = memo(() => {
         try {
             await documento.guardarDocumento(new Date(), operacion, codClient);
             dispatch(promissoryNotesDeliveryActions.setDigitalizadoCompleto(true));
+            successNotify("Documento guardado correctamente");
+            handleClickCancel();
         } catch (error) {
             errorNotify("Error al guardar el documento");
         }

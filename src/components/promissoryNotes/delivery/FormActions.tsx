@@ -7,6 +7,7 @@ import { promissoryNotesServices } from '../../../services/promissoryNotesServic
 import { RootState } from '../../../redux/store';
 import CircularProgress from '@mui/material/CircularProgress';
 import DeliveryButton from './DeliveryButton';
+import DigitalizarButton from './DigitalizarButton';
 
 
 const FormActions = memo(() => {
@@ -18,11 +19,6 @@ const FormActions = memo(() => {
 
     const handlePrint = () => {
         dispatch(promissoryNotesDeliveryActions.setPdfShowModal(true));
-        dispatch(promissoryNotesDeliveryActions.setFormShowModal(false));
-    }
-
-    const handleDigitalizar = () => {
-        dispatch(promissoryNotesDeliveryActions.setAttachShowModal(true));
         dispatch(promissoryNotesDeliveryActions.setFormShowModal(false));
     }
 
@@ -50,7 +46,7 @@ const FormActions = memo(() => {
         <Grid container alignItems={"flex-start"}>
             <Grid xs={6} display={"flex"} flexWrap={"wrap"} gap={2}>
                 <Button variant={"outlined"} onClick={handlePrint}>Imprimir Acuse</Button>
-                <Button variant={"outlined"} onClick={handleDigitalizar}>Digitalizar Acuse</Button>
+                <DigitalizarButton />
                 <Button variant={"outlined"} onClick={handleReprint}>Reimprimir Acuse</Button>
             </Grid>
             <Grid xs={6} display={"flex"} justifyContent={"flex-end"}>

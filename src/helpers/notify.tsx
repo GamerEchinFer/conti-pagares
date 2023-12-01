@@ -9,7 +9,7 @@ export const customNotify = (type: TypeError, message: string) => {
 }
 
 export const errorNotify = (message: string) => {
-    
+
     enqueueSnackbar(message,
         {
             variant: "error",
@@ -23,7 +23,16 @@ export const errorNotify = (message: string) => {
 }
 
 export const successNotify = (message: string) => {
-    enqueueSnackbar(message, { variant: "success" });
+    enqueueSnackbar(message,
+        {
+            variant: "success",
+            action: (key) => (
+                <IconButton onClick={() => closeSnackbar(key)}>
+                    <CloseIcon />
+                </IconButton>
+            ),
+            autoHideDuration: 2500
+        });
 }
 
 export const warningNotify = (message: string) => {
