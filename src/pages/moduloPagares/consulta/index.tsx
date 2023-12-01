@@ -20,7 +20,6 @@ import CustomMaterialDataTable from '../../../components/shared/DataTable/Custom
 import { MRT_Cell, MRT_ColumnDef, MRT_Row, MRT_TableInstance } from 'material-react-table';
 import { PromissoryNotesConsult } from '../../../models/responses/promissoryNotes';
 import { internalServices } from '../../../services/internalService';
-import { pdfExample } from '../../../data/pdf';
 import { useKeycloak } from '@react-keycloak/web';
 import { RootState, useAppDispatch } from '../../../redux/store';
 import { getDatosAgente, login } from '../../../actions/Auth.actions';
@@ -97,7 +96,7 @@ const PromissoryNotesConsultPage = () => {
             { accessorKey: "operacion", header: "Operación", size: 50 },
             { accessorKey: "cuota", header: "Cuota", size: 50 },
             { accessorKey: "estado", header: "Estado", size: 50 },
-            { accessorKey: "nroEnvio", header: "Nro. Envío", size: 50 },
+            { accessorKey: "numeroEnvio", header: "Nro. Envío", size: 50 },
             {
                 accessorKey: "codigoCliente",
                 accessorFn: (originalRow) => {

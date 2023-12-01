@@ -26,7 +26,7 @@ const ResponsiveAppBar = () => {
 	};
 
 	const imageRedirect = () => {
-		if (router.pathname !== '/' && router.pathname !== '/tipoBusqueda') {
+		if (router.pathname !== '/' && router.pathname !== '/moduloPagare') {
 			router.push('/tipoBusqueda')
 		}
 	}

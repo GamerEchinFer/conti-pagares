@@ -193,8 +193,6 @@ const index = () => {
         setFilterState(filterState);
     }
 
-
-
     const handlerClickExport = () => {
         if (data && data.length > 0) {
             exportDataTable({ data, fileName: "example" });
@@ -212,7 +210,6 @@ const index = () => {
     const filterMetadata: FilterControlMetaData = {
         clientFullName: fetchedData?.clientFullName ?? ""
     };
-    console.log("dataresp: ", data);
     return (
         <>
             <ModuleContentWrapper title="Entrega de Pagarés" subtitle="Seleccioná el tipo de búsqueda y completa el campo para iniciar el proceso de búsqueda.">
