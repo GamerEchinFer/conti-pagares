@@ -1,21 +1,26 @@
 import React, { useState } from 'react'
 import AsyncInputLabel from '../../shared/form/AsyncInputLabel'
 import InfoLabel from '../../shared/form/InfoLabel'
+import { useDispatch } from 'react-redux';
+import { promissoryNotesDeliveryActions } from '../../../redux/slices/delivery.slice';
 
-interface ClientDataHeaderProps{
+interface ClientDataHeaderProps {
     client: string;
     codClient: string;
 }
 const ClientDataHeader = ({ client, codClient }: ClientDataHeaderProps) => {
-    const [ valueClient, setValueClient ] = useState(client);
+    const [valueClient, setValueClient] = useState(client);
+    const dispatch = useDispatch();
 
     const handleCompleteSearch = (data: ClientData) => {
-        setValueClient(`
-            ${data.primerNombre} 
-            ${data.segundoNombre} 
-            ${data.primerApellido} 
-            ${data.segundoApellido} 
-        `);
+        const nombreCompletoCliente = `${data.primerNombre} ${data.segundoNombre} ${data.primerApellido} ${data.segundoApellido}`;
+        setValueClient(nombreCompletoCliente);
+
+        dispatch(promissoryNotesDeliveryActions.setClienteRetira({
+            tipoDocumento: data.tipoDocumento,
+            codigoCliente: data.codigoCliente,
+            nombreCliente: nombreCompletoCliente
+        }));
     }
 
     return (

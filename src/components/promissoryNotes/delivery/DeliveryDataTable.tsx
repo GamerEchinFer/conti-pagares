@@ -84,31 +84,22 @@ const DeliveryDataTable = memo(({ data, isLoading, columns, nestedFields }: Deli
         table: MRT_TableInstance<PromissoryNotesConsultDelivery>
     ) => {
         setSubRowSelection((old) => {
-            console.log("oldValues: ", old);
             if (typeof updaterOrValue == "function") {
                 const currentKeysSelected = Object.keys(old);
-                console.log("currentKeysSelected: ", currentKeysSelected);
                 const currentCodClientsSelected = currentKeysSelected.map(key => key.split("_")[1]);
-                console.log("currentCodClientsSelected: ", currentCodClientsSelected);
 
                 const newValue = updaterOrValue(old);
                 const newSelectedKey = Object.keys(newValue);
-                console.log("newSelectedKey: ", newSelectedKey);
                 const codClientSelected = newSelectedKey.length > 1 ? newSelectedKey[newSelectedKey.length - 1].split("_")[1] : "";
-                console.log("codClientSelected: ", codClientSelected);
-
-                console.log("parentRow: ", parentRow.original);
                 //validacion de seleccion de hijo solo de un padre
                 const validCodClientSelected = currentCodClientsSelected.some(
                     codClient => codClient != codClientSelected
                 );
 
-                console.log("validCodClientSelected: ", validCodClientSelected);
                 if (validCodClientSelected && codClientSelected != "") {
                     errorNotify("No se puede seleccionar un Código Cliente diferente");
                     return old;
                 }
-
                 return updaterOrValue(old);
             }
 
@@ -142,20 +133,27 @@ const DeliveryDataTable = memo(({ data, isLoading, columns, nestedFields }: Deli
             acc = [...acc, ...promissoryNoteSelected]
             return acc;
         }, [] as PromissoryNotesConsult[]);
-        // console.log("data: ", data);
 
         if (promissoryNotesSelected.length == 0) {
             errorNotify("Debe seleccionar al menos un pagaré");
             return;
         }
-        console.log("promissoryNotesSelected: ", promissoryNotesSelected);
+        const tipoDocumento = promissoryNotesSelected[0].cliente.tipoDocumento;
+        const codigoCliente = promissoryNotesSelected[0].cliente.codigoCliente;
+        const nombreCliente = promissoryNotesSelected[0].cliente.nombreCliente;
 
         dispatch(promissoryNotesDeliveryActions.setResetDatos());
         dispatch(promissoryNotesDeliveryActions.setPromissoryNotesConsultDelivery(promissoryNotesSelected));
         dispatch(promissoryNotesDeliveryActions.setPromissoryNotesForm(promissoryNotesSelected));
         dispatch(promissoryNotesDeliveryActions.setPromissoryNoteObservation(""));
+        dispatch(promissoryNotesDeliveryActions.setClienteRetira({
+            tipoDocumento: tipoDocumento,
+            codigoCliente: codigoCliente,
+            nombreCliente: nombreCliente
+        }));
         dispatch(promissoryNotesDeliveryActions.setFormShowModal(true));
     }
+
     return (
         <>
             <ModalPromissoryNotesDelivery />

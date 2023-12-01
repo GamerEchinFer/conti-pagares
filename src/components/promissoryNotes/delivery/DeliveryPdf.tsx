@@ -174,7 +174,7 @@ const PromissoryNotesDeliveryPdf = ({ promissoryNotesSelected, currentUser, obsG
                     <View style={tableStyles.tableHead}>
                         {
                             promissoryNotesDeliveryPdfColumns.map(({ label, width }, index) => (
-                                <View style={{ ...tableStyles.cell, flex: `1 1 ${width}%`, borderRight: validOutline(index) }}>
+                                <View key={index} style={{ ...tableStyles.cell, flex: `1 1 ${width}%`, borderRight: validOutline(index) }}>
                                     <Text>{label}</Text>
                                 </View>
                             ))
@@ -182,8 +182,8 @@ const PromissoryNotesDeliveryPdf = ({ promissoryNotesSelected, currentUser, obsG
                     </View>
                     <View style={tableStyles.tableBody}>
                         {
-                            promissoryNotesSelected.map(promissoryNote => (
-                                <View style={tableStyles.row}>
+                            promissoryNotesSelected.map((promissoryNote, index) => (
+                                <View key={index} style={tableStyles.row}>
                                     <View style={tableStyles.cell1}>
                                         <Text>{promissoryNote.cliente.codigoCliente}</Text>
                                     </View>

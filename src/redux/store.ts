@@ -38,7 +38,7 @@ const combinedReducers = combineReducers({
   auth: authSlice,
   ui: uiSlice,
   solicitud,
-  producto : producto,
+  producto: producto,
   subProducto: subProducto,
   datosCliente: datosCliente,
   parametroVisible,
@@ -66,10 +66,10 @@ export type OurStore = ReturnType<typeof combineReducers>
 
 const persistedReducer = persistReducer(persistConfig, combinedReducers)
 
-export let store = configureStore ({
+export let store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware( 
+    getDefaultMiddleware(
       {
         serializableCheck: {
           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],

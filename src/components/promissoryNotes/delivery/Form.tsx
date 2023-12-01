@@ -33,7 +33,9 @@ const Form = ({ promissoryNotesSelected }: FormProps) => {
                 flexDirection: "column",
                 gap: 2
             }}>
-                {promissoryNotesSelected.map((item, index) => (<CardItemDelivery key={index} id={getRowId(item)} item={item} />))}
+                {promissoryNotesSelected.map(
+                    (item, index) => (<CardItemDelivery key={index} id={getRowId(item)} item={item} />)
+                )}
             </Box>
 
             <Box sx={{

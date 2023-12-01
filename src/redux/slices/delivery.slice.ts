@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { TipoDocumento } from "../../interfaces/interfaces";
 import { RootState } from "../../redux/store";
-import { PromissoryNotesConsultDelivery, PromissoryNotesDeliveryState } from "../../interfaces/promissoryNotes";
+import { ClienteRetiraDatos, PromissoryNotesConsultDelivery, PromissoryNotesDeliveryState } from "../../interfaces/promissoryNotes";
 import { PromissoryNotesConsult } from "../../models/responses/promissoryNotes";
 import { promissoryNotesHelper } from "../../helpers/promissoryNotes";
 
@@ -13,7 +13,11 @@ const initialState = () => ({
     promissoryNotesForm: [],
     promissoryNoteObservation: '',
     sending: false,
-    clienteRetira: '',
+    clienteRetira: {
+        tipoDocumento: '',
+        codigoCliente: '',
+        nombreCliente: '',
+    },
     digitalizadoCompleto: false,
 } as PromissoryNotesDeliveryState);
 
@@ -40,7 +44,7 @@ const tipoDocumentoSlice = createSlice({
         setSending(state, action: PayloadAction<boolean>) {
             state.sending = action.payload;
         },
-        setClienteRetira(state, action: PayloadAction<string>) {
+        setClienteRetira(state, action: PayloadAction<ClienteRetiraDatos>) {
             state.clienteRetira = action.payload;
         },
         setPromissoryNotesConsultDelivery(state, action: PayloadAction<PromissoryNotesConsult[]>) {
@@ -75,7 +79,11 @@ const tipoDocumentoSlice = createSlice({
             state.promissoryNotesForm = [];
             state.promissoryNoteObservation = '';
             state.sending = false;
-            state.clienteRetira = '';
+            state.clienteRetira = {
+                tipoDocumento: '',
+                codigoCliente: '',
+                nombreCliente: '',
+            };
             state.digitalizadoCompleto = false;
         }
     }

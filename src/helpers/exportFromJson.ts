@@ -1,10 +1,10 @@
 import exportFromJSON from 'export-from-json';
 
-
 interface ExportParams {
     data: any,
     fileName: string;
 }
+
 export const exportDataTable = ({ data, fileName }: ExportParams) => {
     const exportType = exportFromJSON.types.xls
 
@@ -13,4 +13,4 @@ export const exportDataTable = ({ data, fileName }: ExportParams) => {
         fileName,
         exportType
     })
-}
+};

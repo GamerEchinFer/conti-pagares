@@ -1,4 +1,4 @@
-import Button from '@mui/material/Button/Button'
+import Button from '@mui/material/Button'
 import CircularProgress from '@mui/material/CircularProgress'
 import React from 'react'
 import { useSelector } from 'react-redux';

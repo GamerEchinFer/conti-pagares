@@ -42,6 +42,11 @@ export interface PromissoryNotesStatusHistory {
     user: string;
 }
 
+export interface ClienteRetiraDatos {
+    tipoDocumento: string;
+    codigoCliente: string;
+    nombreCliente: string;
+}
 
 export interface PromissoryNotesDeliveryState {
     showFormModal: boolean;
@@ -51,7 +56,7 @@ export interface PromissoryNotesDeliveryState {
     promissoryNotesForm: PromissoryNotesConsult[];
     promissoryNoteObservation: string;
     sending: boolean;
-    clienteRetira: string;
+    clienteRetira: ClienteRetiraDatos;
     digitalizadoCompleto: boolean;
 }
 
