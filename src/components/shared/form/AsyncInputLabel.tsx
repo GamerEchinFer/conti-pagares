@@ -14,7 +14,7 @@ interface AsyncInputLabelProps<TData extends TValues> {
     labelPropsSx?: SxProps<Theme>;
     valuePropsSx?: SxProps<Theme>;
     endPoint: "crc-client-data";
-    onComplete?: (data: TData) => void;
+    onComplete?: (data: TData | null) => void;
 }
 const AsyncInputLabel = <TData extends TValues>({ label, value, sx, labelPropsSx, valuePropsSx, endPoint, onComplete }: AsyncInputLabelProps<TData>) => {
     const [value_, setValue_] = useState(value);
@@ -37,6 +37,7 @@ const AsyncInputLabel = <TData extends TValues>({ label, value, sx, labelPropsSx
             }
         } catch (error) {
             console.log(error);
+            onComplete && onComplete(null);
         }
         setLoading(false);
     }

@@ -33,14 +33,15 @@ const FormActions = memo(() => {
 
     const handleEntregar = async () => {
         setIsLoading(true);
+        const clienteRetiraCodigoCliente = clienteRetira?.codigoCliente;
         for await (const promissoryNote of promissoryNotesForm) {
             await promissoryNotesServices.deliveryPromissoryNote({
                 operacion: promissoryNote.operacion,
                 cuota: promissoryNote.cuota,
-                clienteretira: clienteRetira,
+                clienteretira: clienteRetiraCodigoCliente,
                 observacion: promissoryNote.observacion,
                 usuario: usuarios?.codigo ?? "",
-            })
+            });
         }
         setIsLoading(false);
     }
@@ -53,7 +54,7 @@ const FormActions = memo(() => {
                 <Button variant={"outlined"} onClick={handleReprint}>Reimprimir Acuse</Button>
             </Grid>
             <Grid xs={6} display={"flex"} justifyContent={"flex-end"}>
-                <DeliveryButton 
+                <DeliveryButton
                     handleEntregar={handleEntregar}
                     isLoading={isLoading}
                 />

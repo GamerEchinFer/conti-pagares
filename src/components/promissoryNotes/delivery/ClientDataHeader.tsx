@@ -12,15 +12,26 @@ const ClientDataHeader = ({ client, codClient }: ClientDataHeaderProps) => {
     const [valueClient, setValueClient] = useState(client);
     const dispatch = useDispatch();
 
-    const handleCompleteSearch = (data: ClientData) => {
-        const nombreCompletoCliente = `${data.primerNombre} ${data.segundoNombre} ${data.primerApellido} ${data.segundoApellido}`;
-        setValueClient(nombreCompletoCliente);
+    const handleCompleteSearch = (data: ClientData | null) => {
+        if (data == null) {
+            dispatch(promissoryNotesDeliveryActions.setClienteRetira({
+                tipoDocumento: "",
+                codigoCliente: "",
+                nombreCliente: ""
+            }));
+            return;
+        } else {
 
-        dispatch(promissoryNotesDeliveryActions.setClienteRetira({
-            tipoDocumento: data.tipoDocumento,
-            codigoCliente: data.codigoCliente,
-            nombreCliente: nombreCompletoCliente
-        }));
+            const nombreCompletoCliente = `${data.primerNombre} ${data.segundoNombre} ${data.primerApellido} ${data.segundoApellido}`;
+            setValueClient(nombreCompletoCliente);
+
+            dispatch(promissoryNotesDeliveryActions.setClienteRetira({
+                tipoDocumento: data.tipoDocumento,
+                codigoCliente: data.codigoCliente,
+                nombreCliente: nombreCompletoCliente
+            }));
+        }
+
     }
 
     return (
