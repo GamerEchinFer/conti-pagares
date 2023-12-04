@@ -8,6 +8,7 @@ import { RootState } from '../../../redux/store';
 import CircularProgress from '@mui/material/CircularProgress';
 import DeliveryButton from './DeliveryButton';
 import DigitalizarButton from './DigitalizarButton';
+import { errorNotify } from '../../../helpers/notify';
 
 
 const FormActions = memo(() => {
@@ -18,12 +19,29 @@ const FormActions = memo(() => {
     const [isLoading, setIsLoading] = useState(false);
 
     const handlePrint = () => {
+        if (clienteRetira.codigoCliente === "") {
+            errorNotify("Debe seleccionar un cliente");
+            return;
+        }
         dispatch(promissoryNotesDeliveryActions.setPdfShowModal(true));
         dispatch(promissoryNotesDeliveryActions.setFormShowModal(false));
     }
 
     const handleReprint = () => {
+        if (clienteRetira.codigoCliente === "") {
+            errorNotify("Debe seleccionar un cliente");
+            return;
+        }
         dispatch(promissoryNotesDeliveryActions.setPdfShowModal(true));
+        dispatch(promissoryNotesDeliveryActions.setFormShowModal(false));
+    }
+
+    const handleDigitalizar = () => {
+        if (clienteRetira.codigoCliente === "") {
+            errorNotify("Debe seleccionar un cliente");
+            return;
+        }
+        dispatch(promissoryNotesDeliveryActions.setAttachShowModal(true));
         dispatch(promissoryNotesDeliveryActions.setFormShowModal(false));
     }
 
@@ -46,7 +64,7 @@ const FormActions = memo(() => {
         <Grid container alignItems={"flex-start"}>
             <Grid xs={6} display={"flex"} flexWrap={"wrap"} gap={2}>
                 <Button variant={"outlined"} onClick={handlePrint}>Imprimir Acuse</Button>
-                <DigitalizarButton />
+                <DigitalizarButton handleDigitalizar={handleDigitalizar} />
                 <Button variant={"outlined"} onClick={handleReprint}>Reimprimir Acuse</Button>
             </Grid>
             <Grid xs={6} display={"flex"} justifyContent={"flex-end"}>

@@ -3,15 +3,11 @@ import React, { memo } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { promissoryNotesDeliveryActions, promissoryNotesSelectors } from '../../../redux/slices/delivery.slice';
 
-const DigitalizarButton = memo(() => {
+interface DigitalizarButtonProps {
+    handleDigitalizar: () => void;
+}
+const DigitalizarButton = memo(({ handleDigitalizar }: DigitalizarButtonProps) => {
     const digitalizadoCompleto = useSelector(promissoryNotesSelectors.getDigitalizadoCompleto);
-    const dispatch = useDispatch();
-    const handleDigitalizar = () => {
-        dispatch(promissoryNotesDeliveryActions.setAttachShowModal(true));
-        dispatch(promissoryNotesDeliveryActions.setFormShowModal(false));
-    }
-
-
     return (
         <>
             <Button

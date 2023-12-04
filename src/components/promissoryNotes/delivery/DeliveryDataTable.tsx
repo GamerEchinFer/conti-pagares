@@ -147,9 +147,9 @@ const DeliveryDataTable = memo(({ data, isLoading, columns, nestedFields }: Deli
         dispatch(promissoryNotesDeliveryActions.setPromissoryNotesForm(promissoryNotesSelected));
         dispatch(promissoryNotesDeliveryActions.setPromissoryNoteObservation(""));
         dispatch(promissoryNotesDeliveryActions.setClienteRetira({
-            tipoDocumento: tipoDocumento,
-            codigoCliente: codigoCliente,
-            nombreCliente: nombreCliente
+            tipoDocumento: tipoDocumento ?? "",
+            codigoCliente: codigoCliente ?? "",
+            nombreCliente: nombreCliente ?? "",
         }));
         dispatch(promissoryNotesDeliveryActions.setFormShowModal(true));
     }

@@ -3,6 +3,7 @@ import AsyncInputLabel from '../../shared/form/AsyncInputLabel'
 import InfoLabel from '../../shared/form/InfoLabel'
 import { useDispatch } from 'react-redux';
 import { promissoryNotesDeliveryActions } from '../../../redux/slices/delivery.slice';
+import { ClientData, CrcClientData } from '../../../models/responses/Clients';
 
 interface ClientDataHeaderProps {
     client: string;
@@ -12,7 +13,7 @@ const ClientDataHeader = ({ client, codClient }: ClientDataHeaderProps) => {
     const [valueClient, setValueClient] = useState(client);
     const dispatch = useDispatch();
 
-    const handleCompleteSearch = (data: ClientData | null) => {
+    const handleCompleteSearch = (data: CrcClientData | null) => {
         if (data == null) {
             dispatch(promissoryNotesDeliveryActions.setClienteRetira({
                 tipoDocumento: "",
@@ -22,12 +23,12 @@ const ClientDataHeader = ({ client, codClient }: ClientDataHeaderProps) => {
             return;
         } else {
 
-            const nombreCompletoCliente = `${data.primerNombre} ${data.segundoNombre} ${data.primerApellido} ${data.segundoApellido}`;
+            const nombreCompletoCliente = `${data.nombres} ${data.apellidos}`;
             setValueClient(nombreCompletoCliente);
 
             dispatch(promissoryNotesDeliveryActions.setClienteRetira({
                 tipoDocumento: data.tipoDocumento,
-                codigoCliente: data.codigoCliente,
+                codigoCliente: data.numeroDocumento,
                 nombreCliente: nombreCompletoCliente
             }));
         }
@@ -36,7 +37,7 @@ const ClientDataHeader = ({ client, codClient }: ClientDataHeaderProps) => {
 
     return (
         <>
-            <AsyncInputLabel<ClientData>
+            <AsyncInputLabel<CrcClientData>
                 label={"Cliente/Autorizado"}
                 value={codClient}
                 sx={{ width: "100%" }}
