@@ -10,15 +10,16 @@ import TextFieldFilterControl from "./TextFieldFilterControl";
 
 interface FilterControlsProps {
     filters: FilterControlsItem[];
-    onChange: (filterState: FilterControlState[]) => void,
-    metaData?: FilterControlMetaData
+    onChange: (filterState: FilterControlState[], reason?: "onBlur" | "onEnter") => void,
+    metaData?: FilterControlMetaData;
 }
 const FilterControls = ({ filters, onChange, metaData }: FilterControlsProps) => {
     const [filterState, setFilterState] = useState<FilterControlState[]>([]);
+    const [reason, setReason] = useState<"onBlur" | "onEnter">("onBlur");
 
     useEffect(() => {
-        onChange(filterState);
-    }, [filterState]);
+        onChange(filterState, reason);
+    }, [filterState, reason]);
 
     //HANDLER PARA EL RADIO BUTTON
     const handlerChangeRadio = (key: string) => {
@@ -69,13 +70,14 @@ const FilterControls = ({ filters, onChange, metaData }: FilterControlsProps) =>
         }
     }
 
-    const handlerChangeSelectValue = (value: string) => {
+    const handlerChangeSelectValue = (value: string, reason: "onBlur" | "onEnter") => {
         const currentFilterState = [...filterState];
         const existFilterSelect = currentFilterState.find(f => f.type == EFilterControlsTypes.Select);
 
         if (existFilterSelect) {
             existFilterSelect.value = value;
             setFilterState(currentFilterState);
+            setReason(reason);
         }
     }
 
@@ -127,7 +129,6 @@ const FilterControls = ({ filters, onChange, metaData }: FilterControlsProps) =>
             }}>
                 {
                     filters.map(({ type, label, control }, i) => {
-
                         return <React.Fragment key={label.replace(" ", "").toLowerCase()}>
                             {
                                 type == EFilterControlsTypes.RadioButton &&
@@ -135,7 +136,12 @@ const FilterControls = ({ filters, onChange, metaData }: FilterControlsProps) =>
                             }
                             {
                                 type == EFilterControlsTypes.Select &&
-                                <SelectFilterControl label={label} items={control as SelectFilterControlItem[]} onChangeSelect={handlerChangeSelect} onChange={handlerChangeSelectValue} />
+                                <SelectFilterControl
+                                    label={label}
+                                    items={control as SelectFilterControlItem[]}
+                                    onChangeSelect={handlerChangeSelect}
+                                    onChange={handlerChangeSelectValue}
+                                />
                             }
                         </React.Fragment>
                     })

@@ -63,7 +63,15 @@ const RadioFilterControl = ({ items, label, onChangeRadio, onChange }: RadioFilt
 
             {
                 valueRadio.type == ERadioFilterControlType.Text &&
-                <TextField id="filled-basic" size={"small"} variant="outlined" value={value} onChange={handlerChangeValue} onBlur={handlerBlurInputField} sx={{ flexGrow: 1, maxWidth: "250px" }} />
+                <TextField
+                    id="filled-basic"
+                    size={"small"}
+                    variant="outlined"
+                    value={value}
+                    onChange={handlerChangeValue}
+                    onBlur={handlerBlurInputField}
+                    sx={{ flexGrow: 1, maxWidth: "250px" }}
+                />
             }
 
         </FormControl>

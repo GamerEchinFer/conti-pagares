@@ -23,13 +23,13 @@ const DeliveryDataTable = memo(({ data, isLoading, columns, nestedFields }: Deli
     const dispatch = useDispatch();
     const initialRowSelection = useMemo(() => ({}), []); // Estado inicial memoizado
     const initialSubRowSelection = useMemo(() => ({}), []); // Estado inicial memoizado
-    const initialCurrentRowsSelected = useMemo<PromissoryNotesConsultDelivery[]>(() => ([]), []); // Estado inicial memoizado
+    // const initialCurrentRowsSelected = useMemo<PromissoryNotesConsultDelivery[]>(() => ([]), []); // Estado inicial memoizado
 
     const { getRowId } = promissoryNotesHelper;
 
     const [rowSelection, setRowSelection] = useState<MRT_RowSelectionState>(initialRowSelection);
     const [subRowSelection, setSubRowSelection] = useState<SimpleRowSelectionState>(initialSubRowSelection);
-    const [currentRowsSelected, setCurrentRowsSelected] = useState<PromissoryNotesConsultDelivery[]>(initialCurrentRowsSelected);
+    // const [currentRowsSelected, setCurrentRowsSelected] = useState<PromissoryNotesConsultDelivery[]>(initialCurrentRowsSelected);
 
     // const handleChangeRowSelection = (updaterOrValue: Updater<SimpleRowSelectionState>) => {
     //     setRowSelection((old) => {
@@ -161,6 +161,7 @@ const DeliveryDataTable = memo(({ data, isLoading, columns, nestedFields }: Deli
                 data={data ?? []}
                 columns={columns}
                 isLoading={isLoading}
+                pixelsToSubstract={60}
                 // enableRowVirtualization
                 // enableStickyHeader
 
@@ -215,10 +216,9 @@ const DeliveryDataTable = memo(({ data, isLoading, columns, nestedFields }: Deli
                     width: "100%",
                     display: "flex",
                     justifyContent: "flex-end",
-                    marginTop: 2,
+                    marginTop: 1,
                 }}
             >
-
                 <Button variant={"contained"} onClick={handlerClickDelivery}>Entregar</Button>
             </Box>
         </>

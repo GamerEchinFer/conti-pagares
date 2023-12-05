@@ -1,4 +1,4 @@
-import { Dayjs } from "dayjs";
+import { Dayjs, extend } from "dayjs";
 import { DeepKeys } from '@tanstack/react-table';
 export interface FieldsDataTable<TData> {
     render?: (row: TData) => JSX.Element; // es para que se pueda manejar de forma diferente el render de la celda de las filas
@@ -28,8 +28,13 @@ export interface DateRangeRequestValue {
 }
 
 export interface NavItem {
-    href: string;
-    icon: JSX.Element;
+    href?: string;
+    icon?: JSX.Element;
     title: string;
     children?: NavItem[];
+}
+
+export interface HeaderExportMapper<TData extends TValues> {
+    header: string;
+    accessorFn: (row: TData) => any;
 }

@@ -44,7 +44,7 @@ const DragDropComponent = memo(() => {
     if (files) return (
         <div className="dropZoneSecondary">
             {Object.values(files).map((file: any, index) =>
-                <div className="static" key={index} draggable onDragStart={(event) => onDragStart(event, index)} onDragEnd={onDragEnd}>
+                <div key={index} draggable onDragStart={(event) => onDragStart(event, index)} onDragEnd={onDragEnd}>
                     <div className="absolute">
                         <ButtonDelete onClick={() => {
                             const newFiles = [...files]

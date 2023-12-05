@@ -24,7 +24,7 @@ export default function App({ Component, pageProps }: AppProps) {
     return (
         <>
             <Head>
-                <title>Carpeta Digital | Banco Continental </title>
+                <title>Gestiones Pagarés | Banco Continental </title>
             </Head>
             <ReactKeycloakProvider authClient={keycloak as any} initOptions={{ onLoad: 'login-required' }} >
                 <Provider store={store}>
@@ -42,12 +42,18 @@ export default function App({ Component, pageProps }: AppProps) {
                                         <MainDrawer />
                                         <Box
                                             component="main"
-                                            sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
+                                            sx={{ 
+                                                flexGrow: 1, 
+                                                bgcolor: 'background.default', 
+                                                paddingTop: 1,
+                                                paddingLeft: 2,
+                                                paddingRight: 2,
+                                                paddingBottom: 2,
+                                            }}
                                         >
-                                            <QueryClientProvider client={queryClient}>
+                                            <QueryClientProvider client={queryClient} >
                                                 <Component {...pageProps} />
                                             </QueryClientProvider>
-
                                         </Box>
 
                                     </div>

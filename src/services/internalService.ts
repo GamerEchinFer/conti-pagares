@@ -2,6 +2,7 @@ import { DateRangeRequestValue } from "../interfaces/_common";
 import { internalApi } from "../lib/apiClient";
 import { PromissoryNotesFolderDocument } from "../models/responses/promissoryNotes";
 import { getDateRequestFormated } from "../helpers/commons";
+import { ClientData, CrcClientData } from "../models/responses/Clients";
 
 const getClientData = async (clientCode?: string, documentNumber?: string) => {
     const params = new URLSearchParams();
@@ -31,7 +32,7 @@ const downloadFolderDocument = async (path: string) => {
 
 
 const getCrcClientDataByDocumentNumber = (docNumber: string) => {
-    return internalApi.get<ClientData>(`/datos/getCrcClient?documentNumber=${docNumber}`, { method: "GET" });
+    return internalApi.get<CrcClientData>(`/datos/getCrcClient?documentNumber=${docNumber}`, { method: "GET" });
 }
 
 export const internalServices = {

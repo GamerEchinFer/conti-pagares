@@ -1,22 +1,24 @@
 import FormControl from '@mui/material/FormControl'
 import TextField from '@mui/material/TextField'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { ESelectFilterControlType, SelectFilterControlItem } from '../../../interfaces/components/filterControls'
 import InputLabel from '@mui/material/InputLabel'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
-import { Paper } from '@mui/material'
 
 interface SelectFilterControlProps {
     items: SelectFilterControlItem[];
     label: string;
     onChangeSelect: (value: string, e?: SelectChangeEvent,) => void;
-    onChange: (value: string) => void;
+    onChange: (value: string, reason: "onBlur" | "onEnter") => void;
+    onEnter?: () => void;
 }
 
-const SelectFilterControl = ({ items, label, onChangeSelect, onChange }: SelectFilterControlProps) => {
+const SelectFilterControl = ({ items, label, onChangeSelect, onChange, onEnter }: SelectFilterControlProps) => {
     const [valueSelect, setValueSelect] = useState(items[0]);
     const [value, setValue] = useState("");
+    //use ref para poder manejaer el focus del input
+    const inputRef = useRef<HTMLInputElement>(null); // Update the type of inputRef
 
     useEffect(() => {
         onChangeSelect(items[0].key)
@@ -36,7 +38,13 @@ const SelectFilterControl = ({ items, label, onChangeSelect, onChange }: SelectF
     }
 
     const handlerBlurInputField = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>) => {
-        onChange(value);
+        onChange(value, "onBlur");
+    }
+
+    const handlePointerEnter = (e: React.KeyboardEvent<HTMLDivElement>) => {
+        if (e.key != "Enter") return;
+        onChange(value, "onEnter");
+        inputRef.current?.blur();
     }
 
     return (
@@ -48,7 +56,6 @@ const SelectFilterControl = ({ items, label, onChangeSelect, onChange }: SelectF
                 // gap: 2,
             }}
         >
-            {/* <FormLabel id="filter-radio-buttons-group-label">{label}</FormLabel> */}
             <InputLabel id="select-filter-control-label">{label}</InputLabel>
             <Select
                 value={valueSelect.key}
@@ -68,11 +75,13 @@ const SelectFilterControl = ({ items, label, onChangeSelect, onChange }: SelectF
             {
                 valueSelect.type == ESelectFilterControlType.Text &&
                 <TextField
+                    ref={inputRef}
                     size={"small"}
                     variant="outlined"
                     value={value}
                     onChange={handlerChangeValue}
                     onBlur={handlerBlurInputField}
+                    onKeyDown={handlePointerEnter}
                     sx={{
                         flexGrow: 1,
                         maxWidth: "250px"

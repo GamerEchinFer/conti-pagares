@@ -63,7 +63,7 @@ const DateRangeFilterControl = ({ label, key_, onChange }: DateRangeFilterContro
                     onChange={handlerChangeStartDate}
                     format={DATE_FORMAT}
                     slotProps={{
-                        textField: { sx: { width: 150 } }
+                        textField: { sx: { width: 150 }, variant: "outlined", size: "small" }
                     }}
                 />
 
@@ -74,7 +74,7 @@ const DateRangeFilterControl = ({ label, key_, onChange }: DateRangeFilterContro
                     onChange={handlerChangeEndDate}
                     // renderInput={(params) => <TextField {...params} sx={{ width: 150 }} />}
                     slotProps={{
-                        textField: { sx: { width: 150 } }
+                        textField: { sx: { width: 150 }, variant: "outlined", size: "small" }
                     }}
                 />
             </LocalizationProvider>

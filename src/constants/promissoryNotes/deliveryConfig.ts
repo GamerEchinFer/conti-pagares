@@ -1,9 +1,11 @@
+import { HeaderExportMapper } from "../../interfaces/_common";
 import {
     EFilterControlsTypes,
     ESelectFilterControlType,
     FilterControlsItem
 } from "../../interfaces/components/filterControls";
 import { PromissoryNotesConsultDelivery, PromissoryNotesDeliveryPdfColumns } from "../../interfaces/promissoryNotes";
+import { PromissoryNotesConsult } from "../../models/responses/promissoryNotes";
 
 
 export const promissoryNotesDeliveryFilters: FilterControlsItem[] = [
@@ -59,4 +61,17 @@ export const promissoryNotesDeliveryPdfColumns: PromissoryNotesDeliveryPdfColumn
         label: "Observación",
         width: 33,
     },
+];
+
+
+export const headerExportMapperPromissoryNotesDeliver: HeaderExportMapper<PromissoryNotesConsult>[] = [
+    { header: "Operación", accessorFn: (row: PromissoryNotesConsult) => row.operacion },
+    { header: "Cuota", accessorFn: (row: PromissoryNotesConsult) => row.cuota },
+    { header: "Estado", accessorFn: (row: PromissoryNotesConsult) => row.estado },
+    { header: "Nro. Envío", accessorFn: (row: PromissoryNotesConsult) => row.numeroEnvio },
+    { header: "Código", accessorFn: (row: PromissoryNotesConsult) => row.cliente.codigoCliente },
+    { header: "Nro Documento", accessorFn: (row: PromissoryNotesConsult) => row.cliente.codigoCliente },
+    { header: "Cliente", accessorFn: (row: PromissoryNotesConsult) => row.cliente.nombreCliente },
+    { header: "Observación", accessorFn: (row: PromissoryNotesConsult) => row.observacion },
+    { header: "Fecha", accessorFn: (row: PromissoryNotesConsult) => row.fechaVencimiento },
 ];

@@ -1,5 +1,5 @@
 import { SxProps, Theme } from '@mui/material';
-import React, { useMemo, useRef } from 'react';
+import React, { memo, useMemo, useRef } from 'react';
 import { MRT_Localization_ES } from 'material-react-table/locales/es';
 import {
     MRT_Cell,
@@ -39,9 +39,10 @@ interface CustomMaterialDataTableProps<TData extends MRT_RowData,> extends MRT_T
     onSubRowSelectionChange?: OnChangeNestedFn<SimpleRowSelectionState, TData>;
     subRowSelection?: SimpleRowSelectionState;
     nestedTableProps?: Partial<DataTableProps<TData>>;
+    pixelsToSubstract?: number;
 }
 
-const CustomMaterialDataTable = <TData extends MRT_RowData>({
+const CustomMaterialDataTable = memo(<TData extends MRT_RowData>({
     columns,
     data,
     isLoading = false,
@@ -55,6 +56,7 @@ const CustomMaterialDataTable = <TData extends MRT_RowData>({
     onSubRowSelectionChange,
     subRowSelection,
     nestedTableProps,
+    pixelsToSubstract,
     ...props
 }: CustomMaterialDataTableProps<TData>) => {
 
@@ -65,8 +67,8 @@ const CustomMaterialDataTable = <TData extends MRT_RowData>({
         backgroundColor: "#ededef",
         color: "#373a3c",
         borderRadius: variant == "normal" ? 3 : 0,
-        paddingTop: variant == "normal" ? 1 : 1,
-        paddingBottom: variant == "normal" ? 1 : 1,
+        paddingTop: variant == "normal" ? 1 : "4px",
+        paddingBottom: variant == "normal" ? 1 : "4px",
         justifyContent: "center",
         boxShadow: "none",
         verticalAlign: "center",
@@ -157,9 +159,9 @@ const CustomMaterialDataTable = <TData extends MRT_RowData>({
             sx: () => ({
                 border: "1px solid #ededef",
                 borderRadius: 3,
-                paddingTop: 1,
-                paddingBottom: 1,
-                fontSize: 14,
+                paddingTop: "4px",
+                paddingBottom: "4px",
+                fontSize: 13,
             }),
             align: "center",
         },
@@ -188,18 +190,17 @@ const CustomMaterialDataTable = <TData extends MRT_RowData>({
             elevation: 0,
             sx: () => ({
                 //calcular el alto dependiendo de todo el espacio que le sobre sin scroll en mi modulo
-                // height: getRestantHeight(80),
-
+                height: pixelsToSubstract ? getRestantHeight(pixelsToSubstract) : undefined,
             }),
             ref: padreRef
         },
 
         muiTableContainerProps: {
             sx: {
-                // height: getRestantHeight(80),
-                // maxHeight: 500,
+                height: pixelsToSubstract ? getRestantHeight(pixelsToSubstract) : undefined,
             }
         },
+
 
         ...props
     });
@@ -207,6 +208,6 @@ const CustomMaterialDataTable = <TData extends MRT_RowData>({
     return (
         <MaterialReactTable table={table} />
     )
-}
+}) as <TData extends MRT_RowData>(props: CustomMaterialDataTableProps<TData>) => JSX.Element;
 
 export default CustomMaterialDataTable

@@ -5,7 +5,6 @@ import { promissoryNotesDeliveryActions, promissoryNotesSelectors } from '../../
 import { useDispatch, useSelector } from 'react-redux';
 import { promissoryNotesServices } from '../../../services/promissoryNotesService';
 import { RootState } from '../../../redux/store';
-import CircularProgress from '@mui/material/CircularProgress';
 import DeliveryButton from './DeliveryButton';
 import DigitalizarButton from './DigitalizarButton';
 import { errorNotify } from '../../../helpers/notify';
@@ -48,15 +47,24 @@ const FormActions = memo(() => {
     const handleEntregar = async () => {
         setIsLoading(true);
         const clienteRetiraCodigoCliente = clienteRetira?.codigoCliente;
+        let error = false;
+        const departamento = usuarios?.sucursal?.codigo == "01" ? usuarios.departamento.codigo : 999;
         for await (const promissoryNote of promissoryNotesForm) {
-            await promissoryNotesServices.deliveryPromissoryNote({
-                operacion: promissoryNote.operacion,
-                cuota: promissoryNote.cuota,
-                clienteretira: clienteRetiraCodigoCliente,
-                observacion: promissoryNote.observacion,
-                usuario: usuarios?.codigo ?? "",
-            });
+            if (error) return;
+            try {
+                await promissoryNotesServices.deliveryPromissoryNote({
+                    operacion: promissoryNote.operacion,
+                    cuota: promissoryNote.cuota,
+                    clienteretira: clienteRetiraCodigoCliente,
+                    observacion: promissoryNote.observacion,
+                    usuario: usuarios?.codigo ?? "",
+                    departamento: departamento.toString()
+                });
+            } catch (error) {
+                error = true;
+            }
         }
+        errorNotify("Ocurrió un error al entregar el pagaré");
         setIsLoading(false);
     }
 

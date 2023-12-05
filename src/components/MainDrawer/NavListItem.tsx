@@ -8,6 +8,9 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import React, { useState } from 'react'
 import { NavItem } from '../../interfaces/_common'
+import { SxProps, Theme } from '@mui/material/styles'
+import Box from '@mui/material/Box'
+import { useRouter } from 'next/router'
 
 interface NavListItemProps {
     item: NavItem;
@@ -15,19 +18,56 @@ interface NavListItemProps {
     deepLevel?: number;
 }
 const NavListItem = ({ item, isSubLevel, deepLevel = 0 }: NavListItemProps) => {
+    const router = useRouter();
     const [open, setOpen] = useState(true);
 
     const handleClick = () => {
+        //enviar a link
+        if (item.href) {
+            router.push(item.href);
+            return;
+        }
+
+
         setOpen(state => !state);
     }
-    const deepPadding = deepLevel * 4;
-    const childrenSx = isSubLevel && deepLevel !== 0 ? { pl: deepPadding } : {};
+    const deepPadding = deepLevel * 2;
+    const rootSx: SxProps<Theme> = {
+        borderBottom: "1px solid white",
+        marginLeft: 1,
+    };
+    const childrenSx: SxProps<Theme> = isSubLevel && deepLevel !== 0
+        ? {
+            ...rootSx,
+            pl: deepPadding,
+            backgroundColor: "#2C3135",
+            "& :hover": {
+                backgroundColor: "#2C3135"
+            },
+        }
+        : rootSx;
     return (
-        <>
+        <Box
+            sx={{
+                backgroundColor: deepLevel === 0 ? "#434b53 !important" : "#2C3135 !important",
+                "& :hover": {
+                    backgroundColor: deepLevel === 0 ? "#434b53" : "#2C3135 !important"
+                },
+                marginRight: 1 - deepLevel,
+            }}  
+        >
             <ListItemButton onClick={handleClick} sx={childrenSx}>
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.title} />
-                {item.children && (open ? <ExpandLess /> : <ExpandMore />)}
+                <ListItemIcon sx={{ minWidth: "32px" }}>{deepLevel === 0 ? item.icon : null}</ListItemIcon>
+                <ListItemText
+                    primary={item.title}
+                    sx={{
+                        '& .MuiTypography-body1': {
+                            fontSize: "13px",
+                            fontFamily: "ContiSans-Light"
+                        },
+                    }}
+                />
+                {item.children && (open ? <ExpandLess fontSize={"small"} /> : <ExpandMore fontSize={"small"} />)}
             </ListItemButton>
             {
                 item.children && (
@@ -44,7 +84,7 @@ const NavListItem = ({ item, isSubLevel, deepLevel = 0 }: NavListItemProps) => {
 
             }
 
-        </>
+        </Box>
     )
 }
 

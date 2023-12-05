@@ -1,4 +1,5 @@
 import { apiDataClient } from "../lib/apiClient";
+import { ClientData } from "../models/responses/Clients";
 
 const getClientDataByDocumentNumber = (docNumber: string) => {
     return apiDataClient.get<ClientData>(`/clientes/datos?NumeroDocumento=${docNumber}`, { method: "GET" });

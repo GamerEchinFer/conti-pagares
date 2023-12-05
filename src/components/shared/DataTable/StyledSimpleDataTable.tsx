@@ -25,7 +25,7 @@ const StyledTable = styled(Table)(({ theme }) => ({
     borderCollapse: "separate",
     borderSpacing: "5px",
     minWidth: 650,
-    minHeight: 200,
+    minHeight: 40,
 }));
 
 //PARA EL VARIANTE NESTED
@@ -38,23 +38,24 @@ const StyledTableCellNested = styled(TableCell)(({ theme }) => ({
         border: "1px solid #ededef",
         color: "#373a3c",
         borderRadius: 5,
-        paddingTop: 10,
-        paddingBottom: 10,
+        paddingTop: "4px",
+        paddingBottom: "4px",
         fontSize: 14
     },
     [`&.${tableCellClasses.body}`]: {
         border: "1px solid white",
         borderRadius: 10,
-        paddingTop: 3,
-        paddingBottom: 3,
-        fontSize: 14
+        paddingTop: "4px",
+        paddingBottom: "4px",
+        fontSize: 13
     },
 }));
 const StyledTableNested = styled(Table)(({ theme }) => ({
     borderCollapse: "separate",
-    borderSpacing: "4px",
+    borderSpacing: "2px",
     minWidth: 650,
-    minHeight: 200,
+    minHeight: 40,
+    maxHeight: 500,
     backgroundColor: "#ededef",
 }));
 
