@@ -2,8 +2,7 @@ import React from 'react'
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 import { promissoryNotesDeliveryPdfColumns } from '../../../constants/promissoryNotes/deliveryConfig';
 import { PromissoryNotesConsultDelivery } from '../../../interfaces/promissoryNotes';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../redux/store';
+import dayjs from 'dayjs';
 
 const tableStyles = StyleSheet.create({
     table: {
@@ -143,10 +142,7 @@ interface PromissoryNotesDeliveryPdfProps {
 }
 const PromissoryNotesDeliveryPdf = ({ promissoryNotesSelected, currentUser, obsGeneral }: PromissoryNotesDeliveryPdfProps) => {
 
-    const now = new Date();
-    const nowDateFormated = `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()}`;
-    const nowTimeFormated = `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
-    const currentDateTime = `${nowDateFormated} ${nowTimeFormated}`;
+    const currentDateTime = dayjs(new Date()).format("DD/MM/YYYY HH:mm:ss");
 
     const validOutline = (index: number) => {
         if (index == promissoryNotesDeliveryPdfColumns.length - 1) {

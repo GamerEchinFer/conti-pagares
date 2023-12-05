@@ -9,7 +9,8 @@ const DeliveryPdfViewer = memo(() => {
     console.log("renderizado DeliveryPdfViewer");
     const promissoryNotesSelected = useSelector(promissoryNotesSelectors.getPromissoryNotesForm);
     const promissoryObservation = useSelector(promissoryNotesSelectors.getPromissoryNoteObservation);
-    const { usuarioKeycloack: currentUser } = useSelector((state: RootState) => state.auth);
+    // const { usuarioKeycloack: currentUser } = useSelector((state: RootState) => state.auth);
+    const datosAgente = useSelector((state: RootState) => state.auth.datosAgente);
     return (
         <PDFViewer
             width={"100%"}
@@ -17,7 +18,7 @@ const DeliveryPdfViewer = memo(() => {
         >
             <PromissoryNotesDeliveryPdf
                 promissoryNotesSelected={promissoryNotesSelected}
-                currentUser={currentUser}
+                currentUser={datosAgente?.codigo ?? ""}
                 obsGeneral={promissoryObservation}
             />
         </PDFViewer>
