@@ -60,7 +60,7 @@ export interface PromissoryNotesConsult {
     envio: PromissoryNotesShipment;
     devolucion: PromissoryNotesReturn;
     recepcionCustodia: PromissoryNotesReceptionCust;
-    entrega: PromissoryNotesDelivery;
+    entrega: PromissoryNotesConsultDelivery;
     rechazo: PromissoryNotesReject;
     parent?:string;
 }
