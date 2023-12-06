@@ -8,9 +8,11 @@ import { RootState } from '../../../redux/store';
 import DeliveryButton from './DeliveryButton';
 import DigitalizarButton from './DigitalizarButton';
 import { errorNotify, successNotify } from '../../../helpers/notify';
+import { useQueryClient } from '@tanstack/react-query';
 
 
 const FormActions = memo(() => {
+    const queryClient = useQueryClient();
     const dispatch = useDispatch();
     const promissoryNotesForm = useSelector(promissoryNotesSelectors.getPromissoryNotesForm);
     const clienteRetira = useSelector(promissoryNotesSelectors.getClienteRetira);
@@ -64,13 +66,16 @@ const FormActions = memo(() => {
                 error = true;
             }
         }
-        if(error){
+        if (error) {
             errorNotify("Ocurrió un error al entregar el pagaré");
             setIsLoading(false);
             return;
         }
         successNotify("Pagaré entregado correctamente");
         setIsLoading(false);
+        dispatch(promissoryNotesDeliveryActions.setFormShowModal(false));
+        dispatch(promissoryNotesDeliveryActions.setResetDatos());
+        queryClient.fetchQuery({ queryKey: ["promissoryNotesConsult"] });
     }
 
     return (
