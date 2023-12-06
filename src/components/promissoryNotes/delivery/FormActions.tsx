@@ -7,7 +7,7 @@ import { promissoryNotesServices } from '../../../services/promissoryNotesServic
 import { RootState } from '../../../redux/store';
 import DeliveryButton from './DeliveryButton';
 import DigitalizarButton from './DigitalizarButton';
-import { errorNotify } from '../../../helpers/notify';
+import { errorNotify, successNotify } from '../../../helpers/notify';
 
 
 const FormActions = memo(() => {
@@ -64,7 +64,12 @@ const FormActions = memo(() => {
                 error = true;
             }
         }
-        errorNotify("Ocurrió un error al entregar el pagaré");
+        if(error){
+            errorNotify("Ocurrió un error al entregar el pagaré");
+            setIsLoading(false);
+            return;
+        }
+        successNotify("Pagaré entregado correctamente");
         setIsLoading(false);
     }
 
