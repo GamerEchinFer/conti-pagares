@@ -3,7 +3,7 @@ import FilterControls from "../../../components/shared/FilterControls/FilterCont
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import IconButton from '@mui/material/IconButton';
 import CustomModal from "../../../components/shared/CustomModal";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Form from "../../../components/promissoryNotes/consult/Form";
 import FormActions from "../../../components/promissoryNotes/consult/FormActions";
 import { promissoryNotesServices } from "../../../services/promissoryNotesService";
@@ -11,7 +11,7 @@ import { exportDataTable } from "../../../helpers/exportFromJson";
 import ModuleContentWrapper from "../../../components/shared/ui/ModuleContentWrapper";
 import ExportButton from '../../../components/shared/ui/buttons/ExportButton';
 import SearchButton from "../../../components/shared/ui/buttons/SearchButton";
-import { promissoryNotesConsultFilters } from "../../../constants/promissoryNotes/consultConfig";
+import { headerExportMapperPromissoryNotesConsult, promissoryNotesConsultFilters } from "../../../constants/promissoryNotes/consultConfig";
 import { DateRangeRequestValue } from '../../../interfaces/_common';
 import { useQuery } from '@tanstack/react-query';
 import { EFilterControlsTypes, FilterControlMetaData, FilterControlState } from '../../../interfaces/components/filterControls';
@@ -114,9 +114,9 @@ const PromissoryNotesConsultPage = () => {
         [],
     );
 
-    const dataTableActions = (props: { cell: MRT_Cell<PromissoryNotesConsult>; row: MRT_Row<PromissoryNotesConsult>; table: MRT_TableInstance<PromissoryNotesConsult>; }) => (
+    const dataTableActions = useCallback((props: { cell: MRT_Cell<PromissoryNotesConsult>; row: MRT_Row<PromissoryNotesConsult>; table: MRT_TableInstance<PromissoryNotesConsult>; }) => (
         <IconButton onClick={() => handlerClickDetail(props.row.original)}><VisibilityIcon /></IconButton>
-    );
+    ), []);
 
     const handlerCloseFormModal = () => {
         setOpenFormModal(false);
@@ -124,12 +124,18 @@ const PromissoryNotesConsultPage = () => {
 
     const handlerClickExport = () => {
         if (data && data.length > 0) {
-            exportDataTable({ data, fileName: "example" });
+            const now = new Date();
+            const fileName = `pagares_${now.getFullYear()}_${now.getMonth() + 1}_${now.getDate()}_${now.getHours()}_${now.getMinutes()}_${now.getSeconds()}`;
+            exportDataTable({ data, fileName: fileName, mapperFunction: headerExportMapperPromissoryNotesConsult });
         }
     };
 
-    const handlerChangeFilter = (filterState: FilterControlState[]) => {
+
+    const handlerChangeFilter = (filterState: FilterControlState[], reason?: "onBlur" | "onEnter") => {
         setFilterState(filterState);
+        if (reason == "onEnter") {
+            handlerClickSearch();
+        }
     }
 
     const handlerClickSearch = () => {
@@ -197,8 +203,14 @@ const PromissoryNotesConsultPage = () => {
                         <ExportButton onClick={handlerClickExport} disabled={isLoading || data == null}>Exportar</ExportButton>
                     </Grid>
                 </Grid>
-                <Grid xs={12} padding={4}>
-                    <CustomMaterialDataTable data={data ?? []} columns={columns} actions={dataTableActions} isLoading={isLoadingFilter} />
+                <Grid xs={12}>
+                    <CustomMaterialDataTable
+                        data={data ?? []}
+                        columns={columns}
+                        actions={dataTableActions}
+                        isLoading={isLoadingFilter}
+                        pixelsToSubstract={18}
+                    />
                 </Grid>
             </ModuleContentWrapper>
         </>

@@ -3,7 +3,7 @@ import FilterControls from "../../../components/shared/FilterControls/FilterCont
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import IconButton from '@mui/material/IconButton';
 import CustomModal from "../../../components/shared/CustomModal";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useCallback } from 'react';
 import Visualizer from "../../../components/promissoryNotes/accusation/Visualizer";
 import FormActions from "../../../components/promissoryNotes/accusation/FormActions";
 import { promissoryNotesServices } from "../../../services/promissoryNotesService";
@@ -11,7 +11,7 @@ import { exportDataTable } from "../../../helpers/exportFromJson";
 import ModuleContentWrapper from "../../../components/shared/ui/ModuleContentWrapper";
 import ExportButton from '../../../components/shared/ui/buttons/ExportButton';
 import SearchButton from "../../../components/shared/ui/buttons/SearchButton";
-import { promissoryNotesAccusationFilters } from "../../../constants/promissoryNotes/accusationConfig";
+import { headerExportMapperPromissoryNotesAccusation, promissoryNotesAccusationFilters } from "../../../constants/promissoryNotes/accusationConfig";
 import InfoLabel from '../../../components/shared/form/InfoLabel';
 import { DateRangeRequestValue } from '../../../interfaces/_common';
 import { EFilterControlsTypes, FilterControlMetaData, FilterControlState } from '../../../interfaces/components/filterControls';
@@ -30,7 +30,7 @@ const index = () => {
     const { isLoading, isFetched, data: fetchedData, refetch: fetchConsult, isRefetching } = useQuery({
         queryKey: ['promissoryNotesAccusation'],
         queryFn: async () => {
-            const radioFilter = filterState.find(f => f.type == EFilterControlsTypes.RadioButton);
+            const radioFilter = filterState.find(f => f.type == EFilterControlsTypes.Select);
             const dateRangeFilter = filterState.find(f => f.type == EFilterControlsTypes.DateRange);
 
             const codClient = radioFilter?.key == "codClient" ? radioFilter.value : "999";
@@ -59,7 +59,6 @@ const index = () => {
     const handlerClickDetail = (row: PromissoryNotesFolderDocument) => {
         setOpenFormModal(true);
         setCurrentRowDetail(row);
-
     }
 
     // cliente - nombrecliente - fechaAlta - Ver - estado - tipodocu
@@ -73,25 +72,32 @@ const index = () => {
         [],
     );
 
-    const dataTableActions = (props: { cell: MRT_Cell<PromissoryNotesFolderDocument>; row: MRT_Row<PromissoryNotesFolderDocument>; table: MRT_TableInstance<PromissoryNotesFolderDocument>; }) => (
+    const dataTableActions = useCallback((props: { cell: MRT_Cell<PromissoryNotesFolderDocument>; row: MRT_Row<PromissoryNotesFolderDocument>; table: MRT_TableInstance<PromissoryNotesFolderDocument>; }) => (
         <IconButton onClick={() => handlerClickDetail(props.row.original)}><VisibilityIcon /></IconButton>
-    );
+    ), []);
 
     const handlerCloseFormModal = () => {
         setOpenFormModal(false);
     }
 
     const handlerClickExport = () => {
-        exportDataTable({ data, fileName: "example" });
+        if (data && data.length > 0) {
+            const now = new Date();
+            const fileName = `pagares_${now.getFullYear()}_${now.getMonth() + 1}_${now.getDate()}_${now.getHours()}_${now.getMinutes()}_${now.getSeconds()}`;
+            exportDataTable({ data, fileName: fileName, mapperFunction: headerExportMapperPromissoryNotesAccusation });
+        }
     };
 
-    const handlerChangeFilter = (filterState: FilterControlState[]) => {
+    const handlerChangeFilter = (filterState: FilterControlState[], reason?: "onBlur" | "onEnter") => {
         setFilterState(filterState);
+        if (reason == "onEnter") {
+            handlerClickSearch();
+        }
     }
 
     const handlerClickSearch = () => {
-        console.log("filterState: ", filterState);
         if (filterState.length > 0 && filterState[0].value != "") {
+            console.log("Refetch", filterState);
             fetchConsult();
         }
     }
@@ -119,7 +125,11 @@ const index = () => {
             <ModuleContentWrapper title="Acuses Digitalizados" subtitle="Seleccioná el tipo de búsqueda y completa el campo para iniciar el proceso de búsqueda.">
                 <Grid xs={12} container>
                     <Grid xs={9}>
-                        <FilterControls filters={promissoryNotesAccusationFilters} onChange={handlerChangeFilter} metaData={filterMetadata} />
+                        <FilterControls
+                            filters={promissoryNotesAccusationFilters}
+                            onChange={handlerChangeFilter}
+                            metaData={filterMetadata}
+                        />
                     </Grid>
                     <Grid xs={3} sx={{
                         display: "flex",
@@ -127,12 +137,27 @@ const index = () => {
                         alignItems: "flex-start",
                         gap: 1
                     }}>
-                        <SearchButton onClick={handlerClickSearch} isLoading={isLoading}>Verificar acuse</SearchButton>
+                        <SearchButton
+                            onClick={handlerClickSearch}
+                            isLoading={isLoading}
+                            sx={{
+                                paddingRight: "6px",
+                                paddingLeft: "7px"
+                            }}
+                        >
+                            Verificar acuse
+                        </SearchButton>
                         <ExportButton onClick={handlerClickExport} disabled={isLoading || data == null}>Exportar</ExportButton>
                     </Grid>
                 </Grid>
-                <Grid xs={12} padding={4}>
-                    <CustomMaterialDataTable data={data ?? []} columns={columns} actions={dataTableActions} isLoading={isLoadingFilter} />
+                <Grid xs={12}>
+                    <CustomMaterialDataTable
+                        data={data ?? []}
+                        columns={columns}
+                        actions={dataTableActions}
+                        isLoading={isLoadingFilter}
+                        pixelsToSubstract={18}
+                    />
                 </Grid>
             </ModuleContentWrapper>
         </>
