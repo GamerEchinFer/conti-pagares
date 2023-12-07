@@ -1,7 +1,8 @@
 import axios from "axios";
+import { apmAuthInterceptor } from "../api/interceptors";
 const baseUrlPromissoryNotes = process.env.NEXT_PUBLIC_API_BASE_URL;
-const apiPromissoryNotes = axios.create({ baseURL: baseUrlPromissoryNotes, headers: { "X-API-KEY": "f9@dg+6TR5SeCh-h9g!z*5" } });
-
+// const apiPromissoryNotes = axios.create({ baseURL: baseUrlPromissoryNotes, headers: { "X-API-KEY": "f9@dg+6TR5SeCh-h9g!z*5" } });
+const apiPromissoryNotes = axios.create({ baseURL: baseUrlPromissoryNotes });
 
 const baseUrlDataClient = process.env.NEXT_PUBLIC_API_CLIENT_URL;
 const apiKey = process.env.NEXT_PUBLIC_API_CLIENT_KEY ?? "";
@@ -14,6 +15,8 @@ const baseUrlDigitalArchivosApi = process.env.NEXT_PUBLIC_API_DIGITALIZACION_FIL
 const apiDigitalArchivos = axios.create({ baseURL: baseUrlDigitalArchivosApi });
 
 const internalApi = axios.create({ baseURL: "/api" });
+
+apiPromissoryNotes.interceptors.request.use(apmAuthInterceptor);
 
 
 export {
